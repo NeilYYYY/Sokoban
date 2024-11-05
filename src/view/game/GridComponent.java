@@ -38,8 +38,8 @@ public class GridComponent extends JComponent {
                 g.setColor(Color.WHITE);
                 g.fillRect(0, 0, getWidth(), getHeight());
                 g.setColor(Color.GREEN);
-                int[] xPoints = {getWidth() / 2, getWidth(), getWidth() / 2, 0};
-                int[] yPoints = {0, getHeight() / 2, getHeight(), getHeight() / 2};
+                int[] xPoints = {getWidth() / 2, getWidth() * 3 / 4, getWidth() / 2, getWidth() / 4};
+                int[] yPoints = {getHeight() / 4, getHeight() / 2, getHeight() * 3 / 4, getHeight() / 2};
                 g.fillPolygon(xPoints, yPoints, 4);
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
