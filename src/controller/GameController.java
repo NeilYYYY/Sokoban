@@ -2,6 +2,7 @@ package controller;
 
 import model.Direction;
 import model.MapMatrix;
+import view.game.Box;
 import view.game.GamePanel;
 import view.game.GridComponent;
 import view.game.Hero;
@@ -30,7 +31,10 @@ public class GameController {
         //target row can column.
         int tRow = row + direction.getRow();
         int tCol = col + direction.getCol();
+        int ttRow = tRow + direction.getRow();
+        int ttCol = tCol + direction.getCol();
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
+        GridComponent ttGrid = view.getGridComponent(ttRow, ttCol);
         int[][] map = model.getMatrix();
         if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
             //update hero in MapMatrix
@@ -43,6 +47,20 @@ public class GameController {
             h.setRow(tRow);
             h.setCol(tCol);
             return true;
+        }
+        if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12) {
+            if (map[ttRow][ttCol] / 10 == 1 || map[ttRow][ttCol] == 1) {
+                return false;
+            }
+            model.getMatrix()[row][col] -= 20;
+            model.getMatrix()[tRow][tCol] += 10;
+            model.getMatrix()[ttRow][ttCol] += 10;
+            Box b = targetGrid.removeBoxFromGrid();
+            Hero h = currentGrid.removeHeroFromGrid();
+            targetGrid.setHeroInGrid(h);
+            ttGrid.setBoxInGrid(b);
+            h.setRow(tRow);
+            h.setCol(tCol);
         }
         return false;
     }

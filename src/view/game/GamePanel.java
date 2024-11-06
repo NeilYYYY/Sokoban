@@ -22,7 +22,6 @@ public class GamePanel extends ListenerPanel {
     private int steps;
     private Hero hero;
 
-
     public GamePanel(MapMatrix model) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -31,7 +30,6 @@ public class GamePanel extends ListenerPanel {
         this.model = model;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         initialGame();
-
     }
 
     public void initialGame() {
