@@ -17,7 +17,7 @@ public class GameFrame extends JFrame {
     private GamePanel gamePanel;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix) {
-        this.setTitle("2024 CS109 Project Demo");
+        this.setTitle("Sokoban");
         this.setLayout(null);
         this.setSize(width, height);
         gamePanel = new GamePanel(mapMatrix);
