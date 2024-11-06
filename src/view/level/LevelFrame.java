@@ -2,6 +2,7 @@ package view.level;
 
 import java.awt.*;
 import javax.swing.*;
+
 import model.MapMatrix;
 import view.FrameUtil;
 import view.game.GameFrame;
@@ -18,7 +19,7 @@ public class LevelFrame extends JFrame {
         JButton level4Btn = FrameUtil.createButton(this, "Level4", new Point(300, height / 2 - 50), 80, 60);
         JButton level5Btn = FrameUtil.createButton(this, "Level5", new Point(390, height / 2 - 50), 80, 60);
 
-        level1Btn.addActionListener(l->{
+        level1Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1},
                     {1, 20, 0, 0, 0, 1},
@@ -31,7 +32,7 @@ public class LevelFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
-        level2Btn.addActionListener(l->{
+        level2Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1, 0},
                     {1, 20, 0, 0, 0, 1, 1},
@@ -45,7 +46,7 @@ public class LevelFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
-        level3Btn.addActionListener(l->{
+        level3Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {0, 0, 1, 1, 1, 1, 0},
                     {1, 1, 1, 0, 0, 1, 0},
@@ -60,7 +61,7 @@ public class LevelFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
-        level4Btn.addActionListener(l->{
+        level4Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {0, 1, 1, 1, 1, 1, 0},
                     {1, 1, 20, 0, 0, 1, 1},
@@ -75,7 +76,7 @@ public class LevelFrame extends JFrame {
             gameFrame.setVisible(true);
         });
 
-        level5Btn.addActionListener(l->{
+        level5Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1, 0, 0},
                     {1, 0, 0, 0, 0, 1, 1, 1},
@@ -88,8 +89,6 @@ public class LevelFrame extends JFrame {
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
-
-        //todo: complete all level.
 
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
