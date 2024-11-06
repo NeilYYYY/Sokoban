@@ -61,6 +61,9 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.RIGHT)) {
             this.afterMove();
         }
+        if (controller.checkWin()) {
+            System.out.println("You win!");
+        }
     }
 
     @Override
@@ -68,6 +71,9 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_LEFT");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)) {
             this.afterMove();
+        }
+        if (controller.checkWin()) {
+            System.out.println("You win!");
         }
     }
 
@@ -77,6 +83,9 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)) {
             this.afterMove();
         }
+        if (controller.checkWin()) {
+            System.out.println("You win!");
+        }
     }
 
     @Override
@@ -84,6 +93,9 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_DOWN");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)) {
             this.afterMove();
+        }
+        if (controller.checkWin()) {
+            System.out.println("You win!");
         }
     }
 

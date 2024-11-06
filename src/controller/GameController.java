@@ -26,6 +26,18 @@ public class GameController {
         System.out.println("Do restart game here");
     }
 
+    public boolean checkWin() {
+        int[][] map = model.getMatrix();
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == 10) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public boolean doMove(int row, int col, Direction direction) {
         GridComponent currentGrid = view.getGridComponent(row, col);
         //target row can column.
@@ -34,7 +46,6 @@ public class GameController {
         int ttRow = tRow + direction.getRow();
         int ttCol = tCol + direction.getCol();
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
-        GridComponent ttGrid = view.getGridComponent(ttRow, ttCol);
         int[][] map = model.getMatrix();
         if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
             //update hero in MapMatrix
@@ -49,6 +60,7 @@ public class GameController {
             return true;
         }
         if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12) {
+            GridComponent ttGrid = view.getGridComponent(ttRow, ttCol);
             if (map[ttRow][ttCol] / 10 == 1 || map[ttRow][ttCol] == 1) {
                 return false;
             }
