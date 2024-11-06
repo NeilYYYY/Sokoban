@@ -14,13 +14,12 @@ import java.awt.*;
  */
 public class GamePanel extends ListenerPanel {
 
+    private final int GRID_SIZE = 50;
     private GridComponent[][] grids;
     private MapMatrix model;
     private GameController controller;
     private JLabel stepLabel;
     private int steps;
-    private final int GRID_SIZE = 50;
-
     private Hero hero;
 
 
@@ -69,7 +68,7 @@ public class GamePanel extends ListenerPanel {
     @Override
     public void doMoveLeft() {
         System.out.println("Click VK_LEFT");
-        if(controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)){
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)) {
             this.afterMove();
         }
     }
@@ -77,15 +76,15 @@ public class GamePanel extends ListenerPanel {
     @Override
     public void doMoveUp() {
         System.out.println("Click VK_Up");
-       if( controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)){
-           this.afterMove();
-       }
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)) {
+            this.afterMove();
+        }
     }
 
     @Override
     public void doMoveDown() {
         System.out.println("Click VK_DOWN");
-        if(controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)){
+        if (controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)) {
             this.afterMove();
         }
     }
@@ -98,7 +97,6 @@ public class GamePanel extends ListenerPanel {
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
     }
-
 
 
     public void setController(GameController controller) {

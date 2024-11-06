@@ -20,6 +20,7 @@ public class GameController {
         view.setController(this);
     }
 
+    //TODO RESTART
     public void restartGame() {
         System.out.println("Do restart game here");
     }

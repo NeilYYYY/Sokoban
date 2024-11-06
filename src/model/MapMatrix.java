@@ -23,7 +23,6 @@ public class MapMatrix {
 
     public MapMatrix(int[][] matrix) {
         this.matrix = matrix;
-
     }
 
     public int getWidth() {

@@ -27,7 +27,7 @@ public class LoginFrame extends JFrame {
         submitBtn = FrameUtil.createButton(this, "Confirm", new Point(40, 140), 100, 40);
         resetBtn = FrameUtil.createButton(this, "Reset", new Point(160, 140), 100, 40);
 
-        submitBtn.addActionListener(e -> {
+        submitBtn.addActionListener(_ -> {
             System.out.println("Username = " + username.getText());
             System.out.println("Password = " + password.getText());
             if (this.levelFrame != null) {
@@ -37,7 +37,7 @@ public class LoginFrame extends JFrame {
             //todo: check login info
 
         });
-        resetBtn.addActionListener(e -> {
+        resetBtn.addActionListener(_ -> {
             username.setText("");
             password.setText("");
         });

@@ -30,11 +30,11 @@ public class GameFrame extends JFrame {
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
-        this.restartBtn.addActionListener(e -> {
+        this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
         });
-        this.loadBtn.addActionListener(e -> {
+        this.loadBtn.addActionListener(_ -> {
             String string = JOptionPane.showInputDialog(this, "Input path:");
             System.out.println(string);
             gamePanel.requestFocusInWindow();//enable key listener
