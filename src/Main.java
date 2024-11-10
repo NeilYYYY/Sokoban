@@ -6,7 +6,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame(290, 280);
+            LoginFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
             LevelFrame levelFrame = new LevelFrame(510, 200);
             levelFrame.setVisible(false);
