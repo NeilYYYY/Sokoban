@@ -85,7 +85,7 @@ public class Register extends JFrame implements ActionListener {
             boolean temp = readUser(username, user);//检测用户名是否重复
             if (temp) {
                 JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
-                String id = "00" + (user.toArray().length);
+                String id = "" + (user.toArray().length);//String id？？？不是int
                 user.add(new User(id, username, password));
                 writeUser(username, password, user);//将新用户的数据写入json表中
                 this.dispose();
