@@ -20,6 +20,12 @@ public class Register extends JFrame implements ActionListener {
     private JButton registerBtn;
 
     public Register() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         setLayout(null);
         setTitle("Register");
         setSize(350, 250);

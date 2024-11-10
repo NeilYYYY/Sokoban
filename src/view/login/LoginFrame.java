@@ -22,6 +22,12 @@ public class LoginFrame extends JFrame implements ActionListener {
     private LevelFrame levelFrame;
 
     public LoginFrame() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.setTitle("Login");
         this.setAlwaysOnTop(true);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
