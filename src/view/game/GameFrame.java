@@ -6,6 +6,7 @@ import java.awt.*;
 import controller.GameController;
 import model.MapMatrix;
 import view.FrameUtil;
+import view.level.LevelFrame;
 
 public class GameFrame extends JFrame {
 

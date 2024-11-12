@@ -8,7 +8,7 @@ import view.FrameUtil;
 import view.game.GameFrame;
 
 public class LevelFrame extends JFrame {
-
+    public int LevelId;
     public LevelFrame(int width, int height) {
         this.setTitle("Level");
         this.setLayout(null);
@@ -27,6 +27,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 2, 10, 0, 1},
                     {1, 1, 1, 1, 1, 1},
             });
+            setLevelId(1);
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
@@ -41,6 +42,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
+            setLevelId(2);
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
@@ -56,6 +58,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
+            LevelId = 3;
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
@@ -71,6 +74,7 @@ public class LevelFrame extends JFrame {
                     {1, 1, 0, 2, 0, 1, 1},
                     {0, 1, 1, 1, 1, 1, 0},
             });
+            LevelId = 4;
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
@@ -85,6 +89,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 1, 0, 2, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1},
             });
+            LevelId = 5;
             GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
             this.setVisible(false);
             gameFrame.setVisible(true);
@@ -93,5 +98,11 @@ public class LevelFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
-
+    public void setLevelId(int levelId) {
+        this.LevelId = levelId;
+    }
+    public int getLevelId() {
+        return LevelId;
+    }
 }
+
