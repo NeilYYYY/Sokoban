@@ -18,6 +18,12 @@ public class GameFrame extends JFrame {
     private GamePanel gamePanel;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.setTitle("Sokoban");
         this.setLayout(null);
         this.setSize(width, height);

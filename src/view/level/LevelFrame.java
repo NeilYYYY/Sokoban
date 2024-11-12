@@ -10,6 +10,12 @@ import view.game.GameFrame;
 public class LevelFrame extends JFrame {
     public int LevelId;
     public LevelFrame(int width, int height) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(width, height);
