@@ -16,6 +16,7 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
+    private SoundPlayerUtil soundPlayer;
     int[][] origin_map = new int[10001][10001];
 
     public GameController(GamePanel view, MapMatrix model) {
@@ -93,6 +94,16 @@ public class GameController {
         }
         return false;
     }
+
+    public void playSound(){
+        SoundPlayerUtil.flag = true;
+        soundPlayer = new SoundPlayerUtil("C:\\Users\\YUAN\\Desktop\\Sokoban\\src\\music1.wav");
+        soundPlayer.playSound();
+    }
+    public void stopSound(){
+        soundPlayer.stopSound();
+    }
+
 
     //todo: add other methods such as loadGame, saveGame...
 

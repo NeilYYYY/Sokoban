@@ -15,10 +15,10 @@ import java.util.Arrays;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
-    private JTextField usernameText;
-    private JPasswordField passwordText;
-    private JButton loginBtn;
-    private JButton registerBtn;
+    private final JTextField usernameText;
+    private final JPasswordField passwordText;
+    private final JButton loginBtn;
+    private final JButton registerBtn;
     private LevelFrame levelFrame;
 
     public LoginFrame() {
@@ -29,16 +29,16 @@ public class LoginFrame extends JFrame implements ActionListener {
             e.printStackTrace();
         }
         this.setTitle("Login");
-        this.setAlwaysOnTop(true);
+        this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
-        this.setSize(350, 180);
+        this.setSize(800, 450);
         this.setLocationRelativeTo(null);//设置GUI显示居中
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
+        this.getContentPane().setLayout(null);
         //创建界面组件
         JLabel username = new JLabel("Username：");
         JLabel password = new JLabel("Password：");
         loginBtn = new JButton("Login");
-
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
         registerBtn.addActionListener(this);//监听注册事件
@@ -51,12 +51,18 @@ public class LoginFrame extends JFrame implements ActionListener {
         passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         //创建装组件的容器
         JPanel usernameJp = new JPanel();
+        usernameJp.setBackground(null);
+        usernameJp.setOpaque(false);
         JPanel passwordJp = new JPanel();
+        passwordJp.setBackground(null);
+        passwordJp.setOpaque(false);
         JPanel loginJp = new JPanel();
+        loginJp.setBackground(null);
+        loginJp.setOpaque(false);
         //设置容器的位置
-        usernameJp.setBounds(30, 0, 300, 50);
-        passwordJp.setBounds(30, 40, 300, 50);
-        loginJp.setBounds(30, 90, 300, 60);
+        usernameJp.setBounds(300, 225, 200, 50);
+        passwordJp.setBounds(300, 265, 200, 50);
+        loginJp.setBounds(300, 310, 200, 60);
         usernameJp.add(username);
         usernameJp.add(usernameText);
         passwordJp.add(password);
@@ -67,6 +73,9 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(usernameJp);
         add(passwordJp);
         add(loginJp);
+        JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.getContentPane().add(bg);
         setVisible(true);
     }
 
