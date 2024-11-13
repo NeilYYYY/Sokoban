@@ -2,7 +2,6 @@ package model;
 
 import javax.sound.sampled.*;
 import java.io.*;
-import java.util.concurrent.TimeUnit;
 
 public class Sound {
     private String musicPath; //音频文件
@@ -50,8 +49,8 @@ public class Sound {
                 sourceDataLine.close();
                 audioStream.close();
             }
-        }catch(IOException ex){
-            ex.printStackTrace();
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
     private void playMusic(){
@@ -71,8 +70,8 @@ public class Sound {
                 }
                 sourceDataLine.write(tempBuff,0,count);
             }
-        }catch(UnsupportedAudioFileException | InterruptedException | IOException ex){
-            ex.printStackTrace();
+        }catch(UnsupportedAudioFileException | InterruptedException | IOException e){
+            e.printStackTrace();
         }
     }
 
