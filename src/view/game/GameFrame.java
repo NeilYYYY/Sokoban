@@ -9,6 +9,7 @@ import view.FrameUtil;
 import view.level.LevelFrame;
 import java.util.TimerTask;
 import java.util.Timer;
+import view.login.User;
 
 public class GameFrame extends JFrame {
 
@@ -21,7 +22,9 @@ public class GameFrame extends JFrame {
     private JLabel stepLabel;
     private GamePanel gamePanel;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix) {
+    private User user;
+
+    public GameFrame(int width, int height, MapMatrix mapMatrix, User user) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -31,11 +34,11 @@ public class GameFrame extends JFrame {
         this.setTitle("Sokoban");
         this.setLayout(null);
         this.setSize(width, height);
-        gamePanel = new GamePanel(mapMatrix, this);
+        gamePanel = new GamePanel(mapMatrix, this, user);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
-        this.controller = new GameController(gamePanel, mapMatrix);
-
+        this.controller = new GameController(gamePanel, mapMatrix, user);
+        System.out.println(user);
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
         //this.playSoundBtn = FrameUtil.createButton(this, "Play Sound", new Point(gamePanel.getWidth() + 180,120), 80, 50);
