@@ -10,6 +10,7 @@ import view.login.User;
 
 public class LevelFrame extends JFrame {
     private final User user;
+    private int lv = 0;
 
     public LevelFrame(int width, int height, User user) {
         try {
@@ -29,6 +30,7 @@ public class LevelFrame extends JFrame {
         this.user = user;
         System.out.println(user);
         level1Btn.addActionListener(_ -> {
+            this.lv = 1;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1},
                     {1, 20, 0, 0, 0, 1},
@@ -36,26 +38,28 @@ public class LevelFrame extends JFrame {
                     {1, 0, 2, 10, 0, 1},
                     {1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level2Btn.addActionListener(_ -> {
+            this.lv = 2;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1, 0},
                     {1, 20, 0, 0, 0, 1, 1},
-                    {1, 0, 10, 10, 0, 1, 1},
+                    {1, 0, 10, 10, 0, 0, 1},
                     {1, 0, 1, 2, 0, 2, 1},
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level3Btn.addActionListener(_ -> {
+            this.lv = 3;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {0, 0, 1, 1, 1, 1, 0},
                     {1, 1, 1, 0, 0, 1, 0},
@@ -65,12 +69,13 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level4Btn.addActionListener(_ -> {
+            this.lv = 4;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {0, 1, 1, 1, 1, 1, 0},
                     {1, 1, 20, 0, 0, 1, 1},
@@ -80,12 +85,13 @@ public class LevelFrame extends JFrame {
                     {1, 1, 0, 2, 0, 1, 1},
                     {0, 1, 1, 1, 1, 1, 0},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
 
         level5Btn.addActionListener(_ -> {
+            this.lv = 5;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1, 0, 0},
                     {1, 0, 0, 0, 0, 1, 1, 1},
@@ -94,7 +100,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 1, 0, 2, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });

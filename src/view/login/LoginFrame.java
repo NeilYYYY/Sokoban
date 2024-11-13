@@ -29,7 +29,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.setTitle("Login");
+        this.setTitle("Sokoban");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
         this.setSize(800, 450);

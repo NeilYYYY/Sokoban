@@ -20,11 +20,13 @@ public class GameController {
     private SoundPlayerUtil soundPlayer;
     int[][] origin_map = new int[10001][10001];
     private User user;
+    private int lv;
 
-    public GameController(GamePanel view, MapMatrix model, User user) {
+    public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
         this.model = model;
         this.user = user;
+        this.lv = lv;
         for (int x = 0; x < model.getHeight(); x++) {
             for (int y = 0; y < model.getWidth(); y++) {
                 origin_map[x][y] = model.getMatrix()[x][y];
@@ -43,7 +45,7 @@ public class GameController {
                 model.getMatrix()[x][y] = origin_map[x][y];
             }
         }
-        GameFrame gameFrame = new GameFrame(600, 450, model, user);
+        GameFrame gameFrame = new GameFrame(600, 450, model, user, lv);
         gameFrame.setVisible(true);
     }
 
