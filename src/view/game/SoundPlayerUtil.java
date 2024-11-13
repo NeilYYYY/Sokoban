@@ -11,42 +11,50 @@ public class SoundPlayerUtil extends Thread {
     public SoundPlayerUtil(String wavFile) {
         this.fileName = wavFile;
     }
-
+    private AudioInputStream audioInputStream;
+    private AudioFormat audioFormat;
+    private SourceDataLine sourceDataLine;
     public void playSound() {
-        try {
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(fileName));
-            AudioFormat audioFormat = audioInputStream.getFormat();
-            final SourceDataLine sourceDataLine;
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-            sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-            sourceDataLine.open(audioFormat);
-            sourceDataLine.start();
-            FloatControl floatControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-            double value = 0.1;
-            float dB = (float) (Math.log(value == 0.0 ? 0.0001 : value) / Math.log(10.0) * 20.0);
-            floatControl.setValue(dB);
-            int nByte = 0;
-            final int SIZE = 1024 * 64;
-            byte[] buffer = new byte[SIZE];
-            while (nByte != -1) {
-                if (flag){
-                    nByte = audioInputStream.read(buffer, 0, SIZE);
-                    sourceDataLine.write(buffer, 0, nByte);
+        while (true){
+            try {
+                audioInputStream = AudioSystem.getAudioInputStream(new File(fileName));
+                audioFormat = audioInputStream.getFormat();
+                DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+                sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+                sourceDataLine.open(audioFormat);
+                sourceDataLine.start();
+                FloatControl floatControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+                double value = 0.1;
+                float dB = (float) (Math.log(value == 0.0 ? 0.0001 : value) / Math.log(10.0) * 20.0);
+                floatControl.setValue(dB);
+                int nByte = 0;
+                final int SIZE = 1024 * 64;
+                byte[] buffer = new byte[SIZE];
+                while (nByte != -1) {
+                    if (flag){
+                        nByte = audioInputStream.read(buffer, 0, SIZE);
+                        sourceDataLine.write(buffer, 0, nByte);
+                    }
+                    else {
+                        nByte = audioInputStream.read(buffer, 0, 0);
+                    }
+
                 }
-                else {
-                    nByte = audioInputStream.read(buffer, 0, 0);
-                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
 
             }
-            sourceDataLine.stop();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
         }
     }
-
+    /*
     public void stopSound() {
         flag = false;
+        sourceDataLine.drain();
+        sourceDataLine.stop();
+        audioInputStream = null;
     }
+
+     */
     /*
     private Clip clip;
 

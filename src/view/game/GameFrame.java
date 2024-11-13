@@ -7,14 +7,16 @@ import controller.GameController;
 import model.MapMatrix;
 import view.FrameUtil;
 import view.level.LevelFrame;
+import java.util.TimerTask;
+import java.util.Timer;
 
 public class GameFrame extends JFrame {
 
     private GameController controller;
     private JButton restartBtn;
     private JButton loadBtn;
-    private JButton playSoundBtn;
-    private JButton stopSoundBtn;
+    //private JButton playSoundBtn;
+    //private JButton stopSoundBtn;
 
     private JLabel stepLabel;
     private GamePanel gamePanel;
@@ -36,8 +38,8 @@ public class GameFrame extends JFrame {
 
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.playSoundBtn = FrameUtil.createButton(this, "Play Sound", new Point(gamePanel.getWidth() + 180,120), 80, 50);
-        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Sound", new Point(gamePanel.getWidth() + 180, 210), 80, 50);
+        //this.playSoundBtn = FrameUtil.createButton(this, "Play Sound", new Point(gamePanel.getWidth() + 180,120), 80, 50);
+        //this.stopSoundBtn = FrameUtil.createButton(this, "Stop Sound", new Point(gamePanel.getWidth() + 180, 210), 80, 50);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
@@ -50,12 +52,29 @@ public class GameFrame extends JFrame {
             System.out.println(string);
             gamePanel.requestFocusInWindow();//enable key listener
         });
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                controller.playSound();
+            }
+        },0,1000);
+        /*
         this.playSoundBtn.addActionListener(_ -> {
-            controller.playSound();
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    controller.playSound();
+                }
+            },0,1000);
+
         });
         this.stopSoundBtn.addActionListener(_ -> {
             controller.stopSound();
         });
+
+         */
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

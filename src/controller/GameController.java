@@ -100,9 +100,12 @@ public class GameController {
         soundPlayer = new SoundPlayerUtil("C:\\Users\\YUAN\\Desktop\\Sokoban\\src\\music1.wav");
         soundPlayer.playSound();
     }
+    /*
     public void stopSound(){
         soundPlayer.stopSound();
     }
+
+     */
 
 
     //todo: add other methods such as loadGame, saveGame...
