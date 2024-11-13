@@ -38,7 +38,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 2, 10, 0, 1},
                     {1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -53,7 +53,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -69,7 +69,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -81,11 +81,11 @@ public class LevelFrame extends JFrame {
                     {1, 1, 20, 0, 0, 1, 1},
                     {1, 0, 0, 1, 0, 0, 1},
                     {1, 0, 10, 12, 10, 0, 1},
-                    {1, 0, 1, 2, 0, 0, 1},
+                    {1, 0, 0, 2, 0, 0, 1},
                     {1, 1, 0, 2, 0, 1, 1},
                     {0, 1, 1, 1, 1, 1, 0},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -100,7 +100,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 1, 0, 2, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
