@@ -16,15 +16,12 @@ public class GameFrame extends JFrame {
     private final JButton restartBtn;
     private final JButton loadBtn;
     private final JButton backBtn;
-    private JButton playSoundBtn;
-    private JButton stopSoundBtn;
-
     private final JLabel stepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
-
     public Sound sound;
-
+    private JButton playSoundBtn;
+    private JButton stopSoundBtn;
     private User user;
     private int lv;
 
@@ -49,13 +46,11 @@ public class GameFrame extends JFrame {
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
-        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180,120), 100, 50);
+        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
         this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
-
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
-
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener

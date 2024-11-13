@@ -8,7 +8,7 @@ public class Hero extends JComponent {
     private int col;
 
     private final int value = 20;
-    private static Color color = new Color(87, 171, 220);
+    private static Color color = new Color(0, 255, 255, 128);
 
     public Hero(int width, int height, int row, int col) {
         this.row = row;
@@ -18,7 +18,7 @@ public class Hero extends JComponent {
     }
 
     public void paintComponent(Graphics g) {
-        g.setColor(Color.BLACK);
+        g.setColor(color);
         g.fillOval(0, 0, getWidth(), getHeight());
         g.setColor(color);
         g.fillOval(1,1,getWidth()-2,getHeight()-2);
