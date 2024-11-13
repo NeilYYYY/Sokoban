@@ -4,11 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Hero extends JComponent {
+    private static Color color = new Color(0, 255, 255, 128);
+    private final int value = 20;
     private int row;
     private int col;
-
-    private final int value = 20;
-    private static Color color = new Color(0, 255, 255, 128);
 
     public Hero(int width, int height, int row, int col) {
         this.row = row;
@@ -21,7 +20,7 @@ public class Hero extends JComponent {
         g.setColor(color);
         g.fillOval(0, 0, getWidth(), getHeight());
         g.setColor(color);
-        g.fillOval(1,1,getWidth()-2,getHeight()-2);
+        g.fillOval(1, 1, getWidth() - 2, getHeight() - 2);
     }
 
     public int getValue() {

@@ -17,7 +17,7 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
-//    private SoundPlayerUtil soundPlayer;
+    //    private SoundPlayerUtil soundPlayer;
     int[][] origin_map = new int[10001][10001];
     private User user;
     private int lv;
@@ -60,11 +60,12 @@ public class GameController {
         }
         return true;
     }
+
     public boolean checkLose() {
         int[][] map = model.getMatrix();
         boolean flag = true;
-        for (int i = 0;i < map.length; i++) {
-            for (int j = 0;j < map[i].length; j++) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
                 if (map[i][j] / 10 == 1) {
                     if (!(((map[i - 1][j] == 1 || map[i - 1][j] / 10 == 1) && (map[i][j - 1] == 1 || map[i][j - 1] / 10 == 1)) || ((map[i - 1][j] == 1 || map[i - 1][j] / 10 == 1) && (map[i][j + 1] == 1 || map[i][j + 1] / 10 == 1)) || ((map[i + 1][j] == 1 || map[i + 1][j] / 10 == 1) && (map[i][j - 1] == 1 || map[i][j - 1] / 10 == 1)) || ((map[i + 1][j] == 1 || map[i + 1][j] / 10 == 1) && (map[i][j + 1] == 1 || map[i][j + 1] / 10 == 1)))) {
                         flag = false;

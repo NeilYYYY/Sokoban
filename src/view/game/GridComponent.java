@@ -5,13 +5,12 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class GridComponent extends JComponent {
+    static Color color = new Color(246, 246, 229);
+    private final int id; // represents the units digit value. It cannot be changed during one game.
     private int row;
     private int col;
-    private final int id; // represents the units digit value. It cannot be changed during one game.
-
     private Hero hero;
     private Box box;
-    static Color color = new Color(246, 246, 229);
 
     public GridComponent(int row, int col, int id, int gridSize) {
         this.setSize(gridSize, gridSize);
@@ -80,6 +79,7 @@ public class GridComponent extends JComponent {
         this.box = box;
         this.add(box);
     }
+
     //When removing hero from this grid, invoking this method
     public Hero removeHeroFromGrid() {
         this.remove(this.hero);//remove hero component from grid component
@@ -89,6 +89,7 @@ public class GridComponent extends JComponent {
         this.repaint();
         return h;
     }
+
     //When removing box from this grid, invoking this method
     public Box removeBoxFromGrid() {
         this.remove(this.box);//remove box component from grid component

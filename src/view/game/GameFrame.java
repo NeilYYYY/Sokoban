@@ -16,18 +16,16 @@ public class GameFrame extends JFrame {
     private final JButton restartBtn;
     private final JButton loadBtn;
     private final JButton backBtn;
+    private final JLabel stepLabel;
+    private final GamePanel gamePanel;
+    private final JLabel lvLabel;
+    public Sound sound;
     private JButton playSoundBtn;
     private JButton stopSoundBtn;
     private JButton upMoveBtn;
     private JButton downMoveBtn;
     private JButton leftMoveBtn;
     private JButton rightMoveBtn;
-
-    private final JLabel stepLabel;
-    private final GamePanel gamePanel;
-    private final JLabel lvLabel;
-    public Sound sound;
-
     private User user;
     private int lv;
 
