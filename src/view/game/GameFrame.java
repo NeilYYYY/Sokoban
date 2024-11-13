@@ -18,6 +18,10 @@ public class GameFrame extends JFrame {
     private final JButton backBtn;
     private JButton playSoundBtn;
     private JButton stopSoundBtn;
+    private JButton upMoveBtn;
+    private JButton downMoveBtn;
+    private JButton leftMoveBtn;
+    private JButton rightMoveBtn;
 
     private final JLabel stepLabel;
     private final GamePanel gamePanel;
@@ -51,6 +55,10 @@ public class GameFrame extends JFrame {
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
         this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180,120), 100, 50);
         this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
+        this.upMoveBtn = FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 320, 250), 70, 70);
+        this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 320, 330), 70, 70);
+        this.leftMoveBtn = FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 240, 330), 70, 70);
+        this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 400, 330), 70, 70);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
@@ -82,6 +90,18 @@ public class GameFrame extends JFrame {
         this.stopSoundBtn.addActionListener(_ -> {
             sound.stop();
             gamePanel.requestFocusInWindow();
+        });
+        this.upMoveBtn.addActionListener(_ -> {
+            gamePanel.doMoveUp();
+        });
+        this.downMoveBtn.addActionListener(_ -> {
+            gamePanel.doMoveDown();
+        });
+        this.leftMoveBtn.addActionListener(_ -> {
+            gamePanel.doMoveLeft();
+        });
+        this.rightMoveBtn.addActionListener(_ -> {
+            gamePanel.doMoveRight();
         });
         //todo: add other button here
         this.setLocationRelativeTo(null);

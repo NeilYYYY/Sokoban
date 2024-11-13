@@ -79,6 +79,12 @@ public class GamePanel extends ListenerPanel {
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }
+        if (controller.checkLose()) {
+            System.out.println("You lose!");
+            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
+            controller.restartGame();
+            this.frame.sound.stop();
+        }
     }
 
     @Override
@@ -93,6 +99,12 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
+        }
+        if (controller.checkLose()) {
+            System.out.println("You lose!");
+            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
+            controller.restartGame();
             this.frame.sound.stop();
         }
     }
@@ -111,6 +123,12 @@ public class GamePanel extends ListenerPanel {
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }
+        if (controller.checkLose()) {
+            System.out.println("You lose!");
+            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
+            controller.restartGame();
+            this.frame.sound.stop();
+        }
     }
 
     @Override
@@ -125,6 +143,12 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
+        }
+        if (controller.checkLose()) {
+            System.out.println("You lose!");
+            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
+            controller.restartGame();
             this.frame.sound.stop();
         }
     }
