@@ -27,7 +27,7 @@ public class GameFrame extends JFrame {
         this.setTitle("Sokoban");
         this.setLayout(null);
         this.setSize(width, height);
-        gamePanel = new GamePanel(mapMatrix);
+        gamePanel = new GamePanel(mapMatrix, this);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix);
