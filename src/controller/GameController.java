@@ -101,7 +101,7 @@ public class GameController {
 
     public void playSound(){
         SoundPlayerUtil.flag = true;
-        soundPlayer = new SoundPlayerUtil("C:\\Users\\YUAN\\Desktop\\Sokoban\\src\\music1.wav");
+        soundPlayer = new SoundPlayerUtil("src\\music1.wav");
         soundPlayer.playSound();
     }
     /*
