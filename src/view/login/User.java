@@ -68,6 +68,11 @@ public class User {
         }
     }
 
+    @Override
+    public String toString() {
+        return String.format("%d, %s, %s", id, username, password);
+    }
+
     public String getUsername() {
         return username;
     }

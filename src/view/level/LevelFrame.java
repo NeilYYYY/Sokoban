@@ -6,9 +6,12 @@ import javax.swing.*;
 import model.MapMatrix;
 import view.FrameUtil;
 import view.game.GameFrame;
+import view.login.User;
 
 public class LevelFrame extends JFrame {
-    public LevelFrame(int width, int height) {
+    private final User user;
+
+    public LevelFrame(int width, int height, User user) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -23,7 +26,8 @@ public class LevelFrame extends JFrame {
         JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(210, height / 2 - 50), 80, 60);
         JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(300, height / 2 - 50), 80, 60);
         JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(390, height / 2 - 50), 80, 60);
-
+        this.user = user;
+        System.out.println(user);
         level1Btn.addActionListener(_ -> {
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
                     {1, 1, 1, 1, 1, 1},
@@ -32,7 +36,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 2, 10, 0, 1},
                     {1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -46,7 +50,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -61,7 +65,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -76,7 +80,7 @@ public class LevelFrame extends JFrame {
                     {1, 1, 0, 2, 0, 1, 1},
                     {0, 1, 1, 1, 1, 1, 0},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -90,7 +94,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 1, 0, 2, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix);
+            GameFrame gameFrame = new GameFrame(600, 450, mapMatrix, user);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });

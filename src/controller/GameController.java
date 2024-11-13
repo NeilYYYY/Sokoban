@@ -5,6 +5,7 @@ import model.MapMatrix;
 import view.game.*;
 import view.game.Box;
 import view.level.LevelFrame;
+import view.login.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,16 +18,19 @@ public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
     int[][] origin_map = new int[10001][10001];
+    private User user;
 
-    public GameController(GamePanel view, MapMatrix model) {
+    public GameController(GamePanel view, MapMatrix model, User user) {
         this.view = view;
         this.model = model;
+        this.user = user;
         for (int x = 0; x < model.getHeight(); x++) {
             for (int y = 0; y < model.getWidth(); y++) {
                 origin_map[x][y] = model.getMatrix()[x][y];
             }
         }
         view.setController(this);
+        System.out.println(user);
     }
 
     //TODO RESTART
@@ -38,7 +42,7 @@ public class GameController {
                 model.getMatrix()[x][y] = origin_map[x][y];
             }
         }
-        GameFrame gameFrame = new GameFrame(600, 450, model);
+        GameFrame gameFrame = new GameFrame(600, 450, model, user);
         gameFrame.setVisible(true);
     }
 

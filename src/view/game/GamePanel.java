@@ -4,6 +4,7 @@ import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
 import view.level.LevelFrame;
+import view.login.User;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,14 +24,16 @@ public class GamePanel extends ListenerPanel {
     private int steps;
     private Hero hero;
     private GameFrame frame;
+    private User user;
 
-    public GamePanel(MapMatrix model, GameFrame frame) {
+    public GamePanel(MapMatrix model, GameFrame frame, User user) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
         this.model = model;
         this.frame = frame;
+        this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         initialGame();
     }
@@ -72,7 +75,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200);
+            LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
         }
     }
@@ -87,7 +90,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200);
+            LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
         }
     }
@@ -102,7 +105,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200);
+            LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
         }
     }
@@ -117,7 +120,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200);
+            LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
         }
     }
