@@ -18,6 +18,7 @@ public class Register extends JFrame implements ActionListener {
     private JPasswordField passwordText;
     private JPasswordField passwordTextTrue;
     private JButton registerBtn;
+    private JButton backBtn;
 
     public Register() {
         try {
@@ -39,6 +40,8 @@ public class Register extends JFrame implements ActionListener {
         JLabel passwordTrue = new JLabel("Confirm Password:");
         registerBtn = new JButton("Register");
         registerBtn.addActionListener(this);
+        backBtn = new JButton("Back");
+        backBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
         passwordTextTrue = new JPasswordField(15);
@@ -66,7 +69,7 @@ public class Register extends JFrame implements ActionListener {
         usernameJp.setBounds(300, 125, 200, 40);
         passwordJp.setBounds(300, 175, 200, 40);
         passwordTrueJp.setBounds(250, 225, 300, 40);
-        registerJp.setBounds(290, 280, 200, 50);
+        registerJp.setBounds(300, 280, 200, 50);
 
         usernameJp.add(username);
         usernameJp.add(usernameText);
@@ -74,12 +77,18 @@ public class Register extends JFrame implements ActionListener {
         passwordJp.add(passwordText);
         passwordTrueJp.add(passwordTrue);
         passwordTrueJp.add(passwordTextTrue);
+        registerJp.add(backBtn);
         registerJp.add(registerBtn);
         //将组件装入GUI
         add(usernameJp);
         add(passwordJp);
         add(passwordTrueJp);
         add(registerJp);
+        JLabel rec = new JLabel();
+        rec.setBounds(250, 50, 300, 350);
+        rec.setOpaque(true);
+        rec.setBackground(Color.WHITE);
+        this.getContentPane().add(rec);
         JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
@@ -88,71 +97,37 @@ public class Register extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String username = usernameText.getText();
-        String password = new String(passwordText.getPassword());
-        String passwordTrue = new String(passwordTextTrue.getPassword());
-        ArrayList<User> user = getUserList();
-        for (User data : user) {
-            System.out.println(data.getUsername());
-        }
-        boolean found;
-        found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue));
-        System.out.println(found);
-        if (found) {
-            boolean temp = readUser(username, user);//检测用户名是否重复
-            if (temp) {
-                JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
-                String id = "" + (user.toArray().length);//String id？？？不是int
-                user.add(new User(id, username, password));
-                writeUser(username, password, user);//将新用户的数据写入json表中
-                this.dispose();
-                LoginFrame loginFrame = new LoginFrame();
-                loginFrame.setVisible(true);
-                LevelFrame levelFrame = new LevelFrame(510, 200);
-                levelFrame.setVisible(false);
-                loginFrame.setLevelFrame(levelFrame);
+        if (e.getSource() == registerBtn) {
+            String username = usernameText.getText();
+            String password = new String(passwordText.getPassword());
+            String passwordTrue = new String(passwordTextTrue.getPassword());
+            ArrayList<User> user = User.getUserList();
+            for (User data : user) {
+                System.out.println(data.getUsername());
+            }
+            boolean found;
+            found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue));
+            System.out.println(found);
+            if (found) {
+                boolean temp = User.readUser(username, user);//检测用户名是否重复
+                if (temp) {
+                    JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    int id = user.toArray().length;
+                    user.add(new User(id, username, password));
+                    User.writeUser(username, password, user);//将新用户的数据写入json表中
+                    this.dispose();
+                    LoginFrame loginFrame = new LoginFrame();
+                    loginFrame.setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(this, "用户名重复，注册失败", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             } else {
-                JOptionPane.showMessageDialog(this, "用户名重复，注册失败", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "注册失败,请正确填写用户名和密码", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "注册失败,请正确填写用户名和密码", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    //获取用户的所有信息数据
-    public ArrayList<User> getUserList() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\users.json"))) {
-            StringBuilder json = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                json.append(line).append("\n");
-            }
-            Gson gson = new Gson();
-            return gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
-            }.getType());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new ArrayList<>();
-    }
-
-    //读取用户数据 检查有没有出现用户名重复的情况
-    public boolean readUser(String username, ArrayList<User> user) {
-        for (User data : user) {
-            if (data.getUsername().equals(username)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //将用户信息写入json文件中
-    public void writeUser(String username, String password, ArrayList<User> user) {
-        try (Writer writer = new FileWriter("src\\users.json")) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(user, writer);
-        } catch (IOException e) {
-            e.printStackTrace();
+            this.dispose();
+            LoginFrame loginFrame = new LoginFrame();
+            loginFrame.setVisible(true);
         }
     }
 }

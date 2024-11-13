@@ -36,7 +36,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         //创建界面组件
-        JLabel username = new JLabel("Username：");
+        JLabel username = new JLabel("Username(Empty is Guest)：");
         JLabel password = new JLabel("Password：");
         loginBtn = new JButton("Login");
         loginBtn.addActionListener(this);//监听登录事件
@@ -60,7 +60,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         loginJp.setBackground(null);
         loginJp.setOpaque(false);
         //设置容器的位置
-        usernameJp.setBounds(300, 225, 200, 50);
+        usernameJp.setBounds(200, 225, 400, 50);
         passwordJp.setBounds(300, 265, 200, 50);
         loginJp.setBounds(300, 310, 200, 60);
         usernameJp.add(username);
@@ -73,6 +73,11 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(usernameJp);
         add(passwordJp);
         add(loginJp);
+        JLabel rec = new JLabel();
+        rec.setBounds(250, 210, 300, 150);
+        rec.setOpaque(true);
+        rec.setBackground(Color.WHITE);
+        this.getContentPane().add(rec);
         JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
