@@ -19,8 +19,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JPasswordField passwordText;
     private final JButton loginBtn;
     private final JButton registerBtn;
-    private LevelFrame levelFrame;
-    private User user;
 
     public LoginFrame() {
         try {
@@ -94,36 +92,34 @@ public class LoginFrame extends JFrame implements ActionListener {
             boolean temp = readUser(username, password);
             System.out.println(temp);
             if (temp) {
+                LevelFrame levelFrame;
+                User user;
                 if (username.isEmpty()) {
                     user = User.getUser("", User.getUserList());
-                    this.levelFrame = new LevelFrame(510, 200, user);
-                    this.levelFrame.setVisible(false);
+                    levelFrame = new LevelFrame(510, 200, user);
+                    levelFrame.setVisible(false);
                     JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     System.out.println("Username = " + usernameText.getText());
                     System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
-                    if (this.levelFrame != null) {
-                        this.levelFrame.setVisible(true);
-                        this.setVisible(false);
-                    }
+                    levelFrame.setVisible(true);
+                    this.setVisible(false);
                     return;
                 }
                 user = User.getUser(usernameText.getText(), User.getUserList());
-                this.levelFrame = new LevelFrame(510, 200, user);
-                this.levelFrame.setVisible(false);
+                levelFrame = new LevelFrame(510, 200, user);
+                levelFrame.setVisible(false);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();//登录成功关闭此窗口 跳转页面
                 System.out.println("Username = " + usernameText.getText());
                 System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
-                if (this.levelFrame != null) {
-                    this.levelFrame.setVisible(true);
-                    this.setVisible(false);
-                }
+                levelFrame.setVisible(true);
+                this.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(this, "登陆失败", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }//注册操作
-        else {
+        else if (e.getSource() == registerBtn) {
             this.dispose();
             new Register();
         }

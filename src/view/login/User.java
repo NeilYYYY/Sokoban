@@ -8,17 +8,14 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class User {
-    private int id;
-    private String username;
-    private String password;
+    private final int id;
+    private final String username;
+    private final String password;
 
     public User(int id, String username, String password) {
         this.id = id;
         this.username = username;
         this.password = password;
-    }
-
-    public User() {
     }
 
     //读取用户数据 检查有没有出现用户名重复的情况
@@ -59,7 +56,7 @@ public class User {
     }
 
     //将用户信息写入json文件中
-    public static void writeUser(String username, String password, ArrayList<User> user) {
+    public static void writeUser(ArrayList<User> user) {
         try (Writer writer = new FileWriter("src\\users.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(user, writer);
@@ -77,23 +74,7 @@ public class User {
         return username;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

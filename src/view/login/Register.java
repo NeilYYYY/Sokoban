@@ -1,24 +1,18 @@
 package view.login;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import view.level.LevelFrame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
 import java.util.ArrayList;
 
 public class Register extends JFrame implements ActionListener {
 
-    private JTextField usernameText;
-    private JPasswordField passwordText;
-    private JPasswordField passwordTextTrue;
-    private JButton registerBtn;
-    private JButton backBtn;
+    private final JTextField usernameText;
+    private final JPasswordField passwordText;
+    private final JPasswordField passwordTextTrue;
+    private final JButton registerBtn;
+    private final JButton backBtn;
 
     public Register() {
         try {
@@ -114,7 +108,7 @@ public class Register extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
                     user.add(new User(id, username, password));
-                    User.writeUser(username, password, user);//将新用户的数据写入json表中
+                    User.writeUser(user);//将新用户的数据写入json表中
                     this.dispose();
                     LoginFrame loginFrame = new LoginFrame();
                     loginFrame.setVisible(true);
@@ -124,7 +118,7 @@ public class Register extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(this, "注册失败,请正确填写用户名和密码", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
+        } else if (e.getSource() == backBtn) {
             this.dispose();
             LoginFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
