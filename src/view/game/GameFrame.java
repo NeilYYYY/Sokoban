@@ -26,7 +26,6 @@ public class GameFrame extends JFrame {
     private final JLabel stepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
-
     public Sound sound;
 
     private User user;
@@ -53,7 +52,7 @@ public class GameFrame extends JFrame {
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
-        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180,120), 100, 50);
+        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
         this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
         this.upMoveBtn = FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 320, 250), 70, 70);
         this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 320, 330), 70, 70);
@@ -61,9 +60,7 @@ public class GameFrame extends JFrame {
         this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 400, 330), 70, 70);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
-
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
-
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
@@ -93,15 +90,19 @@ public class GameFrame extends JFrame {
         });
         this.upMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveUp();
+            gamePanel.requestFocusInWindow();//enable key listener
         });
         this.downMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveDown();
+            gamePanel.requestFocusInWindow();//enable key listener
         });
         this.leftMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveLeft();
+            gamePanel.requestFocusInWindow();//enable key listener
         });
         this.rightMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveRight();
+            gamePanel.requestFocusInWindow();//enable key listener
         });
         //todo: add other button here
         this.setLocationRelativeTo(null);
