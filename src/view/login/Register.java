@@ -28,10 +28,11 @@ public class Register extends JFrame implements ActionListener {
         }
         setLayout(null);
         setTitle("Register");
-        setSize(350, 250);
+        setSize(800, 450);
         setAlwaysOnTop(true);//设置界面一直处于最上层
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        this.getContentPane().setLayout(null);
         //组件
         JLabel username = new JLabel("Username:");
         JLabel password = new JLabel("Password:");
@@ -50,14 +51,22 @@ public class Register extends JFrame implements ActionListener {
         passwordTextTrue.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         //创建装组件的容器
         JPanel usernameJp = new JPanel();
+        usernameJp.setBackground(null);
+        usernameJp.setOpaque(false);
         JPanel passwordJp = new JPanel();
+        passwordJp.setBackground(null);
+        passwordJp.setOpaque(false);
         JPanel passwordTrueJp = new JPanel();
+        passwordTrueJp.setBackground(null);
+        passwordTrueJp.setOpaque(false);
         JPanel registerJp = new JPanel();
+        registerJp.setBackground(null);
+        registerJp.setOpaque(false);
         //设置容器的位置
-        usernameJp.setBounds(30, 0, 300, 40);
-        passwordJp.setBounds(30, 50, 300, 40);
-        passwordTrueJp.setBounds(18, 100, 300, 40);
-        registerJp.setBounds(20, 140, 300, 50);
+        usernameJp.setBounds(300, 125, 200, 40);
+        passwordJp.setBounds(300, 175, 200, 40);
+        passwordTrueJp.setBounds(250, 225, 300, 40);
+        registerJp.setBounds(290, 280, 200, 50);
 
         usernameJp.add(username);
         usernameJp.add(usernameText);
@@ -71,7 +80,9 @@ public class Register extends JFrame implements ActionListener {
         add(passwordJp);
         add(passwordTrueJp);
         add(registerJp);
-        setVisible(true);
+        JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.getContentPane().add(bg);
         setVisible(true);
     }
 
