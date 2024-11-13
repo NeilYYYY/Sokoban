@@ -77,6 +77,7 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
         }
     }
 
@@ -92,6 +93,7 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
         }
     }
 
@@ -107,6 +109,7 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
         }
     }
 
@@ -122,6 +125,7 @@ public class GamePanel extends ListenerPanel {
             this.getFrame().setVisible(false);
             LevelFrame levelFrame = new LevelFrame(510, 200, user);
             levelFrame.setVisible(true);
+            this.frame.sound.stop();
         }
     }
 

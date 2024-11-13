@@ -17,7 +17,7 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
-    private SoundPlayerUtil soundPlayer;
+//    private SoundPlayerUtil soundPlayer;
     int[][] origin_map = new int[10001][10001];
     private User user;
     private int lv;
@@ -45,7 +45,7 @@ public class GameController {
                 model.getMatrix()[x][y] = origin_map[x][y];
             }
         }
-        GameFrame gameFrame = new GameFrame(600, 450, model, user, lv);
+        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv);
         gameFrame.setVisible(true);
     }
 
@@ -101,11 +101,11 @@ public class GameController {
         return false;
     }
 
-    public void playSound(){
-        SoundPlayerUtil.flag = true;
-        soundPlayer = new SoundPlayerUtil("src\\music1.wav");
-        soundPlayer.playSound();
-    }
+//    public void playSound(){
+//        SoundPlayerUtil.flag = true;
+//        soundPlayer = new SoundPlayerUtil("src\\misc\\music1.wav");
+//        soundPlayer.playSound();
+//    }
     /*
     public void stopSound(){
         soundPlayer.stopSound();

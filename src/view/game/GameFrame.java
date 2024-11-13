@@ -5,12 +5,9 @@ import java.awt.*;
 
 import controller.GameController;
 import model.MapMatrix;
+import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
-
-import java.util.TimerTask;
-import java.util.Timer;
-
 import view.login.User;
 
 public class GameFrame extends JFrame {
@@ -19,12 +16,14 @@ public class GameFrame extends JFrame {
     private final JButton restartBtn;
     private final JButton loadBtn;
     private final JButton backBtn;
-    //private JButton playSoundBtn;
-    //private JButton stopSoundBtn;
+    private JButton playSoundBtn;
+    private JButton stopSoundBtn;
 
     private final JLabel stepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
+
+    public Sound sound;
 
     private User user;
     private int lv;
@@ -36,11 +35,13 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.sound = new Sound("src\\misc\\EnterHallownest.wav");
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
         this.setSize(width, height);
         gamePanel = new GamePanel(mapMatrix, this, user);
+        gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix, user, lv);
@@ -48,8 +49,8 @@ public class GameFrame extends JFrame {
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
-        //this.playSoundBtn = FrameUtil.createButton(this, "Play Sound", new Point(gamePanel.getWidth() + 180,120), 80, 50);
-        //this.stopSoundBtn = FrameUtil.createButton(this, "Stop Sound", new Point(gamePanel.getWidth() + 180, 210), 80, 50);
+        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180,120), 100, 50);
+        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
 
@@ -58,6 +59,7 @@ public class GameFrame extends JFrame {
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
+            sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
             String string = JOptionPane.showInputDialog(this, "Input path:");
@@ -70,30 +72,17 @@ public class GameFrame extends JFrame {
             this.dispose();
             levelFrame.setVisible(true);
             this.setVisible(false);
+            this.sound.stop();
         });
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                controller.playSound();
-            }
-        }, 0, 1000);
-        /*
+        this.sound.start(true);
         this.playSoundBtn.addActionListener(_ -> {
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    controller.playSound();
-                }
-            },0,1000);
-
+            sound.continues();
+            gamePanel.requestFocusInWindow();
         });
         this.stopSoundBtn.addActionListener(_ -> {
-            controller.stopSound();
+            sound.stop();
+            gamePanel.requestFocusInWindow();
         });
-
-         */
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
