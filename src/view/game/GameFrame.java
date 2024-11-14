@@ -8,6 +8,7 @@ import model.MapMatrix;
 import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
+import view.login.LoginFrame;
 import view.login.User;
 
 public class GameFrame extends JFrame {
@@ -26,6 +27,7 @@ public class GameFrame extends JFrame {
     private JButton downMoveBtn;
     private JButton leftMoveBtn;
     private JButton rightMoveBtn;
+    private JButton saveBtn;
     private User user;
     private int lv;
 
@@ -56,6 +58,7 @@ public class GameFrame extends JFrame {
         this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 320, 330), 70, 70);
         this.leftMoveBtn = FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 240, 330), 70, 70);
         this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 400, 330), 70, 70);
+        this.saveBtn = FrameUtil.createButton(this, "Save", new Point(gamePanel.getWidth() + 400, 100), 70, 70);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
@@ -65,8 +68,15 @@ public class GameFrame extends JFrame {
             sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
-            String string = JOptionPane.showInputDialog(this, "Input path:");
-            System.out.println(string);
+            FileFrame fileFrame = new FileFrame(510, 200, user);
+            fileFrame.setVisible(true);
+            this.sound.stop();
+            gamePanel.requestFocusInWindow();
+        });
+        this.saveBtn.addActionListener(_ -> {
+            FileFrame fileFrame = new FileFrame(510, 200, user);
+            fileFrame.setVisible(true);
+            this.sound.stop();
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.backBtn.addActionListener(_ -> {
