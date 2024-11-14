@@ -13,27 +13,35 @@ import java.io.File;
 import java.util.Arrays;
 
 
-public class FileFrame extends JFrame /*implements ActionListener */{
+public class FileFrame extends JFrame /*implements ActionListener */ {
+    private User user;
+    private GameFrame gameFrame;
+    private int lv;
+    private String filePath;
 
-    public FileFrame(int width, int height, User user) {
+    public FileFrame(int width, int height, User user, GameFrame gameframe, int lv) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.setTitle("Files");
+        this.user = user;
+        this.gameFrame = gameframe;
+        this.lv = lv;
+        this.filePath = String.format("src\\saves\\%d-%d.json", this.lv, this.user.getId());
+        this.setTitle("Savings");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
-        this.setSize(400, 225);
+        this.setSize(width, height);
         this.setLocationRelativeTo(null);//设置GUI显示居中
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         //创建界面组件
-        JLabel[][] files = new JLabel[2][3];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 3; j++) {
-                files[i][j] = new JLabel("File: " + (i * 4 + j));
+        JLabel[][] files = new JLabel[2][1];
+        for (int i = 0; i < files.length; i++) {
+            for (int j = 0; j < files[0].length; j++) {
+                files[i][j] = new JLabel("File: " + (i * 3 + j));
             }
         }
         JPanel[][] panelsJP = new JPanel[2][3];

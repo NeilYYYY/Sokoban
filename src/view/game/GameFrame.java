@@ -20,14 +20,14 @@ public class GameFrame extends JFrame {
     private final JLabel stepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
+    private final JButton playSoundBtn;
+    private final JButton stopSoundBtn;
+    private final JButton upMoveBtn;
+    private final JButton downMoveBtn;
+    private final JButton leftMoveBtn;
+    private final JButton rightMoveBtn;
+    private final JButton saveBtn;
     public Sound sound;
-    private JButton playSoundBtn;
-    private JButton stopSoundBtn;
-    private JButton upMoveBtn;
-    private JButton downMoveBtn;
-    private JButton leftMoveBtn;
-    private JButton rightMoveBtn;
-    private JButton saveBtn;
     private User user;
     private int lv;
 
@@ -68,13 +68,13 @@ public class GameFrame extends JFrame {
             sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user);
+            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
             fileFrame.setVisible(true);
             this.sound.stop();
             gamePanel.requestFocusInWindow();
         });
         this.saveBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user);
+            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
             fileFrame.setVisible(true);
             this.sound.stop();
             gamePanel.requestFocusInWindow();//enable key listener
