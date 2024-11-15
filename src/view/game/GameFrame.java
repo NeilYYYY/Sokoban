@@ -26,7 +26,6 @@ public class GameFrame extends JFrame {
     private final JButton downMoveBtn;
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
-    private final JButton saveBtn;
     public Sound sound;
     private User user;
     private int lv;
@@ -51,15 +50,14 @@ public class GameFrame extends JFrame {
         this.controller = new GameController(gamePanel, mapMatrix, user, lv);
         System.out.println(user);
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+        this.loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
+        this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
         this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
-        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
-        this.upMoveBtn = FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 320, 250), 70, 70);
-        this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 320, 330), 70, 70);
-        this.leftMoveBtn = FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 240, 330), 70, 70);
-        this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 400, 330), 70, 70);
-        this.saveBtn = FrameUtil.createButton(this, "Save", new Point(gamePanel.getWidth() + 400, 100), 70, 70);
+        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 180), 100, 50);
+        this.upMoveBtn = FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 220, 250), 70, 70);
+        this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 220, 330), 70, 70);
+        this.leftMoveBtn = FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 140, 330), 70, 70);
+        this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 300, 330), 70, 70);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
@@ -73,12 +71,6 @@ public class GameFrame extends JFrame {
             fileFrame.setVisible(true);
             this.sound.stop();
             gamePanel.requestFocusInWindow();
-        });
-        this.saveBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
-            fileFrame.setVisible(true);
-            this.sound.stop();
-            gamePanel.requestFocusInWindow();//enable key listener
         });
         this.backBtn.addActionListener(_ -> {
             LevelFrame levelFrame = new LevelFrame(user);
