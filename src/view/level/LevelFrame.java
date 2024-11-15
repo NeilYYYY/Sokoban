@@ -4,6 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import model.MapMatrix;
+import model.Sound;
 import view.FrameUtil;
 import view.game.GameFrame;
 import view.login.LoginFrame;
@@ -12,6 +13,7 @@ import view.login.User;
 public class LevelFrame extends JFrame {
     private final User user;
     private int lv = 0;
+    private Sound sound;
 
     public LevelFrame(User user) {
         try {
@@ -23,11 +25,12 @@ public class LevelFrame extends JFrame {
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(800, 450);
-        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 175), 80, 60);
-        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(270, 175), 80, 60);
-        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(360, 175), 80, 60);
-        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(450, 175), 80, 60);
-        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(540, 175), 80, 60);
+        this.sound = new Sound("src/misc/Alphys.wav");
+        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 160), 80, 60);
+        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(270, 160), 80, 60);
+        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(360, 160), 80, 60);
+        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(450, 160), 80, 60);
+        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(540, 160), 80, 60);
         JButton logoutBtn = FrameUtil.createButton(this, "Logout", new Point(360, 275), 80, 60);
         this.user = user;
         System.out.println(user);
@@ -43,6 +46,7 @@ public class LevelFrame extends JFrame {
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
+            this.sound.stop();
         });
 
         level2Btn.addActionListener(_ -> {
@@ -58,6 +62,7 @@ public class LevelFrame extends JFrame {
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
+            this.sound.stop();
         });
 
         level3Btn.addActionListener(_ -> {
@@ -74,6 +79,7 @@ public class LevelFrame extends JFrame {
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
+            this.sound.stop();
         });
 
         level4Btn.addActionListener(_ -> {
@@ -90,6 +96,7 @@ public class LevelFrame extends JFrame {
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
+            this.sound.stop();
         });
 
         level5Btn.addActionListener(_ -> {
@@ -105,14 +112,20 @@ public class LevelFrame extends JFrame {
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
+            this.sound.stop();
         });
         logoutBtn.addActionListener(_ -> {
             this.setVisible(false);
             LoginFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
+            this.sound.stop();
         });
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public Sound getSound() {
+        return sound;
     }
 }
 

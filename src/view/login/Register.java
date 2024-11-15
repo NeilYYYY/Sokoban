@@ -13,14 +13,17 @@ public class Register extends JFrame implements ActionListener {
     private final JPasswordField passwordTextTrue;
     private final JButton registerBtn;
     private final JButton backBtn;
+    private final LoginFrame loginFrame;
 
-    public Register() {
+    public Register(LoginFrame loginFrame) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             e.printStackTrace();
         }
+        this.loginFrame = loginFrame;
+        this.loginFrame.setVisible(false);
         setLayout(null);
         setTitle("Register");
         setSize(800, 450);
@@ -120,8 +123,7 @@ public class Register extends JFrame implements ActionListener {
             }
         } else if (e.getSource() == backBtn) {
             this.dispose();
-            LoginFrame loginFrame = new LoginFrame();
-            loginFrame.setVisible(true);
+            this.loginFrame.setVisible(true);
         }
     }
 }

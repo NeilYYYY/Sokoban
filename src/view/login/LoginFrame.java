@@ -36,8 +36,8 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);//设置GUI显示居中
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        this.sound = new Sound("src/misc/恋ひ恋ふ縁.wav");
-//        sound.start(true);
+        this.sound = new Sound("src/misc/Main_Theme.wav");
+        sound.start(true);
         //创建界面组件
         JLabel username = new JLabel("Username(Empty is Guest)：");
         JLabel password = new JLabel("Password：");
@@ -101,33 +101,30 @@ public class LoginFrame extends JFrame implements ActionListener {
                 if (username.isEmpty()) {
                     user = User.getUser("", User.getUserList());
                     levelFrame = new LevelFrame(user);
-                    levelFrame.setVisible(false);
                     JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
+                    levelFrame.getSound().start(true);
                     System.out.println("Username = " + usernameText.getText());
                     System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
                     levelFrame.setVisible(true);
-                    this.setVisible(false);
                     this.sound.stop();
                     return;
                 }
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user);
-                levelFrame.setVisible(false);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();//登录成功关闭此窗口 跳转页面
+                levelFrame.getSound().start(true);
                 System.out.println("Username = " + usernameText.getText());
                 System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
                 levelFrame.setVisible(true);
-                this.setVisible(false);
                 this.sound.stop();
             } else {
                 JOptionPane.showMessageDialog(this, "登陆失败", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }//注册操作
         else if (e.getSource() == registerBtn) {
-            this.dispose();
-            new Register();
+            new Register(this);
         }
     }
 

@@ -17,10 +17,9 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
-    //    private SoundPlayerUtil soundPlayer;
+    private final User user;
+    private final int lv;
     int[][] origin_map = new int[10001][10001];
-    private User user;
-    private int lv;
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
@@ -36,7 +35,6 @@ public class GameController {
         System.out.println(user);
     }
 
-    //TODO RESTART
     public void restartGame() {
         view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
@@ -61,6 +59,18 @@ public class GameController {
         return true;
     }
 
+    public void doWin(GameFrame gameFrame) {
+        if (checkWin()) {
+            System.out.println("You win!");
+            JOptionPane.showMessageDialog(gameFrame, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.dispose();
+            LevelFrame levelFrame = new LevelFrame(user);
+            levelFrame.setVisible(true);
+            levelFrame.getSound().start(true);
+            gameFrame.getSound().stop();
+        }
+    }
+
     public boolean checkLose() {
         int[][] map = model.getMatrix();
         boolean flag = true;
@@ -74,6 +84,15 @@ public class GameController {
             }
         }
         return flag;
+    }
+
+    public void doLose(GameFrame gameFrame) {
+        if (checkLose()) {
+            System.out.println("You win!");
+            JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.getController().restartGame();
+            gameFrame.getSound().stop();
+        }
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -115,20 +134,5 @@ public class GameController {
         }
         return false;
     }
-
-//    public void playSound(){
-//        SoundPlayerUtil.flag = true;
-//        soundPlayer = new SoundPlayerUtil("src/misc/music1.wav");
-//        soundPlayer.playSound();
-//    }
-    /*
-    public void stopSound(){
-        soundPlayer.stopSound();
-    }
-
-     */
-
-
     //todo: add other methods such as loadGame, saveGame...
-
 }
