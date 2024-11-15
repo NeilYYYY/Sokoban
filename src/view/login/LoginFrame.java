@@ -100,7 +100,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 User user;
                 if (username.isEmpty()) {
                     user = User.getUser("", User.getUserList());
-                    levelFrame = new LevelFrame(510, 200, user);
+                    levelFrame = new LevelFrame(user);
                     levelFrame.setVisible(false);
                     JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
@@ -112,7 +112,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                     return;
                 }
                 user = User.getUser(usernameText.getText(), User.getUserList());
-                levelFrame = new LevelFrame(510, 200, user);
+                levelFrame = new LevelFrame(user);
                 levelFrame.setVisible(false);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();//登录成功关闭此窗口 跳转页面

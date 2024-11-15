@@ -75,7 +75,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
+            LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }
@@ -97,7 +97,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
+            LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }
@@ -119,7 +119,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
+            LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }
@@ -141,7 +141,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
             this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
+            LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(true);
             this.frame.sound.stop();
         }

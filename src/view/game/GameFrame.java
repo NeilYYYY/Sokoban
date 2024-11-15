@@ -81,7 +81,7 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
+            LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(false);
             this.dispose();
             levelFrame.setVisible(true);

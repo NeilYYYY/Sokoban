@@ -6,13 +6,14 @@ import javax.swing.*;
 import model.MapMatrix;
 import view.FrameUtil;
 import view.game.GameFrame;
+import view.login.LoginFrame;
 import view.login.User;
 
 public class LevelFrame extends JFrame {
     private final User user;
     private int lv = 0;
 
-    public LevelFrame(int width, int height, User user) {
+    public LevelFrame(User user) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -21,12 +22,13 @@ public class LevelFrame extends JFrame {
         }
         this.setTitle("Level");
         this.setLayout(null);
-        this.setSize(width, height);
-        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(30, height / 2 - 50), 80, 60);
-        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(120, height / 2 - 50), 80, 60);
-        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(210, height / 2 - 50), 80, 60);
-        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(300, height / 2 - 50), 80, 60);
-        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(390, height / 2 - 50), 80, 60);
+        this.setSize(800, 450);
+        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 175), 80, 60);
+        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(270, 175), 80, 60);
+        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(360, 175), 80, 60);
+        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(450, 175), 80, 60);
+        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(540, 175), 80, 60);
+        JButton logoutBtn = FrameUtil.createButton(this, "Logout", new Point(360, 275), 80, 60);
         this.user = user;
         System.out.println(user);
         level1Btn.addActionListener(_ -> {
@@ -104,7 +106,11 @@ public class LevelFrame extends JFrame {
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
-
+        logoutBtn.addActionListener(_ -> {
+            this.setVisible(false);
+            LoginFrame loginFrame = new LoginFrame();
+            loginFrame.setVisible(true);
+        });
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
