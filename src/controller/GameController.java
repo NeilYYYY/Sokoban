@@ -17,8 +17,13 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
+
+    public int[][] getOrigin_map() {
+        return origin_map;
+    }
+
     //    private SoundPlayerUtil soundPlayer;
-    int[][] origin_map = new int[10001][10001];
+    int[][] origin_map;
     private User user;
     private int lv;
 
@@ -27,6 +32,7 @@ public class GameController {
         this.model = model;
         this.user = user;
         this.lv = lv;
+        this.origin_map = new int[model.getHeight()][model.getWidth()];
         for (int x = 0; x < model.getHeight(); x++) {
             for (int y = 0; y < model.getWidth(); y++) {
                 origin_map[x][y] = model.getMatrix()[x][y];
@@ -116,17 +122,6 @@ public class GameController {
         return false;
     }
 
-//    public void playSound(){
-//        SoundPlayerUtil.flag = true;
-//        soundPlayer = new SoundPlayerUtil("src\\misc\\music1.wav");
-//        soundPlayer.playSound();
-//    }
-    /*
-    public void stopSound(){
-        soundPlayer.stopSound();
-    }
-
-     */
 
 
     //todo: add other methods such as loadGame, saveGame...

@@ -37,7 +37,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         this.sound = new Sound("src\\misc\\恋ひ恋ふ縁.wav");
-        sound.start(true);
+//        sound.start(true); //Temp
         //创建界面组件
         JLabel username = new JLabel("Username(Empty is Guest)：");
         JLabel password = new JLabel("Password：");

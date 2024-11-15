@@ -31,6 +31,10 @@ public class GameFrame extends JFrame {
     private User user;
     private int lv;
 
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -38,6 +42,7 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         this.sound = new Sound("src\\misc\\EnterHallownest.wav");
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
@@ -68,14 +73,20 @@ public class GameFrame extends JFrame {
             sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
+            FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
+            fileFrame.setVisible(false);
+            this.dispose();
             fileFrame.setVisible(true);
+            this.setVisible(false);
             this.sound.stop();
             gamePanel.requestFocusInWindow();
         });
         this.saveBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
+            FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
+            fileFrame.setVisible(false);
+            this.dispose();
             fileFrame.setVisible(true);
+            this.setVisible(false);
             this.sound.stop();
             gamePanel.requestFocusInWindow();//enable key listener
         });
