@@ -26,8 +26,7 @@ public class GameFrame extends JFrame {
     private final JButton downMoveBtn;
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
-    private final JButton saveBtn;
-    public Sound sound;
+    private Sound sound;
     private User user;
     private int lv;
 
@@ -42,8 +41,8 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        this.sound = new Sound("src\\misc\\EnterHallownest.wav");
+        this.sound = new Sound("src/misc/EnterHallownest.wav");
+        this.sound.start(true);
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
@@ -55,56 +54,43 @@ public class GameFrame extends JFrame {
         this.controller = new GameController(gamePanel, mapMatrix, user, lv);
         System.out.println(user);
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
-        this.loadBtn = FrameUtil.createButton(this, "Load", new Point(gamePanel.getWidth() + 80, 210), 80, 50);
-        this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 300), 80, 50);
+        this.loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
+        this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
         this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
-        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 210), 100, 50);
-        this.upMoveBtn = FrameUtil.createButton(this, "Up", new Point(gamePanel.getWidth() + 320, 250), 70, 70);
-        this.downMoveBtn = FrameUtil.createButton(this, "Down", new Point(gamePanel.getWidth() + 320, 330), 70, 70);
-        this.leftMoveBtn = FrameUtil.createButton(this, "Left", new Point(gamePanel.getWidth() + 240, 330), 70, 70);
-        this.rightMoveBtn = FrameUtil.createButton(this, "Right", new Point(gamePanel.getWidth() + 400, 330), 70, 70);
-        this.saveBtn = FrameUtil.createButton(this, "Save", new Point(gamePanel.getWidth() + 400, 100), 70, 70);
+        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 180), 100, 50);
+        this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 250), 70, 70);
+        this.downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 330), 70, 70);
+        this.leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 140, 330), 70, 70);
+        this.rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 300, 330), 70, 70);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
-            sound.stop();
+            this.sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
             FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
             fileFrame.setVisible(false);
             this.dispose();
             fileFrame.setVisible(true);
-            this.setVisible(false);
             this.sound.stop();
             gamePanel.requestFocusInWindow();
         });
-        this.saveBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
-            fileFrame.setVisible(false);
-            this.dispose();
-            fileFrame.setVisible(true);
-            this.setVisible(false);
-            this.sound.stop();
-            gamePanel.requestFocusInWindow();//enable key listener
-        });
         this.backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
-            levelFrame.setVisible(false);
+            LevelFrame levelFrame = new LevelFrame(user);
             this.dispose();
             levelFrame.setVisible(true);
-            this.setVisible(false);
+            levelFrame.getSound().start(true);
             this.sound.stop();
         });
-        this.sound.start(true);
         this.playSoundBtn.addActionListener(_ -> {
-            sound.continues();
+            this.sound.continues();
             gamePanel.requestFocusInWindow();
         });
         this.stopSoundBtn.addActionListener(_ -> {
-            sound.stop();
+            this.sound.stop();
             gamePanel.requestFocusInWindow();
         });
         this.upMoveBtn.addActionListener(_ -> {
@@ -126,5 +112,13 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public GameController getController() {
+        return controller;
     }
 }

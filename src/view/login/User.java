@@ -40,7 +40,7 @@ public class User {
 
     //获取用户的所有信息数据
     public static ArrayList<User> getUserList() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -57,7 +57,7 @@ public class User {
 
     //将用户信息写入json文件中
     public static void writeUser(ArrayList<User> user) {
-        try (Writer writer = new FileWriter("src\\users.json")) {
+        try (Writer writer = new FileWriter("src/users.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(user, writer);
         } catch (IOException e) {

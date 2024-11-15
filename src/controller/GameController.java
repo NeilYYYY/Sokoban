@@ -17,15 +17,15 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
+    int[][] origin_map;
+    private final User user;
+    private final int lv;
 
     public int[][] getOrigin_map() {
         return origin_map;
     }
 
     //    private SoundPlayerUtil soundPlayer;
-    int[][] origin_map;
-    private User user;
-    private int lv;
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
@@ -42,7 +42,6 @@ public class GameController {
         System.out.println(user);
     }
 
-    //TODO RESTART
     public void restartGame() {
         view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
@@ -67,6 +66,18 @@ public class GameController {
         return true;
     }
 
+    public void doWin(GameFrame gameFrame) {
+        if (checkWin()) {
+            System.out.println("You win!");
+            JOptionPane.showMessageDialog(gameFrame, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.dispose();
+            LevelFrame levelFrame = new LevelFrame(user);
+            levelFrame.setVisible(true);
+            levelFrame.getSound().start(true);
+            gameFrame.getSound().stop();
+        }
+    }
+
     public boolean checkLose() {
         int[][] map = model.getMatrix();
         boolean flag = true;
@@ -80,6 +91,15 @@ public class GameController {
             }
         }
         return flag;
+    }
+
+    public void doLose(GameFrame gameFrame) {
+        if (checkLose()) {
+            System.out.println("You win!");
+            JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
+            gameFrame.getController().restartGame();
+            gameFrame.getSound().stop();
+        }
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -121,9 +141,5 @@ public class GameController {
         }
         return false;
     }
-
-
-
     //todo: add other methods such as loadGame, saveGame...
-
 }

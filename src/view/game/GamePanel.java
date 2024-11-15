@@ -76,20 +76,6 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.RIGHT)) {
             this.afterMove();
         }
-        if (controller.checkWin()) {
-            System.out.println("You win!");
-            JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
-            levelFrame.setVisible(true);
-            this.frame.sound.stop();
-        }
-        if (controller.checkLose()) {
-            System.out.println("You lose!");
-            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
-            controller.restartGame();
-            this.frame.sound.stop();
-        }
     }
 
     @Override
@@ -97,20 +83,6 @@ public class GamePanel extends ListenerPanel {
         System.out.println("Click VK_LEFT");
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.LEFT)) {
             this.afterMove();
-        }
-        if (controller.checkWin()) {
-            System.out.println("You win!");
-            JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
-            levelFrame.setVisible(true);
-            this.frame.sound.stop();
-        }
-        if (controller.checkLose()) {
-            System.out.println("You lose!");
-            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
-            controller.restartGame();
-            this.frame.sound.stop();
         }
     }
 
@@ -120,20 +92,6 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.UP)) {
             this.afterMove();
         }
-        if (controller.checkWin()) {
-            System.out.println("You win!");
-            JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
-            levelFrame.setVisible(true);
-            this.frame.sound.stop();
-        }
-        if (controller.checkLose()) {
-            System.out.println("You lose!");
-            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
-            controller.restartGame();
-            this.frame.sound.stop();
-        }
     }
 
     @Override
@@ -142,25 +100,13 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)) {
             this.afterMove();
         }
-        if (controller.checkWin()) {
-            System.out.println("You win!");
-            JOptionPane.showMessageDialog(this.frame, "You Win!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            this.getFrame().setVisible(false);
-            LevelFrame levelFrame = new LevelFrame(510, 200, user);
-            levelFrame.setVisible(true);
-            this.frame.sound.stop();
-        }
-        if (controller.checkLose()) {
-            System.out.println("You lose!");
-            JOptionPane.showMessageDialog(this.frame, "You Lose!", "Failure", JOptionPane.INFORMATION_MESSAGE);
-            controller.restartGame();
-            this.frame.sound.stop();
-        }
     }
 
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
+        controller.doWin(this.frame);
+        controller.doLose(this.frame);
     }
 
     public void setStepLabel(JLabel stepLabel) {

@@ -22,10 +22,16 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     int[][] map;
 
     public FileFrame(int width, int height, User user, GameFrame gameframe, int lv) {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            SwingUtilities.updateComponentTreeUI(this);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.user = user;
         this.gameFrame = gameframe;
         this.lv = lv;
-        this.filePath = String.format("src\\saves\\%d-%d.json", this.lv, this.user.getId());
+        this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.getId());
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
