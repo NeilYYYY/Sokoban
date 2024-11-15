@@ -118,7 +118,7 @@ public class GameController {
 
 //    public void playSound(){
 //        SoundPlayerUtil.flag = true;
-//        soundPlayer = new SoundPlayerUtil("src\\misc\\music1.wav");
+//        soundPlayer = new SoundPlayerUtil("src/misc/music1.wav");
 //        soundPlayer.playSound();
 //    }
     /*

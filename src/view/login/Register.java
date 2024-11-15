@@ -83,7 +83,7 @@ public class Register extends JFrame implements ActionListener {
         rec.setOpaque(true);
         rec.setBackground(Color.WHITE);
         this.getContentPane().add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
+        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
         setVisible(true);

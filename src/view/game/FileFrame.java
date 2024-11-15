@@ -29,7 +29,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.user = user;
         this.gameFrame = gameframe;
         this.lv = lv;
-        this.filePath = String.format("src\\saves\\%d-%d.json", this.lv, this.user.getId());
+        this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.getId());
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
@@ -97,7 +97,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         rec.setOpaque(true);
         rec.setBackground(Color.WHITE);
         this.getContentPane().add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
+        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
         setVisible(true);

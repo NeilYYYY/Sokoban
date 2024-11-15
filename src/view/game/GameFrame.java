@@ -38,7 +38,8 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.sound = new Sound("src\\misc\\EnterHallownest.wav");
+        this.sound = new Sound("src/misc/EnterHallownest.wav");
+//        this.sound.start(true);
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
@@ -65,7 +66,7 @@ public class GameFrame extends JFrame {
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
-            sound.stop();
+            this.sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
             FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
@@ -87,13 +88,12 @@ public class GameFrame extends JFrame {
             this.setVisible(false);
             this.sound.stop();
         });
-        this.sound.start(true);
         this.playSoundBtn.addActionListener(_ -> {
-            sound.continues();
+            this.sound.continues();
             gamePanel.requestFocusInWindow();
         });
         this.stopSoundBtn.addActionListener(_ -> {
-            sound.stop();
+            this.sound.stop();
             gamePanel.requestFocusInWindow();
         });
         this.upMoveBtn.addActionListener(_ -> {

@@ -36,8 +36,8 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);//设置GUI显示居中
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        this.sound = new Sound("src\\misc\\恋ひ恋ふ縁.wav");
-        sound.start(true);
+        this.sound = new Sound("src/misc/恋ひ恋ふ縁.wav");
+//        sound.start(true);
         //创建界面组件
         JLabel username = new JLabel("Username(Empty is Guest)：");
         JLabel password = new JLabel("Password：");
@@ -81,7 +81,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         rec.setOpaque(true);
         rec.setBackground(Color.WHITE);
         this.getContentPane().add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src\\images\\1.jpg"));
+        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
         setVisible(true);
@@ -134,7 +134,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     //读取用户数据
     public boolean readUser(String username, String password) {
 
-        try (BufferedReader br = new BufferedReader(new FileReader("src\\users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
