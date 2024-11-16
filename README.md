@@ -1,2 +1,2 @@
-# Sodoban
+# Sokoban
 SUSTech CS109
