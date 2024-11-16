@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Register extends JFrame implements ActionListener {
@@ -82,9 +83,9 @@ public class Register extends JFrame implements ActionListener {
         add(passwordTrueJp);
         add(registerJp);
         JLabel rec = new JLabel();
-        rec.setBounds(250, 50, 300, 350);
+        rec.setBounds(250, 80, 300, 290);
         rec.setOpaque(true);
-        rec.setBackground(Color.WHITE);
+        rec.setBackground(new Color(255, 255, 255, 200));
         this.getContentPane().add(rec);
         JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -110,7 +111,11 @@ public class Register extends JFrame implements ActionListener {
                 if (temp) {
                     JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
-                    user.add(new User(id, username, password));
+                    try {
+                        user.add(new User(id, username, LoginFrame.getSHA(password)));
+                    } catch (NoSuchAlgorithmException ex) {
+                        throw new RuntimeException(ex);
+                    }
                     User.writeUser(user);//将新用户的数据写入json表中
                     this.dispose();
                     LoginFrame loginFrame = new LoginFrame();

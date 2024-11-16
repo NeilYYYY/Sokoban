@@ -13,7 +13,7 @@ import view.login.User;
 public class LevelFrame extends JFrame {
     private final User user;
     private int lv = 0;
-    private Sound sound;
+    private final Sound sound;
 
     public LevelFrame(User user) {
         try {
@@ -33,7 +33,7 @@ public class LevelFrame extends JFrame {
         JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(540, 160), 80, 60);
         JButton logoutBtn = FrameUtil.createButton(this, "Logout", new Point(360, 275), 80, 60);
         this.user = user;
-        System.out.println(user);
+        System.out.println(this.user);
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
             MapMatrix mapMatrix = new MapMatrix(new int[][]{
@@ -43,7 +43,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 2, 10, 0, 1},
                     {1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -59,7 +59,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -76,7 +76,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 0, 0, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -93,7 +93,7 @@ public class LevelFrame extends JFrame {
                     {1, 1, 0, 2, 0, 1, 1},
                     {0, 1, 1, 1, 1, 1, 0},
             });
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -109,7 +109,7 @@ public class LevelFrame extends JFrame {
                     {1, 0, 0, 1, 0, 2, 0, 1},
                     {1, 1, 1, 1, 1, 1, 1, 1},
             });
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, user, lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();

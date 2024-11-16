@@ -8,7 +8,6 @@ import model.MapMatrix;
 import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
-import view.login.LoginFrame;
 import view.login.User;
 
 public class GameFrame extends JFrame {
@@ -26,9 +25,9 @@ public class GameFrame extends JFrame {
     private final JButton downMoveBtn;
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
-    private Sound sound;
+    private final Sound sound;
     private User user;
-    private int lv;
+    private final int lv;
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -36,6 +35,7 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Font font = new Font("Arial", Font.BOLD, 25);
         this.sound = new Sound("src/misc/EnterHallownest.wav");
         this.sound.start(true);
         this.lv = lv;
@@ -53,10 +53,34 @@ public class GameFrame extends JFrame {
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
         this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
         this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 180), 100, 50);
-        this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 250), 70, 70);
-        this.downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 330), 70, 70);
-        this.leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 140, 330), 70, 70);
-        this.rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 300, 330), 70, 70);
+        this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
+        upMoveBtn.setMargin(new Insets(0,0,0,0));
+        upMoveBtn.setBorderPainted(false);
+        upMoveBtn.setBorder(null);
+        upMoveBtn.setFocusPainted(false);
+        upMoveBtn.setContentAreaFilled(false);
+        upMoveBtn.setFont(font);
+        this.downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 320), 30, 30);
+        downMoveBtn.setMargin(new Insets(0,0,0,0));
+        downMoveBtn.setBorderPainted(false);
+        downMoveBtn.setBorder(null);
+        downMoveBtn.setFocusPainted(false);
+        downMoveBtn.setContentAreaFilled(false);
+        downMoveBtn.setFont(font);
+        this.leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 190, 290), 30, 30);
+        leftMoveBtn.setMargin(new Insets(0,0,0,0));
+        leftMoveBtn.setBorderPainted(false);
+        leftMoveBtn.setBorder(null);
+        leftMoveBtn.setFocusPainted(false);
+        leftMoveBtn.setContentAreaFilled(false);
+        leftMoveBtn.setFont(font);
+        this.rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 250, 290), 30, 30);
+        rightMoveBtn.setMargin(new Insets(0,0,0,0));
+        rightMoveBtn.setBorderPainted(false);
+        rightMoveBtn.setBorder(null);
+        rightMoveBtn.setFocusPainted(false);
+        rightMoveBtn.setContentAreaFilled(false);
+        rightMoveBtn.setFont(font);
         this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
