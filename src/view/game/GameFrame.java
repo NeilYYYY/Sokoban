@@ -27,12 +27,8 @@ public class GameFrame extends JFrame {
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
     private final Sound sound;
-    private User user;
     private final int lv;
-
-    public GamePanel getGamePanel() {
-        return gamePanel;
-    }
+    private User user;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv) {
         try {
@@ -60,28 +56,28 @@ public class GameFrame extends JFrame {
         this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
         this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 180), 100, 50);
         this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
-        upMoveBtn.setMargin(new Insets(0,0,0,0));
+        upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
         upMoveBtn.setBorder(null);
         upMoveBtn.setFocusPainted(false);
         upMoveBtn.setContentAreaFilled(false);
         upMoveBtn.setFont(font);
         this.downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 320), 30, 30);
-        downMoveBtn.setMargin(new Insets(0,0,0,0));
+        downMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         downMoveBtn.setBorderPainted(false);
         downMoveBtn.setBorder(null);
         downMoveBtn.setFocusPainted(false);
         downMoveBtn.setContentAreaFilled(false);
         downMoveBtn.setFont(font);
         this.leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 190, 290), 30, 30);
-        leftMoveBtn.setMargin(new Insets(0,0,0,0));
+        leftMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         leftMoveBtn.setBorderPainted(false);
         leftMoveBtn.setBorder(null);
         leftMoveBtn.setFocusPainted(false);
         leftMoveBtn.setContentAreaFilled(false);
         leftMoveBtn.setFont(font);
         this.rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 250, 290), 30, 30);
-        rightMoveBtn.setMargin(new Insets(0,0,0,0));
+        rightMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         rightMoveBtn.setBorderPainted(false);
         rightMoveBtn.setBorder(null);
         rightMoveBtn.setFocusPainted(false);
@@ -137,6 +133,14 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public GameController getGameController() {
+        return controller;
+    }
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
     }
 
     public Sound getSound() {

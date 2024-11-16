@@ -62,7 +62,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        this.model = this.gameFrame.getGamePanel().getModel();
+        this.model = this.gameFrame.getGameController().getModel();
         copyModel = this.model;
         //若json文件不存在，创建
         //if (this.user.getId() != 0){

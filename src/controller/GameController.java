@@ -1,6 +1,7 @@
 package controller;
 
 import model.Direction;
+import model.Level;
 import model.MapMatrix;
 import view.game.*;
 import view.game.Box;
@@ -17,19 +18,13 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
-    int[][] origin_map;
     private final User user;
     private final int lv;
-
-    public int[][] getOrigin_map() {
-        return origin_map;
-    }
-
-    //    private SoundPlayerUtil soundPlayer;
-
+    int[][] origin_map;
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
-        this.model = model;
+        this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
+        this.model.copyMatrix(model.getMatrix());
         this.user = user;
         this.lv = lv;
         this.origin_map = new int[model.getHeight()][model.getWidth()];
@@ -42,13 +37,41 @@ public class GameController {
         System.out.println(user);
     }
 
+    public MapMatrix getModel() {
+        return model;
+    }
+
+    //    private SoundPlayerUtil soundPlayer;
+
+    public int[][] getOrigin_map() {
+        return origin_map;
+    }
+
     public void restartGame() {
         view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
-        for (int x = 0; x < model.getHeight(); x++) {
-            for (int y = 0; y < model.getWidth(); y++) {
-                model.getMatrix()[x][y] = origin_map[x][y];
+        switch (this.lv) {
+            case 1: {
+                model.copyMatrix(Level.LEVEL_1.getMap());
+                break;
             }
+            case 2: {
+                model.copyMatrix(Level.LEVEL_2.getMap());
+                break;
+            }
+            case 3: {
+                model.copyMatrix(Level.LEVEL_3.getMap());
+                break;
+            }
+            case 4: {
+                model.copyMatrix(Level.LEVEL_4.getMap());
+                break;
+            }
+            case 5: {
+                model.copyMatrix(Level.LEVEL_5.getMap());
+                break;
+            }
+            default:
         }
         GameFrame gameFrame = new GameFrame(800, 450, model, user, lv);
         gameFrame.setVisible(true);

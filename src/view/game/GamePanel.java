@@ -36,7 +36,8 @@ public class GamePanel extends ListenerPanel {
         this.setFocusable(true);
         this.setLayout(null);
         this.setSize(model.getWidth() * GRID_SIZE + 4, model.getHeight() * GRID_SIZE + 4);
-        this.model = model;
+        this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
+        this.model.copyMatrix(model.getMatrix());
         this.frame = frame;
         this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
