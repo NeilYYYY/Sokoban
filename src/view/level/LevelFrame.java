@@ -38,7 +38,7 @@ public class LevelFrame extends JFrame {
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_1.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -47,7 +47,7 @@ public class LevelFrame extends JFrame {
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -56,7 +56,7 @@ public class LevelFrame extends JFrame {
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -65,7 +65,7 @@ public class LevelFrame extends JFrame {
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();
@@ -74,7 +74,7 @@ public class LevelFrame extends JFrame {
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0);
             this.setVisible(false);
             gameFrame.setVisible(true);
             this.sound.stop();

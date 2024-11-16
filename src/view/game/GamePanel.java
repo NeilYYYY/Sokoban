@@ -31,7 +31,7 @@ public class GamePanel extends ListenerPanel {
     private GameFrame frame;
     private User user;
 
-    public GamePanel(MapMatrix model, GameFrame frame, User user) {
+    public GamePanel(MapMatrix model, GameFrame frame, User user,int step) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -41,15 +41,15 @@ public class GamePanel extends ListenerPanel {
         this.frame = frame;
         this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        initialGame();
+        initialGame(step);
     }
 
     public GameFrame getFrame() {
         return frame;
     }
 
-    public void initialGame() {
-        this.steps = 0;
+    public void initialGame(int step) {
+        this.steps = step;
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
                 //Units digit maps to id attribute in GridComponent. (The no change value)
@@ -120,5 +120,13 @@ public class GamePanel extends ListenerPanel {
 
     public GridComponent getGridComponent(int row, int col) {
         return grids[row][col];
+    }
+
+    public int getSteps() {
+        return steps;
+    }
+
+    public void setSteps(int steps) {
+        this.steps = steps;
     }
 }

@@ -19,6 +19,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private User user;
     private GameFrame gameFrame;
     private int lv;
+    private int step;
     private String filePath;
     private MapMatrix model;
     int[][] map;
@@ -64,6 +65,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.getContentPane().setLayout(null);
         this.model = this.gameFrame.getGameController().getModel();
         copyModel = this.model;
+        this.step = this.gameFrame.getGamePanel().getSteps();
         //若json文件不存在，创建
         //if (this.user.getId() != 0){
             System.out.println("非游客模式");
@@ -73,11 +75,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 mapInfo.setModel(copyModel);
                 try {
                     createFile(filePath);
-                    addNewMap(mapInfo, filePath);
-                    for (int i = 1; i < 6; i++){
+                    for (int i = 0; i < 6; i++){
                         MapInfo mapInfo2 = new MapInfo();
                         mapInfo2.setModel(null);
                         mapInfo2.setId(i);
+                        mapInfo2.setStep(0);
                         addNewMap(mapInfo2, filePath);
                     }
                     System.out.println("创建新文件并保存");
@@ -98,7 +100,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     MapInfo map = maps.get(0);
                     if (map != null) {
                         System.out.println("读入存档0");
-                        GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv);
+                        GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv, map.getStep());
                         this.setVisible(false);
                         gameFrame.setVisible(true);
                     }else {
@@ -113,9 +115,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             try{
                 Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
                 MapInfo map = maps.get(1);
-                if (map != null) {
+                if (map.getModel() != null) {
                     System.out.println("读入存档1");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv);
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
                     this.setVisible(false);
                     gameFrame.setVisible(true);
                 }else {
@@ -128,7 +130,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             saves[1][0].addActionListener(_ -> {
                 //读取文件
                 try{
-                    boolean result = updateMapById(1, copyModel, filePath);
+                    boolean result = updateMapById(1, copyModel, this.step, filePath);
                     if (result) {
                         System.out.println("更新成功");
                     }else{
@@ -138,6 +140,128 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     e.printStackTrace();
                 }
             });
+        loads[2][0].addActionListener(_ -> {
+            //读取地图
+            try{
+                Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                MapInfo map = maps.get(2);
+                if (map.getModel() != null) {
+                    System.out.println("读入存档2");
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+                    this.setVisible(false);
+                    gameFrame.setVisible(true);
+                }else {
+                    System.out.println("地图不存在");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        saves[2][0].addActionListener(_ -> {
+            //读取文件
+            try{
+                boolean result = updateMapById(2, copyModel, this.step, filePath);
+                if (result) {
+                    System.out.println("更新成功");
+                }else{
+                    System.out.println("更新失败");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        loads[0][1].addActionListener(_ -> {
+            //读取地图
+            try{
+                Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                MapInfo map = maps.get(3);
+                if (map.getModel() != null) {
+                    System.out.println("读入存档3");
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+                    this.setVisible(false);
+                    gameFrame.getGamePanel().setSteps(map.getStep());
+                    gameFrame.setVisible(true);
+                }else {
+                    System.out.println("地图不存在");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        saves[0][1].addActionListener(_ -> {
+            //读取文件
+            try{
+                boolean result = updateMapById(3, copyModel, this.step, filePath);
+                if (result) {
+                    System.out.println("更新成功");
+                }else{
+                    System.out.println("更新失败");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        loads[1][1].addActionListener(_ -> {
+            //读取地图
+            try{
+                Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                MapInfo map = maps.get(4);
+                if (map.getModel() != null) {
+                    System.out.println("读入存档4");
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+                    this.setVisible(false);
+                    gameFrame.getGamePanel().setSteps(map.getStep());
+                    gameFrame.setVisible(true);
+                }else {
+                    System.out.println("地图不存在");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        saves[1][1].addActionListener(_ -> {
+            //读取文件
+            try{
+                boolean result = updateMapById(4, copyModel, this.step, filePath);
+                if (result) {
+                    System.out.println("更新成功");
+                }else{
+                    System.out.println("更新失败");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        loads[2][1].addActionListener(_ -> {
+            //读取地图
+            try{
+                Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                MapInfo map = maps.get(5);
+                if (map.getModel() != null) {
+                    System.out.println("读入存档5");
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+                    this.setVisible(false);
+                    gameFrame.setVisible(true);
+                }else {
+                    System.out.println("地图不存在");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        saves[2][1].addActionListener(_ -> {
+            //读取文件
+            try{
+                boolean result = updateMapById(5, copyModel, this.step, filePath);
+                if (result) {
+                    System.out.println("更新成功");
+                }else{
+                    System.out.println("更新失败");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
         //}else {
         //    System.out.println("游客模式无法存档");
         //}
@@ -161,11 +285,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return maps;
     }
 
-    public static boolean updateMapById (int id, MapMatrix map, String filePath)throws IOException{
+    public static boolean updateMapById (int id, MapMatrix map, int step, String filePath)throws IOException{
         Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
         MapInfo mapToUpdate = maps.get(id);
         if (mapToUpdate != null) {
             mapToUpdate.setModel(map);
+            mapToUpdate.setStep(step);
             saveMapsToJson(maps,filePath);
             return true;
         }
@@ -182,10 +307,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public static void saveMapsToJson (Map<Integer, MapInfo> maps, String filePath) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
         MapsResponse response = new MapsResponse();
         response.setMaps(List.copyOf(maps.values()));
-
         FileWriter writer = new FileWriter(filePath);
         gson.toJson(response, writer);
         writer.flush();
