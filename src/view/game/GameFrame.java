@@ -18,7 +18,7 @@ public class GameFrame extends JFrame {
     private final JButton loadBtn;
     private final JButton backBtn;
     private final JLabel stepLabel;
-    //    private final JLabel leastStepLabel;
+    private final JLabel leastStepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
     private final JButton playSoundBtn;
@@ -87,6 +87,7 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFont(font);
         this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
+        this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Least steps: %d", leastStep[lv]), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
