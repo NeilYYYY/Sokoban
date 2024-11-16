@@ -8,7 +8,6 @@ import model.MapMatrix;
 import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
-import view.login.LoginFrame;
 import view.login.User;
 
 public class GameFrame extends JFrame {
