@@ -11,8 +11,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -20,7 +21,9 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JPasswordField passwordText;
     private final JButton loginBtn;
     private final JButton registerBtn;
-    private Sound sound;
+    private final Sound sound;
+    private LevelFrame levelFrame;
+    private User user;
 
     public LoginFrame() {
         try {
@@ -79,12 +82,34 @@ public class LoginFrame extends JFrame implements ActionListener {
         JLabel rec = new JLabel();
         rec.setBounds(250, 210, 300, 150);
         rec.setOpaque(true);
-        rec.setBackground(Color.WHITE);
+        rec.setBackground(new Color(255, 255, 255, 200));
         this.getContentPane().add(rec);
         JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg);
         setVisible(true);
+    }
+
+    public static String getSHA(String str) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] shaBytes = md.digest(str.getBytes());
+        return bytesToHexString(shaBytes);
+    }
+
+    public static String bytesToHexString(byte[] bytes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (bytes == null || bytes.length == 0) {
+            return null;
+        }
+        for (byte aByte : bytes) {
+            int v = aByte & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv);
+        }
+        return stringBuilder.toString();
     }
 
     @Override
@@ -93,34 +118,47 @@ public class LoginFrame extends JFrame implements ActionListener {
             String username = usernameText.getText();
             String password = new String(passwordText.getPassword());
             // 根据读取的用户账号信息进行校验
-            boolean temp = readUser(username, password);
+            boolean temp;
+            try {
+                temp = readUser(username, getSHA(password));
+            } catch (NoSuchAlgorithmException ex) {
+                throw new RuntimeException(ex);
+            }
             System.out.println(temp);
-            if (temp) {
-                LevelFrame levelFrame;
-                User user;
-                if (username.isEmpty()) {
-                    user = User.getUser("", User.getUserList());
-                    levelFrame = new LevelFrame(user);
-                    JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-                    levelFrame.getSound().start(true);
-                    System.out.println("Username = " + usernameText.getText());
-                    System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
-                    levelFrame.setVisible(true);
-                    this.sound.stop();
-                    return;
+            if (username.isEmpty()) {
+                user = User.getUser("", User.getUserList());
+                levelFrame = new LevelFrame(user);
+                JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                levelFrame.getSound().start(true);
+                System.out.println("Username = " + usernameText.getText());
+                System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
+                try {
+                    System.out.println("Password.SHA = " + getSHA(String.valueOf(passwordText.getPassword())));
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new RuntimeException(ex);
                 }
+                levelFrame.setVisible(true);
+                this.sound.stop();
+                return;
+            }
+            if (temp) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();//登录成功关闭此窗口 跳转页面
                 levelFrame.getSound().start(true);
                 System.out.println("Username = " + usernameText.getText());
-                System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
+                System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
+                try {
+                    System.out.println("Password.SHA = " + getSHA(String.valueOf(passwordText.getPassword())));
+                } catch (NoSuchAlgorithmException ex) {
+                    throw new RuntimeException(ex);
+                }
                 levelFrame.setVisible(true);
                 this.sound.stop();
             } else {
-                JOptionPane.showMessageDialog(this, "登陆失败", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "登录失败", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }//注册操作
         else if (e.getSource() == registerBtn) {
