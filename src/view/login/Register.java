@@ -118,8 +118,7 @@ public class Register extends JFrame implements ActionListener {
                     }
                     User.writeUser(user);//将新用户的数据写入json表中
                     this.dispose();
-                    LoginFrame loginFrame = new LoginFrame();
-                    loginFrame.setVisible(true);
+                    this.loginFrame.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(this, "用户名重复，注册失败", "Error", JOptionPane.ERROR_MESSAGE);
                 }
