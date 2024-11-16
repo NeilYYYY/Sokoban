@@ -18,6 +18,7 @@ public class GameFrame extends JFrame {
     private final JButton loadBtn;
     private final JButton backBtn;
     private final JLabel stepLabel;
+    //    private final JLabel leastStepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
     private final JButton playSoundBtn;
@@ -29,6 +30,7 @@ public class GameFrame extends JFrame {
     private final Sound sound;
     private final int lv;
     private User user;
+    private int[] leastStep;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step) {
         try {
@@ -92,12 +94,17 @@ public class GameFrame extends JFrame {
             this.sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
-            fileFrame.setVisible(false);
-            this.dispose();
-            fileFrame.setVisible(true);
-            this.sound.stop();
-            gamePanel.requestFocusInWindow();
+//            if (user.getId() == 0) {
+//                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.INFORMATION_MESSAGE);
+//            } else {
+                FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
+                fileFrame.setVisible(false);
+                this.dispose();
+                fileFrame.setVisible(true);
+                this.sound.stop();
+                gamePanel.requestFocusInWindow();
+//            }
+            //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
         this.backBtn.addActionListener(_ -> {
             LevelFrame levelFrame = new LevelFrame(user);
