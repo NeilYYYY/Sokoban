@@ -3,12 +3,9 @@ package view.game;
 import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
-import view.level.LevelFrame;
 import view.login.User;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 
 /**
  * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
