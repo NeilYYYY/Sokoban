@@ -1,6 +1,7 @@
 package view.game;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.MapMatrix;
 import view.FrameUtil;
 import view.login.User;
@@ -8,6 +9,7 @@ import view.login.User;
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
@@ -20,6 +22,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private String filePath;
     private MapMatrix model;
     int[][] map;
+    private MapMatrix copyModel;
 
     public FileFrame(int width, int height, User user, GameFrame gameframe, int lv) {
         try {
@@ -40,6 +43,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setLocationRelativeTo(null);//设置GUI显示居中
         JButton[][] loads = new JButton[3][2];
         JButton[][] saves = new JButton[3][2];
+        JButton back = new JButton("Back");
+        back = FrameUtil.createButton(this,"Back",new Point(500,500),100,50);
 
 
         for (int i = 0; i < loads.length; i++) {
@@ -58,65 +63,96 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         this.model = this.gameFrame.getGamePanel().getModel();
+        copyModel = this.model;
         //若json文件不存在，创建
-        if (!file.exists()) {
-            //判断不为游客模式
-            if (this.user.getId() != 0) {
-                System.out.println("非游客模式");
+        //if (this.user.getId() != 0){
+            System.out.println("非游客模式");
+            if (!file.exists()) {
                 Map<Integer, MapInfo> data = new HashMap<>();
                 MapInfo mapInfo = new MapInfo();
-                mapInfo.setModel(this.model);
-                data.put(0, mapInfo);
-                data.put(1, null);
-                data.put(2, null);
-                data.put(3, null);
-                data.put(4, null);
-                data.put(5, null);
-                Gson gson = new Gson();
-                //文件不存在，创建新文件并写入数据
-                try (FileWriter writer = new FileWriter(filePath)) {
-                    gson.toJson(data, writer);
-                    System.out.println(filePath + "文件不存在，创建并保存");
-                } catch (IOException e) {
+                mapInfo.setModel(copyModel);
+                try {
+                    createFile(filePath);
+                    addNewMap(mapInfo, filePath);
+                    for (int i = 1; i < 6; i++){
+                        MapInfo mapInfo2 = new MapInfo();
+                        mapInfo2.setModel(null);
+                        mapInfo2.setId(i);
+                        addNewMap(mapInfo2, filePath);
+                    }
+                    System.out.println("创建新文件并保存");
+                }catch (Exception e){
+                    System.out.println("保存失败");
                     e.printStackTrace();
                 }
-            } else {
-                System.out.println("游客模式无法存档");
+
             }
-        }
-        loads[0][0].addActionListener(_ -> {
-            int[][] array = new int[this.model.getHeight()][this.model.getWidth()];
+            back.addActionListener(e -> {
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            });
+            loads[0][0].addActionListener(_ -> {
+                //读取地图
+                try{
+                    Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                    MapInfo map = maps.get(0);
+                    if (map != null) {
+                        System.out.println("读入存档0");
+                        GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv);
+                        this.setVisible(false);
+                        gameFrame.setVisible(true);
+                    }else {
+                        System.out.println("地图不存在");
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            });
+        loads[1][0].addActionListener(_ -> {
             //读取地图
             try{
                 Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
-                MapInfo map = maps.get(0);
+                MapInfo map = maps.get(1);
                 if (map != null) {
-                    System.out.println("读入存档0");
-                    for (int i = 0; i < this.model.getHeight(); i++) {
-                        for (int j = 0; j < this.model.getWidth(); j++) {
-                            array[i][j] = map.getModel().getMatrix()[i][j];
-                        }
-                    }
+                    System.out.println("读入存档1");
+                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv);
+                    this.setVisible(false);
+                    gameFrame.setVisible(true);
                 }else {
                     System.out.println("地图不存在");
                 }
             }catch (IOException e){
                 e.printStackTrace();
             }
-            //打开LevelFrame用读取内容涂
-            //关闭此窗口
         });
-        saves[0][1].addActionListener(_ -> {
-            //读取文件
-            //改变id文件
-            //存储文件
-        });
+            saves[1][0].addActionListener(_ -> {
+                //读取文件
+                try{
+                    boolean result = updateMapById(1, copyModel, filePath);
+                    if (result) {
+                        System.out.println("更新成功");
+                    }else{
+                        System.out.println("更新失败");
+                    }
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            });
+        //}else {
+        //    System.out.println("游客模式无法存档");
+        //}
+
+
     }
     public static Map<Integer, MapInfo> loadMapsFromJson(String jsonFilePath) throws IOException{
         Gson gson = new Gson();
         FileReader reader = new FileReader(jsonFilePath);
         MapsResponse response = gson.fromJson(reader, MapsResponse.class);
 
+        if (response == null || response.getMaps() == null) {
+            response = new MapsResponse();
+            response.setMaps(List.of());
+        }
         Map<Integer, MapInfo> maps = new HashMap<>();
         for (MapInfo map: response.getMaps()){
             maps.put(map.getId(), map);
@@ -125,4 +161,48 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return maps;
     }
 
+    public static boolean updateMapById (int id, MapMatrix map, String filePath)throws IOException{
+        Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+        MapInfo mapToUpdate = maps.get(id);
+        if (mapToUpdate != null) {
+            mapToUpdate.setModel(map);
+            saveMapsToJson(maps,filePath);
+            return true;
+        }
+        return false;
+    }
+
+
+    public static boolean addNewMap (MapInfo newMap, String filePath)throws IOException{
+        Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+        maps.put(newMap.getId(), newMap);
+        saveMapsToJson(maps,filePath);
+        return true;
+    }
+
+    public static void saveMapsToJson (Map<Integer, MapInfo> maps, String filePath) throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        MapsResponse response = new MapsResponse();
+        response.setMaps(List.copyOf(maps.values()));
+
+        FileWriter writer = new FileWriter(filePath);
+        gson.toJson(response, writer);
+        writer.flush();
+        writer.close();
+    }
+
+    public static void createFile(String filePath) throws IOException {
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+            try(FileWriter writer = new FileWriter(file)){
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                MapsResponse response = new MapsResponse();
+                response.setMaps(new ArrayList<MapInfo>());
+                gson.toJson(response,writer);
+                writer.flush();
+            }
+        }
+    }
 }
