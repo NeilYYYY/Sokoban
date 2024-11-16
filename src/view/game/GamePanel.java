@@ -23,6 +23,7 @@ public class GamePanel extends ListenerPanel {
     private MapMatrix model;
     private GameController controller;
     private JLabel stepLabel;
+    private JLabel leastStepLabel;
     private int steps;
     private Hero hero;
     private GameFrame frame;
@@ -109,6 +110,10 @@ public class GamePanel extends ListenerPanel {
 
     public void setStepLabel(JLabel stepLabel) {
         this.stepLabel = stepLabel;
+    }
+
+    public void setLeastStepLabel(JLabel leastStepLabel) {
+        this.leastStepLabel = leastStepLabel;
     }
 
     public void setController(GameController controller) {

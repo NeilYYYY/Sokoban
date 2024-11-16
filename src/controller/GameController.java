@@ -9,7 +9,6 @@ import view.level.LevelFrame;
 import view.login.User;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
