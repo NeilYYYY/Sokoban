@@ -8,6 +8,7 @@ import model.MapMatrix;
 import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
+import view.login.LoginFrame;
 import view.login.User;
 
 public class GameFrame extends JFrame {
@@ -28,6 +29,11 @@ public class GameFrame extends JFrame {
     private final Sound sound;
     private User user;
     private final int lv;
+
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -90,7 +96,9 @@ public class GameFrame extends JFrame {
             this.sound.stop();
         });
         this.loadBtn.addActionListener(_ -> {
-            FileFrame fileFrame = new FileFrame(510, 200, user, this, this.lv);
+            FileFrame fileFrame = new FileFrame(1000, 1000, user, this, this.lv);
+            fileFrame.setVisible(false);
+            this.dispose();
             fileFrame.setVisible(true);
             this.sound.stop();
             gamePanel.requestFocusInWindow();

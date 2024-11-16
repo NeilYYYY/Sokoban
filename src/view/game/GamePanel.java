@@ -18,6 +18,11 @@ public class GamePanel extends ListenerPanel {
 
     private final int GRID_SIZE = 50;
     private GridComponent[][] grids;
+
+    public MapMatrix getModel() {
+        return model;
+    }
+
     private MapMatrix model;
     private GameController controller;
     private JLabel stepLabel;

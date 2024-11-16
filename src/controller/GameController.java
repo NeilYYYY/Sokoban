@@ -17,15 +17,22 @@ import java.awt.*;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
+    int[][] origin_map;
     private final User user;
     private final int lv;
-    int[][] origin_map = new int[10001][10001];
+
+    public int[][] getOrigin_map() {
+        return origin_map;
+    }
+
+    //    private SoundPlayerUtil soundPlayer;
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
         this.model = model;
         this.user = user;
         this.lv = lv;
+        this.origin_map = new int[model.getHeight()][model.getWidth()];
         for (int x = 0; x < model.getHeight(); x++) {
             for (int y = 0; y < model.getWidth(); y++) {
                 origin_map[x][y] = model.getMatrix()[x][y];

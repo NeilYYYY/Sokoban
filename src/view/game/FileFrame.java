@@ -1,16 +1,16 @@
 package view.game;
 
-import model.Sound;
-import view.level.LevelFrame;
-import view.login.Register;
+import com.google.gson.Gson;
+import model.MapMatrix;
+import view.FrameUtil;
 import view.login.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Arrays;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
@@ -18,6 +18,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private GameFrame gameFrame;
     private int lv;
     private String filePath;
+    private MapMatrix model;
+    int[][] map;
 
     public FileFrame(int width, int height, User user, GameFrame gameframe, int lv) {
         try {
@@ -30,125 +32,97 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.gameFrame = gameframe;
         this.lv = lv;
         this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.getId());
+        File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
         this.setSize(width, height);
         this.setLocationRelativeTo(null);//设置GUI显示居中
+        JButton[][] loads = new JButton[3][2];
+        JButton[][] saves = new JButton[3][2];
+
+
+        for (int i = 0; i < loads.length; i++) {
+            for (int j = 0; j < loads[0].length; j++) {
+                if (i == 0 && j == 0) {
+                    loads[i][j] = FrameUtil.createButton(this, "Load", new Point(150,100), 100, 50);
+                }
+                else{
+                    loads[i][j] = FrameUtil.createButton(this, "Load ", new Point((i + 1) * 100 + 50, j * 100 + 50), 100, 50);
+                    saves[i][j] = FrameUtil.createButton(this,"Save", new Point((i + 1) * 100 + 50, j * 100 + 100), 100, 50);
+                    this.add(loads[i][j]);
+                    this.add(saves[i][j]);
+                }
+            }
+        }
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        //创建界面组件
-        JLabel[][] files = new JLabel[2][1];
-        for (int i = 0; i < files.length; i++) {
-            for (int j = 0; j < files[0].length; j++) {
-                files[i][j] = new JLabel("File: " + (i * 3 + j));
-            }
-        }
-        JPanel[][] panelsJP = new JPanel[2][3];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 3; j++) {
-                panelsJP[i][j] = new JPanel();
-                panelsJP[i][j].setBackground(null);
-                panelsJP[i][j].setOpaque(false);
-                panelsJP[i][j].setBounds((i - 1) * 100 + 50, (j - 1) * 100 + 50, 200, 50);
-            }
-        }
-        /*
-        for (int i = 0; i < 2; i++) {}
-        JLabel username = new JLabel("Username(Empty is Guest)：");
-        JLabel password = new JLabel("Password：");
-        loginBtn = new JButton("Login");
-        loginBtn.addActionListener(this);//监听登录事件
-        registerBtn = new JButton("Register");
-        registerBtn.addActionListener(this);//监听注册事件
-        usernameText = new JTextField(15);
-        passwordText = new JPasswordField(15);
-        // 设置字体和背景颜色
-        usernameText.setForeground(Color.BLACK);
-        passwordText.setForeground(Color.BLACK);
-        usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        //创建装组件的容器
-        JPanel usernameJp = new JPanel();
-        usernameJp.setBackground(null);
-        usernameJp.setOpaque(false);
-        JPanel passwordJp = new JPanel();
-        passwordJp.setBackground(null);
-        passwordJp.setOpaque(false);
-        JPanel loginJp = new JPanel();
-        loginJp.setBackground(null);
-        loginJp.setOpaque(false);
-        //设置容器的位置
-        usernameJp.setBounds(200, 225, 400, 50);
-        passwordJp.setBounds(300, 265, 200, 50);
-        loginJp.setBounds(300, 310, 200, 60);
-        usernameJp.add(username);
-        usernameJp.add(usernameText);
-        passwordJp.add(password);
-        passwordJp.add(passwordText);
-        loginJp.add(loginBtn);
-        loginJp.add(registerBtn);
-        //将组件装入GUI
-        add(usernameJp);
-        add(passwordJp);
-        add(loginJp);
-        JLabel rec = new JLabel();
-        rec.setBounds(250, 210, 300, 150);
-        rec.setOpaque(true);
-        rec.setBackground(Color.WHITE);
-        this.getContentPane().add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
-        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg);
-        setVisible(true);
-    }
-    */
-        /*
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == loginBtn) {
-            String username = usernameText.getText();
-            String password = new String(passwordText.getPassword());
-            // 根据读取的用户账号信息进行校验
-            boolean temp = readUser(username, password);
-            System.out.println(temp);
-            if (temp) {
-                LevelFrame levelFrame;
-                User user;
-                if (username.isEmpty()) {
-                    user = User.getUser("", User.getUserList());
-                    levelFrame = new LevelFrame(510, 200, user);
-                    levelFrame.setVisible(false);
-                    JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-                    System.out.println("Username = " + usernameText.getText());
-                    System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
-                    levelFrame.setVisible(true);
-                    this.setVisible(false);
-                    this.sound.stop();
-                    return;
+        this.model = this.gameFrame.getGamePanel().getModel();
+        //若json文件不存在，创建
+        if (!file.exists()) {
+            //判断不为游客模式
+            if (this.user.getId() != 0) {
+                System.out.println("非游客模式");
+                Map<Integer, MapInfo> data = new HashMap<>();
+                MapInfo mapInfo = new MapInfo();
+                mapInfo.setModel(this.model);
+                data.put(0, mapInfo);
+                data.put(1, null);
+                data.put(2, null);
+                data.put(3, null);
+                data.put(4, null);
+                data.put(5, null);
+                Gson gson = new Gson();
+                //文件不存在，创建新文件并写入数据
+                try (FileWriter writer = new FileWriter(filePath)) {
+                    gson.toJson(data, writer);
+                    System.out.println(filePath + "文件不存在，创建并保存");
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                user = User.getUser(usernameText.getText(), User.getUserList());
-                levelFrame = new LevelFrame(510, 200, user);
-                levelFrame.setVisible(false);
-                JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();//登录成功关闭此窗口 跳转页面
-                System.out.println("Username = " + usernameText.getText());
-                System.out.println("Password = " + Arrays.toString(passwordText.getPassword()));
-                levelFrame.setVisible(true);
-                this.setVisible(false);
-                this.sound.stop();
             } else {
-                JOptionPane.showMessageDialog(this, "登陆失败", "Error", JOptionPane.ERROR_MESSAGE);
+                System.out.println("游客模式无法存档");
             }
-        }//注册操作
-        else if (e.getSource() == registerBtn) {
-            this.dispose();
-            new Register();
+        }
+        loads[0][0].addActionListener(_ -> {
+            int[][] array = new int[this.model.getHeight()][this.model.getWidth()];
+            //读取地图
+            try{
+                Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
+                MapInfo map = maps.get(0);
+                if (map != null) {
+                    System.out.println("读入存档0");
+                    for (int i = 0; i < this.model.getHeight(); i++) {
+                        for (int j = 0; j < this.model.getWidth(); j++) {
+                            array[i][j] = map.getModel().getMatrix()[i][j];
+                        }
+                    }
+                }else {
+                    System.out.println("地图不存在");
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            //打开LevelFrame用读取内容涂
+            //关闭此窗口
+        });
+        saves[0][1].addActionListener(_ -> {
+            //读取文件
+            //改变id文件
+            //存储文件
+        });
+    }
+    public static Map<Integer, MapInfo> loadMapsFromJson(String jsonFilePath) throws IOException{
+        Gson gson = new Gson();
+        FileReader reader = new FileReader(jsonFilePath);
+        MapsResponse response = gson.fromJson(reader, MapsResponse.class);
+
+        Map<Integer, MapInfo> maps = new HashMap<>();
+        for (MapInfo map: response.getMaps()){
+            maps.put(map.getId(), map);
         }
 
-
-         */
+        return maps;
     }
 
 }
