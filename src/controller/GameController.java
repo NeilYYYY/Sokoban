@@ -73,7 +73,7 @@ public class GameController {
             }
             default:
         }
-        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv);
+        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv, 0);
         gameFrame.setVisible(true);
     }
 

@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
     private final int lv;
     private User user;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv) {
+    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -44,7 +44,7 @@ public class GameFrame extends JFrame {
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
         this.setSize(width, height);
-        gamePanel = new GamePanel(mapMatrix, this, user);
+        gamePanel = new GamePanel(mapMatrix, this, user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
@@ -83,7 +83,7 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFocusPainted(false);
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
-        this.stepLabel = FrameUtil.createJLabel(this, "Start", new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         this.restartBtn.addActionListener(_ -> {
