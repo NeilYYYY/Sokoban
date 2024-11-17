@@ -73,22 +73,21 @@ public class GameController {
 
     public boolean checkLose() {
         int[][] map = model.getMatrix();
-        boolean flag = true;
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (map[i][j] / 10 == 1) {
-                    if (!(((map[i - 1][j] == 1 || map[i - 1][j] / 10 == 1) && (map[i][j - 1] == 1 || map[i][j - 1] / 10 == 1)) || ((map[i - 1][j] == 1 || map[i - 1][j] / 10 == 1) && (map[i][j + 1] == 1 || map[i][j + 1] / 10 == 1)) || ((map[i + 1][j] == 1 || map[i + 1][j] / 10 == 1) && (map[i][j - 1] == 1 || map[i][j - 1] / 10 == 1)) || ((map[i + 1][j] == 1 || map[i + 1][j] / 10 == 1) && (map[i][j + 1] == 1 || map[i][j + 1] / 10 == 1)))) {
-                        flag = false;
+                    if (checkVertical(i, j) || checkhorizontal(i, j)) {
+                        return false;
                     }
                 }
             }
         }
-        return flag;
+        return true;
     }
 
     public void doLose(GameFrame gameFrame) {
         if (checkLose()) {
-            System.out.println("You win!");
+            System.out.println("You lose!");
             JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
             gameFrame.getController().restartGame();
             gameFrame.getSound().stop();
@@ -133,6 +132,22 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    public boolean checkVertical(int x, int y){
+        int[][] map = model.getMatrix();
+        if (map[x][y-1] == 1 || map[x][y-1] / 10 == 1 || map[x][y+1] == 1 || map[x][y+1] / 10 == 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkhorizontal(int x, int y){
+        int[][] map = model.getMatrix();
+        if (map[x-1][y] == 1 || map[x-1][y] / 10 == 1 || map[x+1][y] == 1 || map[x+1][y] / 10 == 1) {
+            return false;
+        }
+        return true;
     }
     //todo: add other methods such as loadGame, saveGame...
 }
