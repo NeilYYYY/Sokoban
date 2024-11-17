@@ -10,7 +10,6 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JFrame jFrame;
     private final Font f = new Font("", Font.PLAIN, 20);
     private final Font f2 = new Font("", Font.PLAIN, 20);
-    private final JPanel contentPane;
     private final JButton playBtn;
     private final JButton pauseBtn;
     private final JButton backBtn;
@@ -38,16 +37,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null);
         this.setResizable(false);
 
-        contentPane = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                // 绘制背景图片
-                super.paintComponent(g);
-                ImageIcon backgroundImage = new ImageIcon("src/images/w.png");
-                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), null);
-            }
-        };
-        contentPane.setBounds(35, 35, 220, 260);
         // 创建一个列表模型
         DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("Alphys");
@@ -61,11 +50,9 @@ public class MusicFrame extends JFrame implements ActionListener {
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     // 处理列表项选择事件
-                    choose = songList.getSelectedIndex();
-                    String selectedSong = SongName[choose];
-                    sound.changeSource("src/misc/" + selectedSong);
                     add(playBtn);
                     remove(pauseBtn);
+                    sound.stop();
                     revalidate();
                     repaint();
                 }
@@ -77,9 +64,16 @@ public class MusicFrame extends JFrame implements ActionListener {
                 if (e.getClickCount() == 2) {
                     add(pauseBtn);
                     remove(playBtn);
+                    choose = songList.getSelectedIndex();
+                    String selectedSong = SongName[choose];
+                    try {
+                        sound.changeSource("src/misc/" + selectedSong);
+                    } catch (InterruptedException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                    sound.start(true);
                     revalidate();
                     repaint();
-                    sound.start(true);
                 }
             }
 
@@ -104,8 +98,9 @@ public class MusicFrame extends JFrame implements ActionListener {
         // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中
         JScrollPane scrollPane = new JScrollPane(songList);
         //scrollPane.setOpaque(false);
-        contentPane.add(scrollPane, BorderLayout.CENTER);
-        add(contentPane);
+        scrollPane.setBounds(35, 35, 220, 260);
+        scrollPane.getViewport().setBackground(Color.WHITE);
+        add(scrollPane);
 
         this.sound = sound;
         this.pauseBtn = new JButton("⏸");

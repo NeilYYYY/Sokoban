@@ -16,8 +16,9 @@ public class Sound {
         prefetch();
     }
 
-    public void changeSource(String musicPath) {
+    public void changeSource(String musicPath) throws InterruptedException {
         this.stop();
+        Thread.sleep(200);
         this.musicPath = musicPath;
         prefetch();
     }
