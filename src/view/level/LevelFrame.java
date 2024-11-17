@@ -28,6 +28,7 @@ public class LevelFrame extends JFrame {
         this.setLayout(null);
         this.setSize(800, 450);
         this.sound = sound;
+        this.setResizable(false);
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 160), 80, 60);
         JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(270, 160), 80, 60);
         JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(360, 160), 80, 60);

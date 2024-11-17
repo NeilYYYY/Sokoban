@@ -45,6 +45,7 @@ public class GameFrame extends JFrame {
         this.setSize(width, height);
         this.user = user;
         this.sound = sound;
+        this.setResizable(false);
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);

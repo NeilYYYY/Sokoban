@@ -41,6 +41,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
         this.setSize(width, height);
         this.setLocationRelativeTo(null);//设置GUI显示居中
+        this.setResizable(false);
         JButton[][] loads = new JButton[3][2];
         JButton[][] saves = new JButton[3][2];
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(500, 300), 100, 50);

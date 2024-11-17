@@ -36,6 +36,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
+        this.setResizable(false);
 
         contentPane = new JPanel() {
             @Override
