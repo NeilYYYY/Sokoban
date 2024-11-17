@@ -38,7 +38,7 @@ public class GamePanel extends ListenerPanel {
         this.frame = frame;
         this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), this.user.getId());
+        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), this.user.id());
         this.file = new File(filepath);
         initialGame(step);
     }

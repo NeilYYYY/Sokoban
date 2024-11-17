@@ -34,7 +34,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.user = user;
         this.gameFrame = gameframe;
         this.lv = lv;
-        this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.getId());
+        this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.id());
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);

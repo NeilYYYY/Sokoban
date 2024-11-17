@@ -1,7 +1,5 @@
 package view.login;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import model.Sound;
 import view.level.LevelFrame;
 
@@ -9,11 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -90,28 +84,6 @@ public class LoginFrame extends JFrame implements ActionListener {
         setVisible(true);
     }
 
-    public static String getSHA(String str) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        byte[] shaBytes = md.digest(str.getBytes());
-        return bytesToHexString(shaBytes);
-    }
-
-    public static String bytesToHexString(byte[] bytes) {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (bytes == null || bytes.length == 0) {
-            return null;
-        }
-        for (byte aByte : bytes) {
-            int v = aByte & 0xFF;
-            String hv = Integer.toHexString(v);
-            if (hv.length() < 2) {
-                stringBuilder.append(0);
-            }
-            stringBuilder.append(hv);
-        }
-        return stringBuilder.toString();
-    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == loginBtn) {
@@ -120,7 +92,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             // 根据读取的用户账号信息进行校验
             boolean temp;
             try {
-                temp = readUser(username, getSHA(password));
+                temp = User.checkUser(username, User.getSHA(password));
             } catch (NoSuchAlgorithmException ex) {
                 throw new RuntimeException(ex);
             }
@@ -134,7 +106,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 System.out.println("Username = " + usernameText.getText());
                 System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
                 try {
-                    System.out.println("Password.SHA = " + getSHA(String.valueOf(passwordText.getPassword())));
+                    System.out.println("Password.SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())));
                 } catch (NoSuchAlgorithmException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -151,7 +123,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 System.out.println("Username = " + usernameText.getText());
                 System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
                 try {
-                    System.out.println("Password.SHA = " + getSHA(String.valueOf(passwordText.getPassword())));
+                    System.out.println("Password.SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())));
                 } catch (NoSuchAlgorithmException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -165,28 +137,4 @@ public class LoginFrame extends JFrame implements ActionListener {
             new Register(this);
         }
     }
-
-    //读取用户数据
-    public boolean readUser(String username, String password) {
-
-        try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
-            StringBuilder json = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                json.append(line).append("\n");
-            }
-            Gson gson = new Gson();
-            ArrayList<User> dataList = gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
-            }.getType());
-            for (User data : dataList) {
-                if (data.getUsername().equals(username) && data.getPassword().equals(password)) {
-                    return true;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
 }

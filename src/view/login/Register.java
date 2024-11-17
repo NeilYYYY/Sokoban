@@ -101,7 +101,7 @@ public class Register extends JFrame implements ActionListener {
             String passwordTrue = new String(passwordTextTrue.getPassword());
             ArrayList<User> user = User.getUserList();
             for (User data : user) {
-                System.out.println(data.getUsername());
+                System.out.println(data.username());
             }
             boolean found;
             found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue));
@@ -112,7 +112,7 @@ public class Register extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
                     try {
-                        user.add(new User(id, username, LoginFrame.getSHA(password)));
+                        user.add(new User(id, username, User.getSHA(password)));
                     } catch (NoSuchAlgorithmException ex) {
                         throw new RuntimeException(ex);
                     }
