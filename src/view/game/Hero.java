@@ -14,7 +14,7 @@ public class Hero extends JComponent {
         this.col = col;
         this.setSize(width, height);
         this.setLocation(8, 8);
-        this.image = new ImageIcon("src/images/hero.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+        this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
     }
 
     public void paintComponent(Graphics g) {

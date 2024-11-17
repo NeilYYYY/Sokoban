@@ -1,22 +1,20 @@
 package view.game;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 
 public class Box extends JComponent {
     private final int value = 10;
+    private final Image image;
 
     public Box(int width, int height) {
+        this.image = new ImageIcon("src/images/Grub.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         this.setSize(width, height);
         this.setLocation(5, 5);
     }
 
     public void paintComponent(Graphics g) {
-        g.setColor(new Color(255, 200, 0, 128));
-        g.fillRect(0, 0, getWidth(), getHeight());
-        Border border = BorderFactory.createLineBorder(Color.black, 1);
-        this.setBorder(border);
+        g.drawImage(image, 0, 0, this);
     }
 
     public int getValue() {
