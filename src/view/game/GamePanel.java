@@ -15,11 +15,6 @@ public class GamePanel extends ListenerPanel {
 
     private final int GRID_SIZE = 50;
     private GridComponent[][] grids;
-
-    public MapMatrix getModel() {
-        return model;
-    }
-
     private MapMatrix model;
     private GameController controller;
     private JLabel stepLabel;
@@ -29,7 +24,7 @@ public class GamePanel extends ListenerPanel {
     private GameFrame frame;
     private User user;
 
-    public GamePanel(MapMatrix model, GameFrame frame, User user,int step) {
+    public GamePanel(MapMatrix model, GameFrame frame, User user, int step) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -40,6 +35,10 @@ public class GamePanel extends ListenerPanel {
         this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         initialGame(step);
+    }
+
+    public MapMatrix getModel() {
+        return model;
     }
 
     public GameFrame getFrame() {

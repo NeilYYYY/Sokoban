@@ -5,9 +5,9 @@ import java.awt.*;
 
 public class Hero extends JComponent {
     private final int value = 20;
+    private final Image image;
     private int row;
     private int col;
-    private final Image image;
 
     public Hero(int width, int height, int row, int col) {
         this.row = row;
