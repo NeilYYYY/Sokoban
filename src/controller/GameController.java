@@ -19,31 +19,18 @@ public class GameController {
     private final MapMatrix model;
     private final User user;
     private final int lv;
-    int[][] origin_map;
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
         this.model.copyMatrix(model.getMatrix());
         this.user = user;
         this.lv = lv;
-        this.origin_map = new int[model.getHeight()][model.getWidth()];
-        for (int x = 0; x < model.getHeight(); x++) {
-            for (int y = 0; y < model.getWidth(); y++) {
-                origin_map[x][y] = model.getMatrix()[x][y];
-            }
-        }
         view.setController(this);
         System.out.println(user);
     }
 
     public MapMatrix getModel() {
         return model;
-    }
-
-    //    private SoundPlayerUtil soundPlayer;
-
-    public int[][] getOrigin_map() {
-        return origin_map;
     }
 
     public void restartGame() {
