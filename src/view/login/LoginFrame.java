@@ -1,6 +1,8 @@
 package view.login;
 
 import view.level.LevelFrame;
+import view.music.MusicFrame;
+import view.music.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,8 +18,10 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JButton registerBtn;
     private LevelFrame levelFrame;
     private User user;
+    private final JButton musicBtn;
+    private final Sound sound;
 
-    public LoginFrame() {
+    public LoginFrame(Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -32,12 +36,15 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         //创建界面组件
+        this.sound = sound;
         JLabel username = new JLabel("Username(Empty is Guest)：");
         JLabel password = new JLabel("Password：");
         loginBtn = new JButton("Login");
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
         registerBtn.addActionListener(this);//监听注册事件
+        musicBtn = new JButton("Music");
+        musicBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
         // 设置字体和背景颜色
@@ -58,13 +65,14 @@ public class LoginFrame extends JFrame implements ActionListener {
         //设置容器的位置
         usernameJp.setBounds(200, 225, 400, 50);
         passwordJp.setBounds(300, 265, 200, 50);
-        loginJp.setBounds(300, 310, 200, 60);
+        loginJp.setBounds(250, 310, 300, 60);
         usernameJp.add(username);
         usernameJp.add(usernameText);
         passwordJp.add(password);
         passwordJp.add(passwordText);
         loginJp.add(loginBtn);
         loginJp.add(registerBtn);
+        loginJp.add(musicBtn);
         //将组件装入GUI
         add(usernameJp);
         add(passwordJp);
@@ -95,14 +103,14 @@ public class LoginFrame extends JFrame implements ActionListener {
             System.out.println(temp);
             if (username.isEmpty()) {
                 user = User.getUser("", User.getUserList());
-                levelFrame = new LevelFrame(user);
+                levelFrame = new LevelFrame(user, this.sound);
                 JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
                 showLevelFrame();
                 return;
             }
             if (temp) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
-                levelFrame = new LevelFrame(user);
+                levelFrame = new LevelFrame(user, this.sound);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 showLevelFrame();
             } else {
@@ -111,6 +119,8 @@ public class LoginFrame extends JFrame implements ActionListener {
         }//注册操作
         else if (e.getSource() == registerBtn) {
             new Register(this);
+        } else if (e.getSource() == musicBtn) {
+            new MusicFrame(this, this.sound);
         }
     }
 

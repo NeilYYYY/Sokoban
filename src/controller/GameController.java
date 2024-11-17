@@ -7,6 +7,7 @@ import view.game.*;
 import view.game.Box;
 import view.level.LevelFrame;
 import view.login.User;
+import view.music.Sound;
 
 import javax.swing.*;
 
@@ -19,13 +20,15 @@ public class GameController {
     private final MapMatrix model;
     private final User user;
     private final int lv;
+    private final Sound sound;
 
-    public GameController(GamePanel view, MapMatrix model, User user, int lv) {
+    public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
         this.view = view;
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
         this.model.copyMatrix(model.getMatrix());
         this.user = user;
         this.lv = lv;
+        this.sound = sound;
         view.setController(this);
         System.out.println(user);
     }
@@ -85,7 +88,7 @@ public class GameController {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(gameFrame, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
             gameFrame.dispose();
-            LevelFrame levelFrame = new LevelFrame(user);
+            LevelFrame levelFrame = new LevelFrame(user, this.sound);
             levelFrame.setVisible(true);
             return true;
         }

@@ -8,6 +8,8 @@ import model.MapMatrix;
 import view.FrameUtil;
 import view.level.LevelFrame;
 import view.login.User;
+import view.music.MusicFrame;
+import view.music.Sound;
 
 public class GameFrame extends JFrame {
 
@@ -19,17 +21,17 @@ public class GameFrame extends JFrame {
     private final JLabel leastStepLabel;
     private final GamePanel gamePanel;
     private final JLabel lvLabel;
-    private final JButton playSoundBtn;
-    private final JButton stopSoundBtn;
     private final JButton upMoveBtn;
     private final JButton downMoveBtn;
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
+    private final JButton musicBtn;
     private final int lv;
     private final int[] leastStep = {13, 23, 31, 27, 37};
-    private User user;
+    private final Sound sound;
+    private final User user;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step) {
+    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -42,18 +44,18 @@ public class GameFrame extends JFrame {
         this.setLayout(null);
         this.setSize(width, height);
         this.user = user;
+        this.sound = sound;
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
-        this.controller = new GameController(gamePanel, mapMatrix, this.user, lv);
+        this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
         System.out.println(this.user);
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
-        this.playSoundBtn = FrameUtil.createButton(this, "Play Music", new Point(gamePanel.getWidth() + 180, 120), 100, 50);
-        this.stopSoundBtn = FrameUtil.createButton(this, "Stop Music", new Point(gamePanel.getWidth() + 180, 180), 100, 50);
         this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
+        this.musicBtn = FrameUtil.createButton(this, "Music", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
         upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
         upMoveBtn.setBorder(null);
@@ -102,12 +104,14 @@ public class GameFrame extends JFrame {
             //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
         this.backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(this.user);
+            LevelFrame levelFrame = new LevelFrame(this.user, this.sound);
             this.dispose();
             levelFrame.setVisible(true);
         });
-        this.playSoundBtn.addActionListener(_ -> gamePanel.requestFocusInWindow());
-        this.stopSoundBtn.addActionListener(_ -> gamePanel.requestFocusInWindow());
+        this.musicBtn.addActionListener(_ -> {
+            new MusicFrame(this, this.sound);
+            gamePanel.requestFocusInWindow();
+        });
         this.upMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveUp();
             gamePanel.requestFocusInWindow();//enable key listener

@@ -8,7 +8,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Register extends JFrame implements ActionListener {
-
     private final JTextField usernameText;
     private final JPasswordField passwordText;
     private final JPasswordField passwordTextTrue;

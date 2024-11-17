@@ -16,6 +16,12 @@ public class Sound {
         prefetch();
     }
 
+    public void changeSource(String musicPath) {
+        this.stop();
+        this.musicPath = musicPath;
+        prefetch();
+    }
+
     //数据准备
     private void prefetch() {
         try {
@@ -110,5 +116,9 @@ public class Sound {
     //外部调用控制方法：继续音频线程
     public void continues() {
         new Thread(this::continueMusic).start();
+    }
+
+    public boolean isPlaying() {
+        return run;
     }
 }
