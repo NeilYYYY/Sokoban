@@ -91,7 +91,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             try {
                 Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
                 MapInfo map = maps.get(0);
-                if (map != null) {
+                if (map.getModel() != null) {
                     System.out.println("读入存档0");
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
