@@ -4,6 +4,7 @@ import java.util.List;
 
 public class MapsResponse {
     private List<MapInfo> maps;
+
     public List<MapInfo> getMaps() {
         return maps;
     }

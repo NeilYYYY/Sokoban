@@ -5,16 +5,16 @@ import java.awt.*;
 
 public class Hero extends JComponent {
     private final int value = 20;
+    private final Image image;
     private int row;
     private int col;
-    private final Image image;
 
     public Hero(int width, int height, int row, int col) {
         this.row = row;
         this.col = col;
         this.setSize(width, height);
         this.setLocation(8, 8);
-        this.image = new ImageIcon("src/images/hero.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+        this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
     }
 
     public void paintComponent(Graphics g) {

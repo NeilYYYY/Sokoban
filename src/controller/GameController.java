@@ -37,27 +37,11 @@ public class GameController {
         view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
         switch (this.lv) {
-            case 1: {
-                model.copyMatrix(Level.LEVEL_1.getMap());
-                break;
-            }
-            case 2: {
-                model.copyMatrix(Level.LEVEL_2.getMap());
-                break;
-            }
-            case 3: {
-                model.copyMatrix(Level.LEVEL_3.getMap());
-                break;
-            }
-            case 4: {
-                model.copyMatrix(Level.LEVEL_4.getMap());
-                break;
-            }
-            case 5: {
-                model.copyMatrix(Level.LEVEL_5.getMap());
-                break;
-            }
-            default:
+            case 1 -> model.copyMatrix(Level.LEVEL_1.getMap());
+            case 2 -> model.copyMatrix(Level.LEVEL_2.getMap());
+            case 3 -> model.copyMatrix(Level.LEVEL_3.getMap());
+            case 4 -> model.copyMatrix(Level.LEVEL_4.getMap());
+            case 5 -> model.copyMatrix(Level.LEVEL_5.getMap());
         }
         GameFrame gameFrame = new GameFrame(800, 450, model, user, lv, 0);
         gameFrame.setVisible(true);
