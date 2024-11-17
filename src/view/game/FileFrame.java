@@ -16,14 +16,13 @@ import java.util.List;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    int[][] map;
-    private User user;
-    private GameFrame gameFrame;
-    private int lv;
-    private int step;
-    private String filePath;
-    private MapMatrix model;
-    private MapMatrix copyModel;
+    private final User user;
+    private final GameFrame gameFrame;
+    private final int lv;
+    private final int step;
+    private final String filePath;
+    private final MapMatrix model;
+    private final MapMatrix copyModel;
 
     public FileFrame(int width, int height, User user, GameFrame gameframe, int lv) {
         try {
@@ -66,7 +65,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.step = this.gameFrame.getGamePanel().getSteps();
         //若json文件不存在，创建
         if (!file.exists()) {
-            Map<Integer, MapInfo> data = new HashMap<>();
             MapInfo mapInfo = new MapInfo();
             mapInfo.setModel(copyModel);
             try {
@@ -83,7 +81,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 System.out.println("保存失败");
                 e.printStackTrace();
             }
-
         }
         backBtn.addActionListener(_ -> {
             this.dispose();
@@ -108,7 +105,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -122,9 +120,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -151,7 +146,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -165,9 +161,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -207,7 +200,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -221,9 +215,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -263,7 +254,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -277,10 +269,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.getGamePanel().setSteps(map.getStep());
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -320,7 +308,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -334,10 +323,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.getGamePanel().setSteps(map.getStep());
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -377,7 +362,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
                         for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
                             switch (map.getModel().getId(i, j) / 10) {
-                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 1 ->
+                                        gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
                                 case 2 -> {
                                     gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
                                     gameframe.getGamePanel().getHero().setCol(j);
@@ -391,9 +377,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     this.dispose();
                     gameFrame.setVisible(true);
                     gameframe.getGamePanel().requestFocusInWindow();
-//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-//                    this.setVisible(false);
-//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -446,11 +429,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     }
 
 
-    public static boolean addNewMap(MapInfo newMap, String filePath) throws IOException {
+    public static void addNewMap(MapInfo newMap, String filePath) throws IOException {
         Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
         maps.put(newMap.getId(), newMap);
         saveMapsToJson(maps, filePath);
-        return true;
     }
 
     public static void saveMapsToJson(Map<Integer, MapInfo> maps, String filePath) throws IOException {
@@ -466,11 +448,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public static void createFile(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.exists()) {
-            file.createNewFile();
             try (FileWriter writer = new FileWriter(file)) {
                 Gson gson = new GsonBuilder().setPrettyPrinting().create();
                 MapsResponse response = new MapsResponse();
-                response.setMaps(new ArrayList<MapInfo>());
+                response.setMaps(new ArrayList<>());
                 gson.toJson(response, writer);
                 writer.flush();
             }

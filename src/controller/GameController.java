@@ -35,7 +35,6 @@ public class GameController {
     }
 
     public void restartGame() {
-//        view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
@@ -55,7 +54,8 @@ public class GameController {
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
                 switch (model.getId(i, j) / 10) {
-                    case 1 -> view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                    case 1 ->
+                            view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                     case 2 -> {
                         view.getGrids()[i][j].setHeroInGrid(view.getHero());
                         view.getHero().setRow(i);
@@ -66,8 +66,6 @@ public class GameController {
         }
         view.setSteps(0);
         view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
-//        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv, 0);
-//        gameFrame.setVisible(true);
     }
 
     public boolean checkWin() {
@@ -82,7 +80,7 @@ public class GameController {
         return true;
     }
 
-    public void doWin(GameFrame gameFrame) {
+    public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             System.out.println("You win!");
             JOptionPane.showMessageDialog(gameFrame, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
@@ -91,7 +89,9 @@ public class GameController {
             levelFrame.setVisible(true);
             levelFrame.getSound().start(true);
             gameFrame.getSound().stop();
+            return true;
         }
+        return false;
     }
 
     public boolean checkLose() {
@@ -99,7 +99,7 @@ public class GameController {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
                 if (map[i][j] / 10 == 1) {
-                    if (checkVertical(i, j) || checkhorizontal(i, j)) {
+                    if (checkVertical(i, j) || checkHorizontal(i, j)) {
                         return false;
                     }
                 }
@@ -108,12 +108,14 @@ public class GameController {
         return true;
     }
 
-    public void doLose(GameFrame gameFrame) {
+    public boolean doLose(GameFrame gameFrame) {
         if (checkLose()) {
             System.out.println("You lose!");
             JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
             gameFrame.getController().restartGame();
+            return true;
         }
+        return false;
     }
 
     public boolean doMove(int row, int col, Direction direction) {
@@ -158,18 +160,12 @@ public class GameController {
 
     public boolean checkVertical(int x, int y) {
         int[][] map = model.getMatrix();
-        if (map[x][y - 1] == 1 || map[x][y - 1] / 10 == 1 || map[x][y + 1] == 1 || map[x][y + 1] / 10 == 1) {
-            return false;
-        }
-        return true;
+        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1;
     }
 
-    public boolean checkhorizontal(int x, int y) {
+    public boolean checkHorizontal(int x, int y) {
         int[][] map = model.getMatrix();
-        if (map[x - 1][y] == 1 || map[x - 1][y] / 10 == 1 || map[x + 1][y] == 1 || map[x + 1][y] / 10 == 1) {
-            return false;
-        }
-        return true;
+        return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
     }
     //todo: add other methods such as loadGame, saveGame...
 }

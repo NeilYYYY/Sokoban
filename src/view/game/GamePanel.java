@@ -6,6 +6,8 @@ import model.MapMatrix;
 import view.login.User;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
@@ -14,15 +16,17 @@ import javax.swing.*;
 public class GamePanel extends ListenerPanel {
 
     private final int GRID_SIZE = 50;
-    private GridComponent[][] grids;
-    private MapMatrix model;
+    private final GridComponent[][] grids;
+    private final MapMatrix model;
+    private final GameFrame frame;
+    private final User user;
+    private final String filepath;
+    private final File file;
     private GameController controller;
     private JLabel stepLabel;
     private JLabel leastStepLabel;
     private int steps;
     private Hero hero;
-    private GameFrame frame;
-    private User user;
 
     public GamePanel(MapMatrix model, GameFrame frame, User user, int step) {
         this.setVisible(true);
@@ -34,6 +38,8 @@ public class GamePanel extends ListenerPanel {
         this.frame = frame;
         this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
+        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), this.user.getId());
+        this.file = new File(filepath);
         initialGame(step);
     }
 
@@ -43,10 +49,6 @@ public class GamePanel extends ListenerPanel {
 
     public MapMatrix getModel() {
         return model;
-    }
-
-    public GameFrame getFrame() {
-        return frame;
     }
 
     public Hero getHero() {
@@ -116,15 +118,47 @@ public class GamePanel extends ListenerPanel {
         return stepLabel;
     }
 
+    public void setStepLabel(JLabel stepLabel) {
+        this.stepLabel = stepLabel;
+    }
+
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
-        controller.doWin(this.frame);
-        controller.doLose(this.frame);
-    }
-
-    public void setStepLabel(JLabel stepLabel) {
-        this.stepLabel = stepLabel;
+        if (controller.doWin(this.frame)) {
+            return;
+        }
+        if (controller.doLose(this.frame)) {
+            return;
+        }
+        if (!file.exists()) {
+            MapInfo mapInfo = new MapInfo();
+            mapInfo.setModel(model);
+            try {
+                FileFrame.createFile(filepath);
+                for (int i = 0; i < 6; i++) {
+                    MapInfo mapInfo2 = new MapInfo();
+                    mapInfo2.setModel(null);
+                    mapInfo2.setId(i);
+                    mapInfo2.setStep(0);
+                    FileFrame.addNewMap(mapInfo2, filepath);
+                }
+                System.out.println("创建新文件并保存");
+            } catch (Exception e) {
+                System.out.println("保存失败");
+                e.printStackTrace();
+            }
+        }
+        try {
+            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, this.filepath);
+            if (result) {
+                System.out.println("更新成功");
+            } else {
+                System.out.println("更新失败");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setLeastStepLabel(JLabel leastStepLabel) {

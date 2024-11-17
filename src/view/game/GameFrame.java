@@ -28,8 +28,8 @@ public class GameFrame extends JFrame {
     private final JButton rightMoveBtn;
     private final Sound sound;
     private final int lv;
+    private final int[] leastStep = {13, 23, 31, 27, 37};
     private User user;
-    private int[] leastStep = {13, 23, 31, 27, 37};
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step) {
         try {
@@ -98,7 +98,6 @@ public class GameFrame extends JFrame {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.INFORMATION_MESSAGE);
 //            } else {
             FileFrame fileFrame = new FileFrame(800, 450, user, this, this.lv);
-            fileFrame.setVisible(false);
             this.setVisible(false);
             fileFrame.setVisible(true);
             gamePanel.requestFocusInWindow();
@@ -139,6 +138,10 @@ public class GameFrame extends JFrame {
         //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+    }
+
+    public int getLv() {
+        return lv;
     }
 
     public GameController getGameController() {
