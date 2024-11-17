@@ -37,12 +37,24 @@ public class GamePanel extends ListenerPanel {
         initialGame(step);
     }
 
+    public GridComponent[][] getGrids() {
+        return grids;
+    }
+
     public MapMatrix getModel() {
         return model;
     }
 
     public GameFrame getFrame() {
         return frame;
+    }
+
+    public Hero getHero() {
+        return hero;
+    }
+
+    public int getGRID_SIZE() {
+        return GRID_SIZE;
     }
 
     public void initialGame(int step) {
@@ -98,6 +110,10 @@ public class GamePanel extends ListenerPanel {
         if (controller.doMove(hero.getRow(), hero.getCol(), Direction.DOWN)) {
             this.afterMove();
         }
+    }
+
+    public JLabel getStepLabel() {
+        return stepLabel;
     }
 
     public void afterMove() {

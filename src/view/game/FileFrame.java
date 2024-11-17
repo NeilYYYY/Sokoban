@@ -44,8 +44,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setLocationRelativeTo(null);//设置GUI显示居中
         JButton[][] loads = new JButton[3][2];
         JButton[][] saves = new JButton[3][2];
-        JButton back = new JButton("Back");
-        back = FrameUtil.createButton(this, "Back", new Point(500, 500), 100, 50);
+        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(500, 300), 100, 50);
 
 
         for (int i = 0; i < loads.length; i++) {
@@ -86,8 +85,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
 
         }
-        back.addActionListener(e -> {
-            this.setVisible(false);
+        backBtn.addActionListener(_ -> {
+            this.dispose();
             gameFrame.setVisible(true);
         });
         loads[0][0].addActionListener(_ -> {
@@ -97,9 +96,35 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(0);
                 if (map != null) {
                     System.out.println("读入存档0");
-                    GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv, map.getStep());
-                    this.setVisible(false);
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, copyModel, user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -114,9 +139,35 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(1);
                 if (map.getModel() != null) {
                     System.out.println("读入存档1");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-                    this.setVisible(false);
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -144,9 +195,35 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(2);
                 if (map.getModel() != null) {
                     System.out.println("读入存档2");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-                    this.setVisible(false);
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -174,10 +251,36 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(3);
                 if (map.getModel() != null) {
                     System.out.println("读入存档3");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-                    this.setVisible(false);
-                    gameFrame.getGamePanel().setSteps(map.getStep());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.getGamePanel().setSteps(map.getStep());
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -205,10 +308,36 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(4);
                 if (map.getModel() != null) {
                     System.out.println("读入存档4");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-                    this.setVisible(false);
-                    gameFrame.getGamePanel().setSteps(map.getStep());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.getGamePanel().setSteps(map.getStep());
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }
@@ -236,9 +365,35 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 MapInfo map = maps.get(5);
                 if (map.getModel() != null) {
                     System.out.println("读入存档5");
-                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
-                    this.setVisible(false);
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (copyModel.getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].removeBoxFromGrid();
+                                case 2 -> gameframe.getGamePanel().getGrids()[i][j].removeHeroFromGrid();
+                            }
+                        }
+                    }
+                    gameframe.getGameController().getModel().copyMatrix(map.getModel().getMatrix());
+                    for (int i = 0; i < gameframe.getGamePanel().getGrids().length; i++) {
+                        for (int j = 0; j < gameframe.getGamePanel().getGrids()[i].length; j++) {
+                            switch (map.getModel().getId(i, j) / 10) {
+                                case 1 -> gameframe.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameframe.getGamePanel().getGRID_SIZE() - 10, gameframe.getGamePanel().getGRID_SIZE() - 10));
+                                case 2 -> {
+                                    gameframe.getGamePanel().getGrids()[i][j].setHeroInGrid(gameframe.getGamePanel().getHero());
+                                    gameframe.getGamePanel().getHero().setCol(j);
+                                    gameframe.getGamePanel().getHero().setRow(i);
+                                }
+                            }
+                        }
+                    }
+                    gameframe.getGamePanel().setSteps(map.getStep());
+                    gameframe.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameframe.getGamePanel().getSteps()));
+                    this.dispose();
                     gameFrame.setVisible(true);
+                    gameframe.getGamePanel().requestFocusInWindow();
+//                    GameFrame gameFrame = new GameFrame(800, 450, map.getModel(), user, lv, map.getStep());
+//                    this.setVisible(false);
+//                    gameFrame.setVisible(true);
                 } else {
                     System.out.println("地图不存在");
                 }

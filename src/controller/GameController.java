@@ -19,6 +19,7 @@ public class GameController {
     private final MapMatrix model;
     private final User user;
     private final int lv;
+
     public GameController(GamePanel view, MapMatrix model, User user, int lv) {
         this.view = view;
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
@@ -34,8 +35,16 @@ public class GameController {
     }
 
     public void restartGame() {
-        view.getFrame().setVisible(false);
+//        view.getFrame().setVisible(false);
         System.out.println("Do restart game here");
+        for (int i = 0; i < view.getGrids().length; i++) {
+            for (int j = 0; j < view.getGrids()[i].length; j++) {
+                switch (model.getId(i, j) / 10) {
+                    case 1 -> view.getGrids()[i][j].removeBoxFromGrid();
+                    case 2 -> view.getGrids()[i][j].removeHeroFromGrid();
+                }
+            }
+        }
         switch (this.lv) {
             case 1 -> model.copyMatrix(Level.LEVEL_1.getMap());
             case 2 -> model.copyMatrix(Level.LEVEL_2.getMap());
@@ -43,8 +52,22 @@ public class GameController {
             case 4 -> model.copyMatrix(Level.LEVEL_4.getMap());
             case 5 -> model.copyMatrix(Level.LEVEL_5.getMap());
         }
-        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv, 0);
-        gameFrame.setVisible(true);
+        for (int i = 0; i < view.getGrids().length; i++) {
+            for (int j = 0; j < view.getGrids()[i].length; j++) {
+                switch (model.getId(i, j) / 10) {
+                    case 1 -> view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                    case 2 -> {
+                        view.getGrids()[i][j].setHeroInGrid(view.getHero());
+                        view.getHero().setRow(i);
+                        view.getHero().setCol(j);
+                    }
+                }
+            }
+        }
+        view.setSteps(0);
+        view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
+//        GameFrame gameFrame = new GameFrame(800, 450, model, user, lv, 0);
+//        gameFrame.setVisible(true);
     }
 
     public boolean checkWin() {
@@ -90,7 +113,6 @@ public class GameController {
             System.out.println("You lose!");
             JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
             gameFrame.getController().restartGame();
-            gameFrame.getSound().stop();
         }
     }
 
@@ -134,17 +156,17 @@ public class GameController {
         return false;
     }
 
-    public boolean checkVertical(int x, int y){
+    public boolean checkVertical(int x, int y) {
         int[][] map = model.getMatrix();
-        if (map[x][y-1] == 1 || map[x][y-1] / 10 == 1 || map[x][y+1] == 1 || map[x][y+1] / 10 == 1) {
+        if (map[x][y - 1] == 1 || map[x][y - 1] / 10 == 1 || map[x][y + 1] == 1 || map[x][y + 1] / 10 == 1) {
             return false;
         }
         return true;
     }
 
-    public boolean checkhorizontal(int x, int y){
+    public boolean checkhorizontal(int x, int y) {
         int[][] map = model.getMatrix();
-        if (map[x-1][y] == 1 || map[x-1][y] / 10 == 1 || map[x+1][y] == 1 || map[x+1][y] / 10 == 1) {
+        if (map[x - 1][y] == 1 || map[x - 1][y] / 10 == 1 || map[x + 1][y] == 1 || map[x + 1][y] / 10 == 1) {
             return false;
         }
         return true;
