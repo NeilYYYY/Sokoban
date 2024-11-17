@@ -87,8 +87,6 @@ public class GameController {
             gameFrame.dispose();
             LevelFrame levelFrame = new LevelFrame(user);
             levelFrame.setVisible(true);
-            levelFrame.getSound().start(true);
-            gameFrame.getSound().stop();
             return true;
         }
         return false;

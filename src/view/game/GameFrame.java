@@ -5,7 +5,6 @@ import java.awt.*;
 
 import controller.GameController;
 import model.MapMatrix;
-import model.Sound;
 import view.FrameUtil;
 import view.level.LevelFrame;
 import view.login.User;
@@ -26,7 +25,6 @@ public class GameFrame extends JFrame {
     private final JButton downMoveBtn;
     private final JButton leftMoveBtn;
     private final JButton rightMoveBtn;
-    private final Sound sound;
     private final int lv;
     private final int[] leastStep = {13, 23, 31, 27, 37};
     private User user;
@@ -39,18 +37,17 @@ public class GameFrame extends JFrame {
             e.printStackTrace();
         }
         Font font = new Font("Arial", Font.BOLD, 25);
-        this.sound = new Sound("src/misc/EnterHallownest.wav");
-        this.sound.start(true);
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
         this.setSize(width, height);
-        gamePanel = new GamePanel(mapMatrix, this, user, step);
+        this.user = user;
+        gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
-        this.controller = new GameController(gamePanel, mapMatrix, user, lv);
-        System.out.println(user);
+        this.controller = new GameController(gamePanel, mapMatrix, this.user, lv);
+        System.out.println(this.user);
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
@@ -94,10 +91,10 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         this.loadBtn.addActionListener(_ -> {
-//            if (user.getId() == 0) {
+//            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.INFORMATION_MESSAGE);
 //            } else {
-            FileFrame fileFrame = new FileFrame(800, 450, user, this, this.lv);
+            FileFrame fileFrame = new FileFrame(800, 450, this.user, this, this.lv);
             this.setVisible(false);
             fileFrame.setVisible(true);
             gamePanel.requestFocusInWindow();
@@ -105,20 +102,12 @@ public class GameFrame extends JFrame {
             //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
         this.backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(user);
+            LevelFrame levelFrame = new LevelFrame(this.user);
             this.dispose();
             levelFrame.setVisible(true);
-            levelFrame.getSound().start(true);
-            this.sound.stop();
         });
-        this.playSoundBtn.addActionListener(_ -> {
-            this.sound.continues();
-            gamePanel.requestFocusInWindow();
-        });
-        this.stopSoundBtn.addActionListener(_ -> {
-            this.sound.stop();
-            gamePanel.requestFocusInWindow();
-        });
+        this.playSoundBtn.addActionListener(_ -> gamePanel.requestFocusInWindow());
+        this.stopSoundBtn.addActionListener(_ -> gamePanel.requestFocusInWindow());
         this.upMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveUp();
             gamePanel.requestFocusInWindow();//enable key listener
@@ -150,10 +139,6 @@ public class GameFrame extends JFrame {
 
     public GamePanel getGamePanel() {
         return gamePanel;
-    }
-
-    public Sound getSound() {
-        return sound;
     }
 
     public GameController getController() {

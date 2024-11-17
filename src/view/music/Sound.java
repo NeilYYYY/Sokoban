@@ -1,4 +1,4 @@
-package model;
+package view.music;
 
 import javax.sound.sampled.*;
 import java.io.*;
