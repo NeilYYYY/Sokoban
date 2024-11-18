@@ -14,8 +14,8 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JButton pauseBtn;
     private final JButton backBtn;
     private final Sound sound;
-    private int choose;
     private final String[] SongName;
+    private int choose;
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
@@ -27,7 +27,16 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);
         choose = 1;
-        SongName = new String[]{"東方紅魔郷魔法少女達の百年祭.mid", "東方紅魔郷亡き王女の为のセプテット.mid", "東方紅魔郷U.N.オーエンは彼女なのか？.mid", "东方永夜抄竹取飞翔.mid", "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav", "Alphys.wav", "EnterHallownest.wav", "Main_Theme.wav", "恋ひ恋ふ縁.wav"};
+        SongName = new String[]{
+                "東方紅魔郷魔法少女達の百年祭.mid",
+                "東方紅魔郷亡き王女の为のセプテット.mid",
+                "東方紅魔郷U.N.オーエンは彼女なのか？.mid",
+                "东方永夜抄竹取飞翔.mid", "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav",
+                "Alphys.wav",
+                "EnterHallownest.wav",
+                "Main_Theme.wav",
+                "恋ひ恋ふ縁.wav"
+        };
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
@@ -196,7 +205,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
         add(this.backBtn);
-
 
         setVisible(true);
     }
