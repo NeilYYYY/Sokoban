@@ -5,11 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sound {
+    AudioFormat audioFormat;
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
     private Thread playThread;  // 播放线程
     private AudioInputStream audioStream;
-    AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
@@ -136,18 +136,6 @@ public class Sound {
         setProgress(frame);
     }
 
-    // 设置音量（0.0 ~ 1.0）
-    public void setVolume(double volume) {
-        if (volumeControl == null) {
-            System.out.println("Volume control not supported.");
-            return;
-        }
-        float min = volumeControl.getMinimum();
-        float max = volumeControl.getMaximum();
-        float newVolume = (float) (min + (max - min) * volume);
-        volumeControl.setValue(newVolume);
-    }
-
     // 获取当前音量（0.0 ~ 1.0）
     public double getVolume() {
         if (volumeControl == null) {
@@ -156,7 +144,21 @@ public class Sound {
         }
         float min = volumeControl.getMinimum();
         float max = volumeControl.getMaximum();
-        return (volumeControl.getValue() - min) / (max - min);
+        float mid = (max + min) / 2;
+        return (volumeControl.getValue() - mid) / (max - mid);
+    }
+
+    // 设置音量（0.0 ~ 1.0）
+    public void setVolume(double volume) {
+        if (volumeControl == null) {
+            System.out.println("Volume control not supported.");
+            return;
+        }
+        float min = volumeControl.getMinimum();
+        float max = volumeControl.getMaximum();
+        float mid = (max + min) / 2;
+        float newVolume = (float) (mid + (max - mid) * volume);
+        volumeControl.setValue(newVolume);
     }
 
     // 显示播放信息
