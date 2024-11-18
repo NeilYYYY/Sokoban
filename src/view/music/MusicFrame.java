@@ -66,7 +66,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     // 处理列表项选择事件
                     add(playBtn);
                     remove(pauseBtn);
-                    sound.stop();
+                    sound.pause();
                     revalidate();
                     repaint();
                 }
@@ -80,12 +80,8 @@ public class MusicFrame extends JFrame implements ActionListener {
                     remove(playBtn);
                     choose = songList.getSelectedIndex();
                     String selectedSong = SongName[choose];
-                    try {
-                        sound.changeSource("src/misc/" + selectedSong);
-                    } catch (InterruptedException ex) {
-                        throw new RuntimeException(ex);
-                    }
-                    sound.start(true);
+                    sound.changeSource("src/misc/" + selectedSong);
+                    sound.play();
                     revalidate();
                     repaint();
                 }
@@ -141,7 +137,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 pauseBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
                 remove(pauseBtn);
                 add(playBtn);
-                sound.stop();
+                sound.pause();
             }
 
             @Override
@@ -179,7 +175,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 playBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
                 remove(playBtn);
                 add(pauseBtn);
-                sound.continues();
+                sound.play();
             }
 
             @Override

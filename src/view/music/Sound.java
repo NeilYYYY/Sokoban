@@ -1,124 +1,129 @@
 package view.music;
 
 import javax.sound.sampled.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Sound {
-    private String musicPath; //音频文件
-    private volatile boolean run = true;  //记录音频是否播放
-    private Thread mainThread;   //播放音频的任务线程
+    private String musicPath;  // 当前音频文件路径
+    private volatile boolean isPlaying = false;  // 是否正在播放
+    private Thread playThread;  // 播放线程
     private AudioInputStream audioStream;
     private AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
+    private long clipLength;  // 音频总时长
+    private long currentFrame;  // 当前帧位置
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
         prefetch();
     }
 
-    public void changeSource(String musicPath) throws InterruptedException {
-        this.stop();
-        this.musicPath = musicPath;
-        prefetch();
-    }
-
-    //数据准备
+    // 初始化音频资源
     private void prefetch() {
         try {
-            //获取音频输入流
             audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-            //获取音频的编码对象
             audioFormat = audioStream.getFormat();
-            //包装音频信息
-            DataLine.Info dataLineInfo = new DataLine.Info(SourceDataLine.class, audioFormat, AudioSystem.NOT_SPECIFIED);
-            //使用包装音频信息后的Info类创建源数据行，充当混频器的源
-            sourceDataLine = (SourceDataLine) AudioSystem.getLine(dataLineInfo);
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+            sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
             sourceDataLine.open(audioFormat);
-            sourceDataLine.start();
+            clipLength = audioStream.getFrameLength();
+            currentFrame = 0;
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
     }
 
-    //播放音频:通过loop参数设置是否循环播放
-    private void playMusic(boolean loop) throws InterruptedException {
-        try {
-            if (loop) {
-                while (true) {
-                    playMusic();
-                }
-            } else {
-                playMusic();
-                //清空数据行并关闭
-                sourceDataLine.drain();
-                sourceDataLine.close();
-                audioStream.close();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+    // 播放音频
+    public void play() {
+        if (isPlaying) {
+            System.out.println("Audio is already playing.");
+            return;
         }
-    }
+        isPlaying = true;
 
-    private void playMusic() {
-        try {
-            synchronized (this) {
-                run = true;
-            }
-            //通过数据行读取音频数据流，发送到混音器;
-            //数据流传输过程：AudioInputStream -> SourceDataLine;
-            audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-            int count;
-            byte[] tempBuff = new byte[1024];
-            while ((count = audioStream.read(tempBuff, 0, tempBuff.length)) != -1) {
-                synchronized (this) {
-                    while (!run) wait();
-                }
-                sourceDataLine.write(tempBuff, 0, count);
-            }
-        } catch (UnsupportedAudioFileException | InterruptedException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //暂停播放音频
-    private void stopMusic() {
-        synchronized (this) {
-            run = false;
-            notifyAll();
-        }
-    }
-
-    //继续播放音乐
-    private void continueMusic() {
-        synchronized (this) {
-            run = true;
-            notifyAll();
-        }
-    }
-
-    //外部调用控制方法:生成音频主线程；
-    public void start(boolean loop) {
-        mainThread = new Thread(() -> {
+        playThread = new Thread(() -> {
             try {
-                playMusic(loop);
-            } catch (InterruptedException e) {
+                sourceDataLine.start();
+                audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
+                if (currentFrame > 0) {
+                    audioStream.skip(currentFrame * audioFormat.getFrameSize());
+                }
+
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
+                    sourceDataLine.write(buffer, 0, bytesRead);
+                    currentFrame += bytesRead / audioFormat.getFrameSize();
+                }
+                if (!isPlaying) {
+                    return; // 中途暂停
+                }
+
+                // 播放完毕清理
+                stop();
+            } catch (IOException | UnsupportedAudioFileException e) {
                 e.printStackTrace();
             }
         });
-        mainThread.start();
+        playThread.start();
     }
 
-    //外部调用控制方法：暂停音频线程
+    // 暂停音频
+    public void pause() {
+        if (!isPlaying) {
+            System.out.println("Audio is not currently playing.");
+            return;
+        }
+        isPlaying = false;
+        sourceDataLine.stop();
+    }
+
+    // 停止音频并重置
     public void stop() {
-        new Thread(this::stopMusic).start();
+        isPlaying = false;
+        currentFrame = 0;
+        if (sourceDataLine != null) {
+            sourceDataLine.stop();
+            sourceDataLine.close();
+        }
+        if (playThread != null && playThread.isAlive()) {
+            try {
+                playThread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        prefetch(); // 重新加载资源
     }
 
-    //外部调用控制方法：继续音频线程
-    public void continues() {
-        new Thread(this::continueMusic).start();
+    // 更换音频文件
+    public void changeSource(String newPath) {
+        stop(); // 停止当前播放
+        this.musicPath = newPath;
+        prefetch();
+        System.out.println("Changed audio source to: " + newPath);
     }
 
+    // 获取当前播放进度
+    public double getProgress() {
+        if (clipLength == 0) return 0.0;
+        return (double) currentFrame / clipLength * 100.0;
+    }
+
+    // 显示播放信息
+    public void displayStatus() {
+        String status = isPlaying ? "Playing" : "Paused";
+        System.out.printf("Status: %s, Progress: %.2f%%\n", status, getProgress());
+    }
+
+    // 检查是否正在播放
     public boolean isPlaying() {
-        return run;
+        return isPlaying;
+    }
+
+    // 获取音频总时长（秒）
+    public long getDuration() {
+        return clipLength / (long) audioFormat.getFrameRate();
     }
 }
