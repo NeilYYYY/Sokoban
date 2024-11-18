@@ -30,6 +30,7 @@ public class GameFrame extends JFrame {
     private final int[] leastStep = {13, 23, 31, 27, 37};
     private final Sound sound;
     private final User user;
+    private final Font f = new Font("Comic Sans MS", Font.PLAIN, 22);
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         try {
@@ -84,11 +85,11 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFocusPainted(false);
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
-        this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
-        this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+        this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
         gamePanel.setLeastStepLabel(leastStepLabel);
-        this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+        this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
