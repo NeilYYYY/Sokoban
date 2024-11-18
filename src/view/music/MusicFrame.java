@@ -49,7 +49,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         // 创建一个列表模型
         JScrollPane scrollPane = getJScrollPane(sound);
         scrollPane.getViewport().setBackground(Color.WHITE);
-        add(scrollPane);
+        this.add(scrollPane);
 
         this.sound = sound;
         this.pauseBtn = new JButton("⏸");
@@ -181,6 +181,9 @@ public class MusicFrame extends JFrame implements ActionListener {
                 add(playBtn);
                 remove(pauseBtn);
                 sound.pause();
+                choose = songList.getSelectedIndex();
+                String selectedSong = SongName[choose];
+                sound.changeSource("src/misc/" + selectedSong);
                 statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
                         sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                 sound.displayStatus();
@@ -194,9 +197,6 @@ public class MusicFrame extends JFrame implements ActionListener {
                 if (e.getClickCount() == 2) {
                     add(pauseBtn);
                     remove(playBtn);
-                    choose = songList.getSelectedIndex();
-                    String selectedSong = SongName[choose];
-                    sound.changeSource("src/misc/" + selectedSong);
                     sound.play();
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
                             sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
