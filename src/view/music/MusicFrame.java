@@ -16,6 +16,9 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final Sound sound;
     private final String[] SongName;
     private int choose;
+    private JSlider progressSlider;  // 进度条
+    private JSlider volumeSlider;  // 音量条
+    private JLabel statusLabel;  // 状态显示标签
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
@@ -147,7 +150,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });
         if (sound.isPlaying()) {
-            add(this.pauseBtn);
+            this.add(this.pauseBtn);
         }
 
         this.playBtn = new JButton("▶");
@@ -185,7 +188,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });
         if (!sound.isPlaying()) {
-            add(this.playBtn);
+            this.add(this.playBtn);
         }
 
         this.backBtn = new JButton("⮐");
@@ -200,9 +203,65 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
-        add(this.backBtn);
+        this.add(this.backBtn);
 
-        setVisible(true);
+        statusLabel = new JLabel("Volume: 100%");
+        statusLabel.setBounds(10, 370, 200, 30);
+        this.add(statusLabel);
+
+        // 进度条
+        progressSlider = new JSlider(0, 100, 0);
+        progressSlider.setBounds(10, 350, 200, 10);
+        progressSlider.setPaintTicks(true);
+        progressSlider.setPaintLabels(true);
+
+        // 音量条
+        volumeSlider = new JSlider(0, 100, 100);
+        volumeSlider.setBounds(10, 370, 200, 10);
+        volumeSlider.setPaintTicks(true);
+        volumeSlider.setPaintLabels(true);
+
+        this.add(progressSlider);
+        this.add(volumeSlider);
+
+        // 进度条拖动
+        progressSlider.addChangeListener(_ -> {
+            if (!progressSlider.getValueIsAdjusting() && !sound.isPlaying()) {
+                double progress = progressSlider.getValue() / 100.0;
+                sound.setProgress((long) (progress * sound.getDuration() * sound.audioFormat.getFrameRate()));
+            }
+        });
+
+        // 音量条拖动
+        volumeSlider.addChangeListener(_ -> {
+            double volume = volumeSlider.getValue() / 100.0;
+            sound.setVolume(volume);
+            statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
+                    sound.isPlaying() ? "Playing" : "Paused", volume * 100));
+        });
+
+
+        // 启动更新进度条的线程
+        startProgressUpdater();
+
+        this.setVisible(true);
+    }
+
+    // 启动线程更新进度条
+    private void startProgressUpdater() {
+        new Thread(() -> {
+            while (true) {
+                if (sound.isPlaying()) {
+                    double progress = sound.getProgress();
+                    progressSlider.setValue((int) progress);
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 
     @Override

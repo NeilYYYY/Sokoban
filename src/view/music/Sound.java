@@ -9,9 +9,10 @@ public class Sound {
     private volatile boolean isPlaying = false;  // 是否正在播放
     private Thread playThread;  // 播放线程
     private AudioInputStream audioStream;
-    private AudioFormat audioFormat;
+    AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
-    private long clipLength;  // 音频总时长
+    private FloatControl volumeControl;  // 音量控制器
+    private long clipLength;  // 音频总时长（帧数）
     private long currentFrame;  // 当前帧位置
 
     public Sound(String musicPath) {
@@ -29,6 +30,11 @@ public class Sound {
             sourceDataLine.open(audioFormat);
             clipLength = audioStream.getFrameLength();
             currentFrame = 0;
+
+            // 初始化音量控制器
+            if (sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+                volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+            }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             e.printStackTrace();
         }
@@ -111,10 +117,52 @@ public class Sound {
         return (double) currentFrame / clipLength * 100.0;
     }
 
+    // 设置进度到指定帧
+    public void setProgress(long frame) {
+        if (frame < 0 || frame > clipLength) {
+            System.out.println("Invalid frame position.");
+            return;
+        }
+        currentFrame = frame;
+        if (isPlaying) {
+            stop();
+            play();
+        }
+    }
+
+    // 设置进度到指定秒数
+    public void setProgressByTime(double seconds) {
+        long frame = (long) (seconds * audioFormat.getFrameRate());
+        setProgress(frame);
+    }
+
+    // 设置音量（0.0 ~ 1.0）
+    public void setVolume(double volume) {
+        if (volumeControl == null) {
+            System.out.println("Volume control not supported.");
+            return;
+        }
+        float min = volumeControl.getMinimum();
+        float max = volumeControl.getMaximum();
+        float newVolume = (float) (min + (max - min) * volume);
+        volumeControl.setValue(newVolume);
+    }
+
+    // 获取当前音量（0.0 ~ 1.0）
+    public double getVolume() {
+        if (volumeControl == null) {
+            System.out.println("Volume control not supported.");
+            return 0.0;
+        }
+        float min = volumeControl.getMinimum();
+        float max = volumeControl.getMaximum();
+        return (volumeControl.getValue() - min) / (max - min);
+    }
+
     // 显示播放信息
     public void displayStatus() {
         String status = isPlaying ? "Playing" : "Paused";
-        System.out.printf("Status: %s, Progress: %.2f%%\n", status, getProgress());
+        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%\n", status, getProgress(), getVolume() * 100);
     }
 
     // 检查是否正在播放
