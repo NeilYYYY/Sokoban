@@ -20,6 +20,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     private User user;
     private final JButton musicBtn;
     private final Sound sound;
+    private final Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
 
     public LoginFrame(Sound sound) {
         try {
@@ -39,9 +40,9 @@ public class LoginFrame extends JFrame implements ActionListener {
         //创建界面组件
         this.sound = sound;
         JLabel username = new JLabel("Username(Empty is Guest): ");
-        username.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+        username.setFont(f);
         JLabel password = new JLabel("Password: ");
-        password.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+        password.setFont(f);
         loginBtn = new JButton("Login");
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
