@@ -26,8 +26,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         }
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);
-        choose = 4;
-        SongName = new String[]{"Alphys.wav", "EnterHallownest.wav", "Main_Theme.wav", "恋ひ恋ふ縁.wav"};
+        choose = 1;
+        SongName = new String[]{"東方紅魔郷魔法少女達の百年祭.mid", "東方紅魔郷亡き王女の为のセプテット.mid", "東方紅魔郷U.N.オーエンは彼女なのか？.mid", "东方永夜抄竹取飞翔.mid", "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav", "Alphys.wav", "EnterHallownest.wav", "Main_Theme.wav", "恋ひ恋ふ縁.wav"};
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
@@ -39,6 +39,11 @@ public class MusicFrame extends JFrame implements ActionListener {
 
         // 创建一个列表模型
         DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel.addElement("魔法少女達の百年祭");
+        listModel.addElement("亡き王女の为のセプテット");
+        listModel.addElement("U.N.オーエンは彼女なのか？");
+        listModel.addElement("竹取飞翔");
+        listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
         listModel.addElement("Alphys");
         listModel.addElement("EnterHallownest");
         listModel.addElement("Main_Theme");
@@ -97,7 +102,6 @@ public class MusicFrame extends JFrame implements ActionListener {
 
         // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中
         JScrollPane scrollPane = new JScrollPane(songList);
-        //scrollPane.setOpaque(false);
         scrollPane.setBounds(35, 35, 220, 260);
         scrollPane.getViewport().setBackground(Color.WHITE);
         add(scrollPane);
@@ -127,7 +131,6 @@ public class MusicFrame extends JFrame implements ActionListener {
                 super.mouseReleased(e);
                 pauseBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
                 remove(pauseBtn);
-//                remove(blank);
                 add(playBtn);
                 sound.stop();
             }
