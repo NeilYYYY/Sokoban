@@ -5,11 +5,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class Sound {
+    AudioFormat audioFormat;
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
     private Thread playThread;  // 播放线程
     private AudioInputStream audioStream;
-    AudioFormat audioFormat;
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
@@ -117,23 +117,16 @@ public class Sound {
         return (double) currentFrame / clipLength * 100.0;
     }
 
-    // 设置进度到指定帧
-    public void setProgress(long frame) {
-        if (frame < 0 || frame > clipLength) {
-            System.out.println("Invalid frame position.");
-            return;
+    // 获取当前音量（0.0 ~ 1.0）
+    public double getVolume() {
+        if (volumeControl == null) {
+            System.out.println("Volume control not supported.");
+            return 0.0;
         }
-        currentFrame = frame;
-        if (isPlaying) {
-            stop();
-            play();
-        }
-    }
-
-    // 设置进度到指定秒数
-    public void setProgressByTime(double seconds) {
-        long frame = (long) (seconds * audioFormat.getFrameRate());
-        setProgress(frame);
+        float min = volumeControl.getMinimum();
+        float max = volumeControl.getMaximum();
+        float mid = (max + min) / 2;
+        return (volumeControl.getValue() - mid) / (max - mid);
     }
 
     // 设置音量（0.0 ~ 1.0）
@@ -144,19 +137,9 @@ public class Sound {
         }
         float min = volumeControl.getMinimum();
         float max = volumeControl.getMaximum();
-        float newVolume = (float) (min + (max - min) * volume);
+        float mid = (max + min) / 2;
+        float newVolume = (float) (mid + (max - mid) * volume);
         volumeControl.setValue(newVolume);
-    }
-
-    // 获取当前音量（0.0 ~ 1.0）
-    public double getVolume() {
-        if (volumeControl == null) {
-            System.out.println("Volume control not supported.");
-            return 0.0;
-        }
-        float min = volumeControl.getMinimum();
-        float max = volumeControl.getMaximum();
-        return (volumeControl.getValue() - min) / (max - min);
     }
 
     // 显示播放信息
@@ -168,10 +151,5 @@ public class Sound {
     // 检查是否正在播放
     public boolean isPlaying() {
         return isPlaying;
-    }
-
-    // 获取音频总时长（秒）
-    public long getDuration() {
-        return clipLength / (long) audioFormat.getFrameRate();
     }
 }

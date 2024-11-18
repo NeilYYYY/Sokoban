@@ -1,8 +1,6 @@
 package view.music;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -16,9 +14,8 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final Sound sound;
     private final String[] SongName;
     private int choose;
-    private JSlider progressSlider;  // 进度条
-    private JSlider volumeSlider;  // 音量条
-    private JLabel statusLabel;  // 状态显示标签
+    private final JSlider volumeSlider;  // 音量条
+    private final JLabel statusLabel;  // 状态显示标签
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
@@ -50,67 +47,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.setResizable(false);
 
         // 创建一个列表模型
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("魔法少女達の百年祭");
-        listModel.addElement("亡き王女の为のセプテット");
-        listModel.addElement("U.N.オーエンは彼女なのか？");
-        listModel.addElement("竹取飞翔");
-        listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
-        listModel.addElement("Alphys");
-        listModel.addElement("EnterHallownest");
-        listModel.addElement("Main_Theme");
-        listModel.addElement("恋ひ恋ふ縁");
-        // 创建列表，并设置选择监听器
-        JList<String> songList = new JList<>(listModel);
-        songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        songList.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e) {
-                if (!e.getValueIsAdjusting()) {
-                    // 处理列表项选择事件
-                    add(playBtn);
-                    remove(pauseBtn);
-                    sound.pause();
-                    revalidate();
-                    repaint();
-                }
-            }
-        });
-        songList.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2) {
-                    add(pauseBtn);
-                    remove(playBtn);
-                    choose = songList.getSelectedIndex();
-                    String selectedSong = SongName[choose];
-                    sound.changeSource("src/misc/" + selectedSong);
-                    sound.play();
-                    revalidate();
-                    repaint();
-                }
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-            }
-        });//增加双击功能
-        songList.setOpaque(false);
-
-        // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中
-        JScrollPane scrollPane = new JScrollPane(songList);
-        scrollPane.setBounds(35, 35, 220, 260);
+        JScrollPane scrollPane = getJScrollPane(sound);
         scrollPane.getViewport().setBackground(Color.WHITE);
         add(scrollPane);
 
@@ -141,6 +78,9 @@ public class MusicFrame extends JFrame implements ActionListener {
                 remove(pauseBtn);
                 add(playBtn);
                 sound.pause();
+                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
+                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                sound.displayStatus();
             }
 
             @Override
@@ -179,6 +119,9 @@ public class MusicFrame extends JFrame implements ActionListener {
                 remove(playBtn);
                 add(pauseBtn);
                 sound.play();
+                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
+                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                sound.displayStatus();
             }
 
             @Override
@@ -205,15 +148,10 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.addActionListener(this);
         this.add(this.backBtn);
 
-        statusLabel = new JLabel("Volume: 100%");
+        statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%",
+                sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
         statusLabel.setBounds(10, 370, 200, 30);
         this.add(statusLabel);
-
-        // 进度条
-        progressSlider = new JSlider(0, 100, 0);
-        progressSlider.setBounds(10, 350, 200, 10);
-        progressSlider.setPaintTicks(true);
-        progressSlider.setPaintLabels(true);
 
         // 音量条
         volumeSlider = new JSlider(0, 100, 100);
@@ -221,16 +159,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         volumeSlider.setPaintTicks(true);
         volumeSlider.setPaintLabels(true);
 
-        this.add(progressSlider);
         this.add(volumeSlider);
-
-        // 进度条拖动
-        progressSlider.addChangeListener(_ -> {
-            if (!progressSlider.getValueIsAdjusting() && !sound.isPlaying()) {
-                double progress = progressSlider.getValue() / 100.0;
-                sound.setProgress((long) (progress * sound.getDuration() * sound.audioFormat.getFrameRate()));
-            }
-        });
 
         // 音量条拖动
         volumeSlider.addChangeListener(_ -> {
@@ -240,28 +169,80 @@ public class MusicFrame extends JFrame implements ActionListener {
                     sound.isPlaying() ? "Playing" : "Paused", volume * 100));
         });
 
-
-        // 启动更新进度条的线程
-        startProgressUpdater();
-
         this.setVisible(true);
     }
 
-    // 启动线程更新进度条
-    private void startProgressUpdater() {
-        new Thread(() -> {
-            while (true) {
-                if (sound.isPlaying()) {
-                    double progress = sound.getProgress();
-                    progressSlider.setValue((int) progress);
-                }
-                try {
-                    Thread.sleep(500);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    private JScrollPane getJScrollPane(Sound sound) {
+        JList<String> songList = getSongList();
+        songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        songList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                // 处理列表项选择事件
+                add(playBtn);
+                remove(pauseBtn);
+                sound.pause();
+                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
+                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                sound.displayStatus();
+                revalidate();
+                repaint();
+            }
+        });
+        songList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    add(pauseBtn);
+                    remove(playBtn);
+                    choose = songList.getSelectedIndex();
+                    String selectedSong = SongName[choose];
+                    sound.changeSource("src/misc/" + selectedSong);
+                    sound.play();
+                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
+                            sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                    sound.displayStatus();
+                    revalidate();
+                    repaint();
                 }
             }
-        }).start();
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });//增加双击功能
+        songList.setOpaque(false);
+
+        // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中
+        JScrollPane scrollPane = new JScrollPane(songList);
+        scrollPane.setBounds(35, 35, 220, 260);
+        return scrollPane;
+    }
+
+    private static JList<String> getSongList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel.addElement("魔法少女達の百年祭");
+        listModel.addElement("亡き王女の为のセプテット");
+        listModel.addElement("U.N.オーエンは彼女なのか？");
+        listModel.addElement("竹取飞翔");
+        listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
+        listModel.addElement("Alphys");
+        listModel.addElement("EnterHallownest");
+        listModel.addElement("Main_Theme");
+        listModel.addElement("恋ひ恋ふ縁");
+        // 创建列表，并设置选择监听器
+        return new JList<>(listModel);
     }
 
     @Override
