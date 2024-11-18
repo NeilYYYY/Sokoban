@@ -55,8 +55,8 @@ public class GameFrame extends JFrame {
         this.restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         this.loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         this.backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
-        this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
         this.musicBtn = FrameUtil.createButton(this, "Music", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
+        this.upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
         upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
         upMoveBtn.setBorder(null);
@@ -84,11 +84,11 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFocusPainted(false);
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
-        this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 80, 70), 180, 50);
         gamePanel.setStepLabel(stepLabel);
-        this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+        this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 200, 70), 180, 50);
         gamePanel.setLeastStepLabel(leastStepLabel);
-        this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("serif", Font.ITALIC, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+        this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), new Font("Comic Sans MS", Font.PLAIN, 22), new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener

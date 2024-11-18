@@ -38,8 +38,10 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         //创建界面组件
         this.sound = sound;
-        JLabel username = new JLabel("Username(Empty is Guest)：");
-        JLabel password = new JLabel("Password：");
+        JLabel username = new JLabel("Username(Empty is Guest): ");
+        username.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
+        JLabel password = new JLabel("Password: ");
+        password.setFont(new Font("Comic Sans MS", Font.PLAIN, 13));
         loginBtn = new JButton("Login");
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
