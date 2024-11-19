@@ -130,7 +130,6 @@ public class GameFrame extends JFrame {
             gamePanel.doMoveRight();
             gamePanel.requestFocusInWindow();//enable key listener
         });
-        //todo: add other button here
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }

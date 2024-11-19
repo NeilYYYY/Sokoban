@@ -27,7 +27,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final JButton saveBtn;
     JList<String> levelList;
     private int id = 0;
-    private GamePanel gamePanel;
+    private final GamePanel gamePanel;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
         try {
@@ -59,9 +59,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.add(loadBtn);
         this.add(saveBtn);
 
-        loadBtn.addActionListener(_ -> {
-            Load(id);
-        });
+        loadBtn.addActionListener(_ -> Load(id));
         saveBtn.addActionListener(_ -> {
             Save(id);
             Show(id);
@@ -182,6 +180,31 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
+    private static void reloadPanel(MapInfo map, GamePanel gamePanel) {
+        for (int i = 0; i < gamePanel.getGrids().length; i++) {
+            for (int j = 0; j < gamePanel.getGrids()[i].length; j++) {
+                switch (gamePanel.getModel().getId(i, j) / 10) {
+                    case 1 -> gamePanel.getGrids()[i][j].removeBoxFromGrid();
+                    case 2 -> gamePanel.getGrids()[i][j].removeHeroFromGrid();
+                }
+            }
+        }
+        gamePanel.getModel().copyMatrix(map.getModel().getMatrix());
+        for (int i = 0; i < gamePanel.getGrids().length; i++) {
+            for (int j = 0; j < gamePanel.getGrids()[i].length; j++) {
+                switch (map.getModel().getId(i, j) / 10) {
+                    case 1 ->
+                            gamePanel.getGrids()[i][j].setBoxInGrid(new Box(gamePanel.getGRID_SIZE() - 10, gamePanel.getGRID_SIZE() - 10));
+                    case 2 -> {
+                        gamePanel.getGrids()[i][j].setHeroInGrid(gamePanel.getHero());
+                        gamePanel.getHero().setCol(j);
+                        gamePanel.getHero().setRow(i);
+                    }
+                }
+            }
+        }
+    }
+
     public void Load(int id) {
         //读取地图
         try {
@@ -231,53 +254,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
                 System.out.printf("读入存档%d\n", id);
-                clearPanel(gamePanel);
-                this.gamePanel.getModel().copyMatrix(map.getModel().getMatrix());
-                for (int i = 0; i < this.gamePanel.getGrids().length; i++) {
-                    for (int j = 0; j < this.gamePanel.getGrids()[i].length; j++) {
-                        switch (map.getModel().getId(i, j) / 10) {
-                            case 1 ->
-                                    this.gamePanel.getGrids()[i][j].setBoxInGrid(new Box(this.gamePanel.getGRID_SIZE() - 10, this.gamePanel.getGRID_SIZE() - 10));
-                            case 2 -> {
-                                this.gamePanel.getGrids()[i][j].setHeroInGrid(this.gamePanel.getHero());
-                                this.gamePanel.getHero().setCol(j);
-                                this.gamePanel.getHero().setRow(i);
-                            }
-                        }
-                    }
-                }
+                reloadPanel(map, gamePanel);
             } else {
                 map = maps.get(0);
                 System.out.println("地图不存在");
-                clearPanel(gamePanel);
-                this.gamePanel.getModel().copyMatrix(map.getModel().getMatrix());
-                for (int i = 0; i < this.gamePanel.getGrids().length; i++) {
-                    for (int j = 0; j < this.gamePanel.getGrids()[i].length; j++) {
-                        switch (map.getModel().getId(i, j) / 10) {
-                            case 1 ->
-                                    this.gamePanel.getGrids()[i][j].setBoxInGrid(new Box(this.gamePanel.getGRID_SIZE() - 10, this.gamePanel.getGRID_SIZE() - 10));
-                            case 2 -> {
-                                this.gamePanel.getGrids()[i][j].setHeroInGrid(this.gamePanel.getHero());
-                                this.gamePanel.getHero().setCol(j);
-                                this.gamePanel.getHero().setRow(i);
-                            }
-                        }
-                    }
-                }
+                reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    private static void clearPanel(GamePanel gamePanel) {
-        for (int i = 0; i < gamePanel.getGrids().length; i++) {
-            for (int j = 0; j < gamePanel.getGrids()[i].length; j++) {
-                switch (gamePanel.getModel().getId(i, j) / 10) {
-                    case 1 -> gamePanel.getGrids()[i][j].removeBoxFromGrid();
-                    case 2 -> gamePanel.getGrids()[i][j].removeHeroFromGrid();
-                }
-            }
         }
     }
 

@@ -168,5 +168,4 @@ public class GameController {
         int[][] map = model.getMatrix();
         return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
     }
-    //todo: add other methods such as loadGame, saveGame...
 }
