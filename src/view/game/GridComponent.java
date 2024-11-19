@@ -11,8 +11,10 @@ public class GridComponent extends JComponent {
     private int col;
     private Hero hero;
     private Box box;
+    private final Image image;
 
     public GridComponent(int row, int col, int id, int gridSize) {
+        this.image = new ImageIcon("src/images/Wall.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
         this.row = row;
         this.col = col;
@@ -25,8 +27,7 @@ public class GridComponent extends JComponent {
         Color borderColor = color;
         switch (id % 10) {
             case 1:
-                g.setColor(Color.LIGHT_GRAY);
-                g.fillRect(0, 0, getWidth(), getHeight());
+                g.drawImage(image, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
                 break;
             case 0:

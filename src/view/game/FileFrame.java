@@ -49,13 +49,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setResizable(false);
         this.gamePanel = new GamePanel(this.gameFrame.getGameController().getModel(), gameFrame, this.user, gameFrame.getGamePanel().getSteps());
         this.gamePanel.setFocusable(false);
-        this.gamePanel.setLocation(110, height / 2 - gamePanel.getHeight() / 2);
+        this.gamePanel.setLocation(130, height / 2 - this.gamePanel.getHeight() / 2);
         this.add(this.gamePanel);
-        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(550, 300), 100, 50);
+        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(125 + this.gamePanel.getWidth() + 30, 300), 100, 50);
         this.loadBtn = new JButton("Load");
         this.saveBtn = new JButton("Save");
-        this.loadBtn.setBounds(550, 200, 100, 50);
-        this.saveBtn.setBounds(550, 100, 100, 50);
+        this.loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
+        this.saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
         this.add(loadBtn);
         this.add(saveBtn);
 
@@ -241,6 +241,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
                 System.out.println("地图不存在");
+                JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } catch (IOException e) {
             e.printStackTrace();

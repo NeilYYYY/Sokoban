@@ -1,8 +1,7 @@
 package view.login;
 
 import view.level.LevelFrame;
-import view.music.MusicFrame;
-import view.music.Sound;
+import view.music.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final Sound sound;
     private final Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
     private LevelFrame levelFrame;
-    private User user;
 
     public LoginFrame(Sound sound) {
         try {
@@ -108,6 +106,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 throw new RuntimeException(ex);
             }
             System.out.println(temp);
+            User user;
             if (username.isEmpty()) {
                 user = User.getUser("", User.getUserList());
                 levelFrame = new LevelFrame(user, this.sound);
