@@ -16,11 +16,11 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JPasswordField passwordText;
     private final JButton loginBtn;
     private final JButton registerBtn;
-    private LevelFrame levelFrame;
-    private User user;
     private final JButton musicBtn;
     private final Sound sound;
     private final Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
+    private LevelFrame levelFrame;
+    private User user;
 
     public LoginFrame(Sound sound) {
         try {
@@ -43,11 +43,17 @@ public class LoginFrame extends JFrame implements ActionListener {
         username.setFont(f);
         JLabel password = new JLabel("Password: ");
         password.setFont(f);
+        JLabel titleLabel = new JLabel(new ImageIcon("src/images/ソウコバン_ba-style.png"));
+        titleLabel.setBounds(250, 20, 300, 155);
+        this.add(titleLabel);
         loginBtn = new JButton("Login");
+        loginBtn.setFont(f);
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
+        registerBtn.setFont(f);
         registerBtn.addActionListener(this);//监听注册事件
         musicBtn = new JButton("Music");
+        musicBtn.setFont(f);
         musicBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
@@ -82,13 +88,13 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(passwordJp);
         add(loginJp);
         JLabel rec = new JLabel();
-        rec.setBounds(250, 210, 300, 150);
+        rec.setBounds(225, 20, 350, 370);
         rec.setOpaque(true);
         rec.setBackground(new Color(255, 255, 255, 200));
-        this.getContentPane().add(rec);
+        this.add(rec);
         JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg);
+        this.add(bg);
         setVisible(true);
     }
 

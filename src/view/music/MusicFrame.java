@@ -13,9 +13,9 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JButton backBtn;
     private final Sound sound;
     private final String[] SongName;
-    private int choose;
     private final JSlider volumeSlider;  // 音量条
     private final JLabel statusLabel;  // 状态显示标签
+    private int choose;
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
@@ -28,10 +28,11 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.jFrame.setVisible(false);
         choose = 1;
         SongName = new String[]{
-                "東方紅魔郷魔法少女達の百年祭.mid",
-                "東方紅魔郷亡き王女の为のセプテット.mid",
-                "東方紅魔郷U.N.オーエンは彼女なのか？.mid",
-                "东方永夜抄竹取飞翔.mid", "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav",
+                "東方紅魔郷魔法少女達の百年祭.wav",
+                "東方紅魔郷亡き王女の为のセプテット.wav",
+                "東方紅魔郷U.N.オーエンは彼女なのか？.wav",
+                "东方永夜抄竹取飞翔.wav",
+                "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav",
                 "Alphys.wav",
                 "EnterHallownest.wav",
                 "Main_Theme.wav",
@@ -172,6 +173,21 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    private static JList<String> getSongList() {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
+        listModel.addElement("魔法少女達の百年祭");
+        listModel.addElement("亡き王女の为のセプテット");
+        listModel.addElement("U.N.オーエンは彼女なのか？");
+        listModel.addElement("竹取飞翔");
+        listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
+        listModel.addElement("Alphys");
+        listModel.addElement("EnterHallownest");
+        listModel.addElement("Main_Theme");
+        listModel.addElement("恋ひ恋ふ縁");
+        // 创建列表，并设置选择监听器
+        return new JList<>(listModel);
+    }
+
     private JScrollPane getJScrollPane(Sound sound) {
         JList<String> songList = getSongList();
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -228,21 +244,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         JScrollPane scrollPane = new JScrollPane(songList);
         scrollPane.setBounds(35, 35, 220, 260);
         return scrollPane;
-    }
-
-    private static JList<String> getSongList() {
-        DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement("魔法少女達の百年祭");
-        listModel.addElement("亡き王女の为のセプテット");
-        listModel.addElement("U.N.オーエンは彼女なのか？");
-        listModel.addElement("竹取飞翔");
-        listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
-        listModel.addElement("Alphys");
-        listModel.addElement("EnterHallownest");
-        listModel.addElement("Main_Theme");
-        listModel.addElement("恋ひ恋ふ縁");
-        // 创建列表，并设置选择监听器
-        return new JList<>(listModel);
     }
 
     @Override
