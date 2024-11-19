@@ -41,9 +41,11 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.sound = sound;
         JLabel username = new JLabel("Username(Empty is Guest): ");
         username.setFont(f);
+        username.setForeground(Color.WHITE);
         JLabel password = new JLabel("Password: ");
         password.setFont(f);
-        JLabel titleLabel = new JLabel(new ImageIcon("src/images/ソウコバン_ba-style.png"));
+        password.setForeground(Color.WHITE);
+        JLabel titleLabel = new JLabel(new ImageIcon("src/images/Title.png"));
         titleLabel.setBounds(250, 20, 300, 155);
         this.add(titleLabel);
         loginBtn = new JButton("Login");
@@ -73,8 +75,8 @@ public class LoginFrame extends JFrame implements ActionListener {
         loginJp.setBackground(null);
         loginJp.setOpaque(false);
         //设置容器的位置
-        usernameJp.setBounds(200, 225, 400, 50);
-        passwordJp.setBounds(300, 265, 200, 50);
+        usernameJp.setBounds(200, 210, 400, 50);
+        passwordJp.setBounds(300, 250, 200, 50);
         loginJp.setBounds(250, 310, 300, 60);
         usernameJp.add(username);
         usernameJp.add(usernameText);
@@ -87,12 +89,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(usernameJp);
         add(passwordJp);
         add(loginJp);
-        JLabel rec = new JLabel();
-        rec.setBounds(225, 20, 350, 370);
-        rec.setOpaque(true);
-        rec.setBackground(new Color(255, 255, 255, 200));
-        this.add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
+        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Godmaster.png"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
         setVisible(true);

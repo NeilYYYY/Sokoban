@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        Sound sound = new Sound("src/misc/東方紅魔郷魔法少女達の百年祭.wav");
+        Sound sound = new Sound("src/misc/EnterHallownest.wav");
         sound.play();
         SwingUtilities.invokeLater(() -> {
             LoginFrame loginFrame = new LoginFrame(sound);

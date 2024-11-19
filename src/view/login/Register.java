@@ -36,10 +36,13 @@ public class Register extends JFrame implements ActionListener {
         //组件
         JLabel username = new JLabel("Username:");
         username.setFont(f);
+        username.setForeground(Color.WHITE);
         JLabel password = new JLabel("Password:");
         password.setFont(f);
+        password.setForeground(Color.WHITE);
         JLabel passwordTrue = new JLabel("Confirm Password:");
         passwordTrue.setFont(f);
+        passwordTrue.setForeground(Color.WHITE);
         registerBtn = new JButton("Register");
         registerBtn.setFont(f);
         registerBtn.addActionListener(this);
@@ -88,12 +91,7 @@ public class Register extends JFrame implements ActionListener {
         add(passwordJp);
         add(passwordTrueJp);
         add(registerJp);
-        JLabel rec = new JLabel();
-        rec.setBounds(250, 80, 300, 290);
-        rec.setOpaque(true);
-        rec.setBackground(new Color(255, 255, 255, 200));
-        this.add(rec);
-        JLabel bg = new JLabel(new ImageIcon("src/images/1.jpg"));
+        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Godmaster.png"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
         setVisible(true);
