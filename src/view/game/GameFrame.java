@@ -64,6 +64,7 @@ public class GameFrame extends JFrame {
         upMoveBtn.setFocusPainted(false);
         upMoveBtn.setContentAreaFilled(false);
         upMoveBtn.setFont(font);
+        upMoveBtn.setForeground(Color.WHITE);
         this.downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 320), 30, 30);
         downMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         downMoveBtn.setBorderPainted(false);
@@ -71,6 +72,7 @@ public class GameFrame extends JFrame {
         downMoveBtn.setFocusPainted(false);
         downMoveBtn.setContentAreaFilled(false);
         downMoveBtn.setFont(font);
+        downMoveBtn.setForeground(Color.WHITE);
         this.leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 190, 290), 30, 30);
         leftMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         leftMoveBtn.setBorderPainted(false);
@@ -78,6 +80,7 @@ public class GameFrame extends JFrame {
         leftMoveBtn.setFocusPainted(false);
         leftMoveBtn.setContentAreaFilled(false);
         leftMoveBtn.setFont(font);
+        leftMoveBtn.setForeground(Color.WHITE);
         this.rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 250, 290), 30, 30);
         rightMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         rightMoveBtn.setBorderPainted(false);
@@ -85,11 +88,15 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFocusPainted(false);
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
+        rightMoveBtn.setForeground(Color.WHITE);
         this.stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+        stepLabel.setForeground(Color.WHITE);
         gamePanel.setStepLabel(stepLabel);
         this.leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+        leastStepLabel.setForeground(Color.WHITE);
         gamePanel.setLeastStepLabel(leastStepLabel);
         this.lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+        lvLabel.setForeground(Color.WHITE);
         this.restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
@@ -132,6 +139,10 @@ public class GameFrame extends JFrame {
         });
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png"));
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.add(bg);
+        setVisible(true);
     }
 
     public int getLv() {
