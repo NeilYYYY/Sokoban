@@ -32,6 +32,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 "東方紅魔郷亡き王女の为のセプテット.wav",
                 "東方紅魔郷U.N.オーエンは彼女なのか？.wav",
                 "东方永夜抄竹取飞翔.wav",
+                "东方妖妖梦少女幻葬　～ Necro-Fantasy.wav",
                 "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav",
                 "Alphys.wav",
                 "EnterHallownest.wav",
@@ -179,6 +180,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         listModel.addElement("亡き王女の为のセプテット");
         listModel.addElement("U.N.オーエンは彼女なのか？");
         listModel.addElement("竹取飞翔");
+        listModel.addElement("少女幻葬～Necro-Fantasy");
         listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
         listModel.addElement("Alphys");
         listModel.addElement("EnterHallownest");
