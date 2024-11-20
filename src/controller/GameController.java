@@ -96,6 +96,9 @@ public class GameController {
     }
 
     public boolean checkLose() {
+        if (view.getSteps() >= 100){
+            return true;
+        }
         int[][] map = model.getMatrix();
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[i].length; j++) {
