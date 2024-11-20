@@ -142,7 +142,6 @@ public class GameFrame extends JFrame {
         JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
-        setVisible(true);
     }
 
     public int getLv() {

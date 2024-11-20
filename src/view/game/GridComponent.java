@@ -11,10 +11,12 @@ public class GridComponent extends JComponent {
     private int col;
     private Hero hero;
     private Box box;
-    private final Image image;
+    private final Image imageWall;
+    private final Image imageFloor;
 
     public GridComponent(int row, int col, int id, int gridSize) {
-        this.image = new ImageIcon("src/images/Wall.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        this.imageWall = new ImageIcon("src/images/Wall.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
         this.row = row;
         this.col = col;
@@ -27,16 +29,16 @@ public class GridComponent extends JComponent {
         Color borderColor = color;
         switch (id % 10) {
             case 1:
-                g.drawImage(image, 0, 0, this);
+                g.drawImage(imageWall, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
                 break;
             case 0:
-                g.setColor(Color.WHITE);
-                g.fillRect(0, 0, getWidth(), getHeight());
+                g.drawImage(imageFloor, 0, 0, this);
+                borderColor = Color.DARK_GRAY;
                 break;
             case 2:
-                g.setColor(Color.WHITE);
-                g.fillRect(0, 0, getWidth(), getHeight());
+                g.drawImage(imageFloor, 0, 0, this);
+                borderColor = Color.DARK_GRAY;
                 g.setColor(Color.GREEN);
                 int[] xPoints = {getWidth() / 2, getWidth() * 3 / 4, getWidth() / 2, getWidth() / 4};
                 int[] yPoints = {getHeight() / 4, getHeight() / 2, getHeight() * 3 / 4, getHeight() / 2};
