@@ -132,6 +132,9 @@ public class GameFrame extends JFrame {
         });
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Voidheart.png"));
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.add(bg);
     }
 
     public int getLv() {
