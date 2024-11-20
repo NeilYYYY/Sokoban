@@ -7,12 +7,12 @@ import java.awt.*;
 public class GridComponent extends JComponent {
     static Color color = new Color(246, 246, 229);
     private final int id; // represents the units digit value. It cannot be changed during one game.
+    private final Image imageWall;
+    private final Image imageFloor;
     private int row;
     private int col;
     private Hero hero;
     private Box box;
-    private final Image imageWall;
-    private final Image imageFloor;
 
     public GridComponent(int row, int col, int id, int gridSize) {
         this.imageWall = new ImageIcon("src/images/Wall.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
