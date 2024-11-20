@@ -114,6 +114,12 @@ public class GameController {
 
     public boolean doLose(GameFrame gameFrame) {
         if (checkLose()) {
+            if (this.view.getSteps() >= 100) {
+                System.out.println("Too many steps! 雑魚～");
+                JOptionPane.showMessageDialog(gameFrame, "Too many steps! 雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);
+                gameFrame.getController().restartGame();
+                return true;
+            }
             System.out.println("You lose!");
             JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
             gameFrame.getController().restartGame();
