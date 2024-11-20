@@ -2,6 +2,8 @@ package view.game;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import model.MapMatrix;
 import view.FrameUtil;
 import view.login.User;
@@ -127,7 +129,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         for (MapInfo map : response.getMaps()) {
             maps.put(map.getId(), map);
         }
-
         return maps;
     }
 
