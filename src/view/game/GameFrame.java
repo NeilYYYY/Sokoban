@@ -2,6 +2,8 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 import controller.GameController;
 import model.MapMatrix;
@@ -18,6 +20,8 @@ public class GameFrame extends JFrame {
     private final int lv;
     private final Sound sound;
     private final User user;
+    private final String filepath;
+    private final File file;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         try {
@@ -34,6 +38,8 @@ public class GameFrame extends JFrame {
         this.user = user;
         this.sound = sound;
         this.setResizable(false);
+        this.filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
+        this.file = new File(filepath);
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
@@ -44,7 +50,7 @@ public class GameFrame extends JFrame {
         JButton loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
         JButton musicBtn = FrameUtil.createButton(this, "Music", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
-        JButton undoBtn = FrameUtil.createButton(this, "Undo", new Point(gamePanel.getWidth() + 180, 240), 80, 50);
+        JButton undoBtn = FrameUtil.createButton(this, "Undo", new Point(gamePanel.getWidth() + 180, 180), 80, 50);
         JButton upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
         upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
@@ -106,8 +112,8 @@ public class GameFrame extends JFrame {
             this.dispose();
             levelFrame.setVisible(true);
         });
-        undoBtn.addActionListener(_ ->{
-            if (gamePanel.getSteps() == 0){
+        undoBtn.addActionListener(_ -> {
+            if (gamePanel.getSteps() == 0) {
                 JOptionPane.showMessageDialog(this, "步数为0，无法撤回", "Error", JOptionPane.INFORMATION_MESSAGE);
                 gamePanel.requestFocusInWindow();
             } else {
@@ -140,6 +146,34 @@ public class GameFrame extends JFrame {
         JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
+        if (!file.exists()) {
+            MapInfo mapInfo = new MapInfo();
+            mapInfo.setModel(controller.getModel());
+            try {
+                FileFrame.createFile(filepath);
+                for (int i = 0; i < 6; i++) {
+                    MapInfo mapInfo2 = new MapInfo();
+                    mapInfo2.setModel(null);
+                    mapInfo2.setId(i);
+                    mapInfo2.setStep(0);
+                    FileFrame.addNewMap(mapInfo2, filepath);
+                }
+                System.out.println("创建新文件并保存");
+            } catch (Exception e) {
+                System.out.println("保存失败");
+                e.printStackTrace();
+            }
+            try {
+                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.filepath);
+                if (result) {
+                    System.out.println("更新成功");
+                } else {
+                    System.out.println("更新失败");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public int getLv() {

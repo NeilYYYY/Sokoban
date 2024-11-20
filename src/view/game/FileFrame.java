@@ -20,9 +20,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final int step;
     private final String filePath;
     private final MapMatrix copyModel;
+    private final GamePanel gamePanel;
     JList<String> levelList;
     private int id = 0;
-    private final GamePanel gamePanel;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
         try {
@@ -232,7 +232,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
                 System.out.println("地图不存在");
-                JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -259,6 +259,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Save(int id) {
         //读取文件
+        if (id == 0) {
+            JOptionPane.showMessageDialog(this, "这是Auto_Save喵~", "Tips", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         try {
             boolean result = updateMapById(id, copyModel, this.step, filePath);
             if (result) {
