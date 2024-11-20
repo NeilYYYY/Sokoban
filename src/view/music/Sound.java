@@ -8,12 +8,13 @@ public class Sound {
     AudioFormat audioFormat;
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
+    private volatile boolean isLooping = false;  // 是否循环播放
     private Thread playThread;  // 播放线程
     private AudioInputStream audioStream;
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
-    private long currentFrame;  // 当前帧位置
+    private volatile long currentFrame;  // 当前帧位置
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
@@ -50,24 +51,26 @@ public class Sound {
 
         playThread = new Thread(() -> {
             try {
-                sourceDataLine.start();
-                audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-                if (currentFrame > 0) {
-                    audioStream.skip(currentFrame * audioFormat.getFrameSize());
-                }
+                do {
+                    sourceDataLine.start();
+                    audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
+                    if (currentFrame > 0) {
+                        long bytesToSkip = currentFrame * audioFormat.getFrameSize();
+                        audioStream.skip(bytesToSkip);
+                    }
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
+                        sourceDataLine.write(buffer, 0, bytesRead);
+                        currentFrame += bytesRead / audioFormat.getFrameSize();
+                    }
+                    if (!isPlaying) {
+                        return; // 中途暂停
+                    }
+                    currentFrame = 0; // 如果不是暂停，则重置播放位置
+                } while (isLooping && isPlaying);
 
-                byte[] buffer = new byte[1024];
-                int bytesRead;
-                while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
-                    sourceDataLine.write(buffer, 0, bytesRead);
-                    currentFrame += bytesRead / audioFormat.getFrameSize();
-                }
-                if (!isPlaying) {
-                    return; // 中途暂停
-                }
-
-                // 播放完毕清理
-                stop();
+                stop(); // 播放结束时清理资源
             } catch (IOException | UnsupportedAudioFileException e) {
                 e.printStackTrace();
             }
@@ -88,7 +91,7 @@ public class Sound {
     // 停止音频并重置
     public void stop() {
         isPlaying = false;
-        currentFrame = 0;
+        currentFrame = 0; // 停止时重置帧位置
         if (sourceDataLine != null) {
             sourceDataLine.stop();
             sourceDataLine.close();
@@ -101,6 +104,12 @@ public class Sound {
             }
         }
         prefetch(); // 重新加载资源
+    }
+
+    // 设置循环播放
+    public void setLooping(boolean looping) {
+        isLooping = looping;
+        System.out.println("Looping is set to: " + (looping ? "enabled" : "disabled"));
     }
 
     // 更换音频文件
@@ -145,7 +154,8 @@ public class Sound {
     // 显示播放信息
     public void displayStatus() {
         String status = isPlaying ? "Playing" : "Paused";
-        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%\n", status, getProgress(), getVolume() * 100);
+        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%, Looping: %s\n",
+                status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
     }
 
     // 检查是否正在播放

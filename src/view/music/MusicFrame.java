@@ -39,7 +39,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
-        setAlwaysOnTop(true);//设置界面一直处于最上层
+        //设置界面一直处于最上层
+//        setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
@@ -197,12 +198,12 @@ public class MusicFrame extends JFrame implements ActionListener {
                 add(playBtn);
                 remove(pauseBtn);
                 sound.pause();
+                sound.displayStatus();
                 choose = songList.getSelectedIndex();
                 String selectedSong = SongName[choose];
                 sound.changeSource("src/misc/" + selectedSong);
                 statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
                         sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                sound.displayStatus();
                 revalidate();
                 repaint();
             }
