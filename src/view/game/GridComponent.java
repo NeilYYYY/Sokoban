@@ -47,7 +47,7 @@ public class GridComponent extends JComponent {
                 g.drawPolygon(xPoints, yPoints, 4);
                 break;
         }
-        Border border = BorderFactory.createLineBorder(borderColor, 1);
+        Border border = BorderFactory.createLineBorder(borderColor, 0);//不知道为什么这段代码删了会有BUG，就把厚度设置成0。
         this.setBorder(border);
     }
 

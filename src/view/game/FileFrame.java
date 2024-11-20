@@ -75,8 +75,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        MapMatrix model = this.gameFrame.getGameController().getModel();
-        copyModel = model;
+        copyModel = this.gameFrame.getGameController().getModel();
         this.step = this.gameFrame.getGamePanel().getSteps();
         //若json文件不存在，创建
         if (!file.exists()) {
