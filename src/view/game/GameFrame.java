@@ -44,6 +44,7 @@ public class GameFrame extends JFrame {
         JButton loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
         JButton musicBtn = FrameUtil.createButton(this, "Music", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
+        JButton undoBtn = FrameUtil.createButton(this, "Undo", new Point(gamePanel.getWidth() + 180, 240), 80, 50);
         JButton upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
         upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
@@ -104,6 +105,15 @@ public class GameFrame extends JFrame {
             LevelFrame levelFrame = new LevelFrame(this.user, this.sound);
             this.dispose();
             levelFrame.setVisible(true);
+        });
+        undoBtn.addActionListener(_ ->{
+            if (gamePanel.getSteps() == 0){
+                JOptionPane.showMessageDialog(this, "步数为0，无法撤回", "Error", JOptionPane.INFORMATION_MESSAGE);
+                gamePanel.requestFocusInWindow();
+            } else {
+                gamePanel.undoMove();
+                gamePanel.requestFocusInWindow();
+            }
         });
         musicBtn.addActionListener(_ -> {
             new MusicFrame(this, this.sound);

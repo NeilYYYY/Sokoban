@@ -21,6 +21,8 @@ public class GameController {
     private final User user;
     private final int lv;
     private final Sound sound;
+    private final int[] moveHero = new int[100];
+    private final int[] moveBox = new int[100];
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
         this.view = view;
@@ -147,6 +149,25 @@ public class GameController {
             //Update the row and column attribute in hero
             h.setRow(tRow);
             h.setCol(tCol);
+            switch (direction) {
+                case UP:
+                    moveHero[view.getSteps()] = 3;
+                    view.setMoveHero(moveHero);
+                    break;
+                case DOWN:
+                    moveHero[view.getSteps()] = 4;
+                    view.setMoveHero(moveHero);
+                    break;
+                case LEFT:
+                    moveHero[view.getSteps()] = 1;
+                    view.setMoveHero(moveHero);
+                    break;
+                case RIGHT:
+                    moveHero[view.getSteps()] = 2;
+                    view.setMoveHero(moveHero);
+                    break;
+            }
+            moveBox[view.getSteps()] = 0;
             return true;
         }
         if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12) {
@@ -163,6 +184,42 @@ public class GameController {
             ttGrid.setBoxInGrid(b);
             h.setRow(tRow);
             h.setCol(tCol);
+            switch (direction) {
+                case UP:
+                    moveHero[view.getSteps()] = 3;
+                    view.setMoveHero(moveHero);
+                    break;
+                case DOWN:
+                    moveHero[view.getSteps()] = 4;
+                    view.setMoveHero(moveHero);
+                    break;
+                case LEFT:
+                    moveHero[view.getSteps()] = 1;
+                    view.setMoveHero(moveHero);
+                    break;
+                case RIGHT:
+                    moveHero[view.getSteps()] = 2;
+                    view.setMoveHero(moveHero);
+                    break;
+            }
+            switch (direction) {
+                case UP:
+                    moveBox[view.getSteps()] = 3;
+                    view.setMoveBox(moveBox);
+                    break;
+                case DOWN:
+                    moveBox[view.getSteps()] = 4;
+                    view.setMoveBox(moveBox);
+                    break;
+                case LEFT:
+                    moveBox[view.getSteps()] = 1;
+                    view.setMoveBox(moveBox);
+                    break;
+                case RIGHT:
+                    moveBox[view.getSteps()] = 2;
+                    view.setMoveBox(moveBox);
+                    break;
+            }
             return true;
         }
         return false;
