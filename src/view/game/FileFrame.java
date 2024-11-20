@@ -16,15 +16,10 @@ import java.util.List;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    private final User user;
     private final GameFrame gameFrame;
-    private final int lv;
     private final int step;
     private final String filePath;
-    private final MapMatrix model;
     private final MapMatrix copyModel;
-    private final JButton loadBtn;
-    private final JButton saveBtn;
     JList<String> levelList;
     private int id = 0;
     private final GamePanel gamePanel;
@@ -36,10 +31,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.user = user;
         this.gameFrame = gameFrame;
-        this.lv = lv;
-        this.filePath = String.format("src/saves/%d-%d.json", this.lv, this.user.id());
+        this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
@@ -47,15 +40,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.setSize(width, height);
         this.setLocationRelativeTo(null);//设置GUI显示居中
         this.setResizable(false);
-        this.gamePanel = new GamePanel(this.gameFrame.getGameController().getModel(), gameFrame, this.user, gameFrame.getGamePanel().getSteps());
+        this.gamePanel = new GamePanel(this.gameFrame.getGameController().getModel(), gameFrame, user, gameFrame.getGamePanel().getSteps());
         this.gamePanel.setFocusable(false);
         this.gamePanel.setLocation(130, height / 2 - this.gamePanel.getHeight() / 2);
         this.add(this.gamePanel);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(125 + this.gamePanel.getWidth() + 30, 300), 100, 50);
-        this.loadBtn = new JButton("Load");
-        this.saveBtn = new JButton("Save");
-        this.loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
-        this.saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
+        JButton loadBtn = new JButton("Load");
+        JButton saveBtn = new JButton("Save");
+        loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
+        saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
         this.add(loadBtn);
         this.add(saveBtn);
 
@@ -82,8 +75,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        this.model = this.gameFrame.getGameController().getModel();
-        copyModel = this.model;
+        MapMatrix model = this.gameFrame.getGameController().getModel();
+        copyModel = model;
         this.step = this.gameFrame.getGamePanel().getSteps();
         //若json文件不存在，创建
         if (!file.exists()) {

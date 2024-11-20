@@ -6,12 +6,9 @@ import java.awt.event.*;
 
 public class MusicFrame extends JFrame implements ActionListener {
     private final JFrame jFrame;
-    private final Font f = new Font("", Font.PLAIN, 20);
-    private final Font f2 = new Font("", Font.PLAIN, 20);
     private final JButton playBtn;
     private final JButton pauseBtn;
     private final JButton backBtn;
-    private final Sound sound;
     private final String[] SongName;
     private final JSlider volumeSlider;  // 音量条
     private final JLabel statusLabel;  // 状态显示标签
@@ -53,8 +50,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         scrollPane.getViewport().setBackground(Color.WHITE);
         this.add(scrollPane);
 
-        this.sound = sound;
         this.pauseBtn = new JButton("⏸");
+        Font f = new Font("", Font.PLAIN, 20);
         this.pauseBtn.setFont(f);
         this.pauseBtn.setToolTipText("Pause");
         this.pauseBtn.setBounds(130, 300, 30, 30);
@@ -137,6 +134,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         }
 
         this.backBtn = new JButton("⮐");
+        Font f2 = new Font("", Font.PLAIN, 20);
         this.backBtn.setFont(f2);
         this.backBtn.setToolTipText("Back");
         this.backBtn.setBounds(10, 10, 30, 30);

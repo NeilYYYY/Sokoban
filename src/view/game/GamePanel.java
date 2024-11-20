@@ -19,12 +19,10 @@ public class GamePanel extends ListenerPanel {
     private final GridComponent[][] grids;
     private final MapMatrix model;
     private final GameFrame frame;
-    private final User user;
     private final String filepath;
     private final File file;
     private GameController controller;
     private JLabel stepLabel;
-    private JLabel leastStepLabel;
     private int steps;
     private Hero hero;
 
@@ -36,9 +34,8 @@ public class GamePanel extends ListenerPanel {
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
         this.model.copyMatrix(model.getMatrix());
         this.frame = frame;
-        this.user = user;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), this.user.id());
+        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), user.id());
         this.file = new File(filepath);
         initialGame(step);
     }
@@ -159,10 +156,6 @@ public class GamePanel extends ListenerPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void setLeastStepLabel(JLabel leastStepLabel) {
-        this.leastStepLabel = leastStepLabel;
     }
 
     public void setController(GameController controller) {

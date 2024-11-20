@@ -15,7 +15,6 @@ import view.music.Sound;
 public class LevelFrame extends JFrame {
     private final User user;
     private final Sound sound;
-    private final Font f = new Font("Comic Sans MS", Font.BOLD, 16);
     private int lv = 0;
 
     public LevelFrame(User user, Sound sound) {
@@ -31,6 +30,7 @@ public class LevelFrame extends JFrame {
         this.sound = sound;
         this.setResizable(false);
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 155), 80, 60);
+        Font f = new Font("Comic Sans MS", Font.BOLD, 16);
         level1Btn.setFont(f);
         level1Btn.setForeground(Color.WHITE);
         level1Btn.setMargin(new Insets(0, 0, 0, 0));

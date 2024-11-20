@@ -14,7 +14,6 @@ public class Register extends JFrame implements ActionListener {
     private final JButton registerBtn;
     private final JButton backBtn;
     private final LoginFrame loginFrame;
-    private final Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
 
     public Register(LoginFrame loginFrame) {
         try {
@@ -35,6 +34,7 @@ public class Register extends JFrame implements ActionListener {
         this.setResizable(false);
         //组件
         JLabel username = new JLabel("Username:");
+        Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
         username.setFont(f);
         username.setForeground(Color.WHITE);
         JLabel password = new JLabel("Password:");

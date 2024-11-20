@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Hero extends JComponent {
-    private final int value = 20;
     private final Image image;
     private int row;
     private int col;
@@ -22,7 +21,7 @@ public class Hero extends JComponent {
     }
 
     public int getValue() {
-        return value;
+        return 20;
     }
 
     public int getRow() {

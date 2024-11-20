@@ -17,7 +17,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JButton registerBtn;
     private final JButton musicBtn;
     private final Sound sound;
-    private final Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
     private LevelFrame levelFrame;
 
     public LoginFrame(Sound sound) {
@@ -38,6 +37,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         //创建界面组件
         this.sound = sound;
         JLabel username = new JLabel("Username(Empty is Guest): ");
+        Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
         username.setFont(f);
         username.setForeground(Color.WHITE);
         JLabel password = new JLabel("Password: ");
