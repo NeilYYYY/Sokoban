@@ -17,7 +17,7 @@ public class GridComponent extends JComponent {
 
     public GridComponent(int row, int col, int id, int gridSize) {
         Random random = new Random();
-        int randomNum = random.nextInt(3) + 1;
+        int randomNum = random.nextInt(6) + 1;
         switch (randomNum) {
             case 1 ->{
                 this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
@@ -25,8 +25,17 @@ public class GridComponent extends JComponent {
             case 2 ->{
                 this.imageWall = new ImageIcon("src/images/Wall2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             }
-            default ->{
+            case 3 ->{
                 this.imageWall = new ImageIcon("src/images/Wall3.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+            case 4 ->{
+                this.imageWall = new ImageIcon("src/images/Wall4.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+            case 5 ->{
+                this.imageWall = new ImageIcon("src/images/Wall5.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+            default ->{
+                this.imageWall = new ImageIcon("src/images/Wall6.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             }
         }
         this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
