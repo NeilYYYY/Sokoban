@@ -88,10 +88,17 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             System.out.println("You win!");
+            if(gameFrame.getLv() == 5){//最后一关则退出
+                JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                levelFrame.setVisible(true);
+                gameFrame.dispose();
+                return true;
+            }
             int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Next"}, "Next");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
-                MapMatrix mapMatrix = new MapMatrix(Level.values()[lv + 1].getMap());
+                MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
                 GameFrame gameFrame1 = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound);
                 gameFrame1.setVisible(true);
                 gameFrame.dispose();

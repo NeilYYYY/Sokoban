@@ -16,6 +16,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JButton loginBtn;
     private final JButton registerBtn;
     private final JButton musicBtn;
+    private final JButton guestBtn;
     private final Sound sound;
     private LevelFrame levelFrame;
 
@@ -36,7 +37,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         //创建界面组件
         this.sound = sound;
-        JLabel username = new JLabel("Username(Empty is Guest): ");
+        JLabel username = new JLabel("Username: ");
         Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
         username.setFont(f);
         username.setForeground(Color.WHITE);
@@ -46,6 +47,9 @@ public class LoginFrame extends JFrame implements ActionListener {
         JLabel titleLabel = new JLabel(new ImageIcon("src/images/Title.png"));
         titleLabel.setBounds(240, 20, 300, 155);
         this.add(titleLabel);
+        guestBtn = new JButton("Guest");
+        guestBtn.setFont(f);
+        guestBtn.addActionListener(this);
         loginBtn = new JButton("Login");
         loginBtn.setFont(f);
         loginBtn.addActionListener(this);//监听登录事件
@@ -72,21 +76,37 @@ public class LoginFrame extends JFrame implements ActionListener {
         JPanel loginJp = new JPanel();
         loginJp.setBackground(null);
         loginJp.setOpaque(false);
+        JPanel registerJp = new JPanel();
+        registerJp.setBackground(null);
+        registerJp.setOpaque(false);
+        JPanel musicJp = new JPanel();
+        musicJp.setBackground(null);
+        musicJp.setOpaque(false);
+        JPanel guestJp = new JPanel();
+        guestJp.setBackground(null);
+        guestJp.setOpaque(false);
         //设置容器的位置
         usernameJp.setBounds(200, 210, 400, 50);
         passwordJp.setBounds(300, 250, 200, 50);
-        loginJp.setBounds(250, 310, 300, 60);
+        loginJp.setBounds(300, 290, 100, 60);
+        registerJp.setBounds(390, 290, 100, 60);
+        musicJp.setBounds(this.getWidth() - 130, this.getHeight() - 90, 100, 60);
+        guestJp.setBounds(345, 330, 100, 60);
         usernameJp.add(username);
         usernameJp.add(usernameText);
         passwordJp.add(password);
         passwordJp.add(passwordText);
         loginJp.add(loginBtn);
-        loginJp.add(registerBtn);
-        loginJp.add(musicBtn);
+        registerJp.add(registerBtn);
+        musicJp.add(musicBtn);
+        guestJp.add(guestBtn);
         //将组件装入GUI
         add(usernameJp);
         add(passwordJp);
         add(loginJp);
+        add(registerJp);
+        add(musicJp);
+        add(guestJp);
         JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Godmaster.png"));
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
@@ -107,14 +127,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             }
             System.out.println(temp);
             User user;
-            if (username.isEmpty()) {
-                user = User.getUser("", User.getUserList());
-                levelFrame = new LevelFrame(user, this.sound);
-                JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
-                showLevelFrame();
-                return;
-            }
-            if (temp) {
+            if (temp && !username.isEmpty()) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user, this.sound);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
@@ -127,6 +140,12 @@ public class LoginFrame extends JFrame implements ActionListener {
             new Register(this);
         } else if (e.getSource() == musicBtn) {
             new MusicFrame(this, this.sound);
+        } else if (e.getSource() == guestBtn) {
+            User user;
+            user = User.getUser("", User.getUserList());
+            levelFrame = new LevelFrame(user, this.sound);
+            JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
+            showLevelFrame();
         }
     }
 

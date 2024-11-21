@@ -3,6 +3,7 @@ package view.game;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.util.Random;
 
 public class GridComponent extends JComponent {
     static Color color = new Color(246, 246, 229);
@@ -15,7 +16,19 @@ public class GridComponent extends JComponent {
     private Box box;
 
     public GridComponent(int row, int col, int id, int gridSize) {
-        this.imageWall = new ImageIcon("src/images/Wall.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        Random random = new Random();
+        int randomNum = random.nextInt(3) + 1;
+        switch (randomNum) {
+            case 1 ->{
+                this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+            case 2 ->{
+                this.imageWall = new ImageIcon("src/images/Wall2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+            default ->{
+                this.imageWall = new ImageIcon("src/images/Wall3.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+            }
+        }
         this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
         this.row = row;
