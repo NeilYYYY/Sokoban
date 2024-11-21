@@ -88,11 +88,20 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             System.out.println("You win!");
-            JOptionPane.showMessageDialog(gameFrame, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-            gameFrame.dispose();
-            LevelFrame levelFrame = new LevelFrame(user, this.sound);
-            levelFrame.setVisible(true);
-            return true;
+            int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Next"}, "Next");
+            // 根据用户选择打开不同的 JFrame
+            if (option == 1) {
+                MapMatrix mapMatrix = new MapMatrix(Level.values()[lv + 1].getMap());
+                GameFrame gameFrame1 = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound);
+                gameFrame1.setVisible(true);
+                gameFrame.dispose();
+                return true;
+            } else if (option == 0) {
+                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                levelFrame.setVisible(true);
+                gameFrame.dispose();
+                return true;
+            }
         }
         return false;
     }
@@ -123,9 +132,17 @@ public class GameController {
                 return true;
             }
             System.out.println("You lose!");
-            JOptionPane.showMessageDialog(gameFrame, "Game Over !", "FAILED", JOptionPane.INFORMATION_MESSAGE);
-            gameFrame.getController().restartGame();
-            return true;
+            int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Restart"}, "Restart");
+            // 根据用户选择打开不同的 JFrame
+            if (option == 1) {
+                gameFrame.getController().restartGame();
+                return true;
+            } else if (option == 0) {
+                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                levelFrame.setVisible(true);
+                gameFrame.dispose();
+                return true;
+            }
         }
         return false;
     }
