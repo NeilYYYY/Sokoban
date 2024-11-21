@@ -148,16 +148,7 @@ public class GamePanel extends ListenerPanel {
                 e.printStackTrace();
             }
         }
-        try {
-            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
-            if (result) {
-                System.out.println("更新成功");
-            } else {
-                System.out.println("更新失败");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        autoSave();
     }
 
     public void undoMove() {
@@ -234,6 +225,10 @@ public class GamePanel extends ListenerPanel {
             }
         }
         moveBox[this.steps] = 0;
+        autoSave();
+    }
+
+    private void autoSave() {
         try {
             boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
             if (result) {
