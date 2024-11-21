@@ -23,8 +23,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final GamePanel gamePanel;
     JList<String> levelList;
     private int id = 0;
-    private final int[] moveHero;
-    private final int[] moveBox;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
         try {
@@ -35,8 +33,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
-        this.moveHero = gameFrame.getGamePanel().getMoveHero();
-        this.moveBox = gameFrame.getGamePanel().getMoveBox();
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
@@ -233,6 +229,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 }
                 gameFrame.getGamePanel().setSteps(map.getStep());
                 gameFrame.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameFrame.getGamePanel().getSteps()));
+                gameFrame.getGamePanel().setMoveHero(maps.get(map.getId()).getMoveHero());
+                gameFrame.getGamePanel().setMoveBox(maps.get(map.getId()).getMoveBox());
                 this.dispose();
                 this.gameFrame.setVisible(true);
                 gameFrame.getGamePanel().requestFocusInWindow();
@@ -270,7 +268,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             return;
         }
         try {
-            boolean result = updateMapById(id, copyModel, this.step, this.moveHero, this.moveBox, this.filePath);
+            boolean result = updateMapById(id, copyModel, this.step, gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox(), this.filePath);
             if (result) {
                 System.out.println("更新成功");
             } else {

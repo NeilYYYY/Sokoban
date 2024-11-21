@@ -164,7 +164,7 @@ public class GameFrame extends JFrame {
                 e.printStackTrace();
             }
             try {
-                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.filepath);
+                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.filepath);
                 if (result) {
                     System.out.println("更新成功");
                 } else {

@@ -160,82 +160,78 @@ public class GamePanel extends ListenerPanel {
         }
     }
 
-    public void undoMove(){
+    public void undoMove() {
         this.steps--;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
         GridComponent currentGrid = getGridComponent(hero.getRow(), hero.getCol());
         GridComponent targetGrid;
         GridComponent ttGrid;
         Hero h = currentGrid.removeHeroFromGrid();
-        switch (moveHero[this.steps]){
-            case 1://撤回英雄左移
+        switch (moveHero[this.steps]) {
+            case 1 -> {//撤回英雄左移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 20;
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
                 h.setCol(hero.getCol() + 1);
-                break;
-            case 2://撤回英雄右移
+            }
+            case 2 -> {//撤回英雄右移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 20;
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
                 h.setCol(hero.getCol() - 1);
-                break;
-            case 3://撤回英雄上移
+            }
+            case 3 -> {//撤回英雄上移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
-                model.getMatrix()[hero.getRow() + 1][hero.getCol()] += 20;
+                controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 20;
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() + 1);
                 h.setCol(hero.getCol());
-                break;
-            case 4://撤回英雄下移
+            }
+            case 4 -> {//撤回英雄下移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 20;
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() - 1);
                 h.setCol(hero.getCol());
-                break;
-            default:
-                targetGrid = getGridComponent(hero.getRow(), hero.getCol());
+            }
         }
         moveHero[this.steps] = 0;
         Box b;
-        switch (moveBox[this.steps]){
-            case 1://撤回箱子左移
+        switch (moveBox[this.steps]) {
+            case 1 -> {//撤回箱子左移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
                 b = ttGrid.removeBoxFromGrid();
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
                 currentGrid.setBoxInGrid(b);
-                break;
-            case 2://撤回箱子右移
+            }
+            case 2 -> {//撤回箱子右移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
                 b = ttGrid.removeBoxFromGrid();
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
                 currentGrid.setBoxInGrid(b);
-                break;
-            case 3://撤回箱子上移
+            }
+            case 3 -> {//撤回箱子上移
                 ttGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
                 currentGrid.setBoxInGrid(b);
-                break;
-            case 4://撤回箱子下移
+            }
+            case 4 -> {//撤回箱子下移
                 ttGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
                 currentGrid.setBoxInGrid(b);
-                break;
-            default://箱子未移动
-                break;
+            }
         }
         moveBox[this.steps] = 0;
         try {
