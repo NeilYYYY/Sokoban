@@ -61,7 +61,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
         saveBtn.addActionListener(_ -> {
-            Save(id);
+            try {
+                Save(id);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
             try {
                 Show(id);
             } catch (Exception e) {
@@ -217,7 +221,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         //读取地图
         if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
             System.out.println("存档文件损坏喵！");
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
             return;
         }
         try {
@@ -285,8 +289,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Save(int id) {
+    public void Save(int id) throws Exception {
         //读取文件
+        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+            System.out.println("存档文件损坏喵！");//todo 存档时文件损坏
+            return;
+        }
         if (id == 0) {
             JOptionPane.showMessageDialog(this, "这是Auto_Save喵~", "Tips", JOptionPane.INFORMATION_MESSAGE);
             return;
