@@ -26,7 +26,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        this.setTitle("Sokoban");
+        this.setTitle("Sokoban Knight");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
         this.setSize(800, 450);
@@ -44,7 +44,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         password.setFont(f);
         password.setForeground(Color.WHITE);
         JLabel titleLabel = new JLabel(new ImageIcon("src/images/Title.png"));
-        titleLabel.setBounds(250, 20, 300, 155);
+        titleLabel.setBounds(240, 20, 300, 155);
         this.add(titleLabel);
         loginBtn = new JButton("Login");
         loginBtn.setFont(f);
