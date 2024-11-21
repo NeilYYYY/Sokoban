@@ -6,6 +6,8 @@ public class MapInfo {
     private int id;
     private MapMatrix model;
     private int step;
+    private int[] moveHero;
+    private int[] moveBox;
 
     public MapMatrix getModel() {
         return model;
@@ -29,5 +31,21 @@ public class MapInfo {
 
     public void setStep(int step) {
         this.step = step;
+    }
+
+    public int[] getMoveBox() {
+        return moveBox;
+    }
+
+    public void setMoveBox(int[] moveBox) {
+        this.moveBox = moveBox;
+    }
+
+    public int[] getMoveHero() {
+        return moveHero;
+    }
+
+    public void setMoveHero(int[] moveHero) {
+        this.moveHero = moveHero;
     }
 }

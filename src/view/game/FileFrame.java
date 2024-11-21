@@ -23,6 +23,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     JList<String> levelList;
     private int id = 0;
     private final GamePanel gamePanel;
+    private final int[] moveHero;
+    private final int[] moveBox;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
         try {
@@ -33,6 +35,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
+        this.moveHero = gameFrame.getGamePanel().getMoveHero();
+        this.moveBox = gameFrame.getGamePanel().getMoveBox();
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
@@ -131,12 +135,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return maps;
     }
 
-    public static boolean updateMapById(int id, MapMatrix map, int step, String filePath) throws IOException {
+    public static boolean updateMapById(int id, MapMatrix map, int step, int[] moveHero, int[] moveBox, String filePath) throws IOException {
         Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
         MapInfo mapToUpdate = maps.get(id);
         if (mapToUpdate != null) {
             mapToUpdate.setModel(map);
             mapToUpdate.setStep(step);
+            mapToUpdate.setMoveHero(moveHero);
+            mapToUpdate.setMoveBox(moveBox);
             saveMapsToJson(maps, filePath);
             return true;
         }
@@ -261,7 +267,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public void Save(int id) {
         //读取文件
         try {
-            boolean result = updateMapById(id, copyModel, this.step, filePath);
+            boolean result = updateMapById(id, copyModel, this.step, this.moveHero, this.moveBox, this.filePath);
             if (result) {
                 System.out.println("更新成功");
             } else {

@@ -149,7 +149,7 @@ public class GamePanel extends ListenerPanel {
             }
         }
         try {
-            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, this.filepath);
+            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
             if (result) {
                 System.out.println("更新成功");
             } else {
@@ -239,7 +239,7 @@ public class GamePanel extends ListenerPanel {
         }
         moveBox[this.steps] = 0;
         try {
-            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, this.filepath);
+            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
             if (result) {
                 System.out.println("更新成功");
             } else {
