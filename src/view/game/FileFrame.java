@@ -3,6 +3,7 @@ package view.game;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.MapMatrix;
+import view.FileMD5Util;
 import view.FrameUtil;
 import view.login.User;
 
@@ -52,10 +53,20 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.add(loadBtn);
         this.add(saveBtn);
 
-        loadBtn.addActionListener(_ -> Load(id));
+        loadBtn.addActionListener(_ -> {
+            try {
+                Load(id);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
         saveBtn.addActionListener(_ -> {
             Save(id);
-            Show(id);
+            try {
+                Show(id);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
 
         levelList = getLevelList();
@@ -64,7 +75,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             if (!e.getValueIsAdjusting()) {
                 id = levelList.getSelectedIndex();
                 System.out.println(id);
-                Show(id);
+                try {
+                    Show(id);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
         levelList.setOpaque(false);
@@ -198,8 +213,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Load(int id) {
+    public void Load(int id) throws Exception {
         //读取地图
+        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+            System.out.println("存档文件损坏喵！");
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
             MapInfo map = maps.get(id);
@@ -243,8 +263,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Show(int id) {
+    public void Show(int id) throws Exception {
         //读取地图
+        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+            System.out.println("存档文件损坏喵！");
+            return;
+        }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
             MapInfo map = maps.get(id);
@@ -274,8 +298,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             } else {
                 System.out.println("更新失败");
             }
+            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".md5"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

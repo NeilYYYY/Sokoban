@@ -3,6 +3,7 @@ package view.game;
 import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
+import view.FileMD5Util;
 import view.login.User;
 
 import javax.swing.*;
@@ -236,8 +237,11 @@ public class GamePanel extends ListenerPanel {
             } else {
                 System.out.println("更新失败");
             }
+            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
