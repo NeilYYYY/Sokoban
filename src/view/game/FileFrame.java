@@ -44,7 +44,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.lv = lv;
         this.user = user;
         this.sound = sound;
-        File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局
@@ -106,25 +105,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.getContentPane().setLayout(null);
         copyModel = this.gameFrame.getGameController().getModel();
         this.step = this.gameFrame.getGamePanel().getSteps();
-        //若json文件不存在，创建
-        if (!file.exists()) {
-            MapInfo mapInfo = new MapInfo();
-            mapInfo.setModel(copyModel);
-            try {
-                createFile(filePath);
-                for (int i = 0; i < 6; i++) {
-                    MapInfo mapInfo2 = new MapInfo();
-                    mapInfo2.setModel(null);
-                    mapInfo2.setId(i);
-                    mapInfo2.setStep(0);
-                    addNewMap(mapInfo2, filePath);
-                }
-                System.out.println("创建新文件并保存");
-            } catch (Exception e) {
-                System.out.println("保存失败");
-                log.info(e.getMessage());
-            }
-        }
         backBtn.addActionListener(_ -> {
             this.dispose();
             this.gameFrame.setVisible(true);
