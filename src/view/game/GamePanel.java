@@ -125,12 +125,6 @@ public class GamePanel extends ListenerPanel {
     public void afterMove() {
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
-        if (controller.doWin(this.frame)) {
-            return;
-        }
-        if (controller.doLose(this.frame)) {
-            return;
-        }
         if (!file.exists()) {
             MapInfo mapInfo = new MapInfo();
             mapInfo.setModel(model);
@@ -150,6 +144,10 @@ public class GamePanel extends ListenerPanel {
             }
         }
         autoSave();
+        if (controller.doWin(this.frame)) {
+            return;
+        }
+        controller.doLose(this.frame);
     }
 
     public void undoMove() {
@@ -233,7 +231,8 @@ public class GamePanel extends ListenerPanel {
         try {
             if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");//todo 自动存档时文件损坏
-                return;
+                frame.getFileFrame().fixFile();
+                JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
             }
             boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
             if (result) {
