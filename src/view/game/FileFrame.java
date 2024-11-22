@@ -238,6 +238,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
             this.dispose();
             gameFrame.setVisible(true);
+            return;
         }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
@@ -287,6 +288,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
 //            fixFile();
+            return;
         }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
