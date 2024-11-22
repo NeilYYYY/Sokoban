@@ -49,15 +49,41 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.add(titleLabel);
         guestBtn = new JButton("Guest");
         guestBtn.setFont(f);
+        guestBtn.setForeground(Color.GRAY);
+        guestBtn.setMargin(new Insets(0, 0, 0, 0));
+        guestBtn.setBorderPainted(false);
+        guestBtn.setBorder(null);
+        guestBtn.setFocusPainted(false);
+        guestBtn.setContentAreaFilled(false);
         guestBtn.addActionListener(this);
         loginBtn = new JButton("Login");
         loginBtn.setFont(f);
+        loginBtn.setFont(f.deriveFont(16f));
+        loginBtn.setForeground(Color.WHITE);
+        loginBtn.setMargin(new Insets(0, 0, 0, 0));
+        loginBtn.setBorderPainted(false);
+        loginBtn.setBorder(null);
+        loginBtn.setFocusPainted(false);
+        loginBtn.setContentAreaFilled(false);
         loginBtn.addActionListener(this);//监听登录事件
         registerBtn = new JButton("Register");
         registerBtn.setFont(f);
+        registerBtn.setFont(f.deriveFont(16f));
+        registerBtn.setForeground(Color.WHITE);
+        registerBtn.setMargin(new Insets(0, 0, 0, 0));
+        registerBtn.setBorderPainted(false);
+        registerBtn.setBorder(null);
+        registerBtn.setFocusPainted(false);
+        registerBtn.setContentAreaFilled(false);
         registerBtn.addActionListener(this);//监听注册事件
         musicBtn = new JButton("Music");
         musicBtn.setFont(f);
+        musicBtn.setForeground(Color.WHITE);
+        musicBtn.setMargin(new Insets(0, 0, 0, 0));
+        musicBtn.setBorderPainted(false);
+        musicBtn.setBorder(null);
+        musicBtn.setFocusPainted(false);
+        musicBtn.setContentAreaFilled(false);
         musicBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
@@ -88,10 +114,10 @@ public class LoginFrame extends JFrame implements ActionListener {
         //设置容器的位置
         usernameJp.setBounds(200, 210, 400, 50);
         passwordJp.setBounds(300, 250, 200, 50);
-        loginJp.setBounds(300, 290, 100, 60);
-        registerJp.setBounds(390, 290, 100, 60);
+        loginJp.setBounds(300, 300, 100, 60);
+        registerJp.setBounds(390, 300, 100, 60);
         musicJp.setBounds(this.getWidth() - 130, this.getHeight() - 90, 100, 60);
-        guestJp.setBounds(345, 330, 100, 60);
+        guestJp.setBounds(345, 340, 100, 60);
         usernameJp.add(username);
         usernameJp.add(usernameText);
         passwordJp.add(password);
