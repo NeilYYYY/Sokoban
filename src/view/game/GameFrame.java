@@ -178,6 +178,42 @@ public class GameFrame extends JFrame {
                 throw new RuntimeException(e);
             }
         }
+        File md5File = new File(filepath + ".md5");
+        if (!md5File.exists()) {
+            System.out.println("存档文档损坏喵！");
+            if (file.delete()) {
+                System.out.println("存档已清空！！！");
+                MapInfo mapInfo = new MapInfo();
+                mapInfo.setModel(controller.getModel());
+                try {
+                    FileFrame.createFile(filepath);
+                    for (int i = 0; i < 6; i++) {
+                        MapInfo mapInfo2 = new MapInfo();
+                        mapInfo2.setModel(null);
+                        mapInfo2.setId(i);
+                        mapInfo2.setStep(0);
+                        FileFrame.addNewMap(mapInfo2, filepath);
+                    }
+                    System.out.println("创建新文件并保存");
+                } catch (Exception e) {
+                    System.out.println("保存失败");
+                    e.printStackTrace();
+                }
+                try {
+                    boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.filepath);
+                    if (result) {
+                        System.out.println("更新成功");
+                    } else {
+                        System.out.println("更新失败");
+                    }
+                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
     }
 
     public int getLv() {
