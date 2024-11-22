@@ -23,6 +23,7 @@ public class GameFrame extends JFrame {
     private final User user;
     private final String filepath;
     private final File file;
+    private final FileFrame fileFrame;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         try {
@@ -47,6 +48,7 @@ public class GameFrame extends JFrame {
         this.add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
         System.out.println(this.user);
+        this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
         JButton restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         JButton loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
@@ -101,7 +103,6 @@ public class GameFrame extends JFrame {
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
-            FileFrame fileFrame = new FileFrame(800, 450, this.user, this, this.lv);
             this.setVisible(false);
             fileFrame.setVisible(true);
             gamePanel.requestFocusInWindow();
@@ -214,6 +215,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public FileFrame getFileFrame() {
+        return fileFrame;
     }
 
     public int getLv() {

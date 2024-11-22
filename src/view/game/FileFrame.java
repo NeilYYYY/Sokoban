@@ -2,10 +2,12 @@ package view.game;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import model.Level;
 import model.MapMatrix;
 import view.FileMD5Util;
 import view.FrameUtil;
 import view.login.User;
+import view.music.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,15 +19,18 @@ import java.util.List;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    private final GameFrame gameFrame;
+    private GameFrame gameFrame;
     private final int step;
     private final String filePath;
     private final MapMatrix copyModel;
     private final GamePanel gamePanel;
     JList<String> levelList;
     private int id = 0;
+    private int lv;
+    private User user;
+    private Sound sound;
 
-    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
+    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -34,6 +39,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
+        this.lv = lv;
+        this.user = user;
+        this.sound = sound;
         File file = new File(filePath);
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
@@ -219,10 +227,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Load(int id) throws Exception {
         //读取地图
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+        if (!checkFile()) {
             System.out.println("存档文件损坏喵！");
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
-            return;
+            fixFile();
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
+            gameFrame.dispose();
+            MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
+            gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
+            this.dispose();
+            gameFrame.setVisible(true);
         }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
@@ -269,9 +282,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Show(int id) throws Exception {
         //读取地图
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+        if (!checkFile()) {
             System.out.println("存档文件损坏喵！");
-            return;
+//            fixFile();
         }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
@@ -291,9 +304,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Save(int id) throws Exception {
         //读取文件
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
-            System.out.println("存档文件损坏喵！");//todo 存档时文件损坏
-            return;
+        if (!checkFile()) {
+            System.out.println("存档文件损坏喵！");
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
+            fixFile();
+            gameFrame.dispose();
+            MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
+            gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
+            this.dispose();
+            gameFrame.setVisible(true);
         }
         if (id == 0) {
             JOptionPane.showMessageDialog(this, "这是Auto_Save喵~", "Tips", JOptionPane.INFORMATION_MESSAGE);
@@ -309,6 +328,50 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".md5"));
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkFile() {
+        try {
+            return FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void fixFile(){
+        File file = new File(filePath);
+        File file1 = new File(filePath + ".md5");
+        if (file.delete() && file1.delete()) {
+            System.out.println("文件已删除");
+        } else {
+            System.out.println("删除文件失败");
+        }
+
+        MapMatrix originalMap = new MapMatrix(Level.values()[gameFrame.getLv() - 1].getMap());
+        try {
+            createFile(filePath);
+            for (int i = 0; i < 6; i++) {
+                MapInfo mapInfo = new MapInfo();
+                if (i == 0){
+                    mapInfo.setModel(originalMap);
+                } else {
+                    mapInfo.setModel(originalMap);
+                }
+                mapInfo.setId(i);
+                mapInfo.setStep(0);
+                addNewMap(mapInfo, filePath);
+            }
+            System.out.println("创建新文件并保存");
+        } catch (Exception e) {
+            System.out.println("保存失败");
+            e.printStackTrace();
+        }
+        try {
+            createFile(filePath + ".md5");
+            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".md5"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
