@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import controller.GameController;
 import model.MapMatrix;
+import view.FileMD5Util;
 import view.FrameUtil;
 import view.level.LevelFrame;
 import view.login.User;
@@ -170,8 +171,11 @@ public class GameFrame extends JFrame {
                 } else {
                     System.out.println("更新失败");
                 }
+                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
         }
     }
