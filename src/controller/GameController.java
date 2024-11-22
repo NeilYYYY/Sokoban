@@ -130,28 +130,25 @@ public class GameController {
         return true;
     }
 
-    public boolean doLose(GameFrame gameFrame) {
+    public void doLose(GameFrame gameFrame) {
         if (checkLose()) {
             if (this.view.getSteps() >= 100) {
                 System.out.println("Too many steps! 雑魚～");
                 JOptionPane.showMessageDialog(gameFrame, "Too many steps! 雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);
                 gameFrame.getController().restartGame();
-                return true;
+                return;
             }
             System.out.println("You lose!");
             int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Restart"}, "Restart");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();
-                return true;
             } else if (option == 0) {
                 LevelFrame levelFrame = new LevelFrame(user, this.sound);
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
-                return true;
             }
         }
-        return false;
     }
 
     public boolean doMove(int row, int col, Direction direction) {

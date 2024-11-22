@@ -15,8 +15,4 @@ public class Box extends JComponent {
     public void paintComponent(Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
-
-    public int getValue() {
-        return 10;
-    }
 }

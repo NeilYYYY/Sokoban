@@ -20,10 +20,6 @@ public class Hero extends JComponent {
         g.drawImage(image, 0, 0, this);
     }
 
-    public int getValue() {
-        return 20;
-    }
-
     public int getRow() {
         return row;
     }

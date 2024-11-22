@@ -14,13 +14,13 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JSlider volumeSlider;  // 音量条
     private final JLabel statusLabel;  // 状态显示标签
     private int choose;
-    Logger log = Logger.getLogger("MusicFrame");
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
+            Logger log = Logger.getLogger(this.getClass().getName());
             log.info(e.getMessage());
         }
         this.jFrame = jFrame;

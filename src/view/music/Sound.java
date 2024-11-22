@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 public class Sound {
     AudioFormat audioFormat;
+    Logger log = Logger.getLogger(this.getClass().getName());
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
     private volatile boolean isLooping = false;  // 是否循环播放
@@ -16,7 +17,6 @@ public class Sound {
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
     private volatile long currentFrame;  // 当前帧位置
-    Logger log = Logger.getLogger(this.getClass().getName());
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;

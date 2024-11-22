@@ -20,17 +20,17 @@ import java.util.logging.Logger;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    private GameFrame gameFrame;
     private final int step;
     private final String filePath;
     private final MapMatrix copyModel;
     private final GamePanel gamePanel;
-    JList<String> levelList;
-    private int id = 0;
-    Logger log = Logger.getLogger(FileFrame.class.getName());
     private final int lv;
     private final User user;
     private final Sound sound;
+    JList<String> levelList;
+    private final Logger log = Logger.getLogger(FileFrame.class.getName());
+    private GameFrame gameFrame;
+    private int id = 0;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         try {
@@ -227,17 +227,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Load(int id) throws Exception {
+    public void Load(int id) {
         //读取地图
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
-            gameFrame.dispose();
-            MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-            gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
-            this.dispose();
-            gameFrame.setVisible(true);
+            reopenGameFrame();
             return;
         }
         try {
@@ -283,7 +279,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Show(int id) throws Exception {
+    private void reopenGameFrame() {
+        gameFrame.dispose();
+        MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
+        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
+        this.dispose();
+        gameFrame.setVisible(true);
+    }
+
+    public void Show(int id) {
         //读取地图
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
@@ -306,17 +310,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void Save(int id) throws Exception {
+    public void Save(int id) {
         //读取文件
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
             fixFile();
-            gameFrame.dispose();
-            MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-            gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
-            this.dispose();
-            gameFrame.setVisible(true);
+            reopenGameFrame();
         }
         if (id == 0) {
             JOptionPane.showMessageDialog(this, "这是Auto_Save喵~", "Tips", JOptionPane.INFORMATION_MESSAGE);
@@ -345,7 +345,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public void fixFile(){
+    public void fixFile() {
         File file = new File(filePath);
         File file1 = new File(filePath + ".md5");
         if (file.delete() && file1.delete()) {
@@ -359,11 +359,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             createFile(filePath);
             for (int i = 0; i < 6; i++) {
                 MapInfo mapInfo = new MapInfo();
-                if (i == 0){
-                    mapInfo.setModel(originalMap);
-                } else {
-                    mapInfo.setModel(originalMap);
-                }
+                mapInfo.setModel(originalMap);
                 mapInfo.setId(i);
                 mapInfo.setStep(0);
                 addNewMap(mapInfo, filePath);

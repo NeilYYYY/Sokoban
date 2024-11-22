@@ -20,13 +20,13 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JButton guestBtn;
     private final Sound sound;
     private LevelFrame levelFrame;
-    Logger log = Logger.getLogger("LoginFrame");
 
     public LoginFrame(Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
+            Logger log = Logger.getLogger("LoginFrame");
             log.info(e.getMessage());
         }
         this.setTitle("Sokoban Knight");
@@ -136,7 +136,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(musicJp);
         add(guestJp);
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(),Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);

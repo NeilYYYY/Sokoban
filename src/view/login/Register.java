@@ -15,13 +15,13 @@ public class Register extends JFrame implements ActionListener {
     private final JButton registerBtn;
     private final JButton backBtn;
     private final LoginFrame loginFrame;
-    Logger log = Logger.getLogger(getClass().getName());
 
     public Register(LoginFrame loginFrame) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
+            Logger log = Logger.getLogger(getClass().getName());
             log.info(e.getMessage());
         }
         this.loginFrame = loginFrame;
@@ -94,7 +94,7 @@ public class Register extends JFrame implements ActionListener {
         add(passwordTrueJp);
         add(registerJp);
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(),Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);

@@ -8,8 +8,10 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public record User(int id, String username, String password) {
+    private static final Logger log = Logger.getLogger(User.class.getName());
 
     //读取用户数据 检查有没有出现用户名重复的情况
     public static boolean readUser(String username, ArrayList<User> user) {
@@ -39,7 +41,7 @@ public record User(int id, String username, String password) {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return false;
     }
@@ -88,7 +90,7 @@ public record User(int id, String username, String password) {
             return gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
             }.getType());
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         return new ArrayList<>();
     }
@@ -99,7 +101,7 @@ public record User(int id, String username, String password) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             gson.toJson(user, writer);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 

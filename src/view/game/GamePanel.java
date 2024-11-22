@@ -9,6 +9,7 @@ import view.login.User;
 import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
@@ -22,6 +23,7 @@ public class GamePanel extends ListenerPanel {
     private final GameFrame frame;
     private final String filepath;
     private final File file;
+    private final Logger log = Logger.getLogger(GamePanel.class.getName());
     private GameController controller;
     private JLabel stepLabel;
     private int steps;
@@ -140,7 +142,7 @@ public class GamePanel extends ListenerPanel {
                 System.out.println("创建新文件并保存");
             } catch (Exception e) {
                 System.out.println("保存失败");
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
         }
         autoSave();
@@ -242,7 +244,7 @@ public class GamePanel extends ListenerPanel {
             }
             FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -23,9 +23,9 @@ public class GameFrame extends JFrame {
     private final Sound sound;
     private final User user;
     private final FileFrame fileFrame;
-    Logger log = Logger.getLogger(GameFrame.class.getName());
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
+        Logger log = Logger.getLogger(GameFrame.class.getName());
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
@@ -147,7 +147,7 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png");
-        back.setImage(back.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);

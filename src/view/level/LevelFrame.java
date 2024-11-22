@@ -17,13 +17,13 @@ public class LevelFrame extends JFrame {
     private final User user;
     private final Sound sound;
     private int lv = 0;
-    Logger log = Logger.getLogger(LevelFrame.class.getName());
 
     public LevelFrame(User user, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
+            Logger log = Logger.getLogger(LevelFrame.class.getName());
             log.info(e.getMessage());
         }
         this.setTitle("Level");
@@ -92,7 +92,7 @@ public class LevelFrame extends JFrame {
         System.out.println(this.user);
 
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(),Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
