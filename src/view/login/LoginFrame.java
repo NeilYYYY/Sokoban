@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
+import java.util.logging.Logger;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -19,13 +20,14 @@ public class LoginFrame extends JFrame implements ActionListener {
     private final JButton guestBtn;
     private final Sound sound;
     private LevelFrame levelFrame;
+    Logger log = Logger.getLogger("LoginFrame");
 
     public LoginFrame(Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         this.setTitle("Sokoban Knight");
         this.setAlwaysOnTop(false);
@@ -133,7 +135,9 @@ public class LoginFrame extends JFrame implements ActionListener {
         add(registerJp);
         add(musicJp);
         add(guestJp);
-        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Godmaster.png"));
+        ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(),Image.SCALE_DEFAULT));
+        JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
         setVisible(true);

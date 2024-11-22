@@ -39,7 +39,7 @@ public class FileMD5Util {
     }
 
     // 比较两个MD5
-    public static boolean compareMD5(String md5FromFile, String calculatedMD5) {
-        return md5FromFile.equals(calculatedMD5);
+    public static boolean compareMD5failed(String md5FromFile, String calculatedMD5) {
+        return !md5FromFile.equals(calculatedMD5);
     }
 }

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Register extends JFrame implements ActionListener {
     private final JTextField usernameText;
@@ -14,13 +15,14 @@ public class Register extends JFrame implements ActionListener {
     private final JButton registerBtn;
     private final JButton backBtn;
     private final LoginFrame loginFrame;
+    Logger log = Logger.getLogger(getClass().getName());
 
     public Register(LoginFrame loginFrame) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         this.loginFrame = loginFrame;
         this.loginFrame.setVisible(false);
@@ -91,7 +93,9 @@ public class Register extends JFrame implements ActionListener {
         add(passwordJp);
         add(passwordTrueJp);
         add(registerJp);
-        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_Godmaster.png"));
+        ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(),Image.SCALE_DEFAULT));
+        JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
         setVisible(true);

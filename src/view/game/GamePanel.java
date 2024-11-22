@@ -231,7 +231,7 @@ public class GamePanel extends ListenerPanel {
 
     private void autoSave() {
         try {
-            if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
+            if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");//todo 自动存档时文件损坏
                 return;
             }

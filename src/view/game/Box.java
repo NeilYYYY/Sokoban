@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Box extends JComponent {
-    private final int value = 10;
     private final Image image;
 
     public Box(int width, int height) {
@@ -18,6 +17,6 @@ public class Box extends JComponent {
     }
 
     public int getValue() {
-        return value;
+        return 10;
     }
 }

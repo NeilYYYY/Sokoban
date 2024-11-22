@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
+import java.util.logging.Logger;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
@@ -24,13 +25,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final GamePanel gamePanel;
     JList<String> levelList;
     private int id = 0;
+    Logger log = Logger.getLogger(FileFrame.class.getName());
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
@@ -112,7 +114,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 System.out.println("创建新文件并保存");
             } catch (Exception e) {
                 System.out.println("保存失败");
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
         }
         backBtn.addActionListener(_ -> {
@@ -219,7 +221,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Load(int id) throws Exception {
         //读取地图
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+        if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
             System.out.println("存档文件损坏喵！");
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
             return;
@@ -263,13 +265,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
     public void Show(int id) throws Exception {
         //读取地图
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+        if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
             System.out.println("存档文件损坏喵！");
             return;
         }
@@ -285,13 +287,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
     public void Save(int id) throws Exception {
         //读取文件
-        if (!FileMD5Util.compareMD5(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
+        if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".md5")), FileMD5Util.calculateMD5(new File(this.filePath)))) {
             System.out.println("存档文件损坏喵！");//todo 存档时文件损坏
             return;
         }
@@ -308,7 +310,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
             FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".md5"));
         } catch (IOException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

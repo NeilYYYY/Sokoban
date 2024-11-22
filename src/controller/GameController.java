@@ -171,26 +171,7 @@ public class GameController {
             Hero h = currentGrid.removeHeroFromGrid();
             targetGrid.setHeroInGrid(h);
             //Update the row and column attribute in hero
-            h.setRow(tRow);
-            h.setCol(tCol);
-            switch (direction) {
-                case UP:
-                    moveHero[view.getSteps()] = 3;
-                    view.setMoveHero(moveHero);
-                    break;
-                case DOWN:
-                    moveHero[view.getSteps()] = 4;
-                    view.setMoveHero(moveHero);
-                    break;
-                case LEFT:
-                    moveHero[view.getSteps()] = 1;
-                    view.setMoveHero(moveHero);
-                    break;
-                case RIGHT:
-                    moveHero[view.getSteps()] = 2;
-                    view.setMoveHero(moveHero);
-                    break;
-            }
+            moveHeroBack(direction, tRow, tCol, h);
             moveBox[view.getSteps()] = 0;
             return true;
         }
@@ -206,26 +187,7 @@ public class GameController {
             Hero h = currentGrid.removeHeroFromGrid();
             targetGrid.setHeroInGrid(h);
             ttGrid.setBoxInGrid(b);
-            h.setRow(tRow);
-            h.setCol(tCol);
-            switch (direction) {
-                case UP:
-                    moveHero[view.getSteps()] = 3;
-                    view.setMoveHero(moveHero);
-                    break;
-                case DOWN:
-                    moveHero[view.getSteps()] = 4;
-                    view.setMoveHero(moveHero);
-                    break;
-                case LEFT:
-                    moveHero[view.getSteps()] = 1;
-                    view.setMoveHero(moveHero);
-                    break;
-                case RIGHT:
-                    moveHero[view.getSteps()] = 2;
-                    view.setMoveHero(moveHero);
-                    break;
-            }
+            moveHeroBack(direction, tRow, tCol, h);
             switch (direction) {
                 case UP:
                     moveBox[view.getSteps()] = 3;
@@ -247,6 +209,29 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    private void moveHeroBack(Direction direction, int tRow, int tCol, Hero h) {
+        h.setRow(tRow);
+        h.setCol(tCol);
+        switch (direction) {
+            case UP:
+                moveHero[view.getSteps()] = 3;
+                view.setMoveHero(moveHero);
+                break;
+            case DOWN:
+                moveHero[view.getSteps()] = 4;
+                view.setMoveHero(moveHero);
+                break;
+            case LEFT:
+                moveHero[view.getSteps()] = 1;
+                view.setMoveHero(moveHero);
+                break;
+            case RIGHT:
+                moveHero[view.getSteps()] = 2;
+                view.setMoveHero(moveHero);
+                break;
+        }
     }
 
     public boolean checkVertical(int x, int y) {

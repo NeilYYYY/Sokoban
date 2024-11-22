@@ -3,6 +3,7 @@ package view.music;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.logging.Logger;
 
 public class MusicFrame extends JFrame implements ActionListener {
     private final JFrame jFrame;
@@ -13,13 +14,14 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JSlider volumeSlider;  // 音量条
     private final JLabel statusLabel;  // 状态显示标签
     private int choose;
+    Logger log = Logger.getLogger("MusicFrame");
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);

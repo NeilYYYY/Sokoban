@@ -3,6 +3,7 @@ package view.music;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class Sound {
     AudioFormat audioFormat;
@@ -15,6 +16,7 @@ public class Sound {
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
     private volatile long currentFrame;  // 当前帧位置
+    Logger log = Logger.getLogger(this.getClass().getName());
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
@@ -37,7 +39,7 @@ public class Sound {
                 volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
             }
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
     }
 
@@ -72,7 +74,7 @@ public class Sound {
 
                 stop(); // 播放结束时清理资源
             } catch (IOException | UnsupportedAudioFileException e) {
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
         });
         playThread.start();
@@ -100,7 +102,7 @@ public class Sound {
             try {
                 playThread.join();
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
         }
         prefetch(); // 重新加载资源

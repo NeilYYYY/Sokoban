@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import controller.GameController;
 import model.MapMatrix;
@@ -21,15 +22,14 @@ public class GameFrame extends JFrame {
     private final int lv;
     private final Sound sound;
     private final User user;
-    private final String filepath;
-    private final File file;
+    Logger log = Logger.getLogger(GameFrame.class.getName());
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.info(e.getMessage());
         }
         Font font = new Font("Arial", Font.BOLD, 25);
         this.lv = lv;
@@ -39,12 +39,13 @@ public class GameFrame extends JFrame {
         this.user = user;
         this.sound = sound;
         this.setResizable(false);
-        this.filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
-        this.file = new File(filepath);
+        String filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
+        File file = new File(filepath);
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
         this.add(gamePanel);
+        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
         System.out.println(this.user);
         JButton restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
@@ -144,7 +145,9 @@ public class GameFrame extends JFrame {
         });
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        JLabel bg = new JLabel(new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png"));
+        ImageIcon back = new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png");
+        back.setImage(back.getImage().getScaledInstance(width, height,Image.SCALE_DEFAULT));
+        JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.add(bg);
         if (!file.exists()) {
@@ -162,18 +165,18 @@ public class GameFrame extends JFrame {
                 System.out.println("创建新文件并保存");
             } catch (Exception e) {
                 System.out.println("保存失败");
-                e.printStackTrace();
+                log.info(e.getMessage());
             }
             try {
-                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.filepath);
+                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), filepath);
                 if (result) {
                     System.out.println("更新成功");
                 } else {
                     System.out.println("更新失败");
                 }
-                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
+                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
             } catch (IOException e) {
-                e.printStackTrace();
+                log.info(e.getMessage());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -197,18 +200,18 @@ public class GameFrame extends JFrame {
                     System.out.println("创建新文件并保存");
                 } catch (Exception e) {
                     System.out.println("保存失败");
-                    e.printStackTrace();
+                    log.info(e.getMessage());
                 }
                 try {
-                    boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.filepath);
+                    boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), filepath);
                     if (result) {
                         System.out.println("更新成功");
                     } else {
                         System.out.println("更新失败");
                     }
-                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
+                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    log.info(e.getMessage());
                 } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
