@@ -88,6 +88,9 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             System.out.println("You win!");
+            Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
+            s.setVolume(1.0);
+            s.play();
             if(gameFrame.getLv() == 5){//最后一关则退出
                 JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 LevelFrame levelFrame = new LevelFrame(user, this.sound);
@@ -132,6 +135,9 @@ public class GameController {
 
     public void doLose(GameFrame gameFrame) {
         if (checkLose()) {
+            Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Bad00_Think00.wav");
+            s.setVolume(1.0);
+            s.play();
             if (this.view.getSteps() >= 100) {
                 System.out.println("Too many steps! 雑魚～");
                 JOptionPane.showMessageDialog(gameFrame, "Too many steps! 雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);

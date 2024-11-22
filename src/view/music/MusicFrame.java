@@ -35,7 +35,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 "Help me, ERINNNNNN!! feat.初音ミク (Game size) (feat. Hatsune Miku).wav",
                 "Alphys.wav",
                 "EnterHallownest.wav",
-                "Main_Theme.wav",
+                "Breath_of_Wild_Main_Theme.wav",
                 "恋ひ恋ふ縁.wav"
         };
         setLayout(null);
@@ -185,7 +185,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         listModel.addElement("Help me, ERINNNNNN!! feat.初音ミク");
         listModel.addElement("Alphys");
         listModel.addElement("EnterHallownest");
-        listModel.addElement("Main_Theme");
+        listModel.addElement("旷野之息 Main Theme");
         listModel.addElement("恋ひ恋ふ縁");
         // 创建列表，并设置选择监听器
         return new JList<>(listModel);

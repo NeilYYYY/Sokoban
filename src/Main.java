@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         Sound sound = new Sound("src/misc/EnterHallownest.wav");
+        sound.setVolume(0.5);
         sound.setLooping(true);
         sound.play();
         SwingUtilities.invokeLater(() -> {
