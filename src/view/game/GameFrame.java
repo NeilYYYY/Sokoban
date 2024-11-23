@@ -104,6 +104,7 @@ public class GameFrame extends JFrame {
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
+            fileFrame.Show(0);
             this.setVisible(false);
             fileFrame.setVisible(true);
             gamePanel.requestFocusInWindow();
