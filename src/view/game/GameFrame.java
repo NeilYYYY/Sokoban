@@ -2,6 +2,8 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -24,8 +26,10 @@ public class GameFrame extends JFrame {
     private final User user;
     private final FileFrame fileFrame;
     private boolean check = true;
+    private final boolean mode;
+    private int time;
 
-    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
+    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -34,6 +38,8 @@ public class GameFrame extends JFrame {
             log.info(e.getMessage());
         }
         Font font = new Font("Arial", Font.BOLD, 25);
+        this.mode = mode;
+        this.time = time;
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
@@ -50,7 +56,7 @@ public class GameFrame extends JFrame {
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
         System.out.println(this.user);
-        this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
+        this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound, this.mode, this.time);
         JButton restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         JButton loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
@@ -97,6 +103,11 @@ public class GameFrame extends JFrame {
         leastStepLabel.setForeground(Color.WHITE);
         JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         lvLabel.setForeground(Color.WHITE);
+        if (isMode()){
+            JLabel timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+            timeLabel.setForeground(Color.WHITE);
+        }
+
         restartBtn.addActionListener(_ -> {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
@@ -247,5 +258,9 @@ public class GameFrame extends JFrame {
 
     public GameController getController() {
         return controller;
+    }
+
+    public boolean isMode() {
+        return mode;
     }
 }

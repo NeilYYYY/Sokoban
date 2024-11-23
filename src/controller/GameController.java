@@ -102,7 +102,7 @@ public class GameController {
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
-                GameFrame gameFrame1 = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound);
+                GameFrame gameFrame1 = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), 0);
                 gameFrame1.setVisible(true);
                 gameFrame.dispose();
                 return true;

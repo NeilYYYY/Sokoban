@@ -31,14 +31,18 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final Logger log = Logger.getLogger(FileFrame.class.getName());
     private GameFrame gameFrame;
     private int id = 0;
+    private final boolean mode;
+    private final int time;
 
-    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
+    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound, boolean mode, int time) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             log.info(e.getMessage());
         }
+        this.mode = mode;
+        this.time = time;
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
         this.lv = lv;
@@ -268,7 +272,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private void reopenGameFrame() {
         gameFrame.dispose();
         MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound);
+        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
         this.dispose();
         gameFrame.setVisible(true);
     }
