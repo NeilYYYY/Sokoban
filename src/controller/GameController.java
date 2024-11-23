@@ -117,7 +117,7 @@ public class GameController {
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
-            if (gameFrame.getLv() == 5) {//最后一关则退出
+            if (gameFrame.getLv() == 6) {//最后一关则退出
                 JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
                 levelFrame.setVisible(true);
@@ -150,15 +150,28 @@ public class GameController {
             return true;
         }
         int[][] map = model.getMatrix();
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[i].length; j++) {
-                if (map[i][j] / 10 == 1) {
-                    if (checkVertical(i, j) || checkHorizontal(i, j)) {
-                        return false;
+        if (lv != 6) {
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[i].length; j++) {
+                    if (map[i][j] / 10 == 1) {
+                        if (checkVertical(i, j) || checkHorizontal(i, j)) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        } else {
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[i].length; j++) {
+                    if (map[i][j] / 10 == 1) {
+                        if (checkVerticalPlus(i, j) || checkHorizontalPlus(i, j)) {
+                            return false;
+                        }
                     }
                 }
             }
         }
+
         return true;
     }
 
@@ -275,6 +288,16 @@ public class GameController {
     }
 
     public boolean checkHorizontal(int x, int y) {
+        int[][] map = model.getMatrix();
+        return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
+    }
+
+    public boolean checkVerticalPlus(int x, int y) {
+        int[][] map = model.getMatrix();
+        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1;
+    }
+
+    public boolean checkHorizontalPlus(int x, int y) {
         int[][] map = model.getMatrix();
         return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
     }

@@ -77,6 +77,14 @@ public class LevelFrame extends JFrame {
         level5Btn.setBorder(null);
         level5Btn.setFocusPainted(false);
         level5Btn.setContentAreaFilled(false);
+        JButton level6Btn = FrameUtil.createButton(this, "Level 6", new Point(630, 155), 80, 60);
+        level6Btn.setFont(f);
+        level6Btn.setForeground(Color.WHITE);
+        level6Btn.setMargin(new Insets(0, 0, 0, 0));
+        level6Btn.setBorderPainted(false);
+        level6Btn.setBorder(null);
+        level6Btn.setFocusPainted(false);
+        level6Btn.setContentAreaFilled(false);
         JButton logoutBtn = FrameUtil.createButton(this, "Logout", new Point(300, 275), 80, 60);
         logoutBtn.setFont(f);
         logoutBtn.setForeground(Color.WHITE);
@@ -153,6 +161,14 @@ public class LevelFrame extends JFrame {
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
+        });
+
+        level6Btn.addActionListener(_ -> {
+            this.lv = 6;
+            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
             GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);

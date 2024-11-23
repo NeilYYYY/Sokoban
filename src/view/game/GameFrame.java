@@ -134,12 +134,21 @@ public class GameFrame extends JFrame {
         stepLabel.setForeground(Color.WHITE);
         gamePanel.setStepLabel(stepLabel);
         int[] leastStep = {13, 23, 31, 27, 37};
-        JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
-        leastStepLabel.setForeground(Color.WHITE);
-        JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
-        lvLabel.setForeground(Color.WHITE);
-        if (isMode()) {
-            timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+        if (lv != 6){
+            JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+            leastStepLabel.setForeground(Color.WHITE);
+            JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+            lvLabel.setForeground(Color.WHITE);
+            if (isMode()) {
+                timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+                timeLabel.setForeground(Color.WHITE);
+            }
+        } else {
+            JLabel leastStepLabel = FrameUtil.createJLabel(this, "Min_Steps: ???", f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+            leastStepLabel.setForeground(Color.WHITE);
+            JLabel lvLabel = FrameUtil.createJLabel(this, "Level: ???", f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+            lvLabel.setForeground(Color.WHITE);
+            timeLabel = FrameUtil.createJLabel(this, "Left time: ???", f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
             timeLabel.setForeground(Color.WHITE);
         }
 
@@ -148,7 +157,7 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         loadBtn.addActionListener(_ -> {
-            if (isMode()) {
+            if (isMode() && lv != 6) {
                 JOptionPane.showMessageDialog(this, "限时模式无法存档");
                 gamePanel.requestFocusInWindow();
                 return;
