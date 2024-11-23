@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    private final int step;
+    private int step;
     private final String filePath;
     private final MapMatrix copyModel;
     private final GamePanel gamePanel;
@@ -303,6 +303,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             return;
         }
         try {
+            this.step = this.gameFrame.getGamePanel().getSteps();
             boolean result = updateMapById(id, copyModel, this.step, gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox(), this.filePath);
             if (result) {
                 System.out.println("更新成功");

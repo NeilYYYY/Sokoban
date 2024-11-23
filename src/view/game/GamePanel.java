@@ -232,7 +232,7 @@ public class GamePanel extends ListenerPanel {
     private void autoSave() {
         try {
             if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
-                System.out.println("存档文件损坏喵！");//todo 自动存档时文件损坏
+                System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
             }
