@@ -96,7 +96,12 @@ public class GamePanel extends ListenerPanel {
                 if (model.getId (i,j) == 100) {
                     grids[i][j].setButtonInGrid(new Button(GRID_SIZE - 10, GRID_SIZE - 10));
                 }
-
+                if (model.getId (i,j) % 10 == 3) {
+                    grids[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));
+                }
+                if (model.getId (i,j) % 10 == 4) {
+                    grids[i][j].setOpenDoorInGrid(new OpenDoor(GRID_SIZE - 10, GRID_SIZE - 10));
+                }
                 this.add(grids[i][j]);
             }
         }

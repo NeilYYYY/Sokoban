@@ -15,6 +15,8 @@ public class GridComponent extends JComponent {
     private Hero hero;
     private Box box;
     private Button button;
+    private OpenDoor openDoor;
+    private ClosedDoor closedDoor;
 
     public GridComponent(int row, int col, int id, int gridSize) {
         Random random = new Random();
@@ -49,10 +51,6 @@ public class GridComponent extends JComponent {
                 g.drawImage(imageWall, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
                 break;
-            case 0:
-                g.drawImage(imageFloor, 0, 0, this);
-                borderColor = Color.DARK_GRAY;
-                break;
             case 2:
                 g.drawImage(imageFloor, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
@@ -62,6 +60,12 @@ public class GridComponent extends JComponent {
                 g.fillPolygon(xPoints, yPoints, 4);
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
+                break;
+            case 5:
+                break;
+            default:
+                g.drawImage(imageFloor, 0, 0, this);
+                borderColor = Color.DARK_GRAY;
                 break;
         }
         Border border = BorderFactory.createLineBorder(borderColor, 0);//不知道为什么这段代码删了会有BUG，就把厚度设置成0。
@@ -103,6 +107,16 @@ public class GridComponent extends JComponent {
     public void setButtonInGrid(Button button) {
         this.button = button;
         this.add(button);
+    }
+
+    public void setOpenDoorInGrid(OpenDoor openDoor) {
+        this.openDoor = openDoor;
+        this.add(openDoor);
+    }
+
+    public void setClosedDoorInGrid(ClosedDoor closedDoor) {
+        this.closedDoor = closedDoor;
+        this.add(closedDoor);
     }
 
     //When removing hero from this grid, invoking this method
