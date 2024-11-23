@@ -30,6 +30,7 @@ public class GamePanel extends ListenerPanel {
     private Hero hero;
     private int[] moveHero = new int[GRID_SIZE];
     private int[] moveBox = new int[GRID_SIZE];
+    private int time;
 
     public GamePanel(MapMatrix model, GameFrame frame, User user, int step) {
         this.setVisible(true);
@@ -42,6 +43,7 @@ public class GamePanel extends ListenerPanel {
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
         this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), user.id());
         this.file = new File(filepath);
+        this.time = frame.getTime();
         initialGame(step);
     }
 
@@ -59,6 +61,10 @@ public class GamePanel extends ListenerPanel {
 
     public int getGRID_SIZE() {
         return GRID_SIZE;
+    }
+
+    public int getTime() {
+        return time;
     }
 
     public void initialGame(int step) {

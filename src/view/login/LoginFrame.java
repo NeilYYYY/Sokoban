@@ -163,7 +163,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             User user;
             if (temp && !username.isEmpty()) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
-                levelFrame = new LevelFrame(user, this.sound);
+                levelFrame = new LevelFrame(user, this.sound, false);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 showLevelFrame();
             } else {
@@ -177,7 +177,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == guestBtn) {
             User user;
             user = User.getUser("", User.getUserList());
-            levelFrame = new LevelFrame(user, this.sound);
+            levelFrame = new LevelFrame(user, this.sound, false);
             JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
             showLevelFrame();
         }

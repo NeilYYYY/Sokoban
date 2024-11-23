@@ -272,7 +272,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private void reopenGameFrame() {
         gameFrame.dispose();
         MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, false, 1);
         this.dispose();
         gameFrame.setVisible(true);
     }

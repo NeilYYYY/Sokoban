@@ -93,7 +93,7 @@ public class GameController {
             s.play();
             if(gameFrame.getLv() == 5){//最后一关则退出
                 JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
@@ -107,7 +107,7 @@ public class GameController {
                 gameFrame.dispose();
                 return true;
             } else if (option == 0) {
-                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
@@ -118,6 +118,9 @@ public class GameController {
 
     public boolean checkLose() {
         if (view.getSteps() >= 100){
+            return true;
+        }
+        if (view.getTime() == 0){
             return true;
         }
         int[][] map = model.getMatrix();
@@ -151,7 +154,7 @@ public class GameController {
                 gameFrame.getController().restartGame();
                 return true;
             } else if (option == 0) {
-                LevelFrame levelFrame = new LevelFrame(user, this.sound);
+                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;

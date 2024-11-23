@@ -113,6 +113,10 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         loadBtn.addActionListener(_ -> {
+            if (isMode()){
+                JOptionPane.showMessageDialog(this, "特殊mode无法存档");
+                return;
+            }
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
@@ -131,7 +135,7 @@ public class GameFrame extends JFrame {
             //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
         backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(this.user, this.sound);
+            LevelFrame levelFrame = new LevelFrame(this.user, this.sound, this.mode);
             this.dispose();
             levelFrame.setVisible(true);
         });
@@ -262,5 +266,9 @@ public class GameFrame extends JFrame {
 
     public boolean isMode() {
         return mode;
+    }
+
+    public int getTime() {
+        return time;
     }
 }
