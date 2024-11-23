@@ -35,6 +35,10 @@ public class Register extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null);
         this.setResizable(false);
         //组件
+        GlowingParticleEffect panel = new GlowingParticleEffect(100);
+        panel.setBounds(0, 0, 800, 450);
+        panel.setOpaque(false);
+        this.getContentPane().add(panel);
         JLabel username = new JLabel("Username:");
         Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
         username.setFont(f);
@@ -47,9 +51,23 @@ public class Register extends JFrame implements ActionListener {
         passwordTrue.setForeground(Color.WHITE);
         registerBtn = new JButton("Register");
         registerBtn.setFont(f);
+        registerBtn.setFont(f.deriveFont(16f));
+        registerBtn.setForeground(Color.WHITE);
+        registerBtn.setMargin(new Insets(0, 0, 0, 0));
+        registerBtn.setBorderPainted(false);
+        registerBtn.setBorder(null);
+        registerBtn.setFocusPainted(false);
+        registerBtn.setContentAreaFilled(false);
         registerBtn.addActionListener(this);
         backBtn = new JButton("Back");
         backBtn.setFont(f);
+        backBtn.setFont(f.deriveFont(16f));
+        backBtn.setForeground(Color.WHITE);
+        backBtn.setMargin(new Insets(0, 0, 0, 0));
+        backBtn.setBorderPainted(false);
+        backBtn.setBorder(null);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
         backBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
@@ -71,6 +89,9 @@ public class Register extends JFrame implements ActionListener {
         JPanel passwordTrueJp = new JPanel();
         passwordTrueJp.setBackground(null);
         passwordTrueJp.setOpaque(false);
+        JPanel backJp = new JPanel();
+        backJp.setBackground(null);
+        backJp.setOpaque(false);
         JPanel registerJp = new JPanel();
         registerJp.setBackground(null);
         registerJp.setOpaque(false);
@@ -78,7 +99,8 @@ public class Register extends JFrame implements ActionListener {
         usernameJp.setBounds(300, 125, 200, 40);
         passwordJp.setBounds(300, 175, 200, 40);
         passwordTrueJp.setBounds(250, 225, 300, 40);
-        registerJp.setBounds(300, 280, 200, 50);
+        backJp.setBounds(240, 280, 200, 50);
+        registerJp.setBounds(350, 280, 200, 50);
 
         usernameJp.add(username);
         usernameJp.add(usernameText);
@@ -86,18 +108,19 @@ public class Register extends JFrame implements ActionListener {
         passwordJp.add(passwordText);
         passwordTrueJp.add(passwordTrue);
         passwordTrueJp.add(passwordTextTrue);
-        registerJp.add(backBtn);
+        backJp.add(backBtn);
         registerJp.add(registerBtn);
         //将组件装入GUI
         add(usernameJp);
         add(passwordJp);
         add(passwordTrueJp);
+        add(backJp);
         add(registerJp);
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.add(bg);
+        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
         setVisible(true);
     }
 

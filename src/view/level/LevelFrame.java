@@ -105,7 +105,7 @@ public class LevelFrame extends JFrame {
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.add(bg);
+        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;

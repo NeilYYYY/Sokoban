@@ -109,7 +109,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.add(bg);
+        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
