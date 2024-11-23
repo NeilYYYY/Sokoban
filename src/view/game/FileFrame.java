@@ -39,6 +39,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
+        Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
         this.lv = lv;
@@ -55,8 +56,29 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.gamePanel.setLocation(130, height / 2 - this.gamePanel.getHeight() / 2);
         this.add(this.gamePanel);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(125 + this.gamePanel.getWidth() + 30, 300), 100, 50);
+        backBtn.setFont(f);
+        backBtn.setForeground(Color.BLACK);
+        backBtn.setMargin(new Insets(0, 0, 0, 0));
+        backBtn.setBorderPainted(false);
+        backBtn.setBorder(null);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
         JButton loadBtn = new JButton("Load");
+        loadBtn.setFont(f);
+        loadBtn.setForeground(Color.BLACK);
+        loadBtn.setMargin(new Insets(0, 0, 0, 0));
+        loadBtn.setBorderPainted(false);
+        loadBtn.setBorder(null);
+        loadBtn.setFocusPainted(false);
+        loadBtn.setContentAreaFilled(false);
         JButton saveBtn = new JButton("Save");
+        saveBtn.setFont(f);
+        saveBtn.setForeground(Color.BLACK);
+        saveBtn.setMargin(new Insets(0, 0, 0, 0));
+        saveBtn.setBorderPainted(false);
+        saveBtn.setBorder(null);
+        saveBtn.setFocusPainted(false);
+        saveBtn.setContentAreaFilled(false);
         loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
         saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
         this.add(loadBtn);
