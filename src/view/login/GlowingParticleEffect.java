@@ -29,16 +29,6 @@ public class GlowingParticleEffect extends JPanel {
         timer.start();
     }
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("Glowing Particle Effect");
-        GlowingParticleEffect panel = new GlowingParticleEffect(100); // 创建带有100个粒子的面板
-        frame.add(panel);
-        frame.setSize(800, 600); // 设置初始大小
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-
     private Particle createParticle() {
         int x = random.nextInt(getWidth());
         int y = random.nextInt(getHeight());
