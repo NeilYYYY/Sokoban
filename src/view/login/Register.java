@@ -143,7 +143,7 @@ public class Register extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
                     try {
-                        user.add(new User(id, username, User.getSHA(password)));
+                        user.add(new User(id, username, User.getSHA(password), new boolean[]{false, false, false, false, false}));
                     } catch (NoSuchAlgorithmException ex) {
                         throw new RuntimeException(ex);
                     }

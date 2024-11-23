@@ -130,9 +130,6 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
         rightMoveBtn.setForeground(Color.WHITE);
-        JLabel stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
-        stepLabel.setForeground(Color.WHITE);
-        gamePanel.setStepLabel(stepLabel);
         int[] leastStep = {13, 23, 31, 27, 37};
         if (lv != 6){
             JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
@@ -143,6 +140,9 @@ public class GameFrame extends JFrame {
                 timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
                 timeLabel.setForeground(Color.WHITE);
             }
+            JLabel stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+            stepLabel.setForeground(Color.WHITE);
+            gamePanel.setStepLabel(stepLabel);
         } else {
             JLabel leastStepLabel = FrameUtil.createJLabel(this, "Min_Steps: ???", f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
             leastStepLabel.setForeground(Color.WHITE);
@@ -150,6 +150,9 @@ public class GameFrame extends JFrame {
             lvLabel.setForeground(Color.WHITE);
             timeLabel = FrameUtil.createJLabel(this, "Left time: ???", f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
             timeLabel.setForeground(Color.WHITE);
+            JLabel stepLabel = FrameUtil.createJLabel(this, "Step: ???", f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+            stepLabel.setForeground(Color.WHITE);
+            gamePanel.setStepLabel(stepLabel);
         }
 
         restartBtn.addActionListener(_ -> {

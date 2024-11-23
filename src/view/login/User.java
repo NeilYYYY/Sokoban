@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public record User(int id, String username, String password) {
+public record User(int id, String username, String password, boolean[] lv) {
     private static final Logger log = Logger.getLogger(User.class.getName());
 
     //读取用户数据 检查有没有出现用户名重复的情况

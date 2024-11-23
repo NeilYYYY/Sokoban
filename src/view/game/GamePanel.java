@@ -143,7 +143,9 @@ public class GamePanel extends ListenerPanel {
             controller.getTimer().start();
         }
         this.steps++;
-        this.stepLabel.setText(String.format("Step: %d", this.steps));
+        if (getFrame().getLv() != 6){
+            this.stepLabel.setText(String.format("Step: %d", this.steps));
+        }
         if (!file.exists()) {
             MapInfo mapInfo = new MapInfo();
             mapInfo.setModel(model);

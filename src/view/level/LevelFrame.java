@@ -1,6 +1,7 @@
 package view.level;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 import javax.swing.*;
 
@@ -136,42 +137,67 @@ public class LevelFrame extends JFrame {
 
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
-            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-            this.setVisible(false);
-            gameFrame.setVisible(true);
+            ArrayList<User> users = User.getUserList();
+            if (users.get(this.user.id()).lv()[this.lv - 2]) {
+                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
+                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
-            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-            this.setVisible(false);
-            gameFrame.setVisible(true);
+            ArrayList<User> users = User.getUserList();
+            if (users.get(this.user.id()).lv()[this.lv - 2]) {
+                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
+                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
-            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-            this.setVisible(false);
-            gameFrame.setVisible(true);
+            ArrayList<User> users = User.getUserList();
+            if (users.get(this.user.id()).lv()[this.lv - 2]) {
+                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
+                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
-            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-            this.setVisible(false);
-            gameFrame.setVisible(true);
+            ArrayList<User> users = User.getUserList();
+            if (users.get(this.user.id()).lv()[this.lv - 2]) {
+                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
+                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         level6Btn.addActionListener(_ -> {
             this.lv = 6;
-            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-            this.setVisible(false);
-            gameFrame.setVisible(true);
+            ArrayList<User> users = User.getUserList();
+            if (users.get(this.user.id()).lv()[this.lv - 2]) {
+                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
+                GameFrame gameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
+                this.setVisible(false);
+                gameFrame.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
         logoutBtn.addActionListener(_ -> {
             this.setVisible(false);

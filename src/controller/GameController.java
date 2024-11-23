@@ -10,6 +10,7 @@ import view.login.User;
 import view.music.Sound;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
@@ -34,7 +35,7 @@ public class GameController {
         this.sound = sound;
         view.setController(this);
         System.out.println(user);
-        if (view.getFrame().isMode()) {
+        if (view.getFrame().isMode() && view.getFrame().getLv() != 6) {
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
@@ -61,14 +62,13 @@ public class GameController {
                 }
             }
         }
-        view.setTime(view.getFrame().getTime());
-        view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
         switch (this.lv) {
             case 1 -> model.copyMatrix(Level.LEVEL_1.getMap());
             case 2 -> model.copyMatrix(Level.LEVEL_2.getMap());
             case 3 -> model.copyMatrix(Level.LEVEL_3.getMap());
             case 4 -> model.copyMatrix(Level.LEVEL_4.getMap());
             case 5 -> model.copyMatrix(Level.LEVEL_5.getMap());
+            case 6 -> model.copyMatrix(Level.LEVEL_6.getMap());
         }
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
@@ -84,8 +84,12 @@ public class GameController {
             }
         }
         view.setSteps(0);
-        view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
+        if (view.getFrame().getLv() != 6) {
+            view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
+        }
         if (view.getFrame().isMode()) {
+            view.setTime(view.getFrame().getTime());
+            view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
             timer.stop();
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
@@ -113,6 +117,11 @@ public class GameController {
 
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
+            if (this.user.id() != 0) {
+                ArrayList<User> users = User.getUserList();
+                users.get(this.user.id()).lv()[this.lv - 1] = true;
+                User.writeUser(users);
+            }
             System.out.println("You win!");
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
