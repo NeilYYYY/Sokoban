@@ -47,6 +47,10 @@ public class GamePanel extends ListenerPanel {
         initialGame(step);
     }
 
+    public GameFrame getFrame() {
+        return frame;
+    }
+
     public GridComponent[][] getGrids() {
         return grids;
     }
@@ -65,6 +69,10 @@ public class GamePanel extends ListenerPanel {
 
     public int getTime() {
         return time;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
     }
 
     public void initialGame(int step) {
@@ -154,10 +162,12 @@ public class GamePanel extends ListenerPanel {
         if (controller.doWin(this.frame)) {
             return;
         }
-        if (controller.doLose(this.frame)){
+        if (controller.doLose(this.frame)) {
             return;
         }
-        autoSave();
+        if (!frame.isMode()) {
+            autoSave();
+        }
     }
 
     public void undoMove() {

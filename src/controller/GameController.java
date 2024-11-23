@@ -33,6 +33,18 @@ public class GameController {
         this.sound = sound;
         view.setController(this);
         System.out.println(user);
+        if (view.getFrame().isMode()) {
+            Timer timer = new Timer(1000, e -> {
+                view.setTime(view.getTime() - 1);
+                view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
+                if (view.getTime() == 0) {
+                    // 倒计时结束，执行相应操作
+                    ((Timer) e.getSource()).stop();
+                    doLose(view.getFrame());
+                }
+            });
+            timer.start();
+        }
     }
 
     public MapMatrix getModel() {
@@ -49,6 +61,8 @@ public class GameController {
                 }
             }
         }
+        view.setTime(view.getFrame().getTime());
+        view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
         switch (this.lv) {
             case 1 -> model.copyMatrix(Level.LEVEL_1.getMap());
             case 2 -> model.copyMatrix(Level.LEVEL_2.getMap());
@@ -71,6 +85,18 @@ public class GameController {
         }
         view.setSteps(0);
         view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
+        if (view.getFrame().isMode()) {
+            Timer timer = new Timer(1000, e -> {
+                view.setTime(view.getTime() - 1);
+                view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
+                if (view.getTime() == 0) {
+                    // 倒计时结束，执行相应操作
+                    ((Timer) e.getSource()).stop();
+                    doLose(view.getFrame());
+                }
+            });
+            timer.start();
+        }
     }
 
     public boolean checkWin() {
@@ -91,14 +117,14 @@ public class GameController {
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
-            if(gameFrame.getLv() == 5){//最后一关则退出
+            if (gameFrame.getLv() == 5) {//最后一关则退出
                 JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             }
-            int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Next"}, "Next");
+            int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Next"}, "Next");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
@@ -117,10 +143,10 @@ public class GameController {
     }
 
     public boolean checkLose() {
-        if (view.getSteps() >= 100){
+        if (view.getSteps() >= 100) {
             return true;
         }
-        if (view.getTime() == 0){
+        if (view.getTime() == 0) {
             return true;
         }
         int[][] map = model.getMatrix();
@@ -148,7 +174,7 @@ public class GameController {
                 return true;
             }
             System.out.println("You lose!");
-            int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Restart"}, "Restart");
+            int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Restart"}, "Restart");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();

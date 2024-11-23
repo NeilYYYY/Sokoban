@@ -16,8 +16,10 @@ import view.music.Sound;
 public class LevelFrame extends JFrame {
     private final User user;
     private final Sound sound;
+    private final int time;
     private int lv = 0;
     private boolean mode;
+    private JLabel bg;
 
     public LevelFrame(User user, Sound sound, boolean mode) {
         try {
@@ -32,6 +34,7 @@ public class LevelFrame extends JFrame {
         this.setLayout(null);
         this.setSize(800, 450);
         this.sound = sound;
+        this.time = 60;
         this.setResizable(false);
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 155), 80, 60);
         Font f = new Font("Comic Sans MS", Font.BOLD, 16);
@@ -100,16 +103,16 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setContentAreaFilled(false);
         this.user = user;
         System.out.println(this.user);
-        if (this.mode){
-            ImageIcon back = new ImageIcon("src/images/FileFramebg.png");
+        if (this.mode) {
+            ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
             back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-            JLabel bg = new JLabel(back);
+            bg = new JLabel(back);
             bg.setBounds(0, 0, this.getWidth(), this.getHeight());
             this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
         } else {
             ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
             back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-            JLabel bg = new JLabel(back);
+            bg = new JLabel(back);
             bg.setBounds(0, 0, this.getWidth(), this.getHeight());
             this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
         }
@@ -118,7 +121,7 @@ public class LevelFrame extends JFrame {
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_1.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, 120);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -126,7 +129,7 @@ public class LevelFrame extends JFrame {
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, 120);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -134,7 +137,7 @@ public class LevelFrame extends JFrame {
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, 120);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -142,7 +145,7 @@ public class LevelFrame extends JFrame {
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, 120);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -150,7 +153,7 @@ public class LevelFrame extends JFrame {
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, 120);
+            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -160,17 +163,25 @@ public class LevelFrame extends JFrame {
             loginFrame.setVisible(true);
         });
         changeModeBtn.addActionListener(_ -> {
-           //change bg
+            //change bg
             this.mode = !this.mode;
             System.out.println("change mode");
-            if (this.mode){
-                LevelFrame levelFrame1 = new LevelFrame (this.user, this.sound, true);
-                this.dispose();
-                levelFrame1.setVisible(true);
+            if (this.mode) {
+                this.getContentPane().remove(bg);
+                ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
+                back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                bg = new JLabel(back);
+                bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+                this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.getContentPane().repaint();
             } else {
-                LevelFrame levelFrame1 = new LevelFrame (this.user, this.sound, false);
-                this.dispose();
-                levelFrame1.setVisible(true);
+                this.getContentPane().remove(bg);
+                ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+                back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                bg = new JLabel(back);
+                bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+                this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.getContentPane().repaint();
             }
         });
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));

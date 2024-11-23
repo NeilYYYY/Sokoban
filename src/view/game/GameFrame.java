@@ -2,8 +2,6 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -25,9 +23,10 @@ public class GameFrame extends JFrame {
     private final Sound sound;
     private final User user;
     private final FileFrame fileFrame;
-    private boolean check = true;
     private final boolean mode;
-    private int time;
+    JLabel timeLabel;
+    private boolean check = true;
+    private final int time;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
@@ -56,7 +55,7 @@ public class GameFrame extends JFrame {
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
         System.out.println(this.user);
-        this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound, this.mode, this.time);
+        this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
         JButton restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
         JButton loadBtn = FrameUtil.createButton(this, "Savings", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
         JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
@@ -103,8 +102,8 @@ public class GameFrame extends JFrame {
         leastStepLabel.setForeground(Color.WHITE);
         JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
         lvLabel.setForeground(Color.WHITE);
-        if (isMode()){
-            JLabel timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+        if (isMode()) {
+            timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
             timeLabel.setForeground(Color.WHITE);
         }
 
@@ -113,18 +112,19 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         loadBtn.addActionListener(_ -> {
-            if (isMode()){
-                JOptionPane.showMessageDialog(this, "特殊mode无法存档");
+            if (isMode()) {
+                JOptionPane.showMessageDialog(this, "限时模式无法存档");
+                gamePanel.requestFocusInWindow();
                 return;
             }
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
-            if (check){
+            if (check) {
                 Sound s = new Sound("src/misc/zako.wav");
                 s.setVolume(1.0);
                 s.play();
-                JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雌小鬼语录", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
+                JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雌小鬼语录", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                 check = false;
             }
             fileFrame.Show(0);
@@ -242,6 +242,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public JLabel getTimeLabel() {
+        return timeLabel;
     }
 
     public FileFrame getFileFrame() {

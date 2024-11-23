@@ -20,29 +20,25 @@ import java.util.logging.Logger;
 
 
 public class FileFrame extends JFrame /*implements ActionListener */ {
-    private int step;
     private final String filePath;
     private final MapMatrix copyModel;
     private final GamePanel gamePanel;
     private final int lv;
     private final User user;
     private final Sound sound;
-    JList<String> levelList;
     private final Logger log = Logger.getLogger(FileFrame.class.getName());
+    JList<String> levelList;
+    private int step;
     private GameFrame gameFrame;
     private int id = 0;
-    private final boolean mode;
-    private final int time;
 
-    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound, boolean mode, int time) {
+    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             SwingUtilities.updateComponentTreeUI(this);
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-        this.mode = mode;
-        this.time = time;
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
         this.lv = lv;
@@ -105,7 +101,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         scrollPane.getViewport().setBackground(Color.WHITE);
         this.add(scrollPane);
 
-        ImageIcon back = new ImageIcon("src/images/FileFramebg.png");
+        ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
