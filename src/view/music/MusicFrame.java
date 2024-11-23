@@ -50,7 +50,10 @@ public class MusicFrame extends JFrame implements ActionListener {
 
         // 创建一个列表模型
         JScrollPane scrollPane = getJScrollPane(sound);
-        scrollPane.getViewport().setBackground(Color.WHITE);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0));
+        scrollPane.setBorder(null);
         this.add(scrollPane);
 
         this.pauseBtn = new JButton("⏸");
@@ -139,6 +142,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn = new JButton("⮐");
         Font f2 = new Font("", Font.PLAIN, 20);
         this.backBtn.setFont(f2);
+        this.backBtn.setForeground(Color.WHITE);
         this.backBtn.setToolTipText("Back");
         this.backBtn.setBounds(10, 10, 30, 30);
         this.backBtn.setBorder(BorderFactory.createEmptyBorder());
@@ -153,6 +157,8 @@ public class MusicFrame extends JFrame implements ActionListener {
 
         statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%",
                 sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+        statusLabel.setFont(new Font("Serif", Font.PLAIN, 12));
+        statusLabel.setForeground(Color.WHITE);
         statusLabel.setBounds(10, 370, 200, 30);
         this.add(statusLabel);
 
@@ -173,6 +179,12 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
 
         this.setVisible(true);
+
+        ImageIcon back = new ImageIcon("src/images/MusicFrame.png");
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        JLabel bg = new JLabel(back);
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.add(bg);
     }
 
     private static JList<String> getSongList() {
@@ -241,6 +253,13 @@ public class MusicFrame extends JFrame implements ActionListener {
             public void mouseExited(MouseEvent e) {
             }
         });//增加双击功能
+        songList.setCellRenderer((_, value, _, _, _) -> {
+            JLabel label = new JLabel(value);
+            label.setOpaque(false); // 让每个项的背景透明
+            label.setFont(new Font("Serif", Font.BOLD, 12));
+            label.setForeground(Color.WHITE); // 设置文本颜色为黑色（可选）
+            return label;
+        });
         songList.setOpaque(false);
 
         // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中

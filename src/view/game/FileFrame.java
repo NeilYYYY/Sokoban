@@ -101,6 +101,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         scrollPane.getViewport().setBackground(Color.WHITE);
         this.add(scrollPane);
 
+        ImageIcon back = new ImageIcon("src/images/FileFramebg.png");
+        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        JLabel bg = new JLabel(back);
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.add(bg);
+
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         copyModel = this.gameFrame.getGameController().getModel();

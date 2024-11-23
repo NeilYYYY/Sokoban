@@ -23,6 +23,7 @@ public class GameFrame extends JFrame {
     private final Sound sound;
     private final User user;
     private final FileFrame fileFrame;
+    private boolean check = true;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
@@ -104,6 +105,10 @@ public class GameFrame extends JFrame {
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
+            if (check){
+                JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雌小鬼语录", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
+                check = false;
+            }
             fileFrame.Show(0);
             this.setVisible(false);
             fileFrame.setVisible(true);
