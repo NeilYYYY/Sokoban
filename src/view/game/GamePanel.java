@@ -145,11 +145,13 @@ public class GamePanel extends ListenerPanel {
                 log.info(e.getMessage());
             }
         }
-        autoSave();
         if (controller.doWin(this.frame)) {
             return;
         }
-        controller.doLose(this.frame);
+        if (controller.doLose(this.frame)){
+            return;
+        }
+        autoSave();
     }
 
     public void undoMove() {

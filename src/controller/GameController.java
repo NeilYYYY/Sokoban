@@ -21,8 +21,8 @@ public class GameController {
     private final User user;
     private final int lv;
     private final Sound sound;
-    private final int[] moveHero = new int[100];
-    private final int[] moveBox = new int[100];
+    private final int[] moveHero = new int[101];
+    private final int[] moveBox = new int[101];
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
         this.view = view;
@@ -133,7 +133,7 @@ public class GameController {
         return true;
     }
 
-    public void doLose(GameFrame gameFrame) {
+    public boolean doLose(GameFrame gameFrame) {
         if (checkLose()) {
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Bad00_Think00.wav");
             s.setVolume(1.0);
@@ -142,19 +142,22 @@ public class GameController {
                 System.out.println("Too many steps! 雑魚～");
                 JOptionPane.showMessageDialog(gameFrame, "Too many steps! 雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);
                 gameFrame.getController().restartGame();
-                return;
+                return true;
             }
             System.out.println("You lose!");
             int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"Back", "Restart"}, "Restart");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();
+                return true;
             } else if (option == 0) {
                 LevelFrame levelFrame = new LevelFrame(user, this.sound);
                 levelFrame.setVisible(true);
                 gameFrame.dispose();
+                return true;
             }
         }
+        return false;
     }
 
     public boolean doMove(int row, int col, Direction direction) {
