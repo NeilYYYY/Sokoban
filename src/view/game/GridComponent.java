@@ -14,6 +14,7 @@ public class GridComponent extends JComponent {
     private int col;
     private Hero hero;
     private Box box;
+    private Button button;
 
     public GridComponent(int row, int col, int id, int gridSize) {
         Random random = new Random();
@@ -97,6 +98,11 @@ public class GridComponent extends JComponent {
     public void setBoxInGrid(Box box) {
         this.box = box;
         this.add(box);
+    }
+
+    public void setButtonInGrid(Button button) {
+        this.button = button;
+        this.add(button);
     }
 
     //When removing hero from this grid, invoking this method

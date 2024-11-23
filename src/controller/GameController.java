@@ -22,8 +22,9 @@ public class GameController {
     private final User user;
     private final int lv;
     private final Sound sound;
-    private final int[] moveHero = new int[101];
-    private final int[] moveBox = new int[101];
+    private final int[] moveHero = new int[151];
+    private final int[] moveBox = new int[151];
+    private final int[] moveFragile = new int[151];
     private Timer timer;
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
@@ -35,7 +36,7 @@ public class GameController {
         this.sound = sound;
         view.setController(this);
         System.out.println(user);
-        if (view.getFrame().isMode() && view.getFrame().getLv() != 6) {
+        if (view.getFrame().isMode()) {
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
@@ -56,7 +57,7 @@ public class GameController {
         System.out.println("Do restart game here");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
-                switch (model.getId(i, j) / 10) {
+                switch (model.getId(i, j) % 100 / 10) {
                     case 1 -> view.getGrids()[i][j].removeBoxFromGrid();
                     case 2 -> view.getGrids()[i][j].removeHeroFromGrid();
                 }
@@ -107,7 +108,7 @@ public class GameController {
         int[][] map = model.getMatrix();
         for (int[] ints : map) {
             for (int anInt : ints) {
-                if (anInt == 10) {
+                if (anInt % 100 / 10 == 1 && anInt % 10 != 2) {
                     return false;
                 }
             }
@@ -162,7 +163,7 @@ public class GameController {
         if (lv != 6) {
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
-                    if (map[i][j] / 10 == 1) {
+                    if (map[i][j] % 100 / 10 == 1) {
                         if (checkVertical(i, j) || checkHorizontal(i, j)) {
                             return false;
                         }
@@ -172,15 +173,17 @@ public class GameController {
         } else {
             for (int i = 0; i < map.length; i++) {
                 for (int j = 0; j < map[i].length; j++) {
-                    if (map[i][j] / 10 == 1) {
+                    if (map[i][j] % 100 / 10 == 1) {
                         if (checkVerticalPlus(i, j) || checkHorizontalPlus(i, j)) {
                             return false;
                         }
                     }
+                    if (map[i][j] == 13) {
+                        return true;
+                    }
                 }
             }
         }
-
         return true;
     }
 
@@ -224,8 +227,12 @@ public class GameController {
         int ttCol = tCol + direction.getCol();
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
         int[][] map = model.getMatrix();
-        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2) {
+        if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2 || map[tRow][tCol] == 4 || map[tRow][tCol] == 100 || map[tRow][tCol] == 5) {
             //update hero in MapMatrix
+            if (model.getMatrix()[row][col] == 25) {
+                moveFragile[view.getSteps()] = 1;
+                System.out.println("Fragile");
+            }
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 20;
             //Update hero in GamePanel
@@ -234,12 +241,23 @@ public class GameController {
             //Update the row and column attribute in hero
             moveHeroBack(direction, tRow, tCol, h);
             moveBox[view.getSteps()] = 0;
+            if (model.getMatrix()[row][col] == 5){
+                model.getMatrix()[row][col] = 1;
+                view.setMoveFragile(moveFragile);
+                //todo repaint
+            }
             return true;
         }
-        if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12) {
+        if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12 || map[tRow][tCol] == 14 || map[tRow][tCol] == 110 || map[tRow][tCol] == 15) {
             GridComponent ttGrid = view.getGridComponent(ttRow, ttCol);
-            if (map[ttRow][ttCol] / 10 == 1 || map[ttRow][ttCol] == 1) {
+            if (map[ttRow][ttCol] / 10 == 1 || map[ttRow][ttCol] == 1 || map[ttRow][ttCol] == 3) {
                 return false;
+            }
+            doorCheck(tRow, tCol);
+            if (model.getMatrix()[row][col] == 25) {
+                moveFragile[view.getSteps()] = 1;
+                view.setMoveFragile(moveFragile);
+                System.out.println("Fragile");
             }
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 10;
@@ -249,6 +267,11 @@ public class GameController {
             targetGrid.setHeroInGrid(h);
             ttGrid.setBoxInGrid(b);
             moveHeroBack(direction, tRow, tCol, h);
+            if (model.getMatrix()[row][col] == 5){
+                model.getMatrix()[row][col] = 1;
+                //todo repaint
+            }
+            doorCheck(ttRow, ttCol);
             switch (direction) {
                 case UP:
                     moveBox[view.getSteps()] = 3;
@@ -270,6 +293,21 @@ public class GameController {
             return true;
         }
         return false;
+    }
+
+    private void doorCheck(int tRow, int tCol) {
+        if (model.getMatrix()[tRow][tCol] / 10 == 11){
+            for (int i = 0; i < model.getMatrix().length; i++) {
+                for (int j = 0; j < model.getMatrix()[0].length; j++) {
+                    if (model.getMatrix()[i][j] == 3) {
+                        model.getMatrix()[i][j]++;
+                    } else if (model.getMatrix()[i][j] == 4) {
+                        doLose(view.getFrame());
+                        model.getMatrix()[i][j]--;
+                    }
+                }
+            }
+        }
     }
 
     private void moveHeroBack(Direction direction, int tRow, int tCol, Hero h) {
@@ -307,11 +345,11 @@ public class GameController {
 
     public boolean checkVerticalPlus(int x, int y) {
         int[][] map = model.getMatrix();
-        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1;
+        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y - 1]  != 3 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1 && map[x][y + 1] != 3;
     }
 
     public boolean checkHorizontalPlus(int x, int y) {
         int[][] map = model.getMatrix();
-        return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
+        return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x - 1][y] != 3 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1 && map[x + 1][y] != 3;
     }
 }

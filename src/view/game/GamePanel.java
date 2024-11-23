@@ -30,6 +30,7 @@ public class GamePanel extends ListenerPanel {
     private Hero hero;
     private int[] moveHero = new int[GRID_SIZE];
     private int[] moveBox = new int[GRID_SIZE];
+    private int[] moveFragile = new int[GRID_SIZE];
     private int time;
 
     public GamePanel(MapMatrix model, GameFrame frame, User user, int step) {
@@ -92,6 +93,10 @@ public class GamePanel extends ListenerPanel {
                         grids[i][j].setHeroInGrid(hero);
                         break;
                 }
+                if (model.getId (i,j) == 100) {
+                    grids[i][j].setButtonInGrid(new Button(GRID_SIZE - 10, GRID_SIZE - 10));
+                }
+
                 this.add(grids[i][j]);
             }
         }
@@ -176,8 +181,13 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void undoMove() {
+        for (int i = 0; i <= this.steps; i++) {
+            System.out.println(moveFragile[i]);
+        }
         this.steps--;
-        this.stepLabel.setText(String.format("Step: %d", this.steps));
+        if (getFrame().getLv() != 6){
+            this.stepLabel.setText(String.format("Step: %d", this.steps));
+        }
         GridComponent currentGrid = getGridComponent(hero.getRow(), hero.getCol());
         GridComponent targetGrid;
         GridComponent ttGrid;
@@ -186,6 +196,9 @@ public class GamePanel extends ListenerPanel {
             case 1 -> {//撤回英雄左移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 20;
+                if (moveFragile[this.steps + 1] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
@@ -194,6 +207,9 @@ public class GamePanel extends ListenerPanel {
             case 2 -> {//撤回英雄右移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 20;
+                if (moveFragile[this.steps + 1] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
@@ -202,6 +218,9 @@ public class GamePanel extends ListenerPanel {
             case 3 -> {//撤回英雄上移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 20;
+                if (moveFragile[this.steps + 1] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() + 1);
@@ -210,6 +229,9 @@ public class GamePanel extends ListenerPanel {
             case 4 -> {//撤回英雄下移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 20;
+                if (moveFragile[this.steps + 1] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() - 1);
@@ -222,29 +244,37 @@ public class GamePanel extends ListenerPanel {
             case 1 -> {//撤回箱子左移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
                 b = ttGrid.removeBoxFromGrid();
+                doorCheck(hero.getRow(), hero.getCol() - 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
+                doorCheck(hero.getRow(), hero.getCol() - 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 2 -> {//撤回箱子右移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
                 b = ttGrid.removeBoxFromGrid();
+                doorCheck(hero.getRow(), hero.getCol() + 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
+                doorCheck(hero.getRow(), hero.getCol() + 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 3 -> {//撤回箱子上移
                 ttGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
+                doorCheck(hero.getRow() - 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
+                doorCheck(hero.getRow() - 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
             case 4 -> {//撤回箱子下移
                 ttGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
+                doorCheck(hero.getRow() + 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
+                doorCheck(hero.getRow() + 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
         }
@@ -303,6 +333,29 @@ public class GamePanel extends ListenerPanel {
 
     public void setMoveBox(int[] moveBox) {
         this.moveBox = moveBox;
+    }
+
+    public int[] getMoveFragile() {
+        return moveFragile;
+    }
+
+    public void setMoveFragile(int[] moveFragile) {
+        this.moveFragile = moveFragile;
+    }
+
+
+    private void doorCheck(int tRow, int tCol) {
+        if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11){
+            for (int i = 0; i < controller.getModel().getMatrix().length; i++) {
+                for (int j = 0; j < controller.getModel().getMatrix()[0].length; j++) {
+                    if (controller.getModel().getMatrix()[i][j] == 3) {
+                        controller.getModel().getMatrix()[i][j]++;
+                    } else if (controller.getModel().getMatrix()[i][j] == 4) {
+                        controller.getModel().getMatrix()[i][j]--;
+                    }
+                }
+            }
+        }
     }
 
 }
