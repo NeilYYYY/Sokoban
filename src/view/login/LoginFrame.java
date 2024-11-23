@@ -23,8 +23,8 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     public LoginFrame(Sound sound) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             Logger log = Logger.getLogger("LoginFrame");
             log.info(e.getMessage());
@@ -119,7 +119,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         guestJp.setOpaque(false);
         //设置容器的位置
         usernameJp.setBounds(200, 210, 400, 50);
-        passwordJp.setBounds(300, 250, 200, 50);
+        passwordJp.setBounds(200, 250, 400, 50);
         loginJp.setBounds(300, 300, 100, 60);
         registerJp.setBounds(390, 300, 100, 60);
         musicJp.setBounds(this.getWidth() - 130, this.getHeight() - 90, 100, 60);

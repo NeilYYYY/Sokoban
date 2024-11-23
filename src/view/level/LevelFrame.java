@@ -23,8 +23,8 @@ public class LevelFrame extends JFrame {
 
     public LevelFrame(User user, Sound sound, boolean mode) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             Logger log = Logger.getLogger(LevelFrame.class.getName());
             log.info(e.getMessage());

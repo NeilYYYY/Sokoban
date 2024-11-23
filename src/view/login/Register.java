@@ -18,8 +18,8 @@ public class Register extends JFrame implements ActionListener {
 
     public Register(LoginFrame loginFrame) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             Logger log = Logger.getLogger(getClass().getName());
             log.info(e.getMessage());
@@ -96,9 +96,9 @@ public class Register extends JFrame implements ActionListener {
         registerJp.setBackground(null);
         registerJp.setOpaque(false);
         //设置容器的位置
-        usernameJp.setBounds(300, 125, 200, 40);
-        passwordJp.setBounds(300, 175, 200, 40);
-        passwordTrueJp.setBounds(250, 225, 300, 40);
+        usernameJp.setBounds(200, 125, 400, 40);
+        passwordJp.setBounds(200, 175, 400, 40);
+        passwordTrueJp.setBounds(200, 225, 400, 40);
         backJp.setBounds(240, 280, 200, 50);
         registerJp.setBounds(350, 280, 200, 50);
 

@@ -17,8 +17,8 @@ public class MusicFrame extends JFrame implements ActionListener {
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             Logger log = Logger.getLogger(this.getClass().getName());
             log.info(e.getMessage());
@@ -167,6 +167,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         volumeSlider.setBounds(10, 370, 200, 10);
         volumeSlider.setPaintTicks(true);
         volumeSlider.setPaintLabels(true);
+        volumeSlider.setOpaque(false);
+        volumeSlider.setFocusable(false);
 
         this.add(volumeSlider);
 
@@ -180,7 +182,7 @@ public class MusicFrame extends JFrame implements ActionListener {
 
         this.setVisible(true);
 
-        ImageIcon back = new ImageIcon("src/images/MusicFrame.png");
+        ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());

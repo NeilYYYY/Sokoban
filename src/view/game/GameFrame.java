@@ -31,8 +31,8 @@ public class GameFrame extends JFrame {
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             log.info(e.getMessage());
         }

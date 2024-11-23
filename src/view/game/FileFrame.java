@@ -34,8 +34,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            SwingUtilities.updateComponentTreeUI(this);
+            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
+            UIManager.setLookAndFeel(lookAndFeel);
         } catch (Exception e) {
             log.info(e.getMessage());
         }
