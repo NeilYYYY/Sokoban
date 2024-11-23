@@ -139,6 +139,9 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void afterMove() {
+        if (steps == 0 && frame.isMode()) {
+            controller.getTimer().start();
+        }
         this.steps++;
         this.stepLabel.setText(String.format("Step: %d", this.steps));
         if (!file.exists()) {
