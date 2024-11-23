@@ -212,7 +212,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
             fixFile();
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
             return;
         }
@@ -294,7 +294,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         //读取文件
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             fixFile();
             reopenGameFrame();
         }

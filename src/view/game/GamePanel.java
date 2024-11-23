@@ -234,7 +234,7 @@ public class GamePanel extends ListenerPanel {
             if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
-                JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);//todo 读取时文件损坏
+                JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
             boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
             if (result) {
