@@ -157,7 +157,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.add(statusLabel);
 
         // 音量条
-        volumeSlider = new JSlider(0, 100, 100);
+        volumeSlider = new JSlider(0, 100, (int) (sound.getVolume()*100));
         volumeSlider.setBounds(10, 370, 200, 10);
         volumeSlider.setPaintTicks(true);
         volumeSlider.setPaintLabels(true);
