@@ -106,6 +106,9 @@ public class GameFrame extends JFrame {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
             if (check){
+                Sound s = new Sound("src/misc/zako.wav");
+                s.setVolume(1.0);
+                s.play();
                 JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雌小鬼语录", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[] {"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                 check = false;
             }
