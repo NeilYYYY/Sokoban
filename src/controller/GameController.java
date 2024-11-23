@@ -23,6 +23,7 @@ public class GameController {
     private final Sound sound;
     private final int[] moveHero = new int[101];
     private final int[] moveBox = new int[101];
+    private Timer timer;
 
     public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
         this.view = view;
@@ -34,7 +35,7 @@ public class GameController {
         view.setController(this);
         System.out.println(user);
         if (view.getFrame().isMode()) {
-            Timer timer = new Timer(1000, e -> {
+            timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
@@ -43,7 +44,6 @@ public class GameController {
                     doLose(view.getFrame());
                 }
             });
-            timer.start();
         }
     }
 
@@ -86,7 +86,8 @@ public class GameController {
         view.setSteps(0);
         view.getStepLabel().setText(String.format("Step: %d", view.getSteps()));
         if (view.getFrame().isMode()) {
-            Timer timer = new Timer(1000, e -> {
+            timer.stop();
+            timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
@@ -95,7 +96,6 @@ public class GameController {
                     doLose(view.getFrame());
                 }
             });
-            timer.start();
         }
     }
 
@@ -128,8 +128,8 @@ public class GameController {
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
-                GameFrame gameFrame1 = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), 0);
-                gameFrame1.setVisible(true);
+                GameFrame newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+                newGameFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             } else if (option == 0) {
@@ -200,6 +200,10 @@ public class GameController {
             }
         }
         return false;
+    }
+
+    public Timer getTimer() {
+        return timer;
     }
 
     public boolean doMove(int row, int col, Direction direction) {
