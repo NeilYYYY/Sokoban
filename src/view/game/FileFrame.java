@@ -97,7 +97,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         });
         levelList.setOpaque(false);
         JScrollPane scrollPane = new JScrollPane(levelList);
-        scrollPane.setBounds(30, 125, 70, 110);
+        scrollPane.setBounds(30, 125, 75, 115);
         scrollPane.getViewport().setBackground(Color.WHITE);
         this.add(scrollPane);
 
