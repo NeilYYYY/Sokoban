@@ -233,6 +233,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 }
             }
         }
+        gamePanel.repaint();
     }
 
     public void Load(int id) {
@@ -277,6 +278,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().setMoveBox(maps.get(map.getId()).getMoveBox());
                 this.dispose();
                 this.gameFrame.setVisible(true);
+                gameFrame.getGamePanel().repaint();
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
                 System.out.println("地图不存在");

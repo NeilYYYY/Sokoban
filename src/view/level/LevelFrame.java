@@ -21,6 +21,7 @@ public class LevelFrame extends JFrame {
     private int lv = 0;
     private boolean mode;
     private JLabel bg;
+    private LevelParticleEffect panel;
 
     public LevelFrame(User user, Sound sound, boolean mode) {
         try {
@@ -37,6 +38,10 @@ public class LevelFrame extends JFrame {
         this.sound = sound;
         this.time = 60;
         this.setResizable(false);
+        panel = new LevelParticleEffect(50, mode);
+        panel.setBounds(0, 0, 800, 450);
+        panel.setOpaque(false);
+        this.getContentPane().add(panel);
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 155), 80, 60);
         Font f = new Font("Comic Sans MS", Font.BOLD, 16);
         level1Btn.setFont(f);
@@ -208,9 +213,14 @@ public class LevelFrame extends JFrame {
             //change bg
             this.mode = !this.mode;
             System.out.println("change mode");
+            this.remove(panel);
+            panel = new LevelParticleEffect(50, this.mode);
+            panel.setBounds(0, 0, 800, 450);
+            panel.setOpaque(false);
+            this.add(panel);
             if (this.mode) {
                 this.getContentPane().remove(bg);
-                ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
+                ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
                 back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
                 bg = new JLabel(back);
                 bg.setBounds(0, 0, this.getWidth(), this.getHeight());

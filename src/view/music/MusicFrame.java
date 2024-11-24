@@ -25,6 +25,25 @@ public class MusicFrame extends JFrame implements ActionListener {
         }
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);
+        setLayout(null);
+        setTitle("Music Player");
+        setSize(300, 450);
+        //设置界面一直处于最上层
+//        setAlwaysOnTop(true);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        this.getContentPane().setLayout(null);
+        this.setResizable(false);
+        Font f = new Font("", Font.PLAIN, 20);
+        Font f2 = new Font("", Font.PLAIN, 20);
+
+        // 创建一个列表模型
+        JScrollPane scrollPane = getJScrollPane(sound);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0));
+        scrollPane.setBorder(null);
+        this.add(scrollPane);
         choose = 1;
         SongName = new String[]{
                 "東方紅魔郷魔法少女達の百年祭.wav",
@@ -38,26 +57,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 "Breath_of_Wild_Main_Theme.wav",
                 "恋ひ恋ふ縁.wav"
         };
-        setLayout(null);
-        setTitle("Music Player");
-        setSize(300, 450);
-        //设置界面一直处于最上层
-//        setAlwaysOnTop(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        this.getContentPane().setLayout(null);
-        this.setResizable(false);
-
-        // 创建一个列表模型
-        JScrollPane scrollPane = getJScrollPane(sound);
-        scrollPane.setOpaque(false);
-        scrollPane.getViewport().setOpaque(false);
-        scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0));
-        scrollPane.setBorder(null);
-        this.add(scrollPane);
-
         this.pauseBtn = new JButton("⏸");
-        Font f = new Font("", Font.PLAIN, 20);
         this.pauseBtn.setFont(f);
         this.pauseBtn.setToolTipText("Pause");
         this.pauseBtn.setBounds(130, 300, 30, 30);
@@ -140,7 +140,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         }
 
         this.backBtn = new JButton("⮐");
-        Font f2 = new Font("", Font.PLAIN, 20);
         this.backBtn.setFont(f2);
         this.backBtn.setForeground(Color.WHITE);
         this.backBtn.setToolTipText("Back");
@@ -169,7 +168,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         volumeSlider.setPaintLabels(true);
         volumeSlider.setOpaque(false);
         volumeSlider.setFocusable(false);
-
         this.add(volumeSlider);
 
         // 音量条拖动
@@ -180,13 +178,13 @@ public class MusicFrame extends JFrame implements ActionListener {
                     sound.isPlaying() ? "Playing" : "Paused", volume * 100));
         });
 
-        this.setVisible(true);
-
         ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+
+        this.setVisible(true);
     }
 
     private static JList<String> getSongList() {

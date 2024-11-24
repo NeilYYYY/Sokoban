@@ -6,7 +6,6 @@ import java.awt.*;
 import java.util.Random;
 
 public class GridComponent extends JComponent {
-    static Color color = new Color(246, 246, 229);
     private final int id; // represents the units digit value. It cannot be changed during one game.
     private final Image imageWall;
     private final Image imageFloor;
@@ -19,9 +18,7 @@ public class GridComponent extends JComponent {
     private ClosedDoor closedDoor;
 
     public GridComponent(int row, int col, int id, int gridSize) {
-        Random random = new Random();
-        int randomNum = random.nextInt(6) + 1;
-        switch (randomNum) {
+        switch (new Random().nextInt(6) + 1) {
             case 1 ->
                     this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 2 ->
@@ -45,7 +42,7 @@ public class GridComponent extends JComponent {
     @Override
     public void paintComponent(Graphics g) {
         super.printComponents(g);
-        Color borderColor = color;
+        Color borderColor;
         switch (id % 10) {
             case 1:
                 g.drawImage(imageWall, 0, 0, this);
@@ -137,30 +134,17 @@ public class GridComponent extends JComponent {
         return b;
     }
 
-    public Button removeButtonFromGrid() {
-        this.remove(this.button);
-        Button b = this.button;
-        this.button = null;
-        this.revalidate();
-        this.repaint();
-        return b;
-    }
-
-    public OpenDoor removeOpenDoorFromGrid() {
+    public void removeOpenDoorFromGrid() {
         this.remove(this.openDoor);
-        OpenDoor o = this.openDoor;
         this.openDoor = null;
         this.revalidate();
         this.repaint();
-        return o;
     }
 
-    public ClosedDoor removeClosedDoorFromGrid() {
+    public void removeClosedDoorFromGrid() {
         this.remove(this.closedDoor);
-        ClosedDoor cd = this.closedDoor;
         this.closedDoor = null;
         this.revalidate();
         this.repaint();
-        return cd;
     }
 }

@@ -112,6 +112,7 @@ public class GameController {
                 }
             });
         }
+        view.repaint();
     }
 
     public boolean checkWin() {
