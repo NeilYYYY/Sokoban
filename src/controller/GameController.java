@@ -241,10 +241,10 @@ public class GameController {
             //Update the row and column attribute in hero
             moveHeroBack(direction, tRow, tCol, h);
             moveBox[view.getSteps()] = 0;
-            if (model.getMatrix()[row][col] == 5){
+            if (model.getMatrix()[row][col] == 5) {
                 model.getMatrix()[row][col] = 1;
                 view.setMoveFragile(moveFragile);
-                //todo repaint
+                //todo repaint wall
             }
             return true;
         }
@@ -267,9 +267,9 @@ public class GameController {
             targetGrid.setHeroInGrid(h);
             ttGrid.setBoxInGrid(b);
             moveHeroBack(direction, tRow, tCol, h);
-            if (model.getMatrix()[row][col] == 5){
+            if (model.getMatrix()[row][col] == 5) {
                 model.getMatrix()[row][col] = 1;
-                //todo repaint
+                //todo repaint wall
             }
             doorCheck(ttRow, ttCol);
             switch (direction) {
@@ -296,14 +296,16 @@ public class GameController {
     }
 
     private void doorCheck(int tRow, int tCol) {
-        if (model.getMatrix()[tRow][tCol] / 10 == 11){
+        if (model.getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < model.getMatrix().length; i++) {
                 for (int j = 0; j < model.getMatrix()[0].length; j++) {
                     if (model.getMatrix()[i][j] == 3) {
                         model.getMatrix()[i][j]++;
+                        //todo repaint OpenDoor
                     } else if (model.getMatrix()[i][j] == 4) {
                         doLose(view.getFrame());
                         model.getMatrix()[i][j]--;
+                        //todo repaint ClosedDoor
                     }
                 }
             }
@@ -345,7 +347,7 @@ public class GameController {
 
     public boolean checkVerticalPlus(int x, int y) {
         int[][] map = model.getMatrix();
-        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y - 1]  != 3 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1 && map[x][y + 1] != 3;
+        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y - 1] != 3 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1 && map[x][y + 1] != 3;
     }
 
     public boolean checkHorizontalPlus(int x, int y) {

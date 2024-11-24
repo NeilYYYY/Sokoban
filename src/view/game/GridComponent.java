@@ -61,8 +61,6 @@ public class GridComponent extends JComponent {
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
                 break;
-            case 5:
-                break;
             default:
                 g.drawImage(imageFloor, 0, 0, this);
                 borderColor = Color.DARK_GRAY;

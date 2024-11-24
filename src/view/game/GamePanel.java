@@ -93,13 +93,13 @@ public class GamePanel extends ListenerPanel {
                         grids[i][j].setHeroInGrid(hero);
                         break;
                 }
-                if (model.getId (i,j) == 100) {
+                if (model.getId(i, j) == 100) {
                     grids[i][j].setButtonInGrid(new Button(GRID_SIZE - 10, GRID_SIZE - 10));
                 }
-                if (model.getId (i,j) % 10 == 3) {
+                if (model.getId(i, j) % 10 == 3) {
                     grids[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));
                 }
-                if (model.getId (i,j) % 10 == 4) {
+                if (model.getId(i, j) % 10 == 4) {
                     grids[i][j].setOpenDoorInGrid(new OpenDoor(GRID_SIZE - 10, GRID_SIZE - 10));
                 }
                 this.add(grids[i][j]);
@@ -153,7 +153,7 @@ public class GamePanel extends ListenerPanel {
             controller.getTimer().start();
         }
         this.steps++;
-        if (getFrame().getLv() != 6){
+        if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
         if (!file.exists()) {
@@ -190,7 +190,7 @@ public class GamePanel extends ListenerPanel {
             System.out.println(moveFragile[i]);
         }
         this.steps--;
-        if (getFrame().getLv() != 6){
+        if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
         GridComponent currentGrid = getGridComponent(hero.getRow(), hero.getCol());
@@ -201,8 +201,10 @@ public class GamePanel extends ListenerPanel {
             case 1 -> {//撤回英雄左移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 20;
-                if (moveFragile[this.steps + 1] == 1) {
-                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                if (moveFragile[this.steps] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 4;
+                    System.out.println("Fragile back");
+                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
                 targetGrid.setHeroInGrid(h);
@@ -212,8 +214,10 @@ public class GamePanel extends ListenerPanel {
             case 2 -> {//撤回英雄右移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 20;
-                if (moveFragile[this.steps + 1] == 1) {
-                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                if (moveFragile[this.steps] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 4;
+                    System.out.println("Fragile back");
+                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
                 targetGrid.setHeroInGrid(h);
@@ -223,8 +227,10 @@ public class GamePanel extends ListenerPanel {
             case 3 -> {//撤回英雄上移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 20;
-                if (moveFragile[this.steps + 1] == 1) {
-                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                if (moveFragile[this.steps] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 4;
+                    System.out.println("Fragile back");
+                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
@@ -234,8 +240,10 @@ public class GamePanel extends ListenerPanel {
             case 4 -> {//撤回英雄下移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 20;
-                if (moveFragile[this.steps + 1] == 1) {
-                    controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] += 4;
+                if (moveFragile[this.steps] == 1) {
+                    controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 4;
+                    System.out.println("Fragile back");
+                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
@@ -350,7 +358,7 @@ public class GamePanel extends ListenerPanel {
 
 
     private void doorCheck(int tRow, int tCol) {
-        if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11){
+        if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < controller.getModel().getMatrix().length; i++) {
                 for (int j = 0; j < controller.getModel().getMatrix()[0].length; j++) {
                     if (controller.getModel().getMatrix()[i][j] == 3) {
