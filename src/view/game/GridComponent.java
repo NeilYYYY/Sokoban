@@ -136,4 +136,31 @@ public class GridComponent extends JComponent {
         this.repaint();
         return b;
     }
+
+    public Button removeButtonFromGrid() {
+        this.remove(this.button);
+        Button b = this.button;
+        this.button = null;
+        this.revalidate();
+        this.repaint();
+        return b;
+    }
+
+    public OpenDoor removeOpenDoorFromGrid() {
+        this.remove(this.openDoor);
+        OpenDoor o = this.openDoor;
+        this.openDoor = null;
+        this.revalidate();
+        this.repaint();
+        return o;
+    }
+
+    public ClosedDoor removeClosedDoorFromGrid() {
+        this.remove(this.closedDoor);
+        ClosedDoor cd = this.closedDoor;
+        this.closedDoor = null;
+        this.revalidate();
+        this.repaint();
+        return cd;
+    }
 }

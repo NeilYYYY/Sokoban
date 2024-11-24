@@ -57,6 +57,10 @@ public class GameController {
         System.out.println("Do restart game here");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
+                switch (model.getId(i, j) % 10) {
+                    case 3 -> view.getGrids()[i][j].removeClosedDoorFromGrid();
+                    case 4 -> view.getGrids()[i][j].removeOpenDoorFromGrid();
+                }
                 switch (model.getId(i, j) % 100 / 10) {
                     case 1 -> view.getGrids()[i][j].removeBoxFromGrid();
                     case 2 -> view.getGrids()[i][j].removeHeroFromGrid();
@@ -73,7 +77,13 @@ public class GameController {
         }
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
-                switch (model.getId(i, j) / 10) {
+                switch (model.getId(i, j) % 10) {
+                    case 3 ->
+                        view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                    case 4 ->
+                        view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                }
+                switch (model.getId(i, j) % 100 / 10) {
                     case 1 ->
                             view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                     case 2 -> {
@@ -301,10 +311,14 @@ public class GameController {
                 for (int j = 0; j < model.getMatrix()[0].length; j++) {
                     if (model.getMatrix()[i][j] == 3) {
                         model.getMatrix()[i][j]++;
+                        view.getGrids()[i][j].removeClosedDoorFromGrid();
+                        view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                         //todo repaint OpenDoor
                     } else if (model.getMatrix()[i][j] == 4) {
                         doLose(view.getFrame());
                         model.getMatrix()[i][j]--;
+                        view.getGrids()[i][j].removeOpenDoorFromGrid();
+                        view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                         //todo repaint ClosedDoor
                     }
                 }
