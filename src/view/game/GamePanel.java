@@ -81,7 +81,7 @@ public class GamePanel extends ListenerPanel {
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
                 //Units digit maps to id attribute in GridComponent. (The no change value)
-                grids[i][j] = new GridComponent(i, j, model.getId(i, j) % 10, this.GRID_SIZE);
+                grids[i][j] = new GridComponent(i, j, model.getId(i, j), this.GRID_SIZE);
                 grids[i][j].setLocation(j * GRID_SIZE + 2, i * GRID_SIZE + 2);
                 //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {
@@ -92,9 +92,6 @@ public class GamePanel extends ListenerPanel {
                         this.hero = new Hero(GRID_SIZE - 16, GRID_SIZE - 16, i, j);
                         grids[i][j].setHeroInGrid(hero);
                         break;
-                }
-                if (model.getId(i, j) == 100) {
-                    grids[i][j].setButtonInGrid(new Button(GRID_SIZE - 10, GRID_SIZE - 10));
                 }
                 if (model.getId(i, j) % 10 == 3) {
                     grids[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));

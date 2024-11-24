@@ -9,11 +9,11 @@ public class GridComponent extends JComponent {
     private final int id; // represents the units digit value. It cannot be changed during one game.
     private final Image imageWall;
     private final Image imageFloor;
+    private final Image imageButton;
     private int row;
     private int col;
     private Hero hero;
     private Box box;
-    private Button button;
     private OpenDoor openDoor;
     private ClosedDoor closedDoor;
 
@@ -33,6 +33,7 @@ public class GridComponent extends JComponent {
                     this.imageWall = new ImageIcon("src/images/Wall6.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         }
         this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        this.imageButton = new ImageIcon("src/images/Button.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
         this.row = row;
         this.col = col;
@@ -60,6 +61,9 @@ public class GridComponent extends JComponent {
                 break;
             default:
                 g.drawImage(imageFloor, 0, 0, this);
+                if (id == 100) {
+                    g.drawImage(imageButton, 5, 5, this);
+                }
                 borderColor = Color.DARK_GRAY;
                 break;
         }
@@ -97,11 +101,6 @@ public class GridComponent extends JComponent {
     public void setBoxInGrid(Box box) {
         this.box = box;
         this.add(box);
-    }
-
-    public void setButtonInGrid(Button button) {
-        this.button = button;
-        this.add(button);
     }
 
     public void setOpenDoorInGrid(OpenDoor openDoor) {
