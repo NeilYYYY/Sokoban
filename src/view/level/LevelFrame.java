@@ -118,7 +118,7 @@ public class LevelFrame extends JFrame {
         this.user = user;
         System.out.println(this.user);
         if (this.mode) {
-            ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
+            ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
             back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
             bg = new JLabel(back);
             bg.setBounds(0, 0, this.getWidth(), this.getHeight());
