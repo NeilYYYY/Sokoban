@@ -10,6 +10,14 @@ public class MapInfo {
     private int[] moveBox;
     private int[] moveFragile;
 
+    public MapInfo() {}
+
+    public MapInfo(int[][] model) {
+        int[][] a = new int[model.length][model[0].length];
+        this.model = new MapMatrix(a);
+        this.model.copyMatrix(model);
+    }
+
     public MapMatrix getModel() {
         return model;
     }
