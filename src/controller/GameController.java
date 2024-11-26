@@ -87,9 +87,9 @@ public class GameController {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
                 switch (model.getId(i, j) % 10) {
                     case 3 ->
-                        view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                            view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                     case 4 ->
-                        view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                            view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                 }
                 switch (model.getId(i, j) % 100 / 10) {
                     case 1 ->
@@ -304,22 +304,22 @@ public class GameController {
             }
             doorCheck(ttRow, ttCol);
             switch (direction) {
-                case UP:
+                case UP -> {
                     moveBox[view.getSteps()] = 3;
                     view.setMoveBox(moveBox);
-                    break;
-                case DOWN:
+                }
+                case DOWN -> {
                     moveBox[view.getSteps()] = 4;
                     view.setMoveBox(moveBox);
-                    break;
-                case LEFT:
+                }
+                case LEFT -> {
                     moveBox[view.getSteps()] = 1;
                     view.setMoveBox(moveBox);
-                    break;
-                case RIGHT:
+                }
+                case RIGHT -> {
                     moveBox[view.getSteps()] = 2;
                     view.setMoveBox(moveBox);
-                    break;
+                }
             }
             return true;
         }
@@ -330,7 +330,7 @@ public class GameController {
         if (model.getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < model.getMatrix().length; i++) {
                 for (int j = 0; j < model.getMatrix()[0].length; j++) {
-                    if (model.getMatrix()[i][j]  % 10 == 3) {
+                    if (model.getMatrix()[i][j] % 10 == 3) {
                         model.getMatrix()[i][j]++;
                         view.getGrids()[i][j].removeClosedDoorFromGrid();
                         view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
@@ -351,22 +351,22 @@ public class GameController {
         h.setRow(tRow);
         h.setCol(tCol);
         switch (direction) {
-            case UP:
+            case UP -> {
                 moveHero[view.getSteps()] = 3;
                 view.setMoveHero(moveHero);
-                break;
-            case DOWN:
+            }
+            case DOWN -> {
                 moveHero[view.getSteps()] = 4;
                 view.setMoveHero(moveHero);
-                break;
-            case LEFT:
+            }
+            case LEFT -> {
                 moveHero[view.getSteps()] = 1;
                 view.setMoveHero(moveHero);
-                break;
-            case RIGHT:
+            }
+            case RIGHT -> {
                 moveHero[view.getSteps()] = 2;
                 view.setMoveHero(moveHero);
-                break;
+            }
         }
     }
 

@@ -46,11 +46,11 @@ public class GridComponent extends JComponent {
         super.printComponents(g);
         Color borderColor;
         switch (id % 10) {
-            case 1:
+            case 1 -> {
                 g.drawImage(imageWall, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
-                break;
-            case 2:
+            }
+            case 2 -> {
                 g.drawImage(imageFloor, 0, 0, this);
                 borderColor = Color.DARK_GRAY;
                 g.setColor(Color.GREEN);
@@ -59,14 +59,14 @@ public class GridComponent extends JComponent {
                 g.fillPolygon(xPoints, yPoints, 4);
                 g.setColor(Color.BLACK);
                 g.drawPolygon(xPoints, yPoints, 4);
-                break;
-            default:
+            }
+            default -> {
                 g.drawImage(imageFloor, 0, 0, this);
                 if (id == 100) {
                     g.drawImage(imageButton, 5, 5, this);
                 }
                 borderColor = Color.DARK_GRAY;
-                break;
+            }
         }
         Border border = BorderFactory.createLineBorder(borderColor, 0);//不知道为什么这段代码删了会有BUG，就把厚度设置成0。
         this.setBorder(border);
