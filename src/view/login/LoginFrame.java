@@ -38,11 +38,16 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
         this.setResizable(false);
+
         //创建界面组件
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.setContentPane(layeredPane);
+
         GlowingParticleEffect panel = new GlowingParticleEffect(100);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
-        this.getContentPane().add(panel);
+        this.getContentPane().add(panel, Integer.valueOf(0));
         this.sound = sound;
         JLabel username = new JLabel("Username: ");
         Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
@@ -53,7 +58,8 @@ public class LoginFrame extends JFrame implements ActionListener {
         password.setForeground(Color.WHITE);
         JLabel titleLabel = new JLabel(new ImageIcon("src/images/Title.png"));
         titleLabel.setBounds(240, 20, 300, 155);
-        this.add(titleLabel);
+        this.getContentPane().add(titleLabel, Integer.valueOf(1));
+
         guestBtn = new JButton("Guest");
         guestBtn.setFont(f);
         guestBtn.setForeground(Color.GRAY);
@@ -134,12 +140,12 @@ public class LoginFrame extends JFrame implements ActionListener {
         musicJp.add(musicBtn);
         guestJp.add(guestBtn);
         //将组件装入GUI
-        add(usernameJp);
-        add(passwordJp);
-        add(loginJp);
-        add(registerJp);
-        add(musicJp);
-        add(guestJp);
+        this.getContentPane().add(usernameJp, Integer.valueOf(1));
+        this.getContentPane().add(passwordJp, Integer.valueOf(1));
+        this.getContentPane().add(loginJp, Integer.valueOf(1));
+        this.getContentPane().add(registerJp, Integer.valueOf(1));
+        this.getContentPane().add(musicJp, Integer.valueOf(1));
+        this.getContentPane().add(guestJp, Integer.valueOf(1));
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);

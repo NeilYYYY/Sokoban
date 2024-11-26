@@ -36,11 +36,16 @@ public class Register extends JFrame implements ActionListener {
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
         this.setResizable(false);
+
         //组件
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.setContentPane(layeredPane);
+
         GlowingParticleEffect panel = new GlowingParticleEffect(100);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
-        this.getContentPane().add(panel);
+        this.getContentPane().add(panel, Integer.valueOf(0));
         JLabel username = new JLabel("Username:");
         Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
         username.setFont(f);
@@ -113,11 +118,11 @@ public class Register extends JFrame implements ActionListener {
         backJp.add(backBtn);
         registerJp.add(registerBtn);
         //将组件装入GUI
-        add(usernameJp);
-        add(passwordJp);
-        add(passwordTrueJp);
-        add(backJp);
-        add(registerJp);
+        this.getContentPane().add(usernameJp, Integer.valueOf(1));
+        this.getContentPane().add(passwordJp, Integer.valueOf(1));
+        this.getContentPane().add(passwordTrueJp, Integer.valueOf(1));
+        this.getContentPane().add(backJp, Integer.valueOf(1));
+        this.getContentPane().add(registerJp, Integer.valueOf(1));
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
@@ -145,7 +150,7 @@ public class Register extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
                     try {
-                        user.add(new User(id, username, User.getSHA(password), new boolean[]{false, false, false, false, false}));
+                        user.add(new User(id, username, User.getSHA(password), new boolean[]{false, false, false, false, false, false}));
                     } catch (NoSuchAlgorithmException ex) {
                         throw new RuntimeException(ex);
                     }

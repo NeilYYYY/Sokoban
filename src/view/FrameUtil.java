@@ -12,7 +12,7 @@ public class FrameUtil {
         label.setFont(font);
         label.setLocation(location);
         label.setSize(width, height);
-        frame.add(label);
+        frame.getContentPane().add(label, Integer.valueOf(1));
         return label;
     }
 
@@ -20,7 +20,7 @@ public class FrameUtil {
         JButton button = new JButton(name);
         button.setLocation(location);
         button.setSize(width, height);
-        frame.add(button);
+        frame.getContentPane().add(button, Integer.valueOf(1));
         return button;
     }
 }

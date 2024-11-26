@@ -38,10 +38,15 @@ public class LevelFrame extends JFrame {
         this.sound = sound;
         this.time = 60;
         this.setResizable(false);
+
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.setContentPane(layeredPane);
+
         panel = new LevelParticleEffect(50, mode);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
-        this.getContentPane().add(panel);
+        this.getContentPane().add(panel, Integer.valueOf(0));
         JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 155), 80, 60);
         Font f = new Font("Comic Sans MS", Font.BOLD, 16);
         level1Btn.setFont(f);
@@ -210,11 +215,11 @@ public class LevelFrame extends JFrame {
             //change bg
             this.mode = !this.mode;
             System.out.println("change mode");
-            this.remove(panel);
+            this.getContentPane().remove(panel);
             panel = new LevelParticleEffect(50, this.mode);
             panel.setBounds(0, 0, 800, 450);
             panel.setOpaque(false);
-            this.add(panel);
+            this.getContentPane().add(panel, Integer.valueOf(0));
             if (this.mode) {
                 this.getContentPane().remove(bg);
                 ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");

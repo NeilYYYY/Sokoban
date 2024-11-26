@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 public record User(int id, String username, String password, boolean[] lv) {
     private static final Logger log = Logger.getLogger(User.class.getName());
 
-    //读取用户数据 检查有没有出现用户名重复的情况
+    //读取用户数据 检查是否出现用户名重复的情况
     public static boolean readUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.username().equals(username)) {
@@ -26,9 +26,8 @@ public record User(int id, String username, String password, boolean[] lv) {
         return true;
     }
 
-    //读取用户数据
+    //读取用户数据 检测用户名密码
     public static boolean checkUser(String username, String password) {
-
         try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
             StringBuilder json = new StringBuilder();
             String line;
@@ -49,7 +48,7 @@ public record User(int id, String username, String password, boolean[] lv) {
         return false;
     }
 
-    //读取用户数据 检查有没有出现用户名重复的情况
+    //读取用户数据 找到用户
     public static @Nullable User getUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.username().equals(username)) {

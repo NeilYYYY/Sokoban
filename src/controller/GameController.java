@@ -194,7 +194,6 @@ public class GameController {
             for (int[] ints : map) {
                 for (int j = 0; j < map[0].length; j++) {
                     if (ints[j] == 13) {
-                        System.out.println("111111111");
                         return true;
                     }
                 }
