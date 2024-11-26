@@ -3,6 +3,7 @@ package view.music;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 public class Sound {
@@ -16,7 +17,7 @@ public class Sound {
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
-    private volatile long currentFrame;  // 当前帧位置
+    private final AtomicLong currentFrame = new AtomicLong();  // 当前帧位置
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
@@ -32,7 +33,7 @@ public class Sound {
             sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
             sourceDataLine.open(audioFormat);
             clipLength = audioStream.getFrameLength();
-            currentFrame = 0;
+            currentFrame.set(0);
 
             // 初始化音量控制器
             if (sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
@@ -50,28 +51,29 @@ public class Sound {
             return;
         }
         isPlaying = true;
-
         playThread = new Thread(() -> {
             try {
                 do {
                     sourceDataLine.start();
                     audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-                    if (currentFrame > 0) {
-                        long bytesToSkip = currentFrame * audioFormat.getFrameSize();
-                        audioStream.skip(bytesToSkip);
+                    if (currentFrame.get() > 0) {
+                        long bytesToSkip = currentFrame.get() * audioFormat.getFrameSize();
+                        long bytesSkipped = audioStream.skip(bytesToSkip);
+                        if (bytesSkipped != bytesToSkip) {
+                            log.warning("Skipped " + bytesSkipped + " bytes, expected " + bytesToSkip);
+                        }
                     }
                     byte[] buffer = new byte[1024];
                     int bytesRead;
                     while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
                         sourceDataLine.write(buffer, 0, bytesRead);
-                        currentFrame += bytesRead / audioFormat.getFrameSize();
+                        currentFrame.addAndGet(bytesRead / audioFormat.getFrameSize());
                     }
                     if (!isPlaying) {
                         return; // 中途暂停
                     }
-                    currentFrame = 0; // 如果不是暂停，则重置播放位置
+                    currentFrame.set(0); // 如果不是暂停，则重置播放位置
                 } while (isLooping && isPlaying);
-
                 stop(); // 播放结束时清理资源
             } catch (IOException | UnsupportedAudioFileException e) {
                 log.info(e.getMessage());
@@ -93,7 +95,7 @@ public class Sound {
     // 停止音频并重置
     public void stop() {
         isPlaying = false;
-        currentFrame = 0; // 停止时重置帧位置
+        currentFrame.set(0); // 停止时重置帧位置
         if (sourceDataLine != null) {
             sourceDataLine.stop();
             sourceDataLine.close();
@@ -125,7 +127,7 @@ public class Sound {
     // 获取当前播放进度
     public double getProgress() {
         if (clipLength == 0) return 0.0;
-        return (double) currentFrame / clipLength * 100.0;
+        return (double) currentFrame.get() / clipLength * 100.0;
     }
 
     // 获取当前音量（0.0 ~ 1.0）
