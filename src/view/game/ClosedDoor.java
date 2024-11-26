@@ -1,5 +1,7 @@
 package view.game;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +14,7 @@ public class ClosedDoor extends JComponent {
         this.image = new ImageIcon("src/images/ClosedDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(@NotNull Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
 }

@@ -1,5 +1,8 @@
 package view.level;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -31,7 +34,8 @@ public class LevelParticleEffect extends JPanel {
         timer.start();
     }
 
-    private Particle createParticle() {
+    @Contract(" -> new")
+    private @NotNull Particle createParticle() {
         int x = random.nextInt(getWidth());
         int y = random.nextInt(getHeight());
         int size = random.nextInt(3) + 1;
@@ -58,10 +62,22 @@ public class LevelParticleEffect extends JPanel {
         }
     }
 
-    private void drawGlowingParticle(Graphics2D g2d, int x, int y, int size, float alpha) {
+    private void drawGlowingParticle(@NotNull Graphics2D g2d, int x, int y, int size, float alpha) {
         // 创建白金光的渐变
         int radius = size * 2;
         float[] dist = {0f, 0.5f, 1f};
+        Color[] colors = getColors(alpha);
+        RadialGradientPaint gradient = new RadialGradientPaint(
+                new Point(x, y), radius, dist, colors,
+                MultipleGradientPaint.CycleMethod.NO_CYCLE
+        );
+
+        // 设置渐变
+        g2d.setPaint(gradient);
+        g2d.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+    }
+
+    private Color @NotNull [] getColors(float alpha) {
         Color[] colors;
         if (mode) {
             colors = new Color[]{
@@ -76,14 +92,7 @@ public class LevelParticleEffect extends JPanel {
                     new Color(255, 225, 225, 0) // 最外层透明
             };
         }
-        RadialGradientPaint gradient = new RadialGradientPaint(
-                new Point(x, y), radius, dist, colors,
-                MultipleGradientPaint.CycleMethod.NO_CYCLE
-        );
-
-        // 设置渐变
-        g2d.setPaint(gradient);
-        g2d.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+        return colors;
     }
 
     // 粒子类

@@ -1,5 +1,7 @@
 package view.game;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,7 +18,7 @@ public class Hero extends JComponent {
         this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
     }
 
-    public void paintComponent(Graphics g) {
+    public void paintComponent(@NotNull Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
 

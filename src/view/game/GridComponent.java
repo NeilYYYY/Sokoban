@@ -153,12 +153,10 @@ public class GridComponent extends JComponent {
         this.add(fragile);
     }
 
-    public Fragile removeFragileFromGrid() {
+    public void removeFragileFromGrid() {
         this.remove(this.fragile);
-        Fragile f = this.fragile;
         this.fragile = null;
         this.revalidate();
         this.repaint();
-        return f;
     }
 }

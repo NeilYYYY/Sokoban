@@ -3,6 +3,9 @@ package view.login;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 import java.security.MessageDigest;
@@ -14,7 +17,7 @@ public record User(int id, String username, String password, boolean[] lv) {
     private static final Logger log = Logger.getLogger(User.class.getName());
 
     //读取用户数据 检查有没有出现用户名重复的情况
-    public static boolean readUser(String username, ArrayList<User> user) {
+    public static boolean readUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.username().equals(username)) {
                 return false;
@@ -47,7 +50,7 @@ public record User(int id, String username, String password, boolean[] lv) {
     }
 
     //读取用户数据 检查有没有出现用户名重复的情况
-    public static User getUser(String username, ArrayList<User> user) {
+    public static @Nullable User getUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.username().equals(username)) {
                 return data;
@@ -56,7 +59,7 @@ public record User(int id, String username, String password, boolean[] lv) {
         return null;
     }
 
-    public static String getSHA(String str) throws NoSuchAlgorithmException {
+    public static String getSHA(@NotNull String str) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] shaBytes = md.digest(str.getBytes());
         return bytesToHexString(shaBytes);
@@ -105,8 +108,9 @@ public record User(int id, String username, String password, boolean[] lv) {
         }
     }
 
+    @Contract(pure = true)
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return String.format("%d, %s, %s", id, username, password);
     }
 }

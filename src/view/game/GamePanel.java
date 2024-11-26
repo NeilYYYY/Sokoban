@@ -153,6 +153,7 @@ public class GamePanel extends ListenerPanel {
         }
         if (!file.exists()) {
             MapInfo mapInfo = new MapInfo();
+            System.out.println(mapInfo.getId());
             mapInfo.setModel(model);
             try {
                 FileFrame.createFile(filepath);
@@ -198,7 +199,6 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow()][hero.getCol() + 1].removeFragileFromGrid();
                     System.out.println("Fragile back");
                     moveFragile[this.steps] = 0;
-                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
                 targetGrid.setHeroInGrid(h);
@@ -213,7 +213,6 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow()][hero.getCol() - 1].removeFragileFromGrid();
                     System.out.println("Fragile back");
                     moveFragile[this.steps] = 0;
-                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
                 targetGrid.setHeroInGrid(h);
@@ -228,7 +227,6 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow() + 1][hero.getCol()].removeFragileFromGrid();
                     System.out.println("Fragile back");
                     moveFragile[this.steps] = 0;
-                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
@@ -243,7 +241,6 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow() - 1][hero.getCol()].removeFragileFromGrid();
                     System.out.println("Fragile back");
                     moveFragile[this.steps] = 0;
-                    //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
                 targetGrid.setHeroInGrid(h);
@@ -346,10 +343,6 @@ public class GamePanel extends ListenerPanel {
 
     public void setMoveBox(int[] moveBox) {
         this.moveBox = moveBox;
-    }
-
-    public int[] getMoveFragile() {
-        return moveFragile;
     }
 
     public void setMoveFragile(int[] moveFragile) {

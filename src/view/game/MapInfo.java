@@ -8,7 +8,6 @@ public class MapInfo {
     private int step;
     private int[] moveHero;
     private int[] moveBox;
-    private int[] moveFragile;
 
     public MapInfo() {}
 
@@ -58,11 +57,4 @@ public class MapInfo {
         this.moveHero = moveHero;
     }
 
-    public int[] getMoveFragile() {
-        return moveFragile;
-    }
-
-    public void setMoveFragile(int[] moveFragile) {
-        this.moveFragile = moveFragile;
-    }
 }

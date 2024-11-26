@@ -1,5 +1,7 @@
 package view.login;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -125,7 +127,7 @@ public class Register extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == registerBtn) {
             String username = usernameText.getText();
             String password = new String(passwordText.getPassword());

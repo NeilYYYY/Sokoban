@@ -225,6 +225,7 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
         if (!file.exists()) {
             MapInfo mapInfo = new MapInfo();
+            System.out.println(mapInfo.getId());
             mapInfo.setModel(controller.getModel());
             try {
                 FileFrame.createFile(filepath);
@@ -260,6 +261,7 @@ public class GameFrame extends JFrame {
             if (file.delete()) {
                 System.out.println("存档已清空！！！");
                 MapInfo mapInfo = new MapInfo();
+                System.out.println(mapInfo.getId());
                 mapInfo.setModel(controller.getModel());
                 try {
                     FileFrame.createFile(filepath);

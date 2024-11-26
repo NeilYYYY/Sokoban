@@ -117,19 +117,16 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setContentAreaFilled(false);
         this.user = user;
         System.out.println(this.user);
+        ImageIcon back;// 背景图置于最底层
         if (this.mode) {
-            ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
-            back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-            bg = new JLabel(back);
-            bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-            this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+            back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
         } else {
-            ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
-            back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-            bg = new JLabel(back);
-            bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-            this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+            back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
         }
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        bg = new JLabel(back);
+        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
 
         level1Btn.addActionListener(_ -> {
@@ -220,17 +217,17 @@ public class LevelFrame extends JFrame {
             this.add(panel);
             if (this.mode) {
                 this.getContentPane().remove(bg);
-                ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
-                back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-                bg = new JLabel(back);
+                ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                bg = new JLabel(imageIcon);
                 bg.setBounds(0, 0, this.getWidth(), this.getHeight());
                 this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
                 this.getContentPane().repaint();
             } else {
                 this.getContentPane().remove(bg);
-                ImageIcon back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
-                back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-                bg = new JLabel(back);
+                ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                bg = new JLabel(imageIcon);
                 bg.setBounds(0, 0, this.getWidth(), this.getHeight());
                 this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
                 this.getContentPane().repaint();

@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import model.Level;
 import model.MapMatrix;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import view.FileMD5Util;
 import view.FrameUtil;
 import view.login.User;
@@ -147,7 +149,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         });
     }
 
-    private static JList<String> getLevelList() {
+    @Contract(" -> new")
+    private static @NotNull JList<String> getLevelList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("auto_save");
         listModel.addElement("save_01");
@@ -159,7 +162,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return new JList<>(listModel);
     }
 
-    public static Map<Integer, MapInfo> loadMapsFromJson(String jsonFilePath) throws IOException {
+    public static @NotNull Map<Integer, MapInfo> loadMapsFromJson(String jsonFilePath) throws IOException {
         Gson gson = new Gson();
         FileReader reader = new FileReader(jsonFilePath);
         MapsResponse response = gson.fromJson(reader, MapsResponse.class);
@@ -195,7 +198,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         saveMapsToJson(maps, filePath);
     }
 
-    public static void saveMapsToJson(Map<Integer, MapInfo> maps, String filePath) throws IOException {
+    public static void saveMapsToJson(@NotNull Map<Integer, MapInfo> maps, String filePath) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         MapsResponse response = new MapsResponse();
         response.setMaps(List.copyOf(maps.values()));
@@ -218,7 +221,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    private static void reloadPanel(MapInfo map, GamePanel gamePanel) {
+    private static void reloadPanel(MapInfo map, @NotNull GamePanel gamePanel) {
         for (int i = 0; i < gamePanel.getGrids().length; i++) {
             for (int j = 0; j < gamePanel.getGrids()[i].length; j++) {
                 switch (gamePanel.getModel().getId(i, j) / 10) {

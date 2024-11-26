@@ -1,5 +1,6 @@
 package view.login;
 
+import org.jetbrains.annotations.NotNull;
 import view.level.LevelFrame;
 import view.music.*;
 
@@ -148,7 +149,7 @@ public class LoginFrame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == loginBtn) {
             String username = usernameText.getText();
             String password = new String(passwordText.getPassword());

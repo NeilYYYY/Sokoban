@@ -1,5 +1,8 @@
 package view.login;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -29,7 +32,8 @@ public class GlowingParticleEffect extends JPanel {
         timer.start();
     }
 
-    private Particle createParticle() {
+    @Contract(" -> new")
+    private @NotNull Particle createParticle() {
         int x = random.nextInt(getWidth());
         int y = random.nextInt(getHeight());
         int size = random.nextInt(3) + 3;
@@ -56,7 +60,7 @@ public class GlowingParticleEffect extends JPanel {
         }
     }
 
-    private void drawGlowingParticle(Graphics2D g2d, int x, int y, int size, float alpha) {
+    private void drawGlowingParticle(@NotNull Graphics2D g2d, int x, int y, int size, float alpha) {
         // 创建白金光的渐变
         int radius = size * 2;
         float[] dist = {0f, 0.5f, 1f};

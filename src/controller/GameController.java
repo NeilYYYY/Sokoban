@@ -3,6 +3,7 @@ package controller;
 import model.Direction;
 import model.Level;
 import model.MapMatrix;
+import org.jetbrains.annotations.NotNull;
 import view.game.*;
 import view.game.Box;
 import view.level.LevelFrame;
@@ -27,7 +28,7 @@ public class GameController {
     private final int[] moveFragile = new int[151];
     private Timer timer;
 
-    public GameController(GamePanel view, MapMatrix model, User user, int lv, Sound sound) {
+    public GameController(@NotNull GamePanel view, @NotNull MapMatrix model, User user, int lv, Sound sound) {
         this.view = view;
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
         this.model.copyMatrix(model.getMatrix());
@@ -190,9 +191,9 @@ public class GameController {
                 }
             }
         } else {
-            for (int i = 0; i < map.length; i++) {
+            for (int[] ints : map) {
                 for (int j = 0; j < map[0].length; j++) {
-                    if (map[i][j] == 13) {
+                    if (ints[j] == 13) {
                         System.out.println("111111111");
                         return true;
                     }
@@ -242,7 +243,7 @@ public class GameController {
         return timer;
     }
 
-    public boolean doMove(int row, int col, Direction direction) {
+    public boolean doMove(int row, int col, @NotNull Direction direction) {
         GridComponent currentGrid = view.getGridComponent(row, col);
         //target row can column.
         int tRow = row + direction.getRow();
@@ -271,7 +272,6 @@ public class GameController {
                 model.getMatrix()[row][col] = 1;
                 view.setMoveFragile(moveFragile);
                 view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
-                //todo repaint wall
             }
             return true;
         }
@@ -300,7 +300,6 @@ public class GameController {
                 model.getMatrix()[row][col] = 1;
                 view.setMoveFragile(moveFragile);
                 view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
-                //todo repaint wall
             }
             doorCheck(ttRow, ttCol);
             switch (direction) {
@@ -334,12 +333,10 @@ public class GameController {
                         model.getMatrix()[i][j]++;
                         view.getGrids()[i][j].removeClosedDoorFromGrid();
                         view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
-                        //todo repaint OpenDoor
                     } else if (model.getMatrix()[i][j] % 10 == 4) {
                         model.getMatrix()[i][j]--;
                         view.getGrids()[i][j].removeOpenDoorFromGrid();
                         view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
-                        //todo repaint ClosedDoor
                     }
                 }
             }
@@ -347,7 +344,7 @@ public class GameController {
         doLose(view.getFrame());
     }
 
-    private void moveHeroBack(Direction direction, int tRow, int tCol, Hero h) {
+    private void moveHeroBack(@NotNull Direction direction, int tRow, int tCol, @NotNull Hero h) {
         h.setRow(tRow);
         h.setCol(tCol);
         switch (direction) {
