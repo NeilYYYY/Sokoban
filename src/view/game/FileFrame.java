@@ -235,7 +235,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             for (int j = 0; j < gamePanel.getGrids()[i].length; j++) {
                 switch (map.getModel().getId(i, j) / 10) {
                     case 1 ->
-                            gamePanel.getGrids()[i][j].setBoxInGrid(new Box(gamePanel.getGRID_SIZE() - 10, gamePanel.getGRID_SIZE() - 10));
+                            gamePanel.getGrids()[i][j].setBoxInGrid(new Box(gamePanel.getGRID_SIZE() - 10, gamePanel.getGRID_SIZE() - 10, gamePanel.getFrame().getUser()));
                     case 2 -> {
                         gamePanel.getGrids()[i][j].setHeroInGrid(gamePanel.getHero());
                         gamePanel.getHero().setCol(j);
@@ -274,7 +274,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     for (int j = 0; j < gameFrame.getGamePanel().getGrids()[i].length; j++) {
                         switch (map.getModel().getId(i, j) / 10) {
                             case 1 ->
-                                    gameFrame.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameFrame.getGamePanel().getGRID_SIZE() - 10, gameFrame.getGamePanel().getGRID_SIZE() - 10));
+                                    gameFrame.getGamePanel().getGrids()[i][j].setBoxInGrid(new Box(gameFrame.getGamePanel().getGRID_SIZE() - 10, gameFrame.getGamePanel().getGRID_SIZE() - 10, gameFrame.getUser()));
                             case 2 -> {
                                 gameFrame.getGamePanel().getGrids()[i][j].setHeroInGrid(gameFrame.getGamePanel().getHero());
                                 gameFrame.getGamePanel().getHero().setCol(j);

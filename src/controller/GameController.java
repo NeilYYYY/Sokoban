@@ -94,7 +94,7 @@ public class GameController {
                 }
                 switch (model.getId(i, j) % 100 / 10) {
                     case 1 ->
-                            view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
+                            view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10, user));
                     case 2 -> {
                         view.getGrids()[i][j].setHeroInGrid(view.getHero());
                         view.getHero().setRow(i);
@@ -158,8 +158,7 @@ public class GameController {
             int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Next"}, "Next");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
-                MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
-                GameFrame newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+                GameFrame newGameFrame = getNewGameFrame(gameFrame);
                 newGameFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
@@ -171,6 +170,17 @@ public class GameController {
             }
         }
         return false;
+    }
+
+    private @NotNull GameFrame getNewGameFrame(GameFrame gameFrame) {
+        MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
+        GameFrame newGameFrame;
+        if (gameFrame.getLv() == 5) {
+            newGameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+        } else {
+            newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+        }
+        return newGameFrame;
     }
 
     public boolean checkLose() {
@@ -271,7 +281,7 @@ public class GameController {
         }
         if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12 || map[tRow][tCol] == 14 || map[tRow][tCol] == 110 || map[tRow][tCol] == 15) {
             GridComponent ttGrid = view.getGridComponent(ttRow, ttCol);
-            if (map[ttRow][ttCol] / 10 == 1 || map[ttRow][ttCol] == 1 || map[ttRow][ttCol] == 3) {
+            if (map[ttRow][ttCol] % 100 / 10 == 1 || map[ttRow][ttCol] == 1 || map[ttRow][ttCol] == 3) {
                 return false;
             }
             doorCheck(tRow, tCol);

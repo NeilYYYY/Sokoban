@@ -1,6 +1,7 @@
 package view.game;
 
 import org.jetbrains.annotations.NotNull;
+import view.login.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +11,16 @@ public class Hero extends JComponent {
     private int row;
     private int col;
 
-    public Hero(int width, int height, int row, int col) {
+    public Hero(int width, int height, int row, int col, User user) {
         this.row = row;
         this.col = col;
         this.setSize(width, height);
         this.setLocation(8, 8);
-        this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+        if (user.id() == 2) {
+            this.image = new ImageIcon("src/images/Grub.png").getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+        } else {
+            this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+        }
     }
 
     public void paintComponent(@NotNull Graphics g) {

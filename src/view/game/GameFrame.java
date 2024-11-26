@@ -24,10 +24,9 @@ public class GameFrame extends JFrame {
     private final User user;
     private final FileFrame fileFrame;
     private final boolean mode;
+    private final int time;
     JLabel timeLabel;
     private boolean check = true;
-    private final int time;
-
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
         try {
@@ -131,7 +130,7 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setFont(font);
         rightMoveBtn.setForeground(Color.WHITE);
         int[] leastStep = {13, 23, 31, 27, 37};
-        if (lv != 6){
+        if (lv != 6) {
             JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
             leastStepLabel.setForeground(Color.WHITE);
             JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
@@ -184,7 +183,7 @@ public class GameFrame extends JFrame {
         });
         backBtn.addActionListener(_ -> {
             LevelFrame levelFrame = new LevelFrame(this.user, this.sound, this.mode);
-            if(isMode()){
+            if (isMode()) {
                 controller.getTimer().stop();
             }
             this.dispose();
@@ -295,6 +294,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public User getUser() {
+        return user;
     }
 
     public JLabel getTimeLabel() {

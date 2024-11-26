@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -31,7 +33,7 @@ public class Register extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Register");
         setSize(800, 450);
-        setAlwaysOnTop(true);//设置界面一直处于最上层
+//        setAlwaysOnTop(true);//设置界面一直处于最上层
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
@@ -86,6 +88,22 @@ public class Register extends JFrame implements ActionListener {
         usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         passwordTextTrue.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        passwordTextTrue.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    registerBtn.doClick(); // 模拟按下注册按钮
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
         //创建装组件的容器
         JPanel usernameJp = new JPanel();
         usernameJp.setBackground(null);

@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.NoSuchAlgorithmException;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.logging.Logger;
 
 public class LoginFrame extends JFrame implements ActionListener {
@@ -105,6 +107,41 @@ public class LoginFrame extends JFrame implements ActionListener {
         passwordText.setForeground(Color.BLACK);
         usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        usernameText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loginBtn.doClick(); // 模拟按下登录按钮
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        passwordText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    loginBtn.doClick(); // 模拟按下登录按钮
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
         //创建装组件的容器
         JPanel usernameJp = new JPanel();
         usernameJp.setBackground(null);

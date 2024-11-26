@@ -19,7 +19,7 @@ public class GridComponent extends JComponent {
     private Fragile fragile;
 
     public GridComponent(int row, int col, int id, int gridSize) {
-        switch (new Random(System.currentTimeMillis()).nextInt(6) + 1) {
+        switch (new Random().nextInt(6) + 1) {
             case 1 ->
                     this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 2 ->
