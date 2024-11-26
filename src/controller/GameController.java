@@ -67,6 +67,14 @@ public class GameController {
                 }
             }
         }
+        if (view.getFrame().getLv() == 6) {
+            if (model.getId(4, 6) == 1) {
+                view.getGrids()[4][6].removeFragileFromGrid();
+            }
+            if (model.getId(4, 7) == 1) {
+                view.getGrids()[4][7].removeFragileFromGrid();
+            }
+        }
         switch (this.lv) {
             case 1 -> model.copyMatrix(Level.LEVEL_1.getMap());
             case 2 -> model.copyMatrix(Level.LEVEL_2.getMap());
@@ -173,7 +181,7 @@ public class GameController {
         int[][] map = model.getMatrix();
         if (lv != 6) {
             for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[i].length; j++) {
+                for (int j = 0; j < map[0].length; j++) {
                     if (map[i][j] % 100 / 10 == 1) {
                         if (checkVertical(i, j) || checkHorizontal(i, j)) {
                             return false;
@@ -183,14 +191,19 @@ public class GameController {
             }
         } else {
             for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[i].length; j++) {
+                for (int j = 0; j < map[0].length; j++) {
+                    if (map[i][j] == 13) {
+                        System.out.println("111111111");
+                        return true;
+                    }
+                }
+            }
+            for (int i = 0; i < map.length; i++) {
+                for (int j = 0; j < map[0].length; j++) {
                     if (map[i][j] % 100 / 10 == 1) {
                         if (checkVerticalPlus(i, j) || checkHorizontalPlus(i, j)) {
                             return false;
                         }
-                    }
-                    if (map[i][j] == 13) {
-                        return true;
                     }
                 }
             }
@@ -243,6 +256,8 @@ public class GameController {
             if (model.getMatrix()[row][col] == 25) {
                 moveFragile[view.getSteps()] = 1;
                 System.out.println("Fragile");
+            } else {
+                moveFragile[view.getSteps()] = 0;
             }
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 20;
@@ -255,6 +270,7 @@ public class GameController {
             if (model.getMatrix()[row][col] == 5) {
                 model.getMatrix()[row][col] = 1;
                 view.setMoveFragile(moveFragile);
+                view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                 //todo repaint wall
             }
             return true;
@@ -269,6 +285,8 @@ public class GameController {
                 moveFragile[view.getSteps()] = 1;
                 view.setMoveFragile(moveFragile);
                 System.out.println("Fragile");
+            } else {
+                moveFragile[view.getSteps()] = 0;
             }
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 10;
@@ -280,6 +298,8 @@ public class GameController {
             moveHeroBack(direction, tRow, tCol, h);
             if (model.getMatrix()[row][col] == 5) {
                 model.getMatrix()[row][col] = 1;
+                view.setMoveFragile(moveFragile);
+                view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                 //todo repaint wall
             }
             doorCheck(ttRow, ttCol);
@@ -310,13 +330,12 @@ public class GameController {
         if (model.getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < model.getMatrix().length; i++) {
                 for (int j = 0; j < model.getMatrix()[0].length; j++) {
-                    if (model.getMatrix()[i][j] == 3) {
+                    if (model.getMatrix()[i][j]  % 10 == 3) {
                         model.getMatrix()[i][j]++;
                         view.getGrids()[i][j].removeClosedDoorFromGrid();
                         view.getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
                         //todo repaint OpenDoor
-                    } else if (model.getMatrix()[i][j] == 4) {
-                        doLose(view.getFrame());
+                    } else if (model.getMatrix()[i][j] % 10 == 4) {
                         model.getMatrix()[i][j]--;
                         view.getGrids()[i][j].removeOpenDoorFromGrid();
                         view.getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
@@ -325,6 +344,7 @@ public class GameController {
                 }
             }
         }
+        doLose(view.getFrame());
     }
 
     private void moveHeroBack(Direction direction, int tRow, int tCol, Hero h) {

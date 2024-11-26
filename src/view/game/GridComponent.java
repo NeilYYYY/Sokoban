@@ -16,6 +16,7 @@ public class GridComponent extends JComponent {
     private Box box;
     private OpenDoor openDoor;
     private ClosedDoor closedDoor;
+    private Fragile fragile;
 
     public GridComponent(int row, int col, int id, int gridSize) {
         switch (new Random().nextInt(6) + 1) {
@@ -145,5 +146,19 @@ public class GridComponent extends JComponent {
         this.closedDoor = null;
         this.revalidate();
         this.repaint();
+    }
+
+    public void setFragileInGrid(Fragile fragile) {
+        this.fragile = fragile;
+        this.add(fragile);
+    }
+
+    public Fragile removeFragileFromGrid() {
+        this.remove(this.fragile);
+        Fragile f = this.fragile;
+        this.fragile = null;
+        this.revalidate();
+        this.repaint();
+        return f;
     }
 }

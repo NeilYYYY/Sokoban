@@ -183,9 +183,6 @@ public class GamePanel extends ListenerPanel {
     }
 
     public void undoMove() {
-        for (int i = 0; i <= this.steps; i++) {
-            System.out.println(moveFragile[i]);
-        }
         this.steps--;
         if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
@@ -200,7 +197,9 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 20;
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 4;
+                    getGrids()[hero.getRow()][hero.getCol() + 1].removeFragileFromGrid();
                     System.out.println("Fragile back");
+                    moveFragile[this.steps] = 0;
                     //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
@@ -213,7 +212,9 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 20;
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 4;
+                    getGrids()[hero.getRow()][hero.getCol() - 1].removeFragileFromGrid();
                     System.out.println("Fragile back");
+                    moveFragile[this.steps] = 0;
                     //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
@@ -226,7 +227,9 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 20;
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 4;
+                    getGrids()[hero.getRow() + 1][hero.getCol()].removeFragileFromGrid();
                     System.out.println("Fragile back");
+                    moveFragile[this.steps] = 0;
                     //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
@@ -239,7 +242,9 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 20;
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 4;
+                    getGrids()[hero.getRow() - 1][hero.getCol()].removeFragileFromGrid();
                     System.out.println("Fragile back");
+                    moveFragile[this.steps] = 0;
                     //todo repaint floor
                 }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
@@ -358,10 +363,14 @@ public class GamePanel extends ListenerPanel {
         if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < controller.getModel().getMatrix().length; i++) {
                 for (int j = 0; j < controller.getModel().getMatrix()[0].length; j++) {
-                    if (controller.getModel().getMatrix()[i][j] == 3) {
+                    if (controller.getModel().getMatrix()[i][j] % 10 == 3) {
                         controller.getModel().getMatrix()[i][j]++;
-                    } else if (controller.getModel().getMatrix()[i][j] == 4) {
+                        getGrids()[i][j].removeClosedDoorFromGrid();
+                        getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(GRID_SIZE - 10, GRID_SIZE - 10));
+                    } else if (controller.getModel().getMatrix()[i][j] % 10 == 4) {
                         controller.getModel().getMatrix()[i][j]--;
+                        getGrids()[i][j].removeOpenDoorFromGrid();
+                        getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));
                     }
                 }
             }
