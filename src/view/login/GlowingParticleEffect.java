@@ -10,7 +10,7 @@ import java.util.Random;
 
 public class GlowingParticleEffect extends JPanel {
     private final ArrayList<Particle> particles = new ArrayList<>();
-    private final Random random = new Random();
+    private final Random random = new Random(System.currentTimeMillis());
     private final int particleCount; // 粒子数量
 
     public GlowingParticleEffect(int particleCount) {

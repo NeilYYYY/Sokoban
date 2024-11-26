@@ -145,6 +145,9 @@ public class GameController {
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
+            if (gameFrame.isMode()) {
+                timer.stop();
+            }
             if (gameFrame.getLv() == 6) {//最后一关则退出
                 JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
@@ -172,39 +175,33 @@ public class GameController {
 
     public boolean checkLose() {
         if (view.getSteps() >= 100) {
-            return true;
-        }
-        if (view.getTime() == 0) {
+            if (view.getFrame().isMode()) {
+                timer.stop();
+            }
             return true;
         }
         int[][] map = model.getMatrix();
-        if (lv != 6) {
-            for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[0].length; j++) {
-                    if (map[i][j] % 100 / 10 == 1) {
-                        if (checkVertical(i, j) || checkHorizontal(i, j)) {
-                            return false;
-                        }
+        for (int[] ints : map) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (ints[j] == 13) {
+                    if (view.getFrame().isMode()) {
+                        timer.stop();
+                    }
+                    return true;
+                }
+            }
+        }
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j] % 100 / 10 == 1) {
+                    if (checkVertical(i, j) || checkHorizontal(i, j)) {
+                        return false;
                     }
                 }
             }
-        } else {
-            for (int[] ints : map) {
-                for (int j = 0; j < map[0].length; j++) {
-                    if (ints[j] == 13) {
-                        return true;
-                    }
-                }
-            }
-            for (int i = 0; i < map.length; i++) {
-                for (int j = 0; j < map[0].length; j++) {
-                    if (map[i][j] % 100 / 10 == 1) {
-                        if (checkVerticalPlus(i, j) || checkHorizontalPlus(i, j)) {
-                            return false;
-                        }
-                    }
-                }
-            }
+        }
+        if (view.getFrame().isMode()) {
+            timer.stop();
         }
         return true;
     }
@@ -365,20 +362,10 @@ public class GameController {
 
     public boolean checkVertical(int x, int y) {
         int[][] map = model.getMatrix();
-        return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1;
-    }
-
-    public boolean checkHorizontal(int x, int y) {
-        int[][] map = model.getMatrix();
-        return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1;
-    }
-
-    public boolean checkVerticalPlus(int x, int y) {
-        int[][] map = model.getMatrix();
         return map[x][y - 1] != 1 && map[x][y - 1] / 10 != 1 && map[x][y - 1] != 3 && map[x][y + 1] != 1 && map[x][y + 1] / 10 != 1 && map[x][y + 1] != 3;
     }
 
-    public boolean checkHorizontalPlus(int x, int y) {
+    public boolean checkHorizontal(int x, int y) {
         int[][] map = model.getMatrix();
         return map[x - 1][y] != 1 && map[x - 1][y] / 10 != 1 && map[x - 1][y] != 3 && map[x + 1][y] != 1 && map[x + 1][y] / 10 != 1 && map[x + 1][y] != 3;
     }

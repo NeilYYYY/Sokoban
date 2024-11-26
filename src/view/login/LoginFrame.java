@@ -44,7 +44,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        GlowingParticleEffect panel = new GlowingParticleEffect(100);
+        GlowingParticleEffect panel = new GlowingParticleEffect(75);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));

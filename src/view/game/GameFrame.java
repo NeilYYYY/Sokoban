@@ -160,8 +160,8 @@ public class GameFrame extends JFrame {
             gamePanel.requestFocusInWindow();//enable key listener
         });
         loadBtn.addActionListener(_ -> {
-            if (isMode() && lv != 6) {
-                JOptionPane.showMessageDialog(this, "限时模式无法存档");
+            if (isMode() || lv == 6) {
+                JOptionPane.showMessageDialog(this, "此模式无法存档");
                 gamePanel.requestFocusInWindow();
                 return;
             }
@@ -184,6 +184,9 @@ public class GameFrame extends JFrame {
         });
         backBtn.addActionListener(_ -> {
             LevelFrame levelFrame = new LevelFrame(this.user, this.sound, this.mode);
+            if(isMode()){
+                controller.getTimer().stop();
+            }
             this.dispose();
             levelFrame.setVisible(true);
         });

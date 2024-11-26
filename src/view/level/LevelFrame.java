@@ -2,6 +2,7 @@ package view.level;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Logger;
 import javax.swing.*;
 
@@ -36,7 +37,7 @@ public class LevelFrame extends JFrame {
         this.setLayout(null);
         this.setSize(800, 450);
         this.sound = sound;
-        this.time = 60;
+        this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
         this.setResizable(false);
 
         JLayeredPane layeredPane = new JLayeredPane();
