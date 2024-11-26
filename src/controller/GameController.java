@@ -138,11 +138,9 @@ public class GameController {
 
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
-            if (this.user.id() != 0) {
-                ArrayList<User> users = User.getUserList();
-                users.get(this.user.id()).lv()[this.lv - 1] = true;
-                User.writeUser(users);
-            }
+            ArrayList<User> users = User.getUserList();
+            users.get(this.user.id()).lv()[this.lv - 1] = true;
+            User.writeUser(users);
             System.out.println("You win!");
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
@@ -340,7 +338,6 @@ public class GameController {
                 }
             }
         }
-        doLose(view.getFrame());
     }
 
     private void moveHeroBack(@NotNull Direction direction, int tRow, int tCol, @NotNull Hero h) {
