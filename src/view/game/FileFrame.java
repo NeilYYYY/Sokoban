@@ -105,6 +105,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         });
 
         levelList = getLevelList();
+        levelList.setCellRenderer((_, value, _, _, _) -> {
+            JLabel label = new JLabel(value);
+            label.setOpaque(false); // 让每个项的背景透明
+            label.setFont(new Font("Serif", Font.BOLD, 12));
+            label.setForeground(Color.BLACK); // 设置文本颜色为黑色
+            return label;
+        });
+        levelList.setOpaque(false);
         levelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         levelList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -301,7 +309,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         //读取地图
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
-//            fixFile();
+            fixFile();
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         try {
@@ -311,7 +320,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 System.out.printf("读入存档%d\n", id);
                 reloadPanel(map, gamePanel);
             } else {
-                map = maps.get(0);
+                map = new MapInfo(Level.values()[this.lv - 1].getMap());
                 System.out.println("地图不存在");
                 reloadPanel(map, gamePanel);
             }
@@ -324,8 +333,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         //读取文件
         if (checkFile()) {
             System.out.println("存档文件损坏喵！");
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             fixFile();
+            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
         }
         if (id == 0) {

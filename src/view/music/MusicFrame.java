@@ -13,6 +13,7 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final String[] SongName;
     private final JSlider volumeSlider;  // 音量条
     private final JLabel statusLabel;  // 状态显示标签
+    private final Sound sound;
     private int choose;
 
     public MusicFrame(JFrame jFrame, Sound sound) {
@@ -25,6 +26,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         }
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);
+        this.sound = sound;
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
@@ -36,14 +38,19 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         Font f = new Font("", Font.PLAIN, 20);
         Font f2 = new Font("", Font.PLAIN, 20);
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.setContentPane(layeredPane);
 
         // 创建一个列表模型
-        JScrollPane scrollPane = getJScrollPane(sound);
+        JScrollPane scrollPane = getJScrollPane(this.sound);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
         scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0));
         scrollPane.setBorder(null);
-        this.add(scrollPane);
+        layeredPane.add(scrollPane, Integer.valueOf(0));
+//        this.add(scrollPane);
+
         choose = 1;
         SongName = new String[]{
                 "東方紅魔郷魔法少女達の百年祭.wav",
@@ -57,86 +64,41 @@ public class MusicFrame extends JFrame implements ActionListener {
                 "Breath_of_Wild_Main_Theme.wav",
                 "恋ひ恋ふ縁.wav"
         };
+
         this.pauseBtn = new JButton("⏸");
         this.pauseBtn.setFont(f);
+        this.pauseBtn.setForeground(Color.WHITE);
         this.pauseBtn.setToolTipText("Pause");
         this.pauseBtn.setBounds(130, 300, 30, 30);
         this.pauseBtn.setBorder(BorderFactory.createEmptyBorder());
         this.pauseBtn.setFocusPainted(false);
-        this.pauseBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // 鼠标进入按钮时的效果
-                pauseBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // 鼠标离开按钮时的效果恢复到默认状态
-                pauseBtn.setBorder(BorderFactory.createEmptyBorder());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                pauseBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-                remove(pauseBtn);
-                add(playBtn);
-                sound.pause();
-                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
-                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                sound.displayStatus();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                pauseBtn.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-            }
-        });
-        if (sound.isPlaying()) {
-            this.add(this.pauseBtn);
+        this.pauseBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.pauseBtn.setBorderPainted(false);
+        this.pauseBtn.setBorder(null);
+        this.pauseBtn.setFocusPainted(false);
+        this.pauseBtn.setContentAreaFilled(false);
+        this.pauseBtn.addActionListener(this);
+        if (this.sound.isPlaying()) {
+            layeredPane.add(pauseBtn, Integer.valueOf(0));
+//            this.add(pauseBtn);
         }
 
         this.playBtn = new JButton("▶");
         this.playBtn.setFont(f);
+        this.playBtn.setForeground(Color.WHITE);
         this.playBtn.setToolTipText("Play");
         this.playBtn.setBounds(130, 300, 30, 30);
         this.playBtn.setBorder(BorderFactory.createEmptyBorder());
         this.playBtn.setFocusPainted(false);
-        this.playBtn.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                // 鼠标进入按钮时的效果
-                playBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                // 鼠标离开按钮时的效果恢复到默认状态
-                playBtn.setBorder(BorderFactory.createEmptyBorder());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                super.mouseReleased(e);
-                playBtn.setBorder(BorderFactory.createLineBorder(Color.WHITE, 2));
-                remove(playBtn);
-                add(pauseBtn);
-                sound.play();
-                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
-                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                sound.displayStatus();
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-                super.mousePressed(e);
-                playBtn.setBorder(BorderFactory.createLineBorder(Color.GRAY, 2));
-            }
-        });
-        if (!sound.isPlaying()) {
-            this.add(this.playBtn);
+        this.playBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.playBtn.setBorderPainted(false);
+        this.playBtn.setBorder(null);
+        this.playBtn.setFocusPainted(false);
+        this.playBtn.setContentAreaFilled(false);
+        this.playBtn.addActionListener(this);
+        if (!this.sound.isPlaying()) {
+            layeredPane.add(playBtn, Integer.valueOf(0));
+//            this.add(playBtn);
         }
 
         this.backBtn = new JButton("⮐");
@@ -152,37 +114,38 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
-        this.add(this.backBtn);
+        layeredPane.add(backBtn, Integer.valueOf(0));
+//        this.add(this.backBtn);
 
-        statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%",
-                sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+        statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
         statusLabel.setFont(new Font("Serif", Font.PLAIN, 12));
         statusLabel.setForeground(Color.WHITE);
         statusLabel.setBounds(10, 370, 200, 30);
-        this.add(statusLabel);
+        layeredPane.add(statusLabel, Integer.valueOf(0));
+//        this.add(statusLabel);
 
         // 音量条
-        volumeSlider = new JSlider(0, 100, (int) (sound.getVolume() * 100));
+        volumeSlider = new JSlider(0, 100, (int) (this.sound.getVolume() * 100));
         volumeSlider.setBounds(10, 370, 200, 10);
         volumeSlider.setPaintTicks(true);
         volumeSlider.setPaintLabels(true);
         volumeSlider.setOpaque(false);
         volumeSlider.setFocusable(false);
-        this.add(volumeSlider);
+        layeredPane.add(volumeSlider, Integer.valueOf(0));
+//        this.add(volumeSlider);
 
         // 音量条拖动
         volumeSlider.addChangeListener(_ -> {
             double volume = volumeSlider.getValue() / 100.0;
-            sound.setVolume(volume);
-            statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
-                    sound.isPlaying() ? "Playing" : "Paused", volume * 100));
+            this.sound.setVolume(volume);
+            statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", volume * 100));
         });
 
         ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        layeredPane.add(bg, Integer.valueOf(-1));
 
         this.setVisible(true);
     }
@@ -216,8 +179,8 @@ public class MusicFrame extends JFrame implements ActionListener {
                 choose = songList.getSelectedIndex();
                 String selectedSong = SongName[choose];
                 sound.changeSource("src/misc/" + selectedSong);
-                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
-                        sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                sound.setVolume(0.5);
+                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                 revalidate();
                 repaint();
             }
@@ -229,8 +192,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     add(pauseBtn);
                     remove(playBtn);
                     sound.play();
-                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%",
-                            sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                     sound.displayStatus();
                     revalidate();
                     repaint();
@@ -257,7 +219,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             JLabel label = new JLabel(value);
             label.setOpaque(false); // 让每个项的背景透明
             label.setFont(new Font("Serif", Font.BOLD, 12));
-            label.setForeground(Color.WHITE); // 设置文本颜色为黑色（可选）
+            label.setForeground(Color.WHITE); // 设置文本颜色为白色
             return label;
         });
         songList.setOpaque(false);
@@ -272,7 +234,23 @@ public class MusicFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == backBtn) {
             this.setVisible(false);
-            jFrame.setVisible(true);
+            this.jFrame.setVisible(true);
+        } else if (e.getSource() == playBtn) {
+            this.remove(playBtn);
+            this.add(pauseBtn);
+            this.sound.play();
+            this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
+            this.sound.displayStatus();
+            this.revalidate(); // 重新布局组件
+            this.repaint();    // 重绘界面
+        } else if (e.getSource() == pauseBtn) {
+            this.remove(pauseBtn);
+            this.add(playBtn);
+            this.sound.pause();
+            this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
+            this.sound.displayStatus();
+            this.revalidate(); // 重新布局组件
+            this.repaint();    // 重绘界面
         }
     }
 }

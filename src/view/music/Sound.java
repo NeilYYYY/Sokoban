@@ -6,8 +6,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Sound {
-    AudioFormat audioFormat;
-    Logger log = Logger.getLogger(this.getClass().getName());
+    private final Logger log = Logger.getLogger(this.getClass().getName());
+    private AudioFormat audioFormat;
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
     private volatile boolean isLooping = false;  // 是否循环播放
@@ -156,8 +156,7 @@ public class Sound {
     // 显示播放信息
     public void displayStatus() {
         String status = isPlaying ? "Playing" : "Paused";
-        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%, Looping: %s\n",
-                status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
+        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%, Looping: %s\n", status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
     }
 
     // 检查是否正在播放
