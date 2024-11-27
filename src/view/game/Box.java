@@ -9,7 +9,7 @@ import java.awt.*;
 public class Box extends JComponent {
     private final Image image;
 
-    public Box(int width, int height, User user) {
+    public Box(int width, int height, @NotNull User user) {
         this.setSize(width, height);
         this.setLocation(5, 5);
         if (user.id() == 2) {

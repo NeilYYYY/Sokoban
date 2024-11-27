@@ -8,7 +8,6 @@ import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import view.FileMD5Util;
-import view.FrameUtil;
 import view.login.User;
 import view.music.Sound;
 
@@ -57,8 +56,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.gamePanel = new GamePanel(this.gameFrame.getGameController().getModel(), gameFrame, user, gameFrame.getGamePanel().getSteps());
         this.gamePanel.setFocusable(false);
         this.gamePanel.setLocation(130, height / 2 - this.gamePanel.getHeight() / 2);
-        this.add(this.gamePanel);
-        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(125 + this.gamePanel.getWidth() + 30, 300), 100, 50);
+        this.getContentPane().add(this.gamePanel);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setLocation(new Point(125 + this.gamePanel.getWidth() + 30, 300));
+        backBtn.setSize(100, 50);
         backBtn.setFont(f);
         backBtn.setForeground(Color.BLACK);
         backBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -66,6 +68,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         backBtn.setBorder(null);
         backBtn.setFocusPainted(false);
         backBtn.setContentAreaFilled(false);
+        this.getContentPane().add(backBtn);
+
         JButton loadBtn = new JButton("Load");
         loadBtn.setFont(f);
         loadBtn.setForeground(Color.BLACK);
@@ -74,6 +78,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         loadBtn.setBorder(null);
         loadBtn.setFocusPainted(false);
         loadBtn.setContentAreaFilled(false);
+
         JButton saveBtn = new JButton("Save");
         saveBtn.setFont(f);
         saveBtn.setForeground(Color.BLACK);
@@ -82,10 +87,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         saveBtn.setBorder(null);
         saveBtn.setFocusPainted(false);
         saveBtn.setContentAreaFilled(false);
+
         loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
         saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
-        this.add(loadBtn);
-        this.add(saveBtn);
+
+        this.getContentPane().add(loadBtn);
+        this.getContentPane().add(saveBtn);
 
         loadBtn.addActionListener(_ -> {
             try {
@@ -132,7 +139,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         JScrollPane scrollPane = new JScrollPane(levelList);
         scrollPane.setBounds(30, 125, 75, 115);
         scrollPane.getViewport().setBackground(Color.WHITE);
-        this.add(scrollPane);
+        this.getContentPane().add(scrollPane);
 
         ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
@@ -258,7 +265,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public void Load(int id) {
         //读取地图
         if (checkFile()) {
-            System.out.println("存档文件损坏喵！");
+            System.err.println("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
@@ -300,7 +307,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().repaint();
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
-                System.out.println("地图不存在");
+                System.err.println("地图不存在");
                 JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
@@ -311,7 +318,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private void reopenGameFrame() {
         gameFrame.dispose();
         MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, false, 1);
+        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, false, 1, gameFrame.getLevelFrame());
         this.dispose();
         gameFrame.setVisible(true);
     }
@@ -319,7 +326,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public void Show(int id) {
         //读取地图
         if (checkFile()) {
-            System.out.println("存档文件损坏喵！");
+            System.err.println("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -332,7 +339,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 reloadPanel(map, gamePanel);
             } else {
                 map = new MapInfo(Level.values()[this.lv - 1].getMap());
-                System.out.println("地图不存在");
+                System.err.println("地图不存在");
                 reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
@@ -343,7 +350,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public void Save(int id) {
         //读取文件
         if (checkFile()) {
-            System.out.println("存档文件损坏喵！");
+            System.err.println("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
@@ -358,7 +365,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             if (result) {
                 System.out.println("更新成功");
             } else {
-                System.out.println("更新失败");
+                System.err.println("更新失败");
             }
             FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".md5"));
         } catch (IOException e) {
@@ -380,9 +387,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         File file = new File(filePath);
         File file1 = new File(filePath + ".md5");
         if (file.delete() && file1.delete()) {
-            System.out.println("文件已删除");
+            System.err.println("文件已删除");
         } else {
-            System.out.println("删除文件失败");
+            System.err.println("删除文件失败");
         }
 
         MapMatrix originalMap = new MapMatrix(Level.values()[gameFrame.getLv() - 1].getMap());
@@ -397,7 +404,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
             System.out.println("创建新文件并保存");
         } catch (Exception e) {
-            System.out.println("保存失败");
+            System.err.println("保存失败");
             log.info(e.getMessage());
         }
         try {

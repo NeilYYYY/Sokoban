@@ -11,7 +11,7 @@ public class Hero extends JComponent {
     private int row;
     private int col;
 
-    public Hero(int width, int height, int row, int col, User user) {
+    public Hero(int width, int height, int row, int col, @NotNull User user) {
         this.row = row;
         this.col = col;
         this.setSize(width, height);

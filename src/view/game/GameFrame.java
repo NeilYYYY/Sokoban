@@ -25,9 +25,11 @@ public class GameFrame extends JFrame {
     private final FileFrame fileFrame;
     private final boolean mode;
     private final int time;
+    private final LevelFrame levelFrame;
     JLabel timeLabel;
     private boolean check = true;
-    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time) {
+
+    public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time, LevelFrame levelFrame) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
         try {
             String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
@@ -35,6 +37,7 @@ public class GameFrame extends JFrame {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
+
         Font font = new Font("Arial", Font.BOLD, 25);
         Font f = new Font("Comic Sans MS", Font.PLAIN, 22);
         Font f2 = new Font("Comic Sans MS", Font.PLAIN, 18);
@@ -47,17 +50,22 @@ public class GameFrame extends JFrame {
         this.user = user;
         this.sound = sound;
         this.setResizable(false);
+        this.levelFrame = levelFrame;
+        int[] leastStep = {13, 23, 31, 27, 37};
         String filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
         File file = new File(filepath);
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
         gamePanel.setFocusable(true);
         gamePanel.setLocation(30, height / 2 - gamePanel.getHeight() / 2);
-        this.add(gamePanel);
-        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
-        this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound);
-        System.out.println(this.user);
+        this.getContentPane().add(gamePanel);
+        this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound, this.levelFrame);
         this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
-        JButton restartBtn = FrameUtil.createButton(this, "Restart", new Point(gamePanel.getWidth() + 80, 120), 80, 50);
+
+        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
+
+        JButton restartBtn = new JButton("Restart");
+        restartBtn.setLocation(new Point(gamePanel.getWidth() + 80, 120));
+        restartBtn.setSize(80, 50);
         restartBtn.setFont(f2);
         restartBtn.setMargin(new Insets(0, 0, 0, 0));
         restartBtn.setBorderPainted(false);
@@ -65,7 +73,11 @@ public class GameFrame extends JFrame {
         restartBtn.setFocusPainted(false);
         restartBtn.setContentAreaFilled(false);
         restartBtn.setForeground(Color.WHITE);
-        JButton loadBtn = FrameUtil.createButton(this, "Saving", new Point(gamePanel.getWidth() + 80, 180), 80, 50);
+        this.getContentPane().add(restartBtn);
+
+        JButton loadBtn = new JButton("Saving");
+        loadBtn.setLocation(new Point(gamePanel.getWidth() + 80, 180));
+        loadBtn.setSize(80, 50);
         loadBtn.setFont(f2);
         loadBtn.setMargin(new Insets(0, 0, 0, 0));
         loadBtn.setBorderPainted(false);
@@ -73,7 +85,11 @@ public class GameFrame extends JFrame {
         loadBtn.setFocusPainted(false);
         loadBtn.setContentAreaFilled(false);
         loadBtn.setForeground(Color.WHITE);
-        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(gamePanel.getWidth() + 80, 240), 80, 50);
+        this.getContentPane().add(loadBtn);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.setLocation(new Point(gamePanel.getWidth() + 80, 240));
+        backBtn.setSize(80, 50);
         backBtn.setFont(f2);
         backBtn.setMargin(new Insets(0, 0, 0, 0));
         backBtn.setBorderPainted(false);
@@ -81,7 +97,11 @@ public class GameFrame extends JFrame {
         backBtn.setFocusPainted(false);
         backBtn.setContentAreaFilled(false);
         backBtn.setForeground(Color.WHITE);
-        JButton musicBtn = FrameUtil.createButton(this, "Music", new Point(gamePanel.getWidth() + 180, 120), 80, 50);
+        this.getContentPane().add(backBtn);
+
+        JButton musicBtn = new JButton("Music");
+        musicBtn.setLocation(new Point(gamePanel.getWidth() + 180, 120));
+        musicBtn.setSize(80, 50);
         musicBtn.setFont(f2);
         musicBtn.setMargin(new Insets(0, 0, 0, 0));
         musicBtn.setBorderPainted(false);
@@ -89,7 +109,11 @@ public class GameFrame extends JFrame {
         musicBtn.setFocusPainted(false);
         musicBtn.setContentAreaFilled(false);
         musicBtn.setForeground(Color.WHITE);
-        JButton undoBtn = FrameUtil.createButton(this, "Undo", new Point(gamePanel.getWidth() + 180, 180), 80, 50);
+        this.getContentPane().add(musicBtn);
+
+        JButton undoBtn = new JButton("Undo");
+        undoBtn.setLocation(new Point(gamePanel.getWidth() + 180, 180));
+        undoBtn.setSize(80, 50);
         undoBtn.setFont(f2);
         undoBtn.setMargin(new Insets(0, 0, 0, 0));
         undoBtn.setBorderPainted(false);
@@ -97,7 +121,11 @@ public class GameFrame extends JFrame {
         undoBtn.setFocusPainted(false);
         undoBtn.setContentAreaFilled(false);
         undoBtn.setForeground(Color.WHITE);
-        JButton upMoveBtn = FrameUtil.createButton(this, "↑", new Point(gamePanel.getWidth() + 220, 260), 30, 30);
+        this.getContentPane().add(undoBtn);
+
+        JButton upMoveBtn = new JButton("↑");
+        upMoveBtn.setLocation(new Point(gamePanel.getWidth() + 220, 260));
+        upMoveBtn.setSize(30, 30);
         upMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         upMoveBtn.setBorderPainted(false);
         upMoveBtn.setBorder(null);
@@ -105,7 +133,11 @@ public class GameFrame extends JFrame {
         upMoveBtn.setContentAreaFilled(false);
         upMoveBtn.setFont(font);
         upMoveBtn.setForeground(Color.WHITE);
-        JButton downMoveBtn = FrameUtil.createButton(this, "↓", new Point(gamePanel.getWidth() + 220, 320), 30, 30);
+        this.getContentPane().add(upMoveBtn);
+
+        JButton downMoveBtn = new JButton("↓");
+        downMoveBtn.setLocation(new Point(gamePanel.getWidth() + 220, 320));
+        downMoveBtn.setSize(30, 30);
         downMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         downMoveBtn.setBorderPainted(false);
         downMoveBtn.setBorder(null);
@@ -113,7 +145,11 @@ public class GameFrame extends JFrame {
         downMoveBtn.setContentAreaFilled(false);
         downMoveBtn.setFont(font);
         downMoveBtn.setForeground(Color.WHITE);
-        JButton leftMoveBtn = FrameUtil.createButton(this, "←", new Point(gamePanel.getWidth() + 190, 290), 30, 30);
+        this.getContentPane().add(downMoveBtn);
+
+        JButton leftMoveBtn = new JButton("←");
+        leftMoveBtn.setLocation(new Point(gamePanel.getWidth() + 190, 290));
+        leftMoveBtn.setSize(30, 30);
         leftMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         leftMoveBtn.setBorderPainted(false);
         leftMoveBtn.setBorder(null);
@@ -121,7 +157,11 @@ public class GameFrame extends JFrame {
         leftMoveBtn.setContentAreaFilled(false);
         leftMoveBtn.setFont(font);
         leftMoveBtn.setForeground(Color.WHITE);
-        JButton rightMoveBtn = FrameUtil.createButton(this, "→", new Point(gamePanel.getWidth() + 250, 290), 30, 30);
+        this.getContentPane().add(leftMoveBtn);
+
+        JButton rightMoveBtn = new JButton("→");
+        rightMoveBtn.setLocation(new Point(gamePanel.getWidth() + 250, 290));
+        rightMoveBtn.setSize(30, 30);
         rightMoveBtn.setMargin(new Insets(0, 0, 0, 0));
         rightMoveBtn.setBorderPainted(false);
         rightMoveBtn.setBorder(null);
@@ -129,7 +169,8 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
         rightMoveBtn.setForeground(Color.WHITE);
-        int[] leastStep = {13, 23, 31, 27, 37};
+        this.getContentPane().add(rightMoveBtn);
+
         if (lv != 6) {
             JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
             leastStepLabel.setForeground(Color.WHITE);
@@ -158,6 +199,7 @@ public class GameFrame extends JFrame {
             controller.restartGame();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
         loadBtn.addActionListener(_ -> {
             if (isMode() || lv == 6) {
                 JOptionPane.showMessageDialog(this, "此模式无法存档");
@@ -181,14 +223,15 @@ public class GameFrame extends JFrame {
 //            }
             //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
+
         backBtn.addActionListener(_ -> {
-            LevelFrame levelFrame = new LevelFrame(this.user, this.sound, this.mode);
             if (isMode()) {
                 controller.getTimer().stop();
             }
             this.dispose();
-            levelFrame.setVisible(true);
+            this.levelFrame.setVisible(true);
         });
+
         undoBtn.addActionListener(_ -> {
             if (gamePanel.getSteps() == 0) {
                 JOptionPane.showMessageDialog(this, "步数为0，无法撤回", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -198,34 +241,45 @@ public class GameFrame extends JFrame {
                 gamePanel.requestFocusInWindow();
             }
         });
+
         musicBtn.addActionListener(_ -> {
             new MusicFrame(this, this.sound);
             gamePanel.requestFocusInWindow();
         });
+
         upMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveUp();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
         downMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveDown();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
         leftMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveLeft();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
         rightMoveBtn.addActionListener(_ -> {
             gamePanel.doMoveRight();
             gamePanel.requestFocusInWindow();//enable key listener
         });
+
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+
         if (!file.exists()) {
+            if (!file.getParentFile().mkdirs()) {
+                System.err.println("目录已存在: " + file.getParentFile().getAbsolutePath());
+            }
             MapInfo mapInfo = new MapInfo();
             System.out.println(mapInfo.getId());
             mapInfo.setModel(controller.getModel());
@@ -240,7 +294,7 @@ public class GameFrame extends JFrame {
                 }
                 System.out.println("创建新文件并保存");
             } catch (Exception e) {
-                System.out.println("保存失败");
+                System.err.println("保存失败");
                 log.info(e.getMessage());
             }
             try {
@@ -248,7 +302,7 @@ public class GameFrame extends JFrame {
                 if (result) {
                     System.out.println("更新成功");
                 } else {
-                    System.out.println("更新失败");
+                    System.err.println("更新失败");
                 }
                 FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
             } catch (IOException e) {
@@ -257,11 +311,12 @@ public class GameFrame extends JFrame {
                 throw new RuntimeException(e);
             }
         }
+
         File md5File = new File(filepath + ".md5");
         if (!md5File.exists()) {
-            System.out.println("存档文档损坏喵！");
+            System.err.println("存档文档损坏喵！");
             if (file.delete()) {
-                System.out.println("存档已清空！！！");
+                System.err.println("存档已清空！！！");
                 MapInfo mapInfo = new MapInfo();
                 System.out.println(mapInfo.getId());
                 mapInfo.setModel(controller.getModel());
@@ -276,7 +331,7 @@ public class GameFrame extends JFrame {
                     }
                     System.out.println("创建新文件并保存");
                 } catch (Exception e) {
-                    System.out.println("保存失败");
+                    System.err.println("保存失败");
                     log.info(e.getMessage());
                 }
                 try {
@@ -294,6 +349,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public LevelFrame getLevelFrame() {
+        return levelFrame;
     }
 
     public User getUser() {

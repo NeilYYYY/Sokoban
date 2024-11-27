@@ -1,5 +1,7 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * This class is to record the map of one game. For example:
  * matrix =
@@ -41,7 +43,7 @@ public class MapMatrix {
         return matrix;
     }
 
-    public void copyMatrix(int[][] matrix) {
+    public void copyMatrix(int @NotNull [] @NotNull [] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             System.arraycopy(matrix[i], 0, this.matrix[i], 0, matrix[i].length);
         }

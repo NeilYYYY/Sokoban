@@ -1,6 +1,7 @@
 package view.game;
 
 import model.MapMatrix;
+import org.jetbrains.annotations.NotNull;
 
 public class MapInfo {
     private int id;
@@ -9,9 +10,10 @@ public class MapInfo {
     private int[] moveHero;
     private int[] moveBox;
 
-    public MapInfo() {}
+    public MapInfo() {
+    }
 
-    public MapInfo(int[][] model) {
+    public MapInfo(int @NotNull [] @NotNull [] model) {
         int[][] a = new int[model.length][model[0].length];
         this.model = new MapMatrix(a);
         this.model.copyMatrix(model);

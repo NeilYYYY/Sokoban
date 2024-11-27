@@ -26,15 +26,17 @@ public class GameController {
     private final int[] moveHero = new int[151];
     private final int[] moveBox = new int[151];
     private final int[] moveFragile = new int[151];
+    private LevelFrame levelFrame;
     private Timer timer;
 
-    public GameController(@NotNull GamePanel view, @NotNull MapMatrix model, User user, int lv, Sound sound) {
+    public GameController(@NotNull GamePanel view, @NotNull MapMatrix model, User user, int lv, Sound sound, LevelFrame levelFrame) {
         this.view = view;
         this.model = new MapMatrix(new int[model.getHeight()][model.getWidth()]);
         this.model.copyMatrix(model.getMatrix());
         this.user = user;
         this.lv = lv;
         this.sound = sound;
+        this.levelFrame = levelFrame;
         view.setController(this);
         System.out.println(user);
         if (view.getFrame().isMode()) {
@@ -149,9 +151,15 @@ public class GameController {
                 timer.stop();
             }
             if (gameFrame.getLv() == 6) {//最后一关则退出
-                JOptionPane.showMessageDialog(null, "You Win!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
-                levelFrame.setVisible(true);
+                JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                this.levelFrame.setVisible(true);
+                gameFrame.dispose();
+                return true;
+            }
+            if (gameFrame.getLv() == 5) {
+                JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), true);
+                this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             }
@@ -163,8 +171,7 @@ public class GameController {
                 gameFrame.dispose();
                 return true;
             } else if (option == 0) {
-                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
-                levelFrame.setVisible(true);
+                this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             }
@@ -172,13 +179,13 @@ public class GameController {
         return false;
     }
 
-    private @NotNull GameFrame getNewGameFrame(GameFrame gameFrame) {
+    private @NotNull GameFrame getNewGameFrame(@NotNull GameFrame gameFrame) {
         MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
         GameFrame newGameFrame;
-        if (gameFrame.getLv() == 5) {
-            newGameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+        if (gameFrame.getLv() == 6) {
+            newGameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime(), this.levelFrame);
         } else {
-            newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime());
+            newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime(), this.levelFrame);
         }
         return newGameFrame;
     }
@@ -234,8 +241,7 @@ public class GameController {
                 gameFrame.getController().restartGame();
                 return true;
             } else if (option == 0) {
-                LevelFrame levelFrame = new LevelFrame(user, this.sound, gameFrame.isMode());
-                levelFrame.setVisible(true);
+                this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             }

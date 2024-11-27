@@ -3,6 +3,7 @@ package view.game;
 import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
+import org.jetbrains.annotations.NotNull;
 import view.FileMD5Util;
 import view.login.User;
 
@@ -33,7 +34,7 @@ public class GamePanel extends ListenerPanel {
     private int[] moveFragile = new int[GRID_SIZE];
     private int time;
 
-    public GamePanel(MapMatrix model, GameFrame frame, User user, int step) {
+    public GamePanel(@NotNull MapMatrix model, @NotNull GameFrame frame, @NotNull User user, int step) {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -176,7 +177,7 @@ public class GamePanel extends ListenerPanel {
         if (controller.doLose(this.frame)) {
             return;
         }
-        if (!frame.isMode()) {
+        if (!frame.isMode() && frame.getLv() != 6) {
             autoSave();
         }
     }
@@ -289,7 +290,9 @@ public class GamePanel extends ListenerPanel {
             }
         }
         moveBox[this.steps] = 0;
-        autoSave();
+        if (!frame.isMode() || frame.getLv() != 6) {
+            autoSave();
+        }
     }
 
     private void autoSave() {

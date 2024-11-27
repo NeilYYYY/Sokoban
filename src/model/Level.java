@@ -1,5 +1,7 @@
 package model;
 
+import org.jetbrains.annotations.NotNull;
+
 public enum Level {
     LEVEL_1(new int[][]{
             {1, 1, 1, 1, 1, 1},
@@ -55,7 +57,7 @@ public enum Level {
     });
     private final int[][] map;
 
-    Level(int[][] map) {
+    Level(int @NotNull [] @NotNull [] map) {
         this.map = new int[map.length][map[0].length];
         for (int i = 0; i < map.length; i++) {
             System.arraycopy(map[i], 0, this.map[i], 0, map[i].length);

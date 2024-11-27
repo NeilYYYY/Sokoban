@@ -1,17 +1,20 @@
 package view;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.*;
 import java.nio.file.*;
 import java.security.*;
 
 public class FileMD5Util {
-
     // 计算文件的MD5
-    public static String calculateMD5(File file) throws Exception {
+    public static @NotNull String calculateMD5(File file) throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
         try (InputStream is = Files.newInputStream(file.toPath()); DigestInputStream dis = new DigestInputStream(is, md)) {
             byte[] buffer = new byte[1024];
             while (dis.read(buffer) != -1) {
+                System.out.print("");
                 // 读取文件内容并更新MD5
             }
         }
@@ -39,7 +42,8 @@ public class FileMD5Util {
     }
 
     // 比较两个MD5
-    public static boolean compareMD5failed(String md5FromFile, String calculatedMD5) {
+    @Contract(value = "_, null -> true", pure = true)
+    public static boolean compareMD5failed(@NotNull String md5FromFile, String calculatedMD5) {
         return !md5FromFile.equals(calculatedMD5);
     }
 }
