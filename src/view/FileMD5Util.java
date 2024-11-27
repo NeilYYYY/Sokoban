@@ -14,7 +14,6 @@ public class FileMD5Util {
         try (InputStream is = Files.newInputStream(file.toPath()); DigestInputStream dis = new DigestInputStream(is, md)) {
             byte[] buffer = new byte[1024];
             while (dis.read(buffer) != -1) {
-                System.out.print("");
                 // 读取文件内容并更新MD5
             }
         }
