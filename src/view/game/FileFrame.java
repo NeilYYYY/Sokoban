@@ -29,7 +29,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final User user;
     private final Sound sound;
     private final Logger log = Logger.getLogger(FileFrame.class.getName());
-    JList<String> levelList;
+    JList<String> savingList;
     private int step;
     private GameFrame gameFrame;
     private int id = 0;
@@ -114,19 +114,19 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
 
-        levelList = getLevelList();
-        levelList.setCellRenderer((_, value, _, _, _) -> {
+        savingList = getSavingList();
+        savingList.setCellRenderer((_, value, _, _, _) -> {
             JLabel label = new JLabel(value);
             label.setOpaque(false); // 让每个项的背景透明
             label.setFont(new Font("Serif", Font.BOLD, 12));
             label.setForeground(Color.BLACK); // 设置文本颜色为黑色
             return label;
         });
-        levelList.setOpaque(false);
-        levelList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        levelList.addListSelectionListener(e -> {
+        savingList.setOpaque(false);
+        savingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        savingList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                id = levelList.getSelectedIndex();
+                id = savingList.getSelectedIndex();
                 System.out.println(id);
                 try {
                     Show(id);
@@ -135,10 +135,13 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 }
             }
         });
-        levelList.setOpaque(false);
-        JScrollPane scrollPane = new JScrollPane(levelList);
+        savingList.setOpaque(false);
+        JScrollPane scrollPane = new JScrollPane(savingList);
         scrollPane.setBounds(30, 125, 75, 115);
-        scrollPane.getViewport().setBackground(Color.WHITE);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.getViewport().setBackground(new Color(0, 0, 0, 0));
+        scrollPane.setBorder(null);
         this.getContentPane().add(scrollPane);
 
         ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
@@ -158,7 +161,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     }
 
     @Contract(" -> new")
-    private static @NotNull JList<String> getLevelList() {
+    private static @NotNull JList<String> getSavingList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("auto_save");
         listModel.addElement("save_01");

@@ -1,5 +1,8 @@
 package view.music;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -144,7 +147,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private static JList<String> getSongList() {
+    @Contract(" -> new")
+    private static @NotNull JList<String> getSongList() {
         DefaultListModel<String> listModel = new DefaultListModel<>();
         listModel.addElement("魔法少女達の百年祭");
         listModel.addElement("亡き王女の为のセプテット");
@@ -160,7 +164,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         return new JList<>(listModel);
     }
 
-    private JScrollPane getJScrollPane(Sound sound) {
+    private @NotNull JScrollPane getJScrollPane(Sound sound) {
         JList<String> songList = getSongList();
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songList.addListSelectionListener(e -> {
@@ -225,7 +229,7 @@ public class MusicFrame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == backBtn) {
             this.setVisible(false);
             this.jFrame.setVisible(true);
