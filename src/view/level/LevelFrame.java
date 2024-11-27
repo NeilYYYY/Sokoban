@@ -48,7 +48,7 @@ public class LevelFrame extends JFrame {
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
-        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(180, 155), 80, 60);
+        JButton level1Btn = FrameUtil.createButton(this, "Level 1", new Point(170, 155), 80, 60);
         Font f = new Font("Comic Sans MS", Font.BOLD, 16);
         level1Btn.setFont(f);
         level1Btn.setForeground(Color.WHITE);
@@ -57,7 +57,7 @@ public class LevelFrame extends JFrame {
         level1Btn.setBorder(null);
         level1Btn.setFocusPainted(false);
         level1Btn.setContentAreaFilled(false);
-        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(270, 155), 80, 60);
+        JButton level2Btn = FrameUtil.createButton(this, "Level 2", new Point(260, 155), 80, 60);
         level2Btn.setFont(f);
         level2Btn.setForeground(Color.WHITE);
         level2Btn.setMargin(new Insets(0, 0, 0, 0));
@@ -65,7 +65,7 @@ public class LevelFrame extends JFrame {
         level2Btn.setBorder(null);
         level2Btn.setFocusPainted(false);
         level2Btn.setContentAreaFilled(false);
-        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(360, 155), 80, 60);
+        JButton level3Btn = FrameUtil.createButton(this, "Level 3", new Point(350, 155), 80, 60);
         level3Btn.setFont(f);
         level3Btn.setForeground(Color.WHITE);
         level3Btn.setMargin(new Insets(0, 0, 0, 0));
@@ -73,7 +73,7 @@ public class LevelFrame extends JFrame {
         level3Btn.setBorder(null);
         level3Btn.setFocusPainted(false);
         level3Btn.setContentAreaFilled(false);
-        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(450, 155), 80, 60);
+        JButton level4Btn = FrameUtil.createButton(this, "Level 4", new Point(440, 155), 80, 60);
         level4Btn.setFont(f);
         level4Btn.setForeground(Color.WHITE);
         level4Btn.setMargin(new Insets(0, 0, 0, 0));
@@ -81,7 +81,7 @@ public class LevelFrame extends JFrame {
         level4Btn.setBorder(null);
         level4Btn.setFocusPainted(false);
         level4Btn.setContentAreaFilled(false);
-        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(540, 155), 80, 60);
+        JButton level5Btn = FrameUtil.createButton(this, "Level 5", new Point(530, 155), 80, 60);
         level5Btn.setFont(f);
         level5Btn.setForeground(Color.WHITE);
         level5Btn.setMargin(new Insets(0, 0, 0, 0));
@@ -89,7 +89,7 @@ public class LevelFrame extends JFrame {
         level5Btn.setBorder(null);
         level5Btn.setFocusPainted(false);
         level5Btn.setContentAreaFilled(false);
-        JButton level6Btn = FrameUtil.createButton(this, "Level 6", new Point(630, 155), 80, 60);
+        JButton level6Btn = FrameUtil.createButton(this, "Level 6", new Point(350, 155), 80, 60);
         level6Btn.setFont(f);
         level6Btn.setForeground(Color.WHITE);
         level6Btn.setMargin(new Insets(0, 0, 0, 0));
@@ -97,6 +97,31 @@ public class LevelFrame extends JFrame {
         level6Btn.setBorder(null);
         level6Btn.setFocusPainted(false);
         level6Btn.setContentAreaFilled(false);
+        level6Btn.setVisible(false);
+        JButton kingBtn = FrameUtil.createButton(this, "King", new Point(700, 350), 80, 60);
+        kingBtn.setFont(f);
+        kingBtn.setForeground(Color.WHITE);
+        kingBtn.setMargin(new Insets(0, 0, 0, 0));
+        kingBtn.setBorderPainted(false);
+        kingBtn.setBorder(null);
+        kingBtn.setFocusPainted(false);
+        kingBtn.setContentAreaFilled(false);
+        kingBtn.setVisible(false);
+        JButton backBtn = FrameUtil.createButton(this, "Back", new Point(700, 350), 80, 60);
+        backBtn.setFont(f);
+        backBtn.setForeground(Color.WHITE);
+        backBtn.setMargin(new Insets(0, 0, 0, 0));
+        backBtn.setBorderPainted(false);
+        backBtn.setBorder(null);
+        backBtn.setFocusPainted(false);
+        backBtn.setContentAreaFilled(false);
+        backBtn.setVisible(false);
+
+        ArrayList<User> users = User.getUserList();
+        if (users.get(user.id()).lv()[4]) {
+            kingBtn.setVisible(true);
+        }
+
         JButton logoutBtn = FrameUtil.createButton(this, "Logout", new Point(300, 275), 80, 60);
         logoutBtn.setFont(f);
         logoutBtn.setForeground(Color.WHITE);
@@ -145,7 +170,6 @@ public class LevelFrame extends JFrame {
 
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
-            ArrayList<User> users = User.getUserList();
             if (users.get(this.user.id()).lv()[this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
@@ -158,7 +182,6 @@ public class LevelFrame extends JFrame {
 
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
-            ArrayList<User> users = User.getUserList();
             if (users.get(this.user.id()).lv()[this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
@@ -171,7 +194,6 @@ public class LevelFrame extends JFrame {
 
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
-            ArrayList<User> users = User.getUserList();
             if (users.get(this.user.id()).lv()[this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
@@ -184,7 +206,6 @@ public class LevelFrame extends JFrame {
 
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
-            ArrayList<User> users = User.getUserList();
             if (users.get(this.user.id()).lv()[this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
@@ -197,15 +218,10 @@ public class LevelFrame extends JFrame {
 
         level6Btn.addActionListener(_ -> {
             this.lv = 6;
-            ArrayList<User> users = User.getUserList();
-            if (users.get(this.user.id()).lv()[this.lv - 2]) {
-                MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
-                GameFrame gameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time);
-                this.setVisible(false);
-                gameFrame.setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
-            }
+            MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
+            GameFrame gameFrame = new GameFrame(900, 600, mapMatrix, user, this.lv, 0, this.sound, this.mode, this.time);
+            this.setVisible(false);
+            gameFrame.setVisible(true);
         });
         logoutBtn.addActionListener(_ -> {
             this.setVisible(false);
@@ -238,6 +254,26 @@ public class LevelFrame extends JFrame {
                 this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
                 this.getContentPane().repaint();
             }
+        });
+        backBtn.addActionListener(_ -> {
+            level6Btn.setVisible(false);
+            level1Btn.setVisible(true);
+            level2Btn.setVisible(true);
+            level3Btn.setVisible(true);
+            level4Btn.setVisible(true);
+            level5Btn.setVisible(true);
+            backBtn.setVisible(false);
+            kingBtn.setVisible(true);
+        });
+        kingBtn.addActionListener(_ -> {
+            level1Btn.setVisible(false);
+            level2Btn.setVisible(false);
+            level3Btn.setVisible(false);
+            level4Btn.setVisible(false);
+            level5Btn.setVisible(false);
+            level6Btn.setVisible(true);
+            kingBtn.setVisible(false);
+            backBtn.setVisible(true);
         });
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));
         this.setLocationRelativeTo(null);
