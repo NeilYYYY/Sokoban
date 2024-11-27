@@ -1,41 +1,41 @@
 [
-  {
-    "id": 0,
-    "username": "",
-    "password": "",
-    "lv": [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true
-    ]
-  },
-  {
-    "id": 1,
-    "username": "admin",
-    "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
-    "lv": [
-      false,
-      false,
-      false,
-      false,
-      false,
-      false
-    ]
-  },
-  {
-    "id": 2,
-    "username": "Box",
-    "password": "631cb8a984d071a33e4623c901ac4dea69a058f1892675484b74900ecf77873d",
-    "lv": [
-      true,
-      true,
-      true,
-      true,
-      true,
-      true
-    ]
-  }
+    {
+        "id": 0,
+        "username": "",
+        "password": "",
+        "lv": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    {
+        "id": 1,
+        "username": "admin",
+        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "lv": [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    },
+    {
+        "id": 2,
+        "username": "Box",
+        "password": "631cb8a984d071a33e4623c901ac4dea69a058f1892675484b74900ecf77873d",
+        "lv": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+        ]
+    }
 ]

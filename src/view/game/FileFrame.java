@@ -2,6 +2,7 @@ package view.game;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.stream.JsonWriter;
 import model.Level;
 import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
@@ -202,10 +203,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         MapsResponse response = new MapsResponse();
         response.setMaps(List.copyOf(maps.values()));
-        FileWriter writer = new FileWriter(filePath);
-        gson.toJson(response, writer);
-        writer.flush();
-        writer.close();
+        // 使用 FileWriter 创建文件
+        try (Writer writer = new FileWriter(filePath)) {
+            // 创建 JsonWriter 并设置缩进为 4 个空格
+            JsonWriter jsonWriter = new JsonWriter(writer);
+            jsonWriter.setIndent("    "); // 4 个空格的缩进
+            // 将 response 对象写入文件
+            gson.toJson(response, MapsResponse.class, jsonWriter);
+            jsonWriter.flush(); // 确保所有内容都已写入
+        } catch (IOException e) {
+            throw new IOException("Error saving maps to JSON: " + e.getMessage(), e);
+        }
     }
 
     public static void createFile(String filePath) throws IOException {

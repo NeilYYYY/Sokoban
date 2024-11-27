@@ -3,6 +3,7 @@ package view.login;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.google.gson.stream.JsonWriter;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -101,7 +102,11 @@ public record User(int id, String username, String password, boolean[] lv) {
     public static void writeUser(ArrayList<User> user) {
         try (Writer writer = new FileWriter("src/users.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(user, writer);
+            // 使用 JsonWriter 设置 4 个空格的缩进
+            JsonWriter jsonWriter = new JsonWriter(writer);
+            jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
+            gson.toJson(user, ArrayList.class, jsonWriter);
+            jsonWriter.flush();
         } catch (IOException e) {
             log.info(e.getMessage());
         }
