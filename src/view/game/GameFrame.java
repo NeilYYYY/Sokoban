@@ -9,7 +9,6 @@ import java.util.logging.Logger;
 import controller.GameController;
 import model.MapMatrix;
 import view.FileMD5Util;
-import view.FrameUtil;
 import view.level.LevelFrame;
 import view.login.User;
 import view.music.MusicFrame;
@@ -172,25 +171,66 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(rightMoveBtn);
 
         if (lv != 6) {
-            JLabel leastStepLabel = FrameUtil.createJLabel(this, String.format("Min_Steps: %d", leastStep[lv - 1]), f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+            JLabel leastStepLabel = new JLabel(String.format("Min_Steps: %d", leastStep[lv - 1]));
+            leastStepLabel.setFont(f);
+            leastStepLabel.setLocation(new Point(gamePanel.getWidth() + 200, 70));
+            leastStepLabel.setSize(180, 50);
+            getContentPane().add(leastStepLabel, Integer.valueOf(1));
             leastStepLabel.setForeground(Color.WHITE);
-            JLabel lvLabel = FrameUtil.createJLabel(this, String.format("Level: %d", this.lv), f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+
+            JLabel lvLabel = new JLabel(String.format("Level: %d", this.lv));
+            lvLabel.setFont(f);
+            lvLabel.setLocation(new Point(gamePanel.getWidth() + 80, 20));
+            lvLabel.setSize(180, 50);
+            getContentPane().add(lvLabel, Integer.valueOf(1));
             lvLabel.setForeground(Color.WHITE);
+
             if (isMode()) {
-                timeLabel = FrameUtil.createJLabel(this, String.format("Left time: %d", time), f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+                Point location = new Point(gamePanel.getWidth() + 200, 20);
+                JLabel leftTimeLabel = new JLabel(String.format("Left time: %d", time));
+                leftTimeLabel.setFont(f);
+                leftTimeLabel.setLocation(location);
+                leftTimeLabel.setSize(180, 50);
+                getContentPane().add(leftTimeLabel, Integer.valueOf(1));
+                timeLabel = leftTimeLabel;
                 timeLabel.setForeground(Color.WHITE);
             }
-            JLabel stepLabel = FrameUtil.createJLabel(this, String.format("Step: %d", step), f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+
+            JLabel stepLabel = new JLabel(String.format("Step: %d", step));
+            stepLabel.setFont(f);
+            stepLabel.setLocation(new Point(gamePanel.getWidth() + 80, 70));
+            stepLabel.setSize(180, 50);
+            getContentPane().add(stepLabel, Integer.valueOf(1));
             stepLabel.setForeground(Color.WHITE);
             gamePanel.setStepLabel(stepLabel);
         } else {
-            JLabel leastStepLabel = FrameUtil.createJLabel(this, "Min_Steps: ???", f, new Point(gamePanel.getWidth() + 200, 70), 180, 50);
+            JLabel leastStepLabel = new JLabel("Min_Steps: ???");
+            leastStepLabel.setFont(f);
+            leastStepLabel.setLocation(new Point(gamePanel.getWidth() + 200, 70));
+            leastStepLabel.setSize(180, 50);
+            getContentPane().add(leastStepLabel, Integer.valueOf(1));
             leastStepLabel.setForeground(Color.WHITE);
-            JLabel lvLabel = FrameUtil.createJLabel(this, "Level: ???", f, new Point(gamePanel.getWidth() + 80, 20), 180, 50);
+
+            JLabel lvLabel = new JLabel("Level: ???");
+            lvLabel.setFont(f);
+            lvLabel.setLocation(new Point(gamePanel.getWidth() + 80, 20));
+            lvLabel.setSize(180, 50);
+            getContentPane().add(lvLabel, Integer.valueOf(1));
             lvLabel.setForeground(Color.WHITE);
-            timeLabel = FrameUtil.createJLabel(this, "Left time: ???", f, new Point(gamePanel.getWidth() + 200, 20), 180, 50);
+
+            JLabel leftTimeLabel = new JLabel("Left time: ???");
+            leftTimeLabel.setFont(f);
+            leftTimeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
+            leftTimeLabel.setSize(180, 50);
+            getContentPane().add(leftTimeLabel, Integer.valueOf(1));
+            timeLabel = leftTimeLabel;
             timeLabel.setForeground(Color.WHITE);
-            JLabel stepLabel = FrameUtil.createJLabel(this, "Step: ???", f, new Point(gamePanel.getWidth() + 80, 70), 180, 50);
+
+            JLabel stepLabel = new JLabel("Step: ???");
+            stepLabel.setFont(f);
+            stepLabel.setLocation(new Point(gamePanel.getWidth() + 80, 70));
+            stepLabel.setSize(180, 50);
+            getContentPane().add(stepLabel, Integer.valueOf(1));
             stepLabel.setForeground(Color.WHITE);
             gamePanel.setStepLabel(stepLabel);
         }
