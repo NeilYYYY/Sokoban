@@ -25,6 +25,7 @@ public class GameFrame extends JFrame {
     private final boolean mode;
     private final int time;
     private final LevelFrame levelFrame;
+    JLabel leftTimeLabel;
     JLabel timeLabel;
     private boolean check = true;
 
@@ -41,7 +42,11 @@ public class GameFrame extends JFrame {
         Font f = new Font("Comic Sans MS", Font.PLAIN, 22);
         Font f2 = new Font("Comic Sans MS", Font.PLAIN, 18);
         this.mode = mode;
-        this.time = time;
+        int temp = 0;
+        if (this.mode) {
+            temp = time;
+        }
+        this.time = temp;
         this.lv = lv;
         this.setTitle(String.format("Level %d", this.lv));
         this.setLayout(null);
@@ -186,13 +191,18 @@ public class GameFrame extends JFrame {
             lvLabel.setForeground(Color.WHITE);
 
             if (isMode()) {
-                Point location = new Point(gamePanel.getWidth() + 200, 20);
-                JLabel leftTimeLabel = new JLabel(String.format("Left time: %d", time));
+                leftTimeLabel = new JLabel(String.format("Left time: %d", this.time));
                 leftTimeLabel.setFont(f);
-                leftTimeLabel.setLocation(location);
+                leftTimeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
                 leftTimeLabel.setSize(180, 50);
                 getContentPane().add(leftTimeLabel, Integer.valueOf(1));
-                timeLabel = leftTimeLabel;
+                leftTimeLabel.setForeground(Color.WHITE);
+            } else {
+                timeLabel = new JLabel(String.format("Time: %d", this.time));
+                timeLabel.setFont(f);
+                timeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
+                timeLabel.setSize(180, 50);
+                getContentPane().add(timeLabel, Integer.valueOf(1));
                 timeLabel.setForeground(Color.WHITE);
             }
 
@@ -218,13 +228,21 @@ public class GameFrame extends JFrame {
             getContentPane().add(lvLabel, Integer.valueOf(1));
             lvLabel.setForeground(Color.WHITE);
 
-            JLabel leftTimeLabel = new JLabel("Left time: ???");
-            leftTimeLabel.setFont(f);
-            leftTimeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
-            leftTimeLabel.setSize(180, 50);
-            getContentPane().add(leftTimeLabel, Integer.valueOf(1));
-            timeLabel = leftTimeLabel;
-            timeLabel.setForeground(Color.WHITE);
+            if (isMode()) {
+                leftTimeLabel = new JLabel("Left time: ???");
+                leftTimeLabel.setFont(f);
+                leftTimeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
+                leftTimeLabel.setSize(180, 50);
+                getContentPane().add(leftTimeLabel, Integer.valueOf(1));
+                leftTimeLabel.setForeground(Color.WHITE);
+            } else {
+                timeLabel = new JLabel("Time: ???");
+                timeLabel.setFont(f);
+                timeLabel.setLocation(new Point(gamePanel.getWidth() + 200, 20));
+                timeLabel.setSize(180, 50);
+                getContentPane().add(timeLabel, Integer.valueOf(1));
+                timeLabel.setForeground(Color.WHITE);
+            }
 
             JLabel stepLabel = new JLabel("Step: ???");
             stepLabel.setFont(f);
@@ -246,6 +264,7 @@ public class GameFrame extends JFrame {
                 gamePanel.requestFocusInWindow();
                 return;
             }
+            controller.getTimer().stop();
 //            if (this.user.getId() == 0) {
 //                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
 //            } else {
@@ -265,9 +284,7 @@ public class GameFrame extends JFrame {
         });
 
         backBtn.addActionListener(_ -> {
-            if (isMode()) {
-                controller.getTimer().stop();
-            }
+            controller.getTimer().stop();
             this.dispose();
             this.levelFrame.setVisible(true);
         });
@@ -338,7 +355,7 @@ public class GameFrame extends JFrame {
                 log.info(e.getMessage());
             }
             try {
-                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), filepath);
+                boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.gamePanel.getTime(), filepath);
                 if (result) {
                     System.out.println("更新成功");
                 } else {
@@ -375,7 +392,7 @@ public class GameFrame extends JFrame {
                     log.info(e.getMessage());
                 }
                 try {
-                    boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), filepath);
+                    boolean result = FileFrame.updateMapById(0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox(), this.gamePanel.getTime(), filepath);
                     if (result) {
                         System.out.println("更新成功");
                     } else {
@@ -391,6 +408,10 @@ public class GameFrame extends JFrame {
         }
     }
 
+    public JLabel getTimeLabel() {
+        return timeLabel;
+    }
+
     public LevelFrame getLevelFrame() {
         return levelFrame;
     }
@@ -399,8 +420,8 @@ public class GameFrame extends JFrame {
         return user;
     }
 
-    public JLabel getTimeLabel() {
-        return timeLabel;
+    public JLabel getLeftTimeLabel() {
+        return leftTimeLabel;
     }
 
     public FileFrame getFileFrame() {

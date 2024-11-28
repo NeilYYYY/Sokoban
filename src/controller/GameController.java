@@ -42,12 +42,18 @@ public class GameController {
         if (view.getFrame().isMode()) {
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
-                view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
+                view.getFrame().getLeftTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
                     // 倒计时结束，执行相应操作
                     ((Timer) e.getSource()).stop();
                     doLose(view.getFrame());
                 }
+            });
+        } else {
+            // 创建一个 Timer 定时器，每隔1000ms更新一次
+            timer = new Timer(1000, _ -> {
+                view.setTime(view.getTime() + 1);
+                view.getFrame().getTimeLabel().setText(String.format("Time: %d", view.getTime()));
             });
         }
     }
@@ -111,16 +117,24 @@ public class GameController {
         }
         if (view.getFrame().isMode()) {
             view.setTime(view.getFrame().getTime());
-            view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
+            view.getFrame().getLeftTimeLabel().setText(String.format("Left time: %d", view.getTime()));
             timer.stop();
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);
-                view.getFrame().getTimeLabel().setText(String.format("Left time: %d", view.getTime()));
+                view.getFrame().getLeftTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
                     // 倒计时结束，执行相应操作
                     ((Timer) e.getSource()).stop();
                     doLose(view.getFrame());
                 }
+            });
+        } else {
+            view.setTime(0);
+            view.getFrame().getTimeLabel().setText(String.format("Time: %d", view.getTime()));
+            timer.stop();
+            timer = new Timer(1000, _ -> {
+                view.setTime(view.getTime() + 1);
+                view.getFrame().getTimeLabel().setText(String.format("Time: %d", view.getTime()));
             });
         }
         view.repaint();
@@ -147,9 +161,7 @@ public class GameController {
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
-            if (gameFrame.isMode()) {
-                timer.stop();
-            }
+            timer.stop();
             if (gameFrame.getLv() == 6) {//最后一关则退出
                 JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.levelFrame.setVisible(true);
@@ -192,18 +204,14 @@ public class GameController {
 
     public boolean checkLose() {
         if (view.getSteps() >= 100) {
-            if (view.getFrame().isMode()) {
-                timer.stop();
-            }
+            timer.stop();
             return true;
         }
         int[][] map = model.getMatrix();
         for (int[] ints : map) {
             for (int j = 0; j < map[0].length; j++) {
                 if (ints[j] == 13) {
-                    if (view.getFrame().isMode()) {
-                        timer.stop();
-                    }
+                    timer.stop();
                     return true;
                 }
             }
@@ -217,9 +225,7 @@ public class GameController {
                 }
             }
         }
-        if (view.getFrame().isMode()) {
-            timer.stop();
-        }
+        timer.stop();
         return true;
     }
 
@@ -251,6 +257,10 @@ public class GameController {
 
     public Timer getTimer() {
         return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 
     public boolean doMove(int row, int col, @NotNull Direction direction) {

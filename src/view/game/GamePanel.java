@@ -33,6 +33,11 @@ public class GamePanel extends ListenerPanel {
     private int[] moveBox = new int[GRID_SIZE];
     private int[] moveFragile = new int[GRID_SIZE];
     private int time;
+    private boolean flag = false;
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
+    }
 
     public GamePanel(@NotNull MapMatrix model, @NotNull GameFrame frame, @NotNull User user, int step) {
         this.setVisible(true);
@@ -147,6 +152,9 @@ public class GamePanel extends ListenerPanel {
     public void afterMove() {
         if (steps == 0 && frame.isMode()) {
             controller.getTimer().start();
+        } else if (flag || steps == 0) {
+            controller.getTimer().start();
+            flag = false;
         }
         this.steps++;
         if (getFrame().getLv() != 6) {
@@ -302,7 +310,7 @@ public class GamePanel extends ListenerPanel {
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.filepath);
+            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.time, this.filepath);
             if (result) {
                 System.out.println("更新成功");
             } else {

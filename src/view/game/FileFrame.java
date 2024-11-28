@@ -154,7 +154,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.getContentPane().setLayout(null);
         copyModel = this.gameFrame.getGameController().getModel();
         this.step = this.gameFrame.getGamePanel().getSteps();
+
         backBtn.addActionListener(_ -> {
+            this.gameFrame.getController().getTimer().start();
             this.dispose();
             this.gameFrame.setVisible(true);
         });
@@ -189,7 +191,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return maps;
     }
 
-    public static boolean updateMapById(int id, MapMatrix map, int step, int[] moveHero, int[] moveBox, String filePath) throws IOException {
+    public static boolean updateMapById(int id, MapMatrix map, int step, int[] moveHero, int[] moveBox, int timeUsed, String filePath) throws IOException {
         Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
         MapInfo mapToUpdate = maps.get(id);
         if (mapToUpdate != null) {
@@ -197,6 +199,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             mapToUpdate.setStep(step);
             mapToUpdate.setMoveHero(moveHero);
             mapToUpdate.setMoveBox(moveBox);
+            mapToUpdate.setTimeUsed(timeUsed);
             saveMapsToJson(maps, filePath);
             return true;
         }
@@ -279,6 +282,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
                 System.out.printf("读入存档%d\n", id);
+                gameFrame.getGamePanel().setFlag(true);
                 for (int i = 0; i < gameFrame.getGamePanel().getGrids().length; i++) {
                     for (int j = 0; j < gameFrame.getGamePanel().getGrids()[i].length; j++) {
                         switch (copyModel.getId(i, j) / 10) {
@@ -302,9 +306,16 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     }
                 }
                 gameFrame.getGamePanel().setSteps(map.getStep());
-                gameFrame.getGamePanel().getStepLabel().setText(String.format("Step: %d", gameFrame.getGamePanel().getSteps()));
-                gameFrame.getGamePanel().setMoveHero(maps.get(map.getId()).getMoveHero());
-                gameFrame.getGamePanel().setMoveBox(maps.get(map.getId()).getMoveBox());
+                gameFrame.getGamePanel().getStepLabel().setText(String.format("Step: %d", map.getStep()));
+                gameFrame.getGamePanel().setMoveHero(map.getMoveHero());
+                gameFrame.getGamePanel().setMoveBox(map.getMoveBox());
+                gameFrame.getGamePanel().setTime(map.getTimeUsed());
+                gameFrame.getTimeLabel().setText(String.format("Time: %d", map.getTimeUsed()));
+                gameFrame.getController().getTimer().stop();
+                gameFrame.getController().setTimer(new Timer(1000, _ -> {
+                    gameFrame.getGamePanel().setTime(gameFrame.getGamePanel().getTime() + 1);
+                    gameFrame.getGamePanel().getFrame().getTimeLabel().setText(String.format("Time: %d", gameFrame.getGamePanel().getTime()));
+                }));
                 this.dispose();
                 this.gameFrame.setVisible(true);
                 gameFrame.getGamePanel().repaint();
@@ -364,7 +375,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         try {
             this.step = this.gameFrame.getGamePanel().getSteps();
-            boolean result = updateMapById(id, copyModel, this.step, gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox(), this.filePath);
+            boolean result = updateMapById(id, copyModel, this.step, gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox(), gameFrame.getGamePanel().getTime(), this.filePath);
             if (result) {
                 System.out.println("更新成功");
             } else {

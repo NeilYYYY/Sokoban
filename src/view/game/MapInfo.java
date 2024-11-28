@@ -9,6 +9,7 @@ public class MapInfo {
     private int step;
     private int[] moveHero;
     private int[] moveBox;
+    private int timeUsed;
 
     public MapInfo() {
     }
@@ -17,6 +18,14 @@ public class MapInfo {
         int[][] a = new int[model.length][model[0].length];
         this.model = new MapMatrix(a);
         this.model.copyMatrix(model);
+    }
+
+    public int getTimeUsed() {
+        return timeUsed;
+    }
+
+    public void setTimeUsed(int timeUsed) {
+        this.timeUsed = timeUsed;
     }
 
     public MapMatrix getModel() {
