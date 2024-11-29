@@ -191,6 +191,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     add(pauseBtn);
                     sound.play();
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                    volumeSlider.setValue(50);
                     sound.displayStatus();
                     revalidate();
                     repaint();

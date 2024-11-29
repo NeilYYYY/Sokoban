@@ -24,7 +24,6 @@ public class Sound {
         prefetch();
     }
 
-    // 初始化音频资源
     private void prefetch() {
         try {
             audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
@@ -34,68 +33,71 @@ public class Sound {
             sourceDataLine.open(audioFormat);
             clipLength = audioStream.getFrameLength();
             currentFrame.set(0);
-
-            // 初始化音量控制器
-            if (sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-                volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
-            }
+            initVolumeControl();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             log.info(e.getMessage());
         }
     }
 
-    // 播放音频
+    private void initVolumeControl() {
+        if (sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+        }
+    }
+
     public void play() {
         if (isPlaying) {
-            System.out.println("Audio is already playing.");
+            System.err.println("Audio is already playing.");
             return;
         }
         isPlaying = true;
-        playThread = new Thread(() -> {
-            try {
-                do {
-                    sourceDataLine.start();
-                    audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-                    if (currentFrame.get() > 0) {
-                        long bytesToSkip = currentFrame.get() * audioFormat.getFrameSize();
-                        long bytesSkipped = audioStream.skip(bytesToSkip);
-                        if (bytesSkipped != bytesToSkip) {
-                            log.warning("Skipped " + bytesSkipped + " bytes, expected " + bytesToSkip);
-                        }
-                    }
-                    byte[] buffer = new byte[1024];
-                    int bytesRead;
-                    while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
-                        sourceDataLine.write(buffer, 0, bytesRead);
-                        currentFrame.addAndGet(bytesRead / audioFormat.getFrameSize());
-                    }
-                    if (!isPlaying) {
-                        return; // 中途暂停
-                    }
-                    currentFrame.set(0); // 如果不是暂停，则重置播放位置
-                } while (isLooping && isPlaying);
-                stop(); // 播放结束时清理资源
-            } catch (IOException | UnsupportedAudioFileException e) {
-                log.info(e.getMessage());
-            }
-        });
+        playThread = new Thread(this::playAudio);
         playThread.start();
     }
 
-    // 暂停音频
+    private void playAudio() {
+        try {
+            do {
+                sourceDataLine.start();
+                audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
+                skipToCurrentFrame();
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
+                    sourceDataLine.write(buffer, 0, bytesRead);
+                    currentFrame.addAndGet(bytesRead / audioFormat.getFrameSize());
+                }
+                if (!isPlaying) return;
+                currentFrame.set(0);
+            } while (isLooping && isPlaying);
+            stop();
+        } catch (IOException | UnsupportedAudioFileException e) {
+            log.info(e.getMessage());
+        }
+    }
+
+    private void skipToCurrentFrame() throws IOException {
+        if (currentFrame.get() > 0) {
+            long bytesToSkip = currentFrame.get() * audioFormat.getFrameSize();
+            long bytesSkipped = audioStream.skip(bytesToSkip);
+            if (bytesSkipped != bytesToSkip) {
+                log.warning("Skipped " + bytesSkipped + " bytes, expected " + bytesToSkip);
+            }
+        }
+    }
+
     public void pause() {
         if (!isPlaying) {
-            System.out.println("Audio is not currently playing.");
+            System.err.println("Audio is not currently playing.");
             return;
         }
         isPlaying = false;
         sourceDataLine.stop();
     }
 
-    // 停止音频并重置
     public void stop() {
         isPlaying = false;
-        currentFrame.set(0); // 停止时重置帧位置
+        currentFrame.set(0);
         if (sourceDataLine != null) {
             sourceDataLine.stop();
             sourceDataLine.close();
@@ -107,38 +109,32 @@ public class Sound {
                 log.info(e.getMessage());
             }
         }
-        prefetch(); // 重新加载资源
+        prefetch();
     }
 
-    // 设置循环播放
     public void setLooping(boolean looping) {
         isLooping = looping;
         System.out.println("Looping is set to: " + (looping ? "enabled" : "disabled"));
     }
 
-    // 更换音频文件
     public void changeSource(String newPath) {
-        stop(); // 停止当前播放
+        stop();
         this.musicPath = newPath;
         prefetch();
         System.out.println("Changed audio source to: " + newPath);
     }
 
-    // 获取当前音频文件路径
     public String getMusicPath() {
         return musicPath;
     }
 
-    // 获取当前播放进度
     public double getProgress() {
-        if (clipLength == 0) return 0.0;
-        return (double) currentFrame.get() / clipLength * 100.0;
+        return clipLength == 0 ? 0.0 : (double) currentFrame.get() / clipLength * 100.0;
     }
 
-    // 获取当前音量（0.0 ~ 1.0）
     public double getVolume() {
         if (volumeControl == null) {
-            System.out.println("Volume control not supported.");
+            System.err.println("Volume control not supported.");
             return 0.0;
         }
         float min = volumeControl.getMinimum();
@@ -147,10 +143,9 @@ public class Sound {
         return (volumeControl.getValue() - mid) / (max - mid);
     }
 
-    // 设置音量（0.0 ~ 1.0）
     public void setVolume(double volume) {
         if (volumeControl == null) {
-            System.out.println("Volume control not supported.");
+            System.err.println("Volume control not supported.");
             return;
         }
         float min = volumeControl.getMinimum();
@@ -160,13 +155,11 @@ public class Sound {
         volumeControl.setValue(newVolume);
     }
 
-    // 显示播放信息
     public void displayStatus() {
         String status = isPlaying ? "Playing" : "Paused";
         System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%, Looping: %s\n", status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
     }
 
-    // 检查是否正在播放
     public boolean isPlaying() {
         return isPlaying;
     }
