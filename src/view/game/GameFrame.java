@@ -80,7 +80,7 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(restartBtn);
 
         JButton loadBtn = new JButton("Saving");
-        loadBtn.setLocation(new Point(gamePanel.getWidth() + 80, 180));
+        loadBtn.setLocation(new Point(gamePanel.getWidth() + 180, 180));
         loadBtn.setSize(80, 50);
         loadBtn.setFont(f2);
         loadBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -116,7 +116,7 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(musicBtn);
 
         JButton undoBtn = new JButton("Undo");
-        undoBtn.setLocation(new Point(gamePanel.getWidth() + 180, 180));
+        undoBtn.setLocation(new Point(gamePanel.getWidth() + 80, 180));
         undoBtn.setSize(80, 50);
         undoBtn.setFont(f2);
         undoBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -214,6 +214,10 @@ public class GameFrame extends JFrame {
             stepLabel.setForeground(Color.WHITE);
             gamePanel.setStepLabel(stepLabel);
         } else {
+            loadBtn.setVisible(false);
+            musicBtn.setVisible(false);
+            //todo 改musicFrame中正在播放曲目
+
             JLabel leastStepLabel = new JLabel("Min_Steps: ???");
             leastStepLabel.setFont(f);
             leastStepLabel.setLocation(new Point(gamePanel.getWidth() + 200, 70));
