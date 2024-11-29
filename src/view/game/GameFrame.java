@@ -64,6 +64,7 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound, this.levelFrame);
         this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
+        String musicPath = this.sound.getMusicPath();
 
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
 
@@ -217,6 +218,8 @@ public class GameFrame extends JFrame {
             loadBtn.setVisible(false);
             musicBtn.setVisible(false);
             //todo 改musicFrame中正在播放曲目
+            this.sound.changeSource("src/misc/东方永夜抄竹取飞翔.wav");
+            sound.play();
 
             JLabel leastStepLabel = new JLabel("Min_Steps: ???");
             leastStepLabel.setFont(f);
@@ -288,6 +291,10 @@ public class GameFrame extends JFrame {
         });
 
         backBtn.addActionListener(_ -> {
+            if(this.getLv() == 6){
+                this.sound.changeSource(musicPath);
+                sound.play();
+            }
             controller.getTimer().stop();
             this.dispose();
             this.levelFrame.setVisible(true);

@@ -124,6 +124,11 @@ public class Sound {
         System.out.println("Changed audio source to: " + newPath);
     }
 
+    // 获取当前音频文件路径
+    public String getMusicPath() {
+        return musicPath;
+    }
+
     // 获取当前播放进度
     public double getProgress() {
         if (clipLength == 0) return 0.0;
