@@ -66,7 +66,7 @@ public class GameFrame extends JFrame {
         this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
         String musicPath = this.sound.getMusicPath();
 
-        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);
+        SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);//为什么这里不能换成this.gamePanel.requestFocusInWindow()
 
         JButton restartBtn = new JButton("Restart");
         restartBtn.setLocation(new Point(gamePanel.getWidth() + 80, 120));
