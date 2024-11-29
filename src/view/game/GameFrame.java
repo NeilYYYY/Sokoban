@@ -217,7 +217,6 @@ public class GameFrame extends JFrame {
         } else {
             loadBtn.setVisible(false);
             musicBtn.setVisible(false);
-            //todo 改musicFrame中正在播放曲目
             this.sound.changeSource("src/misc/东方永夜抄竹取飞翔.wav");
             sound.play();
 
