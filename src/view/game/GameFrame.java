@@ -335,7 +335,7 @@ public class GameFrame extends JFrame {
 
         if (!file.exists()) {
             if (!file.getParentFile().mkdirs()) {
-                System.err.println("目录已存在: " + file.getParentFile().getAbsolutePath());
+                System.err.println("目录已存在喵: " + file.getParentFile().getAbsolutePath());
             }
             MapInfo mapInfo = new MapInfo();
             System.out.println(mapInfo.getId());

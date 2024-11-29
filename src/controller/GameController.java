@@ -44,13 +44,11 @@ public class GameController {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getLeftTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
-                    // 倒计时结束，执行相应操作
                     ((Timer) e.getSource()).stop();
                     doLose(view.getFrame());
                 }
             });
         } else {
-            // 创建一个 Timer 定时器，每隔1000ms更新一次
             timer = new Timer(1000, _ -> {
                 view.setTime(view.getTime() + 1);
                 view.getFrame().getTimeLabel().setText(String.format("Time: %d", view.getTime()));
@@ -123,7 +121,6 @@ public class GameController {
                 view.setTime(view.getTime() - 1);
                 view.getFrame().getLeftTimeLabel().setText(String.format("Left time: %d", view.getTime()));
                 if (view.getTime() == 0) {
-                    // 倒计时结束，执行相应操作
                     ((Timer) e.getSource()).stop();
                     doLose(view.getFrame());
                 }
@@ -176,17 +173,14 @@ public class GameController {
                 return true;
             }
             int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Next"}, "Next");
-            // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 GameFrame newGameFrame = getNewGameFrame(gameFrame);
                 newGameFrame.setVisible(true);
-                gameFrame.dispose();
-                return true;
-            } else if (option == 0) {
+            } else {
                 this.levelFrame.setVisible(true);
-                gameFrame.dispose();
-                return true;
             }
+            gameFrame.dispose();
+            return true;
         }
         return false;
     }
@@ -245,12 +239,11 @@ public class GameController {
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();
-                return true;
-            } else if (option == 0) {
+            } else {
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
-                return true;
             }
+            return true;
         }
         return false;
     }
