@@ -182,7 +182,7 @@ public class GameController {
                 newGameFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
-            } else if (option == 0) {
+            } else {
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
@@ -246,7 +246,7 @@ public class GameController {
             if (option == 1) {
                 gameFrame.getController().restartGame();
                 return true;
-            } else if (option == 0) {
+            } else {
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;

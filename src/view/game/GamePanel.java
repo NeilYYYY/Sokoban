@@ -29,9 +29,9 @@ public class GamePanel extends ListenerPanel {
     private JLabel stepLabel;
     private int steps;
     private Hero hero;
-    private int[] moveHero = new int[GRID_SIZE];
-    private int[] moveBox = new int[GRID_SIZE];
-    private int[] moveFragile = new int[GRID_SIZE];
+    private int[] moveHero = new int[150];
+    private int[] moveBox = new int[150];
+    private int[] moveFragile = new int[150];
     private int time;
     private boolean flag = false;
 
