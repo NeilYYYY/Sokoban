@@ -10,15 +10,13 @@ public class GridComponent extends JComponent {
     private final Image imageWall;
     private final Image imageFloor;
     private final Image imageButton;
-    private int row;
-    private int col;
     private Hero hero;
     private Box box;
     private OpenDoor openDoor;
     private ClosedDoor closedDoor;
     private Fragile fragile;
 
-    public GridComponent(int row, int col, int id, int gridSize) {
+    public GridComponent(int id, int gridSize) {
         switch (new Random().nextInt(6) + 1) {
             case 1 ->
                     this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
@@ -36,8 +34,6 @@ public class GridComponent extends JComponent {
         this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         this.imageButton = new ImageIcon("src/images/Button.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
-        this.row = row;
-        this.col = col;
         this.id = id;
     }
 
@@ -70,22 +66,6 @@ public class GridComponent extends JComponent {
         }
         Border border = BorderFactory.createLineBorder(borderColor, 0);//不知道为什么这段代码删了会有BUG，就把厚度设置成0。
         this.setBorder(border);
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
-    public void setCol(int col) {
-        this.col = col;
     }
 
     public int getId() {

@@ -27,6 +27,7 @@ public class GameFrame extends JFrame {
     private final LevelFrame levelFrame;
     JLabel leftTimeLabel;
     JLabel timeLabel;
+    String musicPath;
     private boolean check = true;
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time, LevelFrame levelFrame) {
@@ -55,6 +56,7 @@ public class GameFrame extends JFrame {
         this.sound = sound;
         this.setResizable(false);
         this.levelFrame = levelFrame;
+        musicPath = this.sound.getMusicPath();
         int[] leastStep = {13, 23, 31, 27, 37};
         String filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
         File file = new File(filepath);
@@ -64,7 +66,6 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(gamePanel);
         this.controller = new GameController(gamePanel, mapMatrix, this.user, this.lv, this.sound, this.levelFrame);
         this.fileFrame = new FileFrame(800, 450, this.user, this, this.lv, this.sound);
-        String musicPath = this.sound.getMusicPath();
 
         SwingUtilities.invokeLater(gamePanel::requestFocusInWindow);//为什么这里不能换成this.gamePanel.requestFocusInWindow()
 
@@ -290,7 +291,7 @@ public class GameFrame extends JFrame {
         });
 
         backBtn.addActionListener(_ -> {
-            if(this.getLv() == 6){
+            if (this.getLv() == 6) {
                 this.sound.changeSource(musicPath);
                 sound.play();
             }
@@ -416,6 +417,14 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public Sound getSound() {
+        return sound;
+    }
+
+    public String getMusicPath() {
+        return musicPath;
     }
 
     public JLabel getTimeLabel() {
