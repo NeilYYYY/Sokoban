@@ -59,6 +59,11 @@ public class LevelFrame extends JFrame {
             }
         }
 
+        ImageIcon star = new ImageIcon("src/images/star.png");
+        star.setImage(star.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
+        ImageIcon crown = new ImageIcon("src/images/crown.png");
+        crown.setImage(crown.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+
         JButton level1Btn = new JButton("Level 1");
         level1Btn.setLocation(new Point(170, 155));
         level1Btn.setSize(80, 60);
@@ -70,15 +75,19 @@ public class LevelFrame extends JFrame {
         level1Btn.setFocusPainted(false);
         level1Btn.setContentAreaFilled(false);
         getContentPane().add(level1Btn, Integer.valueOf(1));
-        JLabel level1Status = new JLabel(String.format("%d * ", check[0]));
+        JLabel level1Status = new JLabel(String.format("%d ", check[0]));
         level1Status.setLocation(new Point(180, 215));
         level1Status.setSize(80, 60);
         level1Status.setFont(f);
         level1Status.setForeground(Color.WHITE);
         getContentPane().add(level1Status, Integer.valueOf(1));
+        JLabel star1 = new JLabel(star);
+        star1.setBounds(210, 230, 40, 30);
+        this.getContentPane().add(star1, Integer.valueOf(1));
         if (flag) {
             level1Btn.setVisible(false);
             level1Status.setVisible(false);
+            star1.setVisible(false);
         }
 
         JButton level2Btn = new JButton("Level 2");
@@ -92,19 +101,25 @@ public class LevelFrame extends JFrame {
         level2Btn.setFocusPainted(false);
         level2Btn.setContentAreaFilled(false);
         getContentPane().add(level2Btn, Integer.valueOf(1));
-        JLabel level2Status = new JLabel(String.format("%d * ", check[1]));
+        JLabel level2Status = new JLabel(String.format("%d ", check[1]));
         level2Status.setLocation(new Point(270, 215));
         level2Status.setSize(80, 60);
         level2Status.setFont(f);
         level2Status.setForeground(Color.WHITE);
         getContentPane().add(level2Status, Integer.valueOf(1));
         level2Status.setVisible(false);
+        JLabel star2 = new JLabel(star);
+        star2.setBounds(300, 230, 40, 30);
+        this.getContentPane().add(star2, Integer.valueOf(1));
+        star2.setVisible(false);
         if (user.lv()[0][0]) {
             level2Status.setVisible(true);
+            star2.setVisible(true);
         }
         if (flag) {
             level2Btn.setVisible(false);
             level2Status.setVisible(false);
+            star2.setVisible(false);
         }
 
         JButton level3Btn = new JButton("Level 3");
@@ -118,19 +133,25 @@ public class LevelFrame extends JFrame {
         level3Btn.setFocusPainted(false);
         level3Btn.setContentAreaFilled(false);
         getContentPane().add(level3Btn, Integer.valueOf(1));
-        JLabel level3Status = new JLabel(String.format("%d * ", check[2]));
+        JLabel level3Status = new JLabel(String.format("%d ", check[2]));
         level3Status.setLocation(new Point(360, 215));
         level3Status.setSize(80, 60);
         level3Status.setFont(f);
         level3Status.setForeground(Color.WHITE);
         getContentPane().add(level3Status, Integer.valueOf(1));
         level3Status.setVisible(false);
+        JLabel star3 = new JLabel(star);
+        star3.setBounds(390, 230, 40, 30);
+        this.getContentPane().add(star3, Integer.valueOf(1));
+        star3.setVisible(false);
         if (user.lv()[0][1]) {
             level3Status.setVisible(true);
+            star3.setVisible(true);
         }
         if (flag) {
             level3Btn.setVisible(false);
             level3Status.setVisible(false);
+            star3.setVisible(false);
         }
 
         JButton level4Btn = new JButton("Level 4");
@@ -144,19 +165,25 @@ public class LevelFrame extends JFrame {
         level4Btn.setFocusPainted(false);
         level4Btn.setContentAreaFilled(false);
         getContentPane().add(level4Btn, Integer.valueOf(1));
-        JLabel level4Status = new JLabel(String.format("%d * ", check[3]));
+        JLabel level4Status = new JLabel(String.format("%d ", check[3]));
         level4Status.setLocation(new Point(450, 215));
         level4Status.setSize(80, 60);
         level4Status.setFont(f);
         level4Status.setForeground(Color.WHITE);
         getContentPane().add(level4Status, Integer.valueOf(1));
         level4Status.setVisible(false);
+        JLabel star4 = new JLabel(star);
+        star4.setBounds(480, 230, 40, 30);
+        this.getContentPane().add(star4, Integer.valueOf(1));
+        star4.setVisible(false);
         if (user.lv()[0][2]) {
             level4Status.setVisible(true);
+            star4.setVisible(true);
         }
         if (flag) {
             level4Btn.setVisible(false);
             level4Status.setVisible(false);
+            star4.setVisible(false);
         }
 
         JButton level5Btn = new JButton("Level 5");
@@ -170,19 +197,25 @@ public class LevelFrame extends JFrame {
         level5Btn.setFocusPainted(false);
         level5Btn.setContentAreaFilled(false);
         getContentPane().add(level5Btn, Integer.valueOf(1));
-        JLabel level5Status = new JLabel(String.format("%d * ", check[4]));
+        JLabel level5Status = new JLabel(String.format("%d ", check[4]));
         level5Status.setLocation(new Point(540, 215));
         level5Status.setSize(80, 60);
         level5Status.setFont(f);
         level5Status.setForeground(Color.WHITE);
         getContentPane().add(level5Status, Integer.valueOf(1));
         level5Status.setVisible(false);
+        JLabel star5 = new JLabel(star);
+        star5.setBounds(570, 230, 40, 30);
+        this.getContentPane().add(star5, Integer.valueOf(1));
+        star5.setVisible(false);
         if (user.lv()[0][3]) {
             level5Status.setVisible(true);
+            star5.setVisible(true);
         }
         if (flag) {
             level5Btn.setVisible(false);
             level5Status.setVisible(false);
+            star5.setVisible(false);
         }
 
         JButton level6Btn = new JButton("Level 6");
@@ -197,27 +230,37 @@ public class LevelFrame extends JFrame {
         level6Btn.setContentAreaFilled(false);
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
+        JLabel c = new JLabel(crown);
+        c.setBounds(370, 230, 40, 30);
+        this.getContentPane().add(c, Integer.valueOf(1));
+        c.setVisible(false);
         if (flag) {
             level6Btn.setVisible(true);
+            c.setVisible(true);
         }
 
-        JButton kingBtn = new JButton("King");
+        JButton kingBtn = new JButton();
         kingBtn.setLocation(new Point(700, 350));
         kingBtn.setSize(80, 60);
-        kingBtn.setFont(f);
-        kingBtn.setForeground(Color.WHITE);
         kingBtn.setMargin(new Insets(0, 0, 0, 0));
         kingBtn.setBorderPainted(false);
         kingBtn.setBorder(null);
         kingBtn.setFocusPainted(false);
         kingBtn.setContentAreaFilled(false);
-        getContentPane().add(kingBtn, Integer.valueOf(1));
         kingBtn.setVisible(false);
+        getContentPane().add(kingBtn, Integer.valueOf(1));
+        ImageIcon king = new ImageIcon("src/images/king.png");
+        king.setImage(king.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        JLabel k = new JLabel(king);
+        k.setBounds(700,350,80,60);
+        this.getContentPane().add(k, Integer.valueOf(1));
+        k.setVisible(false);
         if (!flag && this.user.lv()[0][4]) {
+            k.setVisible(true);
             kingBtn.setVisible(true);
         }
 
-        JButton backBtn = new JButton("Back");
+        JButton backBtn = new JButton();
         backBtn.setLocation(new Point(700, 350));
         backBtn.setSize(80, 60);
         backBtn.setFont(f);
@@ -229,7 +272,12 @@ public class LevelFrame extends JFrame {
         backBtn.setContentAreaFilled(false);
         getContentPane().add(backBtn, Integer.valueOf(1));
         backBtn.setVisible(false);
+        JLabel b = new JLabel(king);
+        b.setBounds(700,350,80,60);
+        this.getContentPane().add(b, Integer.valueOf(1));
+        b.setVisible(false);
         if (flag) {
+            b.setVisible(true);
             backBtn.setVisible(true);
         }
 
@@ -388,6 +436,19 @@ public class LevelFrame extends JFrame {
             level5Btn.setVisible(true);
             backBtn.setVisible(false);
             kingBtn.setVisible(true);
+            level1Status.setVisible(true);
+            star1.setVisible(true);
+            level2Status.setVisible(true);
+            star2.setVisible(true);
+            level3Status.setVisible(true);
+            star3.setVisible(true);
+            level4Status.setVisible(true);
+            star4.setVisible(true);
+            level5Status.setVisible(true);
+            star5.setVisible(true);
+            b.setVisible(false);
+            k.setVisible(true);
+            c.setVisible(false);
         });
 
         kingBtn.addActionListener(_ -> {
@@ -399,6 +460,19 @@ public class LevelFrame extends JFrame {
             level6Btn.setVisible(true);
             kingBtn.setVisible(false);
             backBtn.setVisible(true);
+            level1Status.setVisible(false);
+            level2Status.setVisible(false);
+            level3Status.setVisible(false);
+            level4Status.setVisible(false);
+            level5Status.setVisible(false);
+            star1.setVisible(false);
+            star2.setVisible(false);
+            star3.setVisible(false);
+            star4.setVisible(false);
+            star5.setVisible(false);
+            b.setVisible(true);
+            k.setVisible(false);
+            c.setVisible(true);
         });
 
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));
