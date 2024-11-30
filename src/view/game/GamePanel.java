@@ -35,10 +35,6 @@ public class GamePanel extends ListenerPanel {
     private int time;
     private boolean flag = false;
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
     public GamePanel(@NotNull MapMatrix model, @NotNull GameFrame frame, @NotNull User user, int step) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -52,6 +48,10 @@ public class GamePanel extends ListenerPanel {
         this.file = new File(filepath);
         this.time = frame.getTime();
         initialGame(step);
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public GameFrame getFrame() {
