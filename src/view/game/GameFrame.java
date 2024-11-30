@@ -24,12 +24,12 @@ public class GameFrame extends JFrame {
     private final FileFrame fileFrame;
     private final boolean mode;
     private final int time;
-    private final LevelFrame levelFrame;
+    private final int[] leastStep = {13, 23, 31, 27, 37};
     JLabel leftTimeLabel;
     JLabel timeLabel;
     String musicPath;
+    private LevelFrame levelFrame;
     private boolean check = true;
-    private int  [] leastStep = {13, 23, 31, 27, 37};
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time, LevelFrame levelFrame) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
@@ -272,22 +272,21 @@ public class GameFrame extends JFrame {
                 return;
             }
             controller.getTimer().stop();
-//            if (this.user.getId() == 0) {
-//                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
-//            } else {
-            if (check) {
-                Sound s = new Sound("src/misc/zako.wav");
-                s.setVolume(1.0);
-                s.play();
-                JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
-                check = false;
+            if (this.user.id() == 0) {
+                JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
+            } else {
+                if (check) {
+                    Sound s = new Sound("src/misc/zako.wav");
+                    s.setVolume(1.0);
+                    s.play();
+                    JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
+                    check = false;
+                }
+                fileFrame.Show(0);
+                this.setVisible(false);
+                fileFrame.setVisible(true);
+                gamePanel.requestFocusInWindow();
             }
-            fileFrame.Show(0);
-            this.setVisible(false);
-            fileFrame.setVisible(true);
-            gamePanel.requestFocusInWindow();
-//            }
-            //todo 这里是游客模式功能限制 记得去掉注释！！！！！！！
         });
 
         backBtn.addActionListener(_ -> {
@@ -296,8 +295,13 @@ public class GameFrame extends JFrame {
                 sound.play();
             }
             controller.getTimer().stop();
-            this.dispose();
+            if (this.lv == 6) {
+                this.levelFrame = new LevelFrame(this.user, this.sound, this.mode, true);
+            } else {
+                this.levelFrame = new LevelFrame(this.user, this.sound, this.mode, false);
+            }
             this.levelFrame.setVisible(true);
+            this.dispose();
         });
 
         undoBtn.addActionListener(_ -> {

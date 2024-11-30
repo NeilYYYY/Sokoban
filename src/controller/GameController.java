@@ -20,12 +20,12 @@ import java.util.ArrayList;
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
-    private final User user;
     private final int lv;
     private final Sound sound;
     private final int[] moveHero = new int[151];
     private final int[] moveBox = new int[151];
     private final int[] moveFragile = new int[151];
+    private final User user;
     private LevelFrame levelFrame;
     private Timer timer;
 
@@ -152,8 +152,11 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             ArrayList<User> users = User.getUserList();
-            users.get(this.user.id()).lv()[0][this.lv - 1] = true;
-            User.writeUser(users);
+            this.user.lv()[0][this.lv - 1] = true;
+            if (this.user.id() != 0) {
+                users.get(this.user.id()).lv()[0][this.lv - 1] = true;
+                User.writeUser(users);
+            }
             System.out.println("You win!");
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
@@ -163,15 +166,24 @@ public class GameController {
                 JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.view.getFrame().getSound().changeSource(this.view.getFrame().getMusicPath());
                 this.view.getFrame().getSound().play();
+                this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), true);
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             } else {
                 if (gameFrame.getGamePanel().getSteps() == gameFrame.getLeastStep()[this.lv - 1]) {
-                    users.get(this.user.id()).lv()[1][this.lv - 1] = true;
+                    this.user.lv()[1][this.lv - 1] = true;
+                    if (this.user.id() != 0) {
+                        users.get(this.user.id()).lv()[1][this.lv - 1] = true;
+                        User.writeUser(users);
+                    }
                 }
                 if (gameFrame.isMode()) {
-                    users.get(this.user.id()).lv()[2][this.lv - 1] = true;
+                    this.user.lv()[2][this.lv - 1] = true;
+                    if (this.user.id() != 0) {
+                        users.get(this.user.id()).lv()[2][this.lv - 1] = true;
+                        User.writeUser(users);
+                    }
                 }
             }
             if (gameFrame.getLv() == 5) {
@@ -186,6 +198,7 @@ public class GameController {
                 GameFrame newGameFrame = getNewGameFrame(gameFrame);
                 newGameFrame.setVisible(true);
             } else {
+                this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), false);
                 this.levelFrame.setVisible(true);
             }
             gameFrame.dispose();
@@ -249,6 +262,11 @@ public class GameController {
             if (option == 1) {
                 gameFrame.getController().restartGame();
             } else {
+                if (this.lv == 6) {
+                    this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), true);
+                } else {
+                    this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), false);
+                }
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
             }

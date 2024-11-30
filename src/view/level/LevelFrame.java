@@ -197,7 +197,7 @@ public class LevelFrame extends JFrame {
         level6Btn.setContentAreaFilled(false);
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
-        if(flag) {
+        if (flag) {
             level6Btn.setVisible(true);
         }
 

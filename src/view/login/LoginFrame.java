@@ -207,11 +207,6 @@ public class LoginFrame extends JFrame implements ActionListener {
             User user;
             if (temp && !username.isEmpty()) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
-//                for (int i = 0; i < 3; i++) {
-//                    for (int j = 0; j < 6; j++) {
-//                        user.lv()[i][j] = false;
-//                    }
-//                }
                 levelFrame = new LevelFrame(user, this.sound, false, false);
                 JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
                 showLevelFrame();
