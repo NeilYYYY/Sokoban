@@ -28,6 +28,7 @@ public class GameFrame extends JFrame {
     JLabel leftTimeLabel;
     JLabel timeLabel;
     String musicPath;
+    JButton backBtn;
     private LevelFrame levelFrame;
     private boolean check = true;
 
@@ -93,7 +94,7 @@ public class GameFrame extends JFrame {
         loadBtn.setForeground(Color.WHITE);
         this.getContentPane().add(loadBtn);
 
-        JButton backBtn = new JButton("Back");
+        backBtn = new JButton("Back");
         backBtn.setLocation(new Point(gamePanel.getWidth() + 80, 240));
         backBtn.setSize(80, 50);
         backBtn.setFont(f2);
@@ -421,6 +422,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public JButton getBackBtn() {
+        return backBtn;
     }
 
     public Sound getSound() {

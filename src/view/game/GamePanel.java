@@ -141,6 +141,16 @@ public class GamePanel extends ListenerPanel {
         }
     }
 
+    @Override
+    public void doWin() {
+        controller.doWin(this.frame, true);
+    }
+
+    @Override
+    public void back() {
+        frame.getBackBtn().doClick();
+    }
+
     public JLabel getStepLabel() {
         return stepLabel;
     }
@@ -179,7 +189,7 @@ public class GamePanel extends ListenerPanel {
                 log.info(e.getMessage());
             }
         }
-        if (controller.doWin(this.frame)) {
+        if (controller.doWin(this.frame, false)) {
             return;
         }
         if (controller.doLose(this.frame)) {

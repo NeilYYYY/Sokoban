@@ -149,8 +149,8 @@ public class GameController {
         return true;
     }
 
-    public boolean doWin(GameFrame gameFrame) {
-        if (checkWin()) {
+    public boolean doWin(GameFrame gameFrame, boolean flag) {
+        if (checkWin() || flag) {
             ArrayList<User> users = User.getUserList();
             this.user.lv()[0][this.lv - 1] = true;
             if (this.user.id() != 0) {
