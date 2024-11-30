@@ -152,7 +152,7 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame) {
         if (checkWin()) {
             ArrayList<User> users = User.getUserList();
-            users.get(this.user.id()).lv()[this.lv - 1] = true;
+            users.get(this.user.id()).lv()[0][this.lv - 1] = true;
             User.writeUser(users);
             System.out.println("You win!");
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
@@ -166,6 +166,13 @@ public class GameController {
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
+            } else {
+                if (gameFrame.getGamePanel().getSteps() == gameFrame.getLeastStep()[this.lv - 1]) {
+                    users.get(this.user.id()).lv()[1][this.lv - 1] = true;
+                }
+                if (gameFrame.isMode()) {
+                    users.get(this.user.id()).lv()[2][this.lv - 1] = true;
+                }
             }
             if (gameFrame.getLv() == 5) {
                 JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);

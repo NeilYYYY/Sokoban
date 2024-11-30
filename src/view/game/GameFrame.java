@@ -29,6 +29,7 @@ public class GameFrame extends JFrame {
     JLabel timeLabel;
     String musicPath;
     private boolean check = true;
+    private int  [] leastStep = {13, 23, 31, 27, 37};
 
     public GameFrame(int width, int height, MapMatrix mapMatrix, User user, int lv, int step, Sound sound, boolean mode, int time, LevelFrame levelFrame) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
@@ -57,7 +58,6 @@ public class GameFrame extends JFrame {
         this.setResizable(false);
         this.levelFrame = levelFrame;
         musicPath = this.sound.getMusicPath();
-        int[] leastStep = {13, 23, 31, 27, 37};
         String filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
         File file = new File(filepath);
         gamePanel = new GamePanel(mapMatrix, this, this.user, step);
@@ -469,5 +469,9 @@ public class GameFrame extends JFrame {
 
     public int getTime() {
         return time;
+    }
+
+    public int[] getLeastStep() {
+        return leastStep;
     }
 }
