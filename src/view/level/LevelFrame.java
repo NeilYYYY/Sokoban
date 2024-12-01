@@ -60,14 +60,14 @@ public class LevelFrame extends JFrame {
             }
         }
 
-        ImageIcon star = new ImageIcon("src/images/star.png");
-        star.setImage(star.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
+        ImageIcon starImg = new ImageIcon("src/images/star.png");
+        starImg.setImage(starImg.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
         ImageIcon crownImg = new ImageIcon("src/images/crown.png");
         crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        ImageIcon king = new ImageIcon("src/images/king.png");
-        king.setImage(king.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        ImageIcon kingAlt = new ImageIcon("src/images/king_alter.png");
-        kingAlt.setImage(kingAlt.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon kingImg = new ImageIcon("src/images/king.png");
+        kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon kingAltImg = new ImageIcon("src/images/king_alter.png");
+        kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
 
         JButton level1Btn = new JButton("Level 1");
         level1Btn.setLocation(new Point(170, 155));
@@ -86,7 +86,7 @@ public class LevelFrame extends JFrame {
         level1Status.setFont(f);
         level1Status.setForeground(Color.WHITE);
         getContentPane().add(level1Status, Integer.valueOf(1));
-        JLabel star1 = new JLabel(star);
+        JLabel star1 = new JLabel(starImg);
         star1.setBounds(210, 230, 40, 30);
         this.getContentPane().add(star1, Integer.valueOf(1));
         if (flag) {
@@ -113,7 +113,7 @@ public class LevelFrame extends JFrame {
         level2Status.setForeground(Color.WHITE);
         getContentPane().add(level2Status, Integer.valueOf(1));
         level2Status.setVisible(false);
-        JLabel star2 = new JLabel(star);
+        JLabel star2 = new JLabel(starImg);
         star2.setBounds(300, 230, 40, 30);
         this.getContentPane().add(star2, Integer.valueOf(1));
         star2.setVisible(false);
@@ -145,7 +145,7 @@ public class LevelFrame extends JFrame {
         level3Status.setForeground(Color.WHITE);
         getContentPane().add(level3Status, Integer.valueOf(1));
         level3Status.setVisible(false);
-        JLabel star3 = new JLabel(star);
+        JLabel star3 = new JLabel(starImg);
         star3.setBounds(390, 230, 40, 30);
         this.getContentPane().add(star3, Integer.valueOf(1));
         star3.setVisible(false);
@@ -177,7 +177,7 @@ public class LevelFrame extends JFrame {
         level4Status.setForeground(Color.WHITE);
         getContentPane().add(level4Status, Integer.valueOf(1));
         level4Status.setVisible(false);
-        JLabel star4 = new JLabel(star);
+        JLabel star4 = new JLabel(starImg);
         star4.setBounds(480, 230, 40, 30);
         this.getContentPane().add(star4, Integer.valueOf(1));
         star4.setVisible(false);
@@ -209,7 +209,7 @@ public class LevelFrame extends JFrame {
         level5Status.setForeground(Color.WHITE);
         getContentPane().add(level5Status, Integer.valueOf(1));
         level5Status.setVisible(false);
-        JLabel star5 = new JLabel(star);
+        JLabel star5 = new JLabel(starImg);
         star5.setBounds(570, 230, 40, 30);
         this.getContentPane().add(star5, Integer.valueOf(1));
         star5.setVisible(false);
@@ -244,7 +244,7 @@ public class LevelFrame extends JFrame {
             crown.setVisible(true);
         }
 
-        JButton kingBtn = new JButton(king);
+        JButton kingBtn = new JButton(kingImg);
         kingBtn.setLocation(new Point(700, 350));
         kingBtn.setSize(80, 60);
         kingBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -258,7 +258,7 @@ public class LevelFrame extends JFrame {
             kingBtn.setVisible(true);
         }
 
-        JButton backBtn = new JButton(kingAlt);
+        JButton backBtn = new JButton(kingAltImg);
         backBtn.setLocation(new Point(700, 350));
         backBtn.setSize(80, 60);
         backBtn.setFont(f);
