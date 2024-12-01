@@ -60,7 +60,7 @@ public record User(int id, String username, String password, boolean[][] lv) {
     }
 
     public static String getSHA(@NotNull String str) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        MessageDigest md = MessageDigest.getInstance("SHA3-512");
         byte[] shaBytes = md.digest(str.getBytes());
         return bytesToHexString(shaBytes);
     }
