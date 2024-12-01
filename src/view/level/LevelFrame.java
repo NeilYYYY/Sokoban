@@ -86,9 +86,11 @@ public class LevelFrame extends JFrame {
         level1Status.setFont(f);
         level1Status.setForeground(Color.WHITE);
         getContentPane().add(level1Status, Integer.valueOf(1));
+
         JLabel star1 = new JLabel(starImg);
         star1.setBounds(210, 230, 40, 30);
         this.getContentPane().add(star1, Integer.valueOf(1));
+
         if (flag) {
             level1Btn.setVisible(false);
             level1Status.setVisible(false);
@@ -113,10 +115,12 @@ public class LevelFrame extends JFrame {
         level2Status.setForeground(Color.WHITE);
         getContentPane().add(level2Status, Integer.valueOf(1));
         level2Status.setVisible(false);
+
         JLabel star2 = new JLabel(starImg);
         star2.setBounds(300, 230, 40, 30);
         this.getContentPane().add(star2, Integer.valueOf(1));
         star2.setVisible(false);
+
         if (user.lv()[0][0]) {
             level2Status.setVisible(true);
             star2.setVisible(true);
@@ -145,10 +149,12 @@ public class LevelFrame extends JFrame {
         level3Status.setForeground(Color.WHITE);
         getContentPane().add(level3Status, Integer.valueOf(1));
         level3Status.setVisible(false);
+
         JLabel star3 = new JLabel(starImg);
         star3.setBounds(390, 230, 40, 30);
         this.getContentPane().add(star3, Integer.valueOf(1));
         star3.setVisible(false);
+
         if (user.lv()[0][1]) {
             level3Status.setVisible(true);
             star3.setVisible(true);
@@ -177,10 +183,12 @@ public class LevelFrame extends JFrame {
         level4Status.setForeground(Color.WHITE);
         getContentPane().add(level4Status, Integer.valueOf(1));
         level4Status.setVisible(false);
+
         JLabel star4 = new JLabel(starImg);
         star4.setBounds(480, 230, 40, 30);
         this.getContentPane().add(star4, Integer.valueOf(1));
         star4.setVisible(false);
+
         if (user.lv()[0][2]) {
             level4Status.setVisible(true);
             star4.setVisible(true);
@@ -209,10 +217,12 @@ public class LevelFrame extends JFrame {
         level5Status.setForeground(Color.WHITE);
         getContentPane().add(level5Status, Integer.valueOf(1));
         level5Status.setVisible(false);
+
         JLabel star5 = new JLabel(starImg);
         star5.setBounds(570, 230, 40, 30);
         this.getContentPane().add(star5, Integer.valueOf(1));
         star5.setVisible(false);
+
         if (user.lv()[0][3]) {
             level5Status.setVisible(true);
             star5.setVisible(true);
@@ -235,10 +245,12 @@ public class LevelFrame extends JFrame {
         level6Btn.setContentAreaFilled(false);
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
+
         JLabel crown = new JLabel(crownImg);
         crown.setBounds(370, 230, 40, 30);
         this.getContentPane().add(crown, Integer.valueOf(1));
         crown.setVisible(false);
+
         if (flag) {
             level6Btn.setVisible(true);
             crown.setVisible(true);
@@ -310,17 +322,16 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setFocusPainted(false);
         changeModeBtn.setContentAreaFilled(false);
 
-        ImageIcon back;// 背景图置于最底层
+        ImageIcon backImg;// 背景图置于最底层
         if (this.mode) {
-            back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
+            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
         } else {
-            back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
         }
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-        bg = new JLabel(back);
+        backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        bg = new JLabel(backImg);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
-
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
@@ -387,9 +398,12 @@ public class LevelFrame extends JFrame {
         });
 
         logoutBtn.addActionListener(_ -> {
-            this.setVisible(false);
-            LoginFrame loginFrame = new LoginFrame(this.sound);
-            loginFrame.setVisible(true);
+            int option = JOptionPane.showOptionDialog(null, "Sure to Logout?", "CONFIRM", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Cancel", "Confirm"}, "Cancel");
+            if (option == 1) {
+                this.setVisible(false);
+                LoginFrame loginFrame = new LoginFrame(this.sound);
+                loginFrame.setVisible(true);
+            }
         });
 
         changeModeBtn.addActionListener(_ -> {
