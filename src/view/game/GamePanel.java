@@ -307,6 +307,9 @@ public class GamePanel extends ListenerPanel {
     }
 
     private void autoSave() {
+        if (frame.getUser().id() == 0) {
+            return;
+        }
         try {
             if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".sha")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
