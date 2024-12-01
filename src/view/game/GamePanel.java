@@ -266,37 +266,37 @@ public class GamePanel extends ListenerPanel {
             case 1 -> {//撤回箱子左移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow(), hero.getCol() - 2);
+                controller.doorCheck(hero.getRow(), hero.getCol() - 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
-                doorCheck(hero.getRow(), hero.getCol() - 1);
+                controller.doorCheck(hero.getRow(), hero.getCol() - 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 2 -> {//撤回箱子右移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow(), hero.getCol() + 2);
+                controller.doorCheck(hero.getRow(), hero.getCol() + 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
-                doorCheck(hero.getRow(), hero.getCol() + 1);
+                controller.doorCheck(hero.getRow(), hero.getCol() + 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 3 -> {//撤回箱子上移
                 ttGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow() - 2, hero.getCol());
+                controller.doorCheck(hero.getRow() - 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
-                doorCheck(hero.getRow() - 1, hero.getCol());
+                controller.doorCheck(hero.getRow() - 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
             case 4 -> {//撤回箱子下移
                 ttGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow() + 2, hero.getCol());
+                controller.doorCheck(hero.getRow() + 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
-                doorCheck(hero.getRow() + 1, hero.getCol());
+                controller.doorCheck(hero.getRow() + 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
         }
@@ -362,24 +362,4 @@ public class GamePanel extends ListenerPanel {
     public void setMoveFragile(int[] moveFragile) {
         this.moveFragile = moveFragile;
     }
-
-
-    private void doorCheck(int tRow, int tCol) {
-        if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11) {
-            for (int i = 0; i < controller.getModel().getMatrix().length; i++) {
-                for (int j = 0; j < controller.getModel().getMatrix()[0].length; j++) {
-                    if (controller.getModel().getMatrix()[i][j] % 10 == 3) {
-                        controller.getModel().getMatrix()[i][j]++;
-                        getGrids()[i][j].removeClosedDoorFromGrid();
-                        getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(GRID_SIZE - 10, GRID_SIZE - 10));
-                    } else if (controller.getModel().getMatrix()[i][j] % 10 == 4) {
-                        controller.getModel().getMatrix()[i][j]--;
-                        getGrids()[i][j].removeOpenDoorFromGrid();
-                        getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));
-                    }
-                }
-            }
-        }
-    }
-
 }

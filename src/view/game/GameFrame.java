@@ -220,6 +220,7 @@ public class GameFrame extends JFrame {
             loadBtn.setVisible(false);
             musicBtn.setVisible(false);
             this.sound.changeSource("src/misc/东方永夜抄竹取飞翔.wav");
+            sound.setVolume(0.5);
             sound.play();
 
             JLabel leastStepLabel = new JLabel("Min_Steps: ???");
@@ -278,7 +279,7 @@ public class GameFrame extends JFrame {
             } else {
                 if (check) {
                     Sound s = new Sound("src/misc/zako.wav");
-                    s.setVolume(1.0);
+                    s.setVolume(0.8);
                     s.play();
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                     check = false;
@@ -293,6 +294,7 @@ public class GameFrame extends JFrame {
         backBtn.addActionListener(_ -> {
             if (this.getLv() == 6) {
                 this.sound.changeSource(musicPath);
+                sound.setVolume(0.5);
                 sound.play();
             }
             controller.getTimer().stop();

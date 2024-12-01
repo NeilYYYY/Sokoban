@@ -313,6 +313,9 @@ public class GameController {
                 view.setMoveFragile(moveFragile);
                 view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
             }
+            Sound s = new Sound("src/misc/Foot_Step.wav");
+            s.setVolume(1.0);
+            s.play();
             return true;
         }
         if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12 || map[tRow][tCol] == 14 || map[tRow][tCol] == 110 || map[tRow][tCol] == 15) {
@@ -360,12 +363,14 @@ public class GameController {
                     view.setMoveBox(moveBox);
                 }
             }
+            Sound s = new Sound("src/misc/Foot_Step.wav");
+            s.play();
             return true;
         }
         return false;
     }
 
-    private void doorCheck(int tRow, int tCol) {
+    public void doorCheck(int tRow, int tCol) {
         if (model.getMatrix()[tRow][tCol] / 10 == 11) {
             for (int i = 0; i < model.getMatrix().length; i++) {
                 for (int j = 0; j < model.getMatrix()[0].length; j++) {
@@ -380,6 +385,9 @@ public class GameController {
                     }
                 }
             }
+            Sound s = new Sound("src/misc/Door.wav");
+            s.setVolume(0.6);
+            s.play();
         }
     }
 
