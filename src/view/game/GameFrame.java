@@ -391,7 +391,7 @@ public class GameFrame extends JFrame {
                 } else {
                     System.err.println("更新失败");
                 }
-                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
+                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
                 log.info(e.getMessage());
             } catch (Exception e) {
@@ -399,7 +399,7 @@ public class GameFrame extends JFrame {
             }
         }
 
-        File md5File = new File(filepath + ".md5");
+        File md5File = new File(filepath + ".sha");
         if (!md5File.exists()) {
             System.err.println("存档文档损坏喵！");
             if (file.delete()) {
@@ -428,7 +428,7 @@ public class GameFrame extends JFrame {
                     } else {
                         System.out.println("更新失败");
                     }
-                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
+                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".sha"));
                 } catch (IOException e) {
                     log.info(e.getMessage());
                 } catch (Exception e) {

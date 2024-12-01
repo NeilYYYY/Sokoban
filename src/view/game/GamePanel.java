@@ -308,7 +308,7 @@ public class GamePanel extends ListenerPanel {
 
     private void autoSave() {
         try {
-            if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
+            if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".sha")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -319,7 +319,7 @@ public class GamePanel extends ListenerPanel {
             } else {
                 System.out.println("更新失败");
             }
-            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
+            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".sha"));
         } catch (IOException e) {
             log.info(e.getMessage());
         } catch (Exception e) {

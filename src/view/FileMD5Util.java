@@ -9,7 +9,7 @@ import java.security.*;
 
 public class FileMD5Util {
     public static @NotNull String calculateMD5(File file) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+        MessageDigest md = MessageDigest.getInstance("SHA3-512");
         try (InputStream is = Files.newInputStream(file.toPath()); DigestInputStream dis = new DigestInputStream(is, md)) {
             byte[] buffer = new byte[1024];
             while (dis.read(buffer) != -1) {
