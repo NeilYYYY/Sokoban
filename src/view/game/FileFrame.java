@@ -7,7 +7,7 @@ import model.Level;
 import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import view.FileMD5Util;
+import view.FileSHAUtil;
 import view.login.User;
 import view.music.Sound;
 
@@ -381,7 +381,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             } else {
                 System.err.println("更新失败");
             }
-            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".sha"));
+            FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filePath)), new File(filePath + ".sha"));
         } catch (IOException e) {
             log.info(e.getMessage());
         } catch (Exception e) {
@@ -391,7 +391,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public boolean checkFile() {
         try {
-            return FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filePath + ".sha")), FileMD5Util.calculateMD5(new File(this.filePath)));
+            return FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filePath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filePath)));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -423,7 +423,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         try {
             createFile(filePath + ".sha");
-            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filePath)), new File(filePath + ".sha"));
+            FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filePath)), new File(filePath + ".sha"));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

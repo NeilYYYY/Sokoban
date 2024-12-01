@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import controller.GameController;
 import model.MapMatrix;
-import view.FileMD5Util;
+import view.FileSHAUtil;
 import view.level.LevelFrame;
 import view.login.User;
 import view.music.MusicFrame;
@@ -288,6 +288,8 @@ public class GameFrame extends JFrame {
             controller.getTimer().stop();
             if (this.user.id() == 0) {
                 JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
+                controller.getTimer().start();
+                gamePanel.requestFocusInWindow();
             } else {
                 if (check) {
                     Sound s = new Sound("src/misc/zako.wav");
@@ -363,7 +365,7 @@ public class GameFrame extends JFrame {
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
-        if (!file.exists()) {
+        if (!file.exists() && user.id() != 0 && lv != 6) {
             if (!file.getParentFile().mkdirs()) {
                 System.err.println("目录已存在喵: " + file.getParentFile().getAbsolutePath());
             }
@@ -391,7 +393,7 @@ public class GameFrame extends JFrame {
                 } else {
                     System.err.println("更新失败");
                 }
-                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".sha"));
+                FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
                 log.info(e.getMessage());
             } catch (Exception e) {
@@ -399,8 +401,8 @@ public class GameFrame extends JFrame {
             }
         }
 
-        File md5File = new File(filepath + ".sha");
-        if (!md5File.exists()) {
+        File shaFile = new File(filepath + ".sha");
+        if (!shaFile.exists() && user.id() != 0 && lv != 6) {
             System.err.println("存档文档损坏喵！");
             if (file.delete()) {
                 System.err.println("存档已清空！！！");
@@ -428,7 +430,7 @@ public class GameFrame extends JFrame {
                     } else {
                         System.out.println("更新失败");
                     }
-                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".sha"));
+                    FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
                 } catch (IOException e) {
                     log.info(e.getMessage());
                 } catch (Exception e) {

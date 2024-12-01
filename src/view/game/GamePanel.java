@@ -4,7 +4,7 @@ import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
 import org.jetbrains.annotations.NotNull;
-import view.FileMD5Util;
+import view.FileSHAUtil;
 import view.login.User;
 
 import javax.swing.*;
@@ -163,7 +163,7 @@ public class GamePanel extends ListenerPanel {
         if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
-        if (!file.exists()) {
+        if (!file.exists() && frame.getUser().id() != 0 && frame.getLv() != 6) {
             MapInfo mapInfo = new MapInfo();
             System.out.println(mapInfo.getId());
             mapInfo.setModel(model);
@@ -311,7 +311,7 @@ public class GamePanel extends ListenerPanel {
             return;
         }
         try {
-            if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".sha")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
+            if (FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -322,7 +322,7 @@ public class GamePanel extends ListenerPanel {
             } else {
                 System.out.println("更新失败");
             }
-            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".sha"));
+            FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filepath)), new File(filepath + ".sha"));
         } catch (IOException e) {
             log.info(e.getMessage());
         } catch (Exception e) {
