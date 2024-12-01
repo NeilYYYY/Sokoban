@@ -230,6 +230,18 @@ public class GameFrame extends JFrame {
             getContentPane().add(leastStepLabel, Integer.valueOf(1));
             leastStepLabel.setForeground(Color.WHITE);
 
+            JButton helpBtn = new JButton("Help");
+            helpBtn.setLocation(new Point(gamePanel.getWidth() + 180, 180));
+            helpBtn.setSize(80, 50);
+            helpBtn.setFont(f2);
+            helpBtn.setMargin(new Insets(0, 0, 0, 0));
+            helpBtn.setBorderPainted(false);
+            helpBtn.setBorder(null);
+            helpBtn.setFocusPainted(false);
+            helpBtn.setContentAreaFilled(false);
+            helpBtn.setForeground(Color.WHITE);
+            this.getContentPane().add(helpBtn);
+
             JLabel lvLabel = new JLabel("Level: ???");
             lvLabel.setFont(f);
             lvLabel.setLocation(new Point(gamePanel.getWidth() + 80, 20));
