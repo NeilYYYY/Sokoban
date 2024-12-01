@@ -62,8 +62,12 @@ public class LevelFrame extends JFrame {
 
         ImageIcon star = new ImageIcon("src/images/star.png");
         star.setImage(star.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
-        ImageIcon crown = new ImageIcon("src/images/crown.png");
-        crown.setImage(crown.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon crownImg = new ImageIcon("src/images/crown.png");
+        crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon king = new ImageIcon("src/images/king.png");
+        king.setImage(king.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon kingAlt = new ImageIcon("src/images/king_alter.png");
+        kingAlt.setImage(kingAlt.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
 
         JButton level1Btn = new JButton("Level 1");
         level1Btn.setLocation(new Point(170, 155));
@@ -231,16 +235,16 @@ public class LevelFrame extends JFrame {
         level6Btn.setContentAreaFilled(false);
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
-        JLabel c = new JLabel(crown);
-        c.setBounds(370, 230, 40, 30);
-        this.getContentPane().add(c, Integer.valueOf(1));
-        c.setVisible(false);
+        JLabel crown = new JLabel(crownImg);
+        crown.setBounds(370, 230, 40, 30);
+        this.getContentPane().add(crown, Integer.valueOf(1));
+        crown.setVisible(false);
         if (flag) {
             level6Btn.setVisible(true);
-            c.setVisible(true);
+            crown.setVisible(true);
         }
 
-        JButton kingBtn = new JButton();
+        JButton kingBtn = new JButton(king);
         kingBtn.setLocation(new Point(700, 350));
         kingBtn.setSize(80, 60);
         kingBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -250,18 +254,11 @@ public class LevelFrame extends JFrame {
         kingBtn.setContentAreaFilled(false);
         kingBtn.setVisible(false);
         getContentPane().add(kingBtn, Integer.valueOf(1));
-        ImageIcon king = new ImageIcon("src/images/king.png");
-        king.setImage(king.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        JLabel k = new JLabel(king);
-        k.setBounds(700,350,80,60);
-        this.getContentPane().add(k, Integer.valueOf(1));
-        k.setVisible(false);
         if (!flag && this.user.lv()[0][4]) {
-            k.setVisible(true);
             kingBtn.setVisible(true);
         }
 
-        JButton backBtn = new JButton();
+        JButton backBtn = new JButton(kingAlt);
         backBtn.setLocation(new Point(700, 350));
         backBtn.setSize(80, 60);
         backBtn.setFont(f);
@@ -273,12 +270,7 @@ public class LevelFrame extends JFrame {
         backBtn.setContentAreaFilled(false);
         getContentPane().add(backBtn, Integer.valueOf(1));
         backBtn.setVisible(false);
-        JLabel b = new JLabel(king);
-        b.setBounds(700,350,80,60);
-        this.getContentPane().add(b, Integer.valueOf(1));
-        b.setVisible(false);
         if (flag) {
-            b.setVisible(true);
             backBtn.setVisible(true);
         }
 
@@ -403,7 +395,7 @@ public class LevelFrame extends JFrame {
         changeModeBtn.addActionListener(_ -> {
             //change bg
             this.mode = !this.mode;
-            System.out.println("change mode");
+            System.out.println("change to mode " + this.mode);
             this.getContentPane().remove(panel);
             panel = new ParticleEffectPanel(50, this.mode, true);
             panel.setBounds(0, 0, 800, 450);
@@ -447,9 +439,7 @@ public class LevelFrame extends JFrame {
             star4.setVisible(true);
             level5Status.setVisible(true);
             star5.setVisible(true);
-            b.setVisible(false);
-            k.setVisible(true);
-            c.setVisible(false);
+            crown.setVisible(false);
         });
 
         kingBtn.addActionListener(_ -> {
@@ -471,9 +461,7 @@ public class LevelFrame extends JFrame {
             star3.setVisible(false);
             star4.setVisible(false);
             star5.setVisible(false);
-            b.setVisible(true);
-            k.setVisible(false);
-            c.setVisible(true);
+            crown.setVisible(true);
         });
 
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));
