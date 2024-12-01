@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import model.Level;
 import model.MapMatrix;
+import view.ParticleEffectPanel;
 import view.game.GameFrame;
 import view.login.LoginFrame;
 import view.login.User;
@@ -20,7 +21,7 @@ public class LevelFrame extends JFrame {
     private int lv = 0;
     private boolean mode;
     private JLabel bg;
-    private LevelParticleEffect panel;
+    private ParticleEffectPanel panel;
 
     public LevelFrame(User user, Sound sound, boolean mode, boolean flag) {
         try {
@@ -41,7 +42,7 @@ public class LevelFrame extends JFrame {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        panel = new LevelParticleEffect(50, mode);
+        panel = new ParticleEffectPanel(50, mode, true);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
@@ -404,7 +405,7 @@ public class LevelFrame extends JFrame {
             this.mode = !this.mode;
             System.out.println("change mode");
             this.getContentPane().remove(panel);
-            panel = new LevelParticleEffect(50, this.mode);
+            panel = new ParticleEffectPanel(50, this.mode, true);
             panel.setBounds(0, 0, 800, 450);
             panel.setOpaque(false);
             this.getContentPane().add(panel, Integer.valueOf(0));

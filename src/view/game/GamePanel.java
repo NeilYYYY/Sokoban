@@ -12,12 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/**
- * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
- * The class contains a grids, which is the corresponding GUI view of the matrix variable in MapMatrix.
- */
 public class GamePanel extends ListenerPanel {
-
     private final int GRID_SIZE = 50;
     private final GridComponent[][] grids;
     private final MapMatrix model;
@@ -86,10 +81,8 @@ public class GamePanel extends ListenerPanel {
         this.steps = step;
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
-                //Units digit maps to id attribute in GridComponent. (The no change value)
                 grids[i][j] = new GridComponent(model.getId(i, j), this.GRID_SIZE);
                 grids[i][j].setLocation(j * GRID_SIZE + 2, i * GRID_SIZE + 2);
-                //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {
                     case 1 -> grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10, frame.getUser()));
                     case 2 -> {

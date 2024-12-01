@@ -1,6 +1,7 @@
 package view.login;
 
 import org.jetbrains.annotations.NotNull;
+import view.ParticleEffectPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,18 +34,17 @@ public class Register extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Register");
         setSize(800, 450);
-//        setAlwaysOnTop(true);//设置界面一直处于最上层
+//        setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
         this.setResizable(false);
 
-        //组件
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        GlowingParticleEffect panel = new GlowingParticleEffect(75);
+        ParticleEffectPanel panel = new ParticleEffectPanel(75, false, false);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
@@ -81,7 +81,7 @@ public class Register extends JFrame implements ActionListener {
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
         passwordTextTrue = new JPasswordField(15);
-        // 设置字体和背景颜色
+
         usernameText.setForeground(Color.BLACK);
         passwordText.setForeground(Color.BLACK);
         passwordTextTrue.setForeground(Color.BLACK);
@@ -104,7 +104,7 @@ public class Register extends JFrame implements ActionListener {
             public void keyReleased(KeyEvent e) {
             }
         });
-        //创建装组件的容器
+
         JPanel usernameJp = new JPanel();
         usernameJp.setBackground(null);
         usernameJp.setOpaque(false);
@@ -120,7 +120,7 @@ public class Register extends JFrame implements ActionListener {
         JPanel registerJp = new JPanel();
         registerJp.setBackground(null);
         registerJp.setOpaque(false);
-        //设置容器的位置
+
         usernameJp.setBounds(200, 125, 400, 40);
         passwordJp.setBounds(200, 175, 400, 40);
         passwordTrueJp.setBounds(200, 225, 400, 40);
@@ -135,7 +135,7 @@ public class Register extends JFrame implements ActionListener {
         passwordTrueJp.add(passwordTextTrue);
         backJp.add(backBtn);
         registerJp.add(registerBtn);
-        //将组件装入GUI
+
         this.getContentPane().add(usernameJp, Integer.valueOf(1));
         this.getContentPane().add(passwordJp, Integer.valueOf(1));
         this.getContentPane().add(passwordTrueJp, Integer.valueOf(1));
