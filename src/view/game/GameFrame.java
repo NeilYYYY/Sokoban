@@ -105,6 +105,18 @@ public class GameFrame extends JFrame {
         backBtn.setForeground(Color.WHITE);
         this.getContentPane().add(backBtn);
 
+        JButton helpBtn = new JButton("Help");
+        helpBtn.setLocation(new Point(gamePanel.getWidth() + 80, 300));
+        helpBtn.setSize(80, 50);
+        helpBtn.setFont(f2);
+        helpBtn.setMargin(new Insets(0, 0, 0, 0));
+        helpBtn.setBorderPainted(false);
+        helpBtn.setBorder(null);
+        helpBtn.setFocusPainted(false);
+        helpBtn.setContentAreaFilled(false);
+        helpBtn.setForeground(Color.WHITE);
+        this.getContentPane().add(helpBtn);
+
         JButton musicBtn = new JButton("Music");
         musicBtn.setLocation(new Point(gamePanel.getWidth() + 180, 120));
         musicBtn.setSize(80, 50);
@@ -178,6 +190,7 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(rightMoveBtn);
 
         if (lv != 6) {
+            helpBtn.setVisible(false);
             JLabel leastStepLabel = new JLabel(String.format("Min_Steps: %d", leastStep[lv - 1]));
             leastStepLabel.setFont(f);
             leastStepLabel.setLocation(new Point(gamePanel.getWidth() + 200, 70));
@@ -316,6 +329,15 @@ public class GameFrame extends JFrame {
 
         musicBtn.addActionListener(_ -> {
             new MusicFrame(this, this.sound);
+            gamePanel.requestFocusInWindow();
+        });
+
+        helpBtn.addActionListener(_ -> {
+            ImageIcon originalIcon = new ImageIcon("src/images/Help.png");
+            Image originalImage = originalIcon.getImage();  // 获取 Image 对象
+            Image resizedImage = originalImage.getScaledInstance(1200, 675, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(resizedImage);
+            JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
             gamePanel.requestFocusInWindow();
         });
 
