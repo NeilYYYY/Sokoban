@@ -22,6 +22,8 @@ public abstract class ListenerPanel extends JPanel {
                 case KeyEvent.VK_LEFT -> doMoveLeft();
                 case KeyEvent.VK_UP -> doMoveUp();
                 case KeyEvent.VK_DOWN -> doMoveDown();
+                case KeyEvent.VK_F11 -> doWin();
+                case KeyEvent.VK_ESCAPE -> back();
             }
         }
     }
@@ -35,4 +37,7 @@ public abstract class ListenerPanel extends JPanel {
 
     public abstract void doMoveDown();
 
+    public abstract void doWin();
+
+    public abstract void back();
 }

@@ -7,18 +7,17 @@ import java.io.*;
 import java.nio.file.*;
 import java.security.*;
 
-public class FileMD5Util {
-    // 计算文件的MD5
-    public static @NotNull String calculateMD5(File file) throws Exception {
-        MessageDigest md = MessageDigest.getInstance("MD5");
+public class FileSHAUtil {
+    public static @NotNull String calculateSHA(File file) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA3-512");
         try (InputStream is = Files.newInputStream(file.toPath()); DigestInputStream dis = new DigestInputStream(is, md)) {
             byte[] buffer = new byte[1024];
             while (dis.read(buffer) != -1) {
-                // 读取文件内容并更新MD5
+                // 读取文件内容并更新SHA
             }
         }
         byte[] digest = md.digest();
-        // 将MD5字节数组转换为十六进制字符串
+        // 将SHA字节数组转换为十六进制字符串
         StringBuilder sb = new StringBuilder();
         for (byte b : digest) {
             sb.append(String.format("%02x", b));
@@ -26,23 +25,20 @@ public class FileMD5Util {
         return sb.toString();
     }
 
-    // 保存MD5到文件
-    public static void saveMD5ToFile(String md5, File outputFile) throws IOException {
+    public static void saveSHAToFile(String sha, File outputFile) throws IOException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
-            writer.write(md5);
+            writer.write(sha);
         }
     }
 
-    // 从文件加载MD5
-    public static String loadMD5FromFile(File inputFile) throws IOException {
+    public static String loadSHAFromFile(File inputFile) throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
             return reader.readLine();
         }
     }
 
-    // 比较两个MD5
     @Contract(value = "_, null -> true", pure = true)
-    public static boolean compareMD5failed(@NotNull String md5FromFile, String calculatedMD5) {
-        return !md5FromFile.equals(calculatedMD5);
+    public static boolean compareSHAFailed(@NotNull String shaFromFile, String calculatedSHA) {
+        return !shaFromFile.equals(calculatedSHA);
     }
 }

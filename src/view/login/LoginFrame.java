@@ -1,6 +1,7 @@
 package view.login;
 
 import org.jetbrains.annotations.NotNull;
+import view.ParticleEffectPanel;
 import view.level.LevelFrame;
 import view.music.*;
 
@@ -41,12 +42,11 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.getContentPane().setLayout(null);
         this.setResizable(false);
 
-        //创建界面组件
         JLayeredPane layeredPane = new JLayeredPane();
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        GlowingParticleEffect panel = new GlowingParticleEffect(75);
+        ParticleEffectPanel panel = new ParticleEffectPanel(75, false, false);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
@@ -102,7 +102,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         musicBtn.addActionListener(this);
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
-        // 设置字体和背景颜色
+
         usernameText.setForeground(Color.BLACK);
         passwordText.setForeground(Color.BLACK);
         usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -142,7 +142,6 @@ public class LoginFrame extends JFrame implements ActionListener {
             }
         });
 
-        //创建装组件的容器
         JPanel usernameJp = new JPanel();
         usernameJp.setBackground(null);
         usernameJp.setOpaque(false);
@@ -161,7 +160,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         JPanel guestJp = new JPanel();
         guestJp.setBackground(null);
         guestJp.setOpaque(false);
-        //设置容器的位置
+
         usernameJp.setBounds(200, 210, 400, 50);
         passwordJp.setBounds(200, 250, 400, 50);
         loginJp.setBounds(300, 300, 100, 60);
@@ -176,7 +175,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         registerJp.add(registerBtn);
         musicJp.add(musicBtn);
         guestJp.add(guestBtn);
-        //将组件装入GUI
+
         this.getContentPane().add(usernameJp, Integer.valueOf(1));
         this.getContentPane().add(passwordJp, Integer.valueOf(1));
         this.getContentPane().add(loginJp, Integer.valueOf(1));

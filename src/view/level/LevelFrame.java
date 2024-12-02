@@ -7,6 +7,7 @@ import javax.swing.*;
 
 import model.Level;
 import model.MapMatrix;
+import view.ParticleEffectPanel;
 import view.game.GameFrame;
 import view.login.LoginFrame;
 import view.login.User;
@@ -20,7 +21,7 @@ public class LevelFrame extends JFrame {
     private int lv = 0;
     private boolean mode;
     private JLabel bg;
-    private LevelParticleEffect panel;
+    private ParticleEffectPanel panel;
 
     public LevelFrame(User user, Sound sound, boolean mode, boolean flag) {
         try {
@@ -41,7 +42,7 @@ public class LevelFrame extends JFrame {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        panel = new LevelParticleEffect(50, mode);
+        panel = new ParticleEffectPanel(50, mode, true);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
@@ -59,10 +60,14 @@ public class LevelFrame extends JFrame {
             }
         }
 
-        ImageIcon star = new ImageIcon("src/images/star.png");
-        star.setImage(star.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
-        ImageIcon crown = new ImageIcon("src/images/crown.png");
-        crown.setImage(crown.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon starImg = new ImageIcon("src/images/star.png");
+        starImg.setImage(starImg.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
+        ImageIcon crownImg = new ImageIcon("src/images/crown.png");
+        crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon kingImg = new ImageIcon("src/images/king.png");
+        kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon kingAltImg = new ImageIcon("src/images/king_alter.png");
+        kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
 
         JButton level1Btn = new JButton("Level 1");
         level1Btn.setLocation(new Point(170, 155));
@@ -81,9 +86,11 @@ public class LevelFrame extends JFrame {
         level1Status.setFont(f);
         level1Status.setForeground(Color.WHITE);
         getContentPane().add(level1Status, Integer.valueOf(1));
-        JLabel star1 = new JLabel(star);
+
+        JLabel star1 = new JLabel(starImg);
         star1.setBounds(210, 230, 40, 30);
         this.getContentPane().add(star1, Integer.valueOf(1));
+
         if (flag) {
             level1Btn.setVisible(false);
             level1Status.setVisible(false);
@@ -108,10 +115,12 @@ public class LevelFrame extends JFrame {
         level2Status.setForeground(Color.WHITE);
         getContentPane().add(level2Status, Integer.valueOf(1));
         level2Status.setVisible(false);
-        JLabel star2 = new JLabel(star);
+
+        JLabel star2 = new JLabel(starImg);
         star2.setBounds(300, 230, 40, 30);
         this.getContentPane().add(star2, Integer.valueOf(1));
         star2.setVisible(false);
+
         if (user.lv()[0][0]) {
             level2Status.setVisible(true);
             star2.setVisible(true);
@@ -140,10 +149,12 @@ public class LevelFrame extends JFrame {
         level3Status.setForeground(Color.WHITE);
         getContentPane().add(level3Status, Integer.valueOf(1));
         level3Status.setVisible(false);
-        JLabel star3 = new JLabel(star);
+
+        JLabel star3 = new JLabel(starImg);
         star3.setBounds(390, 230, 40, 30);
         this.getContentPane().add(star3, Integer.valueOf(1));
         star3.setVisible(false);
+
         if (user.lv()[0][1]) {
             level3Status.setVisible(true);
             star3.setVisible(true);
@@ -172,10 +183,12 @@ public class LevelFrame extends JFrame {
         level4Status.setForeground(Color.WHITE);
         getContentPane().add(level4Status, Integer.valueOf(1));
         level4Status.setVisible(false);
-        JLabel star4 = new JLabel(star);
+
+        JLabel star4 = new JLabel(starImg);
         star4.setBounds(480, 230, 40, 30);
         this.getContentPane().add(star4, Integer.valueOf(1));
         star4.setVisible(false);
+
         if (user.lv()[0][2]) {
             level4Status.setVisible(true);
             star4.setVisible(true);
@@ -204,10 +217,12 @@ public class LevelFrame extends JFrame {
         level5Status.setForeground(Color.WHITE);
         getContentPane().add(level5Status, Integer.valueOf(1));
         level5Status.setVisible(false);
-        JLabel star5 = new JLabel(star);
+
+        JLabel star5 = new JLabel(starImg);
         star5.setBounds(570, 230, 40, 30);
         this.getContentPane().add(star5, Integer.valueOf(1));
         star5.setVisible(false);
+
         if (user.lv()[0][3]) {
             level5Status.setVisible(true);
             star5.setVisible(true);
@@ -230,16 +245,18 @@ public class LevelFrame extends JFrame {
         level6Btn.setContentAreaFilled(false);
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
-        JLabel c = new JLabel(crown);
-        c.setBounds(370, 230, 40, 30);
-        this.getContentPane().add(c, Integer.valueOf(1));
-        c.setVisible(false);
+
+        JLabel crown = new JLabel(crownImg);
+        crown.setBounds(370, 230, 40, 30);
+        this.getContentPane().add(crown, Integer.valueOf(1));
+        crown.setVisible(false);
+
         if (flag) {
             level6Btn.setVisible(true);
-            c.setVisible(true);
+            crown.setVisible(true);
         }
 
-        JButton kingBtn = new JButton();
+        JButton kingBtn = new JButton(kingImg);
         kingBtn.setLocation(new Point(700, 350));
         kingBtn.setSize(80, 60);
         kingBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -249,18 +266,11 @@ public class LevelFrame extends JFrame {
         kingBtn.setContentAreaFilled(false);
         kingBtn.setVisible(false);
         getContentPane().add(kingBtn, Integer.valueOf(1));
-        ImageIcon king = new ImageIcon("src/images/king.png");
-        king.setImage(king.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        JLabel k = new JLabel(king);
-        k.setBounds(700,350,80,60);
-        this.getContentPane().add(k, Integer.valueOf(1));
-        k.setVisible(false);
         if (!flag && this.user.lv()[0][4]) {
-            k.setVisible(true);
             kingBtn.setVisible(true);
         }
 
-        JButton backBtn = new JButton();
+        JButton backBtn = new JButton(kingAltImg);
         backBtn.setLocation(new Point(700, 350));
         backBtn.setSize(80, 60);
         backBtn.setFont(f);
@@ -272,12 +282,7 @@ public class LevelFrame extends JFrame {
         backBtn.setContentAreaFilled(false);
         getContentPane().add(backBtn, Integer.valueOf(1));
         backBtn.setVisible(false);
-        JLabel b = new JLabel(king);
-        b.setBounds(700,350,80,60);
-        this.getContentPane().add(b, Integer.valueOf(1));
-        b.setVisible(false);
         if (flag) {
-            b.setVisible(true);
             backBtn.setVisible(true);
         }
 
@@ -317,17 +322,16 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setFocusPainted(false);
         changeModeBtn.setContentAreaFilled(false);
 
-        ImageIcon back;// 背景图置于最底层
+        ImageIcon backImg;// 背景图置于最底层
         if (this.mode) {
-            back = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
+            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
         } else {
-            back = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
         }
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-        bg = new JLabel(back);
+        backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        bg = new JLabel(backImg);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
-
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
@@ -394,17 +398,20 @@ public class LevelFrame extends JFrame {
         });
 
         logoutBtn.addActionListener(_ -> {
-            this.setVisible(false);
-            LoginFrame loginFrame = new LoginFrame(this.sound);
-            loginFrame.setVisible(true);
+            int option = JOptionPane.showOptionDialog(null, "Sure to Logout?", "CONFIRM", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Cancel", "Confirm"}, "Cancel");
+            if (option == 1) {
+                this.setVisible(false);
+                LoginFrame loginFrame = new LoginFrame(this.sound);
+                loginFrame.setVisible(true);
+            }
         });
 
         changeModeBtn.addActionListener(_ -> {
             //change bg
             this.mode = !this.mode;
-            System.out.println("change mode");
+            System.out.println("change to mode " + this.mode);
             this.getContentPane().remove(panel);
-            panel = new LevelParticleEffect(50, this.mode);
+            panel = new ParticleEffectPanel(50, this.mode, true);
             panel.setBounds(0, 0, 800, 450);
             panel.setOpaque(false);
             this.getContentPane().add(panel, Integer.valueOf(0));
@@ -446,9 +453,7 @@ public class LevelFrame extends JFrame {
             star4.setVisible(true);
             level5Status.setVisible(true);
             star5.setVisible(true);
-            b.setVisible(false);
-            k.setVisible(true);
-            c.setVisible(false);
+            crown.setVisible(false);
         });
 
         kingBtn.addActionListener(_ -> {
@@ -470,9 +475,7 @@ public class LevelFrame extends JFrame {
             star3.setVisible(false);
             star4.setVisible(false);
             star5.setVisible(false);
-            b.setVisible(true);
-            k.setVisible(false);
-            c.setVisible(true);
+            crown.setVisible(true);
         });
 
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));

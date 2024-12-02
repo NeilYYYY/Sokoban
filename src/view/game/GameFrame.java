@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 
 import controller.GameController;
 import model.MapMatrix;
-import view.FileMD5Util;
+import view.FileSHAUtil;
 import view.level.LevelFrame;
 import view.login.User;
 import view.music.MusicFrame;
@@ -28,6 +28,7 @@ public class GameFrame extends JFrame {
     JLabel leftTimeLabel;
     JLabel timeLabel;
     String musicPath;
+    JButton backBtn;
     private LevelFrame levelFrame;
     private boolean check = true;
 
@@ -93,7 +94,7 @@ public class GameFrame extends JFrame {
         loadBtn.setForeground(Color.WHITE);
         this.getContentPane().add(loadBtn);
 
-        JButton backBtn = new JButton("Back");
+        backBtn = new JButton("Back");
         backBtn.setLocation(new Point(gamePanel.getWidth() + 80, 240));
         backBtn.setSize(80, 50);
         backBtn.setFont(f2);
@@ -232,6 +233,7 @@ public class GameFrame extends JFrame {
             loadBtn.setVisible(false);
             musicBtn.setVisible(false);
             this.sound.changeSource("src/misc/东方永夜抄竹取飞翔.wav");
+            sound.setVolume(0.5);
             sound.play();
 
             JLabel leastStepLabel = new JLabel("Min_Steps: ???");
@@ -240,6 +242,18 @@ public class GameFrame extends JFrame {
             leastStepLabel.setSize(180, 50);
             getContentPane().add(leastStepLabel, Integer.valueOf(1));
             leastStepLabel.setForeground(Color.WHITE);
+
+            JButton helpBtn = new JButton("Help");
+            helpBtn.setLocation(new Point(gamePanel.getWidth() + 180, 180));
+            helpBtn.setSize(80, 50);
+            helpBtn.setFont(f2);
+            helpBtn.setMargin(new Insets(0, 0, 0, 0));
+            helpBtn.setBorderPainted(false);
+            helpBtn.setBorder(null);
+            helpBtn.setFocusPainted(false);
+            helpBtn.setContentAreaFilled(false);
+            helpBtn.setForeground(Color.WHITE);
+            this.getContentPane().add(helpBtn);
 
             JLabel lvLabel = new JLabel("Level: ???");
             lvLabel.setFont(f);
@@ -287,10 +301,12 @@ public class GameFrame extends JFrame {
             controller.getTimer().stop();
             if (this.user.id() == 0) {
                 JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
+                controller.getTimer().start();
+                gamePanel.requestFocusInWindow();
             } else {
                 if (check) {
                     Sound s = new Sound("src/misc/zako.wav");
-                    s.setVolume(1.0);
+                    s.setVolume(0.8);
                     s.play();
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                     check = false;
@@ -305,6 +321,7 @@ public class GameFrame extends JFrame {
         backBtn.addActionListener(_ -> {
             if (this.getLv() == 6) {
                 this.sound.changeSource(musicPath);
+                sound.setVolume(0.5);
                 sound.play();
             }
             controller.getTimer().stop();
@@ -370,7 +387,7 @@ public class GameFrame extends JFrame {
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
-        if (!file.exists()) {
+        if (!file.exists() && user.id() != 0 && lv != 6) {
             if (!file.getParentFile().mkdirs()) {
                 System.err.println("目录已存在喵: " + file.getParentFile().getAbsolutePath());
             }
@@ -398,7 +415,7 @@ public class GameFrame extends JFrame {
                 } else {
                     System.err.println("更新失败");
                 }
-                FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
+                FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
                 log.info(e.getMessage());
             } catch (Exception e) {
@@ -406,8 +423,8 @@ public class GameFrame extends JFrame {
             }
         }
 
-        File md5File = new File(filepath + ".md5");
-        if (!md5File.exists()) {
+        File shaFile = new File(filepath + ".sha");
+        if (!shaFile.exists() && user.id() != 0 && lv != 6) {
             System.err.println("存档文档损坏喵！");
             if (file.delete()) {
                 System.err.println("存档已清空！！！");
@@ -435,7 +452,7 @@ public class GameFrame extends JFrame {
                     } else {
                         System.out.println("更新失败");
                     }
-                    FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(filepath)), new File(filepath + ".md5"));
+                    FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
                 } catch (IOException e) {
                     log.info(e.getMessage());
                 } catch (Exception e) {
@@ -443,6 +460,10 @@ public class GameFrame extends JFrame {
                 }
             }
         }
+    }
+
+    public JButton getBackBtn() {
+        return backBtn;
     }
 
     public Sound getSound() {

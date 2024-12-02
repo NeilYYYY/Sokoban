@@ -1,4 +1,4 @@
-package view.login;
+package view;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -8,19 +8,23 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GlowingParticleEffect extends JPanel {
+public class ParticleEffectPanel extends JPanel {
     private final ArrayList<Particle> particles = new ArrayList<>();
     private final Random random = new Random();
     private final int particleCount; // 粒子数量
+    private final boolean mode;
+    private final boolean style;
 
-    public GlowingParticleEffect(int particleCount) {
+    public ParticleEffectPanel(int particleCount, boolean mode, boolean style) {
         this.particleCount = particleCount;
+        this.mode = mode;
+        this.style = style;
         // 定时器更新粒子位置
         // 每16ms更新一次（约60FPS）
         Timer timer = new Timer(16, _ -> {
             if (particles.isEmpty() && getWidth() > 0 && getHeight() > 0) {
                 // 初始化粒子
-                for (int i = 0; i < GlowingParticleEffect.this.particleCount; i++) {
+                for (int i = 0; i < this.particleCount; i++) {
                     particles.add(createParticle());
                 }
             }
@@ -36,7 +40,7 @@ public class GlowingParticleEffect extends JPanel {
     private @NotNull Particle createParticle() {
         int x = random.nextInt(getWidth());
         int y = random.nextInt(getHeight());
-        int size = random.nextInt(3) + 3;
+        int size = random.nextInt(3) + 1;
         int dx = random.nextInt(3) - 1;
         int dy = random.nextInt(3) - 1;
         while (dx == 0 && dy == 0) { // 确保粒子不静止
@@ -64,11 +68,7 @@ public class GlowingParticleEffect extends JPanel {
         // 创建白金光的渐变
         int radius = size * 2;
         float[] dist = {0f, 0.5f, 1f};
-        Color[] colors = {
-                new Color(255, 255, 224, (int) (255 * alpha)), // 中心白黄色，动态透明
-                new Color(255, 223, 128, (int) (128 * alpha)), // 渐变为金色，动态透明
-                new Color(255, 223, 128, 0) // 最外层透明
-        };
+        Color[] colors = getColors(alpha);
         RadialGradientPaint gradient = new RadialGradientPaint(
                 new Point(x, y), radius, dist, colors,
                 MultipleGradientPaint.CycleMethod.NO_CYCLE
@@ -77,6 +77,32 @@ public class GlowingParticleEffect extends JPanel {
         // 设置渐变
         g2d.setPaint(gradient);
         g2d.fillOval(x - radius, y - radius, radius * 2, radius * 2);
+    }
+
+    private Color @NotNull [] getColors(float alpha) {
+        Color[] colors;
+        if (style) {
+            if (mode) {
+                colors = new Color[]{
+                        new Color(150, 50, 50, (int) (255 * alpha)),
+                        new Color(200, 100, 100, (int) (128 * alpha)),
+                        new Color(255, 125, 125, 0),
+                };
+            } else {
+                colors = new Color[]{
+                        new Color(255, 255, 225, (int) (255 * alpha)),
+                        new Color(255, 225, 225, (int) (128 * alpha)),
+                        new Color(255, 225, 225, 0)
+                };
+            }
+        } else {
+            colors = new Color[]{
+                    new Color(255, 255, 224, (int) (255 * alpha)), // 中心白黄色，动态透明
+                    new Color(255, 223, 128, (int) (128 * alpha)), // 渐变为金色，动态透明
+                    new Color(255, 223, 128, 0) // 最外层透明
+            };
+        }
+        return colors;
     }
 
     // 粒子类
@@ -107,13 +133,21 @@ public class GlowingParticleEffect extends JPanel {
 
             // 透明度变化
             if (fadingOut) {
-                alpha -= 0.02f;
+                if (style) {
+                    alpha -= 0.01f;
+                } else {
+                    alpha -= 0.02f;
+                }
                 if (alpha <= 0) {
                     alpha = 0;
                     fadingOut = false; // 开始淡入
                 }
             } else {
-                alpha += 0.02f;
+                if (style) {
+                    alpha += 0.01f;
+                } else {
+                    alpha += 0.02f;
+                }
                 if (alpha >= 1) {
                     alpha = 1;
                     fadingOut = true; // 开始淡出
@@ -136,3 +170,4 @@ public class GlowingParticleEffect extends JPanel {
         }
     }
 }
+

@@ -33,7 +33,7 @@
     {
         "id": 1,
         "username": "admin",
-        "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+        "password": "64d09d9930c8ecf79e513167a588cb75439b762ce8f9b22ea59765f32aa74ca19d2f1e97dc922a3d4954594a05062917fb24d1f8e72f2ed02a58ed7534f94d27",
         "lv": [
             [
                 true,
@@ -46,7 +46,7 @@
             [
                 true,
                 true,
-                false,
+                true,
                 true,
                 true,
                 false
@@ -64,7 +64,7 @@
     {
         "id": 2,
         "username": "Box",
-        "password": "631cb8a984d071a33e4623c901ac4dea69a058f1892675484b74900ecf77873d",
+        "password": "c964a72641eea046484af0198742a258d814224e6400400777959bb94ab811bf505ef4a5d1eb46f2f909f4b6bfa45b27af07bdfd5943cf3c0f6e65e8dc81430b",
         "lv": [
             [
                 false,

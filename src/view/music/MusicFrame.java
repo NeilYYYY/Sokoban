@@ -14,8 +14,8 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JButton pauseBtn;
     private final JButton backBtn;
     private final String[] SongName;
-    private final JSlider volumeSlider;  // 音量条
-    private final JLabel statusLabel;  // 状态显示标签
+    private final JSlider volumeSlider;
+    private final JLabel statusLabel;
     private final Sound sound;
     private int choose;
 
@@ -33,7 +33,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
-        //设置界面一直处于最上层
 //        setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -45,7 +44,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        // 创建一个列表模型
         JScrollPane scrollPane = getJScrollPane(this.sound);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -122,7 +120,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         statusLabel.setBounds(10, 370, 200, 30);
         this.getContentPane().add(statusLabel, Integer.valueOf(0));
 
-        // 音量条
         volumeSlider = new JSlider(0, 100, (int) (this.sound.getVolume() * 100));
         volumeSlider.setBounds(10, 370, 200, 10);
         volumeSlider.setPaintTicks(true);
@@ -131,7 +128,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         volumeSlider.setFocusable(false);
         this.getContentPane().add(volumeSlider, Integer.valueOf(0));
 
-        // 音量条拖动
         volumeSlider.addChangeListener(_ -> {
             double volume = volumeSlider.getValue() / 100.0;
             this.sound.setVolume(volume);
@@ -160,7 +156,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         listModel.addElement("EnterHallownest");
         listModel.addElement("旷野之息 Main Theme");
         listModel.addElement("恋ひ恋ふ縁");
-        // 创建列表，并设置选择监听器
         return new JList<>(listModel);
     }
 
@@ -169,7 +164,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                // 处理列表项选择事件
                 this.getContentPane().remove(pauseBtn);
                 this.getContentPane().add(playBtn, Integer.valueOf(0));
                 sound.pause();

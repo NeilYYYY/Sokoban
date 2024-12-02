@@ -4,7 +4,7 @@ import controller.GameController;
 import model.Direction;
 import model.MapMatrix;
 import org.jetbrains.annotations.NotNull;
-import view.FileMD5Util;
+import view.FileSHAUtil;
 import view.login.User;
 
 import javax.swing.*;
@@ -12,12 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-/**
- * It is the subclass of ListenerPanel, so that it should implement those four methods: do move left, up, down ,right.
- * The class contains a grids, which is the corresponding GUI view of the matrix variable in MapMatrix.
- */
 public class GamePanel extends ListenerPanel {
-
     private final int GRID_SIZE = 50;
     private final GridComponent[][] grids;
     private final MapMatrix model;
@@ -35,10 +30,6 @@ public class GamePanel extends ListenerPanel {
     private int time;
     private boolean flag = false;
 
-    public void setFlag(boolean flag) {
-        this.flag = flag;
-    }
-
     public GamePanel(@NotNull MapMatrix model, @NotNull GameFrame frame, @NotNull User user, int step) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -52,6 +43,10 @@ public class GamePanel extends ListenerPanel {
         this.file = new File(filepath);
         this.time = frame.getTime();
         initialGame(step);
+    }
+
+    public void setFlag(boolean flag) {
+        this.flag = flag;
     }
 
     public GameFrame getFrame() {
@@ -86,10 +81,8 @@ public class GamePanel extends ListenerPanel {
         this.steps = step;
         for (int i = 0; i < grids.length; i++) {
             for (int j = 0; j < grids[i].length; j++) {
-                //Units digit maps to id attribute in GridComponent. (The no change value)
                 grids[i][j] = new GridComponent(model.getId(i, j), this.GRID_SIZE);
                 grids[i][j].setLocation(j * GRID_SIZE + 2, i * GRID_SIZE + 2);
-                //Ten digit maps to Box or Hero in corresponding location in the GridComponent. (Changed value)
                 switch (model.getId(i, j) / 10) {
                     case 1 -> grids[i][j].setBoxInGrid(new Box(GRID_SIZE - 10, GRID_SIZE - 10, frame.getUser()));
                     case 2 -> {
@@ -141,6 +134,16 @@ public class GamePanel extends ListenerPanel {
         }
     }
 
+    @Override
+    public void doWin() {
+        controller.doWin(this.frame, true);
+    }
+
+    @Override
+    public void back() {
+        frame.getBackBtn().doClick();
+    }
+
     public JLabel getStepLabel() {
         return stepLabel;
     }
@@ -160,7 +163,7 @@ public class GamePanel extends ListenerPanel {
         if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
-        if (!file.exists()) {
+        if (!file.exists() && frame.getUser().id() != 0 && frame.getLv() != 6) {
             MapInfo mapInfo = new MapInfo();
             System.out.println(mapInfo.getId());
             mapInfo.setModel(model);
@@ -179,7 +182,7 @@ public class GamePanel extends ListenerPanel {
                 log.info(e.getMessage());
             }
         }
-        if (controller.doWin(this.frame)) {
+        if (controller.doWin(this.frame, false)) {
             return;
         }
         if (controller.doLose(this.frame)) {
@@ -263,37 +266,37 @@ public class GamePanel extends ListenerPanel {
             case 1 -> {//撤回箱子左移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow(), hero.getCol() - 2);
+                controller.doorCheck(hero.getRow(), hero.getCol() - 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
-                doorCheck(hero.getRow(), hero.getCol() - 1);
+                controller.doorCheck(hero.getRow(), hero.getCol() - 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 2 -> {//撤回箱子右移
                 ttGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow(), hero.getCol() + 2);
+                controller.doorCheck(hero.getRow(), hero.getCol() + 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
-                doorCheck(hero.getRow(), hero.getCol() + 1);
+                controller.doorCheck(hero.getRow(), hero.getCol() + 1);
                 currentGrid.setBoxInGrid(b);
             }
             case 3 -> {//撤回箱子上移
                 ttGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow() - 2, hero.getCol());
+                controller.doorCheck(hero.getRow() - 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
-                doorCheck(hero.getRow() - 1, hero.getCol());
+                controller.doorCheck(hero.getRow() - 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
             case 4 -> {//撤回箱子下移
                 ttGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
                 b = ttGrid.removeBoxFromGrid();
-                doorCheck(hero.getRow() + 2, hero.getCol());
+                controller.doorCheck(hero.getRow() + 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
-                doorCheck(hero.getRow() + 1, hero.getCol());
+                controller.doorCheck(hero.getRow() + 1, hero.getCol());
                 currentGrid.setBoxInGrid(b);
             }
         }
@@ -304,8 +307,11 @@ public class GamePanel extends ListenerPanel {
     }
 
     private void autoSave() {
+        if (frame.getUser().id() == 0) {
+            return;
+        }
         try {
-            if (FileMD5Util.compareMD5failed(FileMD5Util.loadMD5FromFile(new File(this.filepath + ".md5")), FileMD5Util.calculateMD5(new File(this.filepath)))) {
+            if (FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
@@ -316,7 +322,7 @@ public class GamePanel extends ListenerPanel {
             } else {
                 System.out.println("更新失败");
             }
-            FileMD5Util.saveMD5ToFile(FileMD5Util.calculateMD5(new File(this.filepath)), new File(filepath + ".md5"));
+            FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filepath)), new File(filepath + ".sha"));
         } catch (IOException e) {
             log.info(e.getMessage());
         } catch (Exception e) {
@@ -359,24 +365,4 @@ public class GamePanel extends ListenerPanel {
     public void setMoveFragile(int[] moveFragile) {
         this.moveFragile = moveFragile;
     }
-
-
-    private void doorCheck(int tRow, int tCol) {
-        if (controller.getModel().getMatrix()[tRow][tCol] / 10 == 11) {
-            for (int i = 0; i < controller.getModel().getMatrix().length; i++) {
-                for (int j = 0; j < controller.getModel().getMatrix()[0].length; j++) {
-                    if (controller.getModel().getMatrix()[i][j] % 10 == 3) {
-                        controller.getModel().getMatrix()[i][j]++;
-                        getGrids()[i][j].removeClosedDoorFromGrid();
-                        getGrids()[i][j].setOpenDoorInGrid(new OpenDoor(GRID_SIZE - 10, GRID_SIZE - 10));
-                    } else if (controller.getModel().getMatrix()[i][j] % 10 == 4) {
-                        controller.getModel().getMatrix()[i][j]--;
-                        getGrids()[i][j].removeOpenDoorFromGrid();
-                        getGrids()[i][j].setClosedDoorInGrid(new ClosedDoor(GRID_SIZE - 10, GRID_SIZE - 10));
-                    }
-                }
-            }
-        }
-    }
-
 }
