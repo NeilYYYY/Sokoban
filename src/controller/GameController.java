@@ -165,6 +165,7 @@ public class GameController {
             if (gameFrame.getLv() == 6) {//最后一关则退出
                 JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.view.getFrame().getSound().changeSource(this.view.getFrame().getMusicPath());
+                this.view.getFrame().getSound().setVolume(0.5);
                 this.view.getFrame().getSound().play();
                 this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), true);
                 this.levelFrame.setVisible(true);
