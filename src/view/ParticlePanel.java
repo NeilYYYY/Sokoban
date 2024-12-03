@@ -8,14 +8,14 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class ParticleEffectPanel extends JPanel {
+public class ParticlePanel extends JPanel {
     private final ArrayList<Particle> particles = new ArrayList<>();
     private final Random random = new Random();
     private final int particleCount; // 粒子数量
     private final boolean mode;
     private final boolean style;
 
-    public ParticleEffectPanel(int particleCount, boolean mode, boolean style) {
+    public ParticlePanel(int particleCount, boolean mode, boolean style) {
         this.particleCount = particleCount;
         this.mode = mode;
         this.style = style;

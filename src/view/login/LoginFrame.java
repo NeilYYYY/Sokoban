@@ -1,7 +1,7 @@
 package view.login;
 
 import org.jetbrains.annotations.NotNull;
-import view.ParticleEffectPanel;
+import view.ParticlePanel;
 import view.level.LevelFrame;
 import view.music.*;
 
@@ -46,7 +46,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        ParticleEffectPanel panel = new ParticleEffectPanel(75, false, false);
+        ParticlePanel panel = new ParticlePanel(75, false, false);
         panel.setBounds(0, 0, 800, 450);
         panel.setOpaque(false);
         this.getContentPane().add(panel, Integer.valueOf(0));
