@@ -398,7 +398,11 @@ public class LevelFrame extends JFrame {
         });
 
         logoutBtn.addActionListener(_ -> {
-            int option = JOptionPane.showOptionDialog(null, "Sure to Logout?", "CONFIRM", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Cancel", "Confirm"}, "Cancel");
+            ImageIcon originalIcon = new ImageIcon("src/images/Logout.png");
+            Image originalImage = originalIcon.getImage();
+            Image resizedImage = originalImage.getScaledInstance(450, 600, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(resizedImage);
+            int option = JOptionPane.showOptionDialog(this, null, "CONFIRM", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, resizedIcon, new Object[]{"Cancel", "Confirm"}, "Cancel");
             if (option == 1) {
                 this.setVisible(false);
                 LoginFrame loginFrame = new LoginFrame(this.sound);

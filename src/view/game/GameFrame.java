@@ -339,7 +339,7 @@ public class GameFrame extends JFrame {
 
         helpBtn.addActionListener(_ -> {
             ImageIcon originalIcon = new ImageIcon("src/images/Help.png");
-            Image originalImage = originalIcon.getImage();  // 获取 Image 对象
+            Image originalImage = originalIcon.getImage();
             Image resizedImage = originalImage.getScaledInstance(1200, 675, Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(resizedImage);
             JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
