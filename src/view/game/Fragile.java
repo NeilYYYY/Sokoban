@@ -14,6 +14,7 @@ public class Fragile extends JComponent {
         this.setLocation(5, 5);
     }
 
+    @Override
     public void paintComponent(@NotNull Graphics g) {
         g.drawImage(image, 0, 0, this);
     }

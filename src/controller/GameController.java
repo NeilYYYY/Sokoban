@@ -212,9 +212,9 @@ public class GameController {
         MapMatrix mapMatrix = new MapMatrix(Level.values()[gameFrame.getLv()].getMap());
         GameFrame newGameFrame;
         if (gameFrame.getLv() == 6) {
-            newGameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime(), this.levelFrame);
+            newGameFrame = new GameFrame(900, 600, this.levelFrame, mapMatrix, this.user, this.sound, this.lv + 1, 0, gameFrame.isMode(), view.getFrame().getTime());
         } else {
-            newGameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv + 1, 0, this.sound, gameFrame.isMode(), view.getFrame().getTime(), this.levelFrame);
+            newGameFrame = new GameFrame(800, 450, this.levelFrame, mapMatrix, this.user, this.sound, this.lv + 1, 0, gameFrame.isMode(), view.getFrame().getTime());
         }
         return newGameFrame;
     }

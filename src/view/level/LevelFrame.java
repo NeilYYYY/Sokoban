@@ -336,7 +336,7 @@ public class LevelFrame extends JFrame {
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_1.getMap());
-            GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+            GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });
@@ -345,7 +345,7 @@ public class LevelFrame extends JFrame {
             this.lv = 2;
             if (this.user.lv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
-                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+                GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
@@ -357,7 +357,7 @@ public class LevelFrame extends JFrame {
             this.lv = 3;
             if (this.user.lv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
-                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+                GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
@@ -369,7 +369,7 @@ public class LevelFrame extends JFrame {
             this.lv = 4;
             if (this.user.lv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
-                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+                GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
@@ -381,7 +381,7 @@ public class LevelFrame extends JFrame {
             this.lv = 5;
             if (this.user.lv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
-                GameFrame gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+                GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
@@ -392,7 +392,7 @@ public class LevelFrame extends JFrame {
         level6Btn.addActionListener(_ -> {
             this.lv = 6;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
-            GameFrame gameFrame = new GameFrame(900, 600, mapMatrix, this.user, this.lv, 0, this.sound, this.mode, this.time, this);
+            GameFrame gameFrame = new GameFrame(900, 600, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
             this.setVisible(false);
             gameFrame.setVisible(true);
         });

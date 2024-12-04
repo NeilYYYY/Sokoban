@@ -14,6 +14,7 @@ public class ClosedDoor extends JComponent {
         this.image = new ImageIcon("src/images/ClosedDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
     }
 
+    @Override
     public void paintComponent(@NotNull Graphics g) {
         g.drawImage(image, 0, 0, this);
     }

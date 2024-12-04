@@ -164,17 +164,14 @@ public class GamePanel extends ListenerPanel {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
         if (!file.exists() && frame.getUser().id() != 0 && frame.getLv() != 6) {
-            MapInfo mapInfo = new MapInfo();
-            System.out.println(mapInfo.getId());
-            mapInfo.setModel(model);
             try {
                 FileFrame.createFile(filepath);
                 for (int i = 0; i < 6; i++) {
-                    MapInfo mapInfo2 = new MapInfo();
-                    mapInfo2.setModel(null);
-                    mapInfo2.setId(i);
-                    mapInfo2.setStep(0);
-                    FileFrame.addNewMap(mapInfo2, filepath);
+                    MapInfo mapInfo = new MapInfo();
+                    mapInfo.setModel(null);
+                    mapInfo.setId(i);
+                    mapInfo.setStep(0);
+                    FileFrame.addNewMap(mapInfo, filepath);
                 }
                 System.out.println("创建新文件并保存");
             } catch (Exception e) {
@@ -316,7 +313,7 @@ public class GamePanel extends ListenerPanel {
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
-            boolean result = FileFrame.updateMapById(0, controller.getModel(), this.steps, moveHero, moveBox, this.time, this.filepath);
+            boolean result = FileFrame.updateMapById(this.filepath, 0, controller.getModel(), this.steps, this.time, moveHero, moveBox);
             if (result) {
                 System.out.println("更新成功");
             } else {

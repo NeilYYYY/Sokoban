@@ -191,15 +191,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         return maps;
     }
 
-    public static boolean updateMapById(int id, MapMatrix map, int step, int[] moveHero, int[] moveBox, int timeUsed, String filePath) throws IOException {
+    public static boolean updateMapById(String filePath, int id, MapMatrix map, int step, int timeUsed, int[] moveHero, int[] moveBox) throws IOException {
         Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
         MapInfo mapToUpdate = maps.get(id);
         if (mapToUpdate != null) {
             mapToUpdate.setModel(map);
             mapToUpdate.setStep(step);
+            mapToUpdate.setTimeUsed(timeUsed);
             mapToUpdate.setMoveHero(moveHero);
             mapToUpdate.setMoveBox(moveBox);
-            mapToUpdate.setTimeUsed(timeUsed);
             saveMapsToJson(maps, filePath);
             return true;
         }
@@ -332,7 +332,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private void reopenGameFrame() {
         gameFrame.dispose();
         MapMatrix mapMatrix = new MapMatrix(Level.values()[this.lv - 1].getMap());
-        gameFrame = new GameFrame(800, 450, mapMatrix, this.user, this.lv, 0, this.sound, false, 1, gameFrame.getLevelFrame());
+        gameFrame = new GameFrame(800, 450, gameFrame.getLevelFrame(), mapMatrix, this.user, this.sound, this.lv, 0, false, 1);
         this.dispose();
         gameFrame.setVisible(true);
     }
@@ -375,7 +375,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         try {
             this.step = this.gameFrame.getGamePanel().getSteps();
-            boolean result = updateMapById(id, copyModel, this.step, gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox(), gameFrame.getGamePanel().getTime(), this.filePath);
+            boolean result = updateMapById(this.filePath, id, copyModel, this.step, gameFrame.getGamePanel().getTime(), gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox());
             if (result) {
                 System.out.println("更新成功");
             } else {

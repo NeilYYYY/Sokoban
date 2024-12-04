@@ -23,6 +23,7 @@ public class Hero extends JComponent {
         }
     }
 
+    @Override
     public void paintComponent(@NotNull Graphics g) {
         g.drawImage(image, 0, 0, this);
     }
