@@ -14,13 +14,27 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public record User(int id, String username, String password, boolean[][] lv) {
+public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
+    private final int id;
+    private String username;
+    private String password;
+    private final boolean[][] lv;
+
+    public User(int id, String username, String password, boolean @NotNull [] @NotNull [] lv) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.lv = new boolean[lv.length][lv[0].length];
+        for (int i = 0; i < lv.length; i++) {
+            System.arraycopy(lv[i], 0, this.lv[i], 0, lv[i].length);
+        }
+    }
 
     //读取用户数据 检查是否出现用户名重复的情况
     public static boolean readUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
-            if (data.username().equals(username)) {
+            if (data.getUsername().equals(username)) {
                 return false;
             }
         }
@@ -39,7 +53,7 @@ public record User(int id, String username, String password, boolean[][] lv) {
             ArrayList<User> dataList = gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
             }.getType());
             for (User data : dataList) {
-                if (data.username().equals(username) && data.password().equals(password)) {
+                if (data.getUsername().equals(username) && data.getPassword().equals(password)) {
                     return true;
                 }
             }
@@ -52,7 +66,7 @@ public record User(int id, String username, String password, boolean[][] lv) {
     //读取用户数据 找到用户
     public static @Nullable User getUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
-            if (data.username().equals(username)) {
+            if (data.getUsername().equals(username)) {
                 return data;
             }
         }
@@ -110,6 +124,30 @@ public record User(int id, String username, String password, boolean[][] lv) {
         } catch (IOException e) {
             log.info(e.getMessage());
         }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public boolean[][] getLv() {
+        return lv;
     }
 
     @Contract(pure = true)

@@ -54,7 +54,7 @@ public class LevelFrame extends JFrame {
         int[] check = new int[5];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 3; j++) {
-                if (user.lv()[j][i]) {
+                if (user.getLv()[j][i]) {
                     check[i]++;
                 }
             }
@@ -121,7 +121,7 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(star2, Integer.valueOf(1));
         star2.setVisible(false);
 
-        if (user.lv()[0][0]) {
+        if (user.getLv()[0][0]) {
             level2Status.setVisible(true);
             star2.setVisible(true);
         }
@@ -155,7 +155,7 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(star3, Integer.valueOf(1));
         star3.setVisible(false);
 
-        if (user.lv()[0][1]) {
+        if (user.getLv()[0][1]) {
             level3Status.setVisible(true);
             star3.setVisible(true);
         }
@@ -189,7 +189,7 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(star4, Integer.valueOf(1));
         star4.setVisible(false);
 
-        if (user.lv()[0][2]) {
+        if (user.getLv()[0][2]) {
             level4Status.setVisible(true);
             star4.setVisible(true);
         }
@@ -223,7 +223,7 @@ public class LevelFrame extends JFrame {
         this.getContentPane().add(star5, Integer.valueOf(1));
         star5.setVisible(false);
 
-        if (user.lv()[0][3]) {
+        if (user.getLv()[0][3]) {
             level5Status.setVisible(true);
             star5.setVisible(true);
         }
@@ -266,7 +266,7 @@ public class LevelFrame extends JFrame {
         kingBtn.setContentAreaFilled(false);
         kingBtn.setVisible(false);
         getContentPane().add(kingBtn, Integer.valueOf(1));
-        if (!flag && this.user.lv()[0][4]) {
+        if (!flag && this.user.getLv()[0][4]) {
             kingBtn.setVisible(true);
         }
 
@@ -322,6 +322,21 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setFocusPainted(false);
         changeModeBtn.setContentAreaFilled(false);
 
+        JButton settingBtn = new JButton("Account Setting");
+        settingBtn.setLocation(new Point(600, 10));
+        settingBtn.setSize(140, 60);
+        getContentPane().add(settingBtn, Integer.valueOf(1));
+        settingBtn.setFont(f);
+        settingBtn.setForeground(Color.WHITE);
+        settingBtn.setMargin(new Insets(0, 0, 0, 0));
+        settingBtn.setBorderPainted(false);
+        settingBtn.setBorder(null);
+        settingBtn.setFocusPainted(false);
+        settingBtn.setContentAreaFilled(false);
+        if (this.user.getId() == 0) {
+            settingBtn.setVisible(false);
+        }
+
         ImageIcon backImg;// 背景图置于最底层
         if (this.mode) {
             backImg = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
@@ -343,7 +358,7 @@ public class LevelFrame extends JFrame {
 
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
-            if (this.user.lv()[0][this.lv - 2]) {
+            if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
@@ -355,7 +370,7 @@ public class LevelFrame extends JFrame {
 
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
-            if (this.user.lv()[0][this.lv - 2]) {
+            if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
@@ -367,7 +382,7 @@ public class LevelFrame extends JFrame {
 
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
-            if (this.user.lv()[0][this.lv - 2]) {
+            if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
@@ -379,7 +394,7 @@ public class LevelFrame extends JFrame {
 
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
-            if (this.user.lv()[0][this.lv - 2]) {
+            if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
                 this.setVisible(false);
@@ -437,6 +452,8 @@ public class LevelFrame extends JFrame {
                 this.getContentPane().repaint();
             }
         });
+
+        settingBtn.addActionListener(_ -> new SettingFrame(this, this.user));
 
         backBtn.addActionListener(_ -> {
             level6Btn.setVisible(false);

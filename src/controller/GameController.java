@@ -152,9 +152,9 @@ public class GameController {
     public boolean doWin(GameFrame gameFrame, boolean flag) {
         if (checkWin() || flag) {
             ArrayList<User> users = User.getUserList();
-            this.user.lv()[0][this.lv - 1] = true;
-            if (this.user.id() != 0) {
-                users.get(this.user.id()).lv()[0][this.lv - 1] = true;
+            this.user.getLv()[0][this.lv - 1] = true;
+            if (this.user.getId() != 0) {
+                users.get(this.user.getId()).getLv()[0][this.lv - 1] = true;
                 User.writeUser(users);
             }
             System.out.println("You win!");
@@ -173,16 +173,16 @@ public class GameController {
                 return true;
             } else {
                 if (gameFrame.getGamePanel().getSteps() == gameFrame.getLeastStep()[this.lv - 1]) {
-                    this.user.lv()[1][this.lv - 1] = true;
-                    if (this.user.id() != 0) {
-                        users.get(this.user.id()).lv()[1][this.lv - 1] = true;
+                    this.user.getLv()[1][this.lv - 1] = true;
+                    if (this.user.getId() != 0) {
+                        users.get(this.user.getId()).getLv()[1][this.lv - 1] = true;
                         User.writeUser(users);
                     }
                 }
                 if (gameFrame.isMode()) {
-                    this.user.lv()[2][this.lv - 1] = true;
-                    if (this.user.id() != 0) {
-                        users.get(this.user.id()).lv()[2][this.lv - 1] = true;
+                    this.user.getLv()[2][this.lv - 1] = true;
+                    if (this.user.getId() != 0) {
+                        users.get(this.user.getId()).getLv()[2][this.lv - 1] = true;
                         User.writeUser(users);
                     }
                 }
