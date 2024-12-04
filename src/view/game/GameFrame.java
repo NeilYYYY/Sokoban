@@ -116,13 +116,13 @@ public class GameFrame extends JFrame {
         JButton helpBtn = new JButton("Help");
         helpBtn.setLocation(new Point(this.gamePanel.getWidth() + 80, 300));
         helpBtn.setSize(80, 50);
-        helpBtn.setFont(f2);
+        helpBtn.setFont(new Font("Comic Sans MS", Font.BOLD, 20));
         helpBtn.setMargin(new Insets(0, 0, 0, 0));
         helpBtn.setBorderPainted(false);
         helpBtn.setBorder(null);
         helpBtn.setFocusPainted(false);
         helpBtn.setContentAreaFilled(false);
-        helpBtn.setForeground(Color.WHITE);
+        helpBtn.setForeground(Color.YELLOW);
         this.getContentPane().add(helpBtn);
 
         JButton musicBtn = new JButton("Music");
@@ -345,7 +345,7 @@ public class GameFrame extends JFrame {
         });
 
         helpBtn.addActionListener(_ -> {
-            JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(new ImageIcon("src/images/Help.png").getImage().getScaledInstance(1000, 675, Image.SCALE_SMOOTH)));
+            JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(new ImageIcon("src/images/Help.png").getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
             gamePanel.requestFocusInWindow();
         });
 
