@@ -39,7 +39,7 @@ public class GamePanel extends ListenerPanel {
         this.model.copyMatrix(model.getMatrix());
         this.frame = frame;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), user.id());
+        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), user.getId());
         this.file = new File(filepath);
         this.time = frame.getTime();
         initialGame(step);
@@ -163,7 +163,7 @@ public class GamePanel extends ListenerPanel {
         if (getFrame().getLv() != 6) {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
-        if (!file.exists() && frame.getUser().id() != 0 && frame.getLv() != 6) {
+        if (!file.exists() && frame.getUser().getId() != 0 && frame.getLv() != 6) {
             try {
                 FileFrame.createFile(filepath);
                 for (int i = 0; i < 6; i++) {
@@ -304,7 +304,7 @@ public class GamePanel extends ListenerPanel {
     }
 
     private void autoSave() {
-        if (frame.getUser().id() == 0) {
+        if (frame.getUser().getId() == 0) {
             return;
         }
         try {

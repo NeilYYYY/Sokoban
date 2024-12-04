@@ -43,7 +43,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
-        this.filePath = String.format("src/saves/%d-%d.json", lv, user.id());
+        this.filePath = String.format("src/saves/%d-%d.json", lv, user.getId());
         this.lv = lv;
         this.user = user;
         this.sound = sound;

@@ -64,7 +64,7 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        String filepath = String.format("src/saves/%d-%d.json", this.lv, user.id());
+        String filepath = String.format("src/saves/%d-%d.json", this.lv, user.getId());
         File file = new File(filepath);
 
         this.gamePanel = new GamePanel(mapMatrix, this, this.user, step);
@@ -294,7 +294,7 @@ public class GameFrame extends JFrame {
                 return;
             }
             this.controller.getTimer().stop();
-            if (this.user.id() == 0) {
+            if (this.user.getId() == 0) {
                 JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
                 this.controller.getTimer().start();
                 this.gamePanel.requestFocusInWindow();
@@ -375,7 +375,7 @@ public class GameFrame extends JFrame {
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
-        if (!file.exists() && user.id() != 0 && lv != 6) {
+        if (!file.exists() && user.getId() != 0 && lv != 6) {
             if (!file.getParentFile().mkdirs()) {
                 System.err.println("目录已存在喵: " + file.getParentFile().getAbsolutePath());
             }
@@ -408,7 +408,7 @@ public class GameFrame extends JFrame {
         }
 
         File shaFile = new File(filepath + ".sha");
-        if (!shaFile.exists() && user.id() != 0 && lv != 6) {
+        if (!shaFile.exists() && user.getId() != 0 && lv != 6) {
             System.err.println("存档文档损坏喵！");
             if (file.delete()) {
                 System.err.println("存档已清空！！！");

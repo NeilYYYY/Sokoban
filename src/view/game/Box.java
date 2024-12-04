@@ -12,7 +12,7 @@ public class Box extends JComponent {
     public Box(int width, int height, @NotNull User user) {
         this.setSize(width, height);
         this.setLocation(5, 5);
-        if (user.id() == 2) {
+        if (user.getId() == 2) {
             this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         } else {
             this.image = new ImageIcon("src/images/Grub.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);

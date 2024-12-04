@@ -141,6 +141,7 @@ public class Register extends JFrame implements ActionListener {
         this.getContentPane().add(passwordTrueJp, Integer.valueOf(1));
         this.getContentPane().add(backJp, Integer.valueOf(1));
         this.getContentPane().add(registerJp, Integer.valueOf(1));
+
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
@@ -157,7 +158,7 @@ public class Register extends JFrame implements ActionListener {
             String passwordTrue = new String(passwordTextTrue.getPassword());
             ArrayList<User> user = User.getUserList();
             for (User data : user) {
-                System.out.println(data.username());
+                System.out.println(data.getUsername());
             }
             boolean found;
             found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue));
