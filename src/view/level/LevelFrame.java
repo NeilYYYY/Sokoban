@@ -453,7 +453,7 @@ public class LevelFrame extends JFrame {
             }
         });
 
-        settingBtn.addActionListener(_ -> new SettingFrame(this, this.user));
+        settingBtn.addActionListener(_ -> new SettingFrame(this, this.user, this.sound));
 
         backBtn.addActionListener(_ -> {
             level6Btn.setVisible(false);
