@@ -53,18 +53,25 @@ public class LevelFrame extends JFrame {
         kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
         ImageIcon kingAltImg = new ImageIcon("src/images/king_alter.png");
         kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        ImageIcon lockImg = new ImageIcon("src/images/lock.png");
+        lockImg.setImage(lockImg.getImage().getScaledInstance(80, 45, Image.SCALE_DEFAULT));
 
         JLabel[][] stars = new JLabel[3][5];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 5; j++) {
-                stars[i][j] = new JLabel(starImg);
-                stars[i][j].setVisible(false);
-            }
-        }
         for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 3; j++) {
+                stars[j][i] = new JLabel(starImg);
+                stars[j][i].setVisible(false);
+            }
             stars[0][i].setBounds(170 + i * 90, 230, 40, 30);
             stars[1][i].setBounds(210 + i * 90, 230, 40, 30);
             stars[2][i].setBounds(190 + i * 90, 210, 40, 30);
+        }
+
+        JLabel[] locks = new JLabel[4];
+        for (int i = 0; i < 4; i++) {
+            locks[i] = new JLabel(lockImg);
+            locks[i].setVisible(true);
+            locks[i].setBounds(260 + i * 90, 180, 80, 45);
         }
 
         JButton level1Btn = new JButton("Level 1");
@@ -120,16 +127,19 @@ public class LevelFrame extends JFrame {
             }
         });
         getContentPane().add(level2Btn, Integer.valueOf(1));
+        getContentPane().add(locks[0], Integer.valueOf(2));
         for (int i = 0; i < 3; i++) {
             this.getContentPane().add(stars[i][1], Integer.valueOf(1));
         }
         if (user.getLv()[0][0]) {
             show(1, stars);
+            locks[0].setVisible(false);
         }
 
         if (flag) {
             level2Btn.setVisible(false);
             noShow(1, stars);
+            locks[0].setVisible(false);
         }
 
         JButton level3Btn = new JButton("Level 3");
@@ -143,6 +153,7 @@ public class LevelFrame extends JFrame {
         level3Btn.setFocusPainted(false);
         level3Btn.setContentAreaFilled(false);
         getContentPane().add(level3Btn, Integer.valueOf(1));
+        getContentPane().add(locks[1], Integer.valueOf(2));
         level3Btn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -159,10 +170,12 @@ public class LevelFrame extends JFrame {
         }
         if (user.getLv()[0][1]) {
             show (2, stars);
+            locks[1].setVisible(false);
         }
         if (flag) {
             level3Btn.setVisible(false);
             noShow(2, stars);
+            locks[1].setVisible(false);
         }
 
         JButton level4Btn = new JButton("Level 4");
@@ -187,15 +200,18 @@ public class LevelFrame extends JFrame {
             }
         });
         getContentPane().add(level4Btn, Integer.valueOf(1));
+        getContentPane().add(locks[2], Integer.valueOf(2));
         for (int i = 0; i < 3; i++) {
             this.getContentPane().add(stars[i][3], Integer.valueOf(1));
         }
         if (user.getLv()[0][2]) {
             show (3, stars);
+            locks[2].setVisible(false);
         }
         if (flag) {
             level4Btn.setVisible(false);
             noShow(3, stars);
+            locks[2].setVisible(false);
         }
 
         JButton level5Btn = new JButton("Level 5");
@@ -220,16 +236,19 @@ public class LevelFrame extends JFrame {
             }
         });
         getContentPane().add(level5Btn, Integer.valueOf(1));
+        getContentPane().add(locks[3], Integer.valueOf(2));
         for (int i = 0; i < 3; i++) {
            this.getContentPane().add(stars[i][4], Integer.valueOf(1));
         }
 
         if (user.getLv()[0][3]) {
             show(4, stars);
+            locks[3].setVisible(false);
         }
         if (flag) {
             level5Btn.setVisible(false);
             noShow(4, stars);
+            locks[3].setVisible(false);
         }
 
         JButton level6Btn = new JButton("Level 6");
