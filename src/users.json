@@ -91,36 +91,5 @@
                 false
             ]
         ]
-    },
-    {
-        "id": 3,
-        "username": "1",
-        "password": "ca2c70bc13298c5109ee0cb342d014906e6365249005fd4beee6f01aee44edb531231e98b50bf6810de6cf687882b09320fdd5f6375d1f2debd966fbf8d03efa",
-        "lv": [
-            [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                true,
-                true,
-                false,
-                false,
-                false,
-                false
-            ],
-            [
-                true,
-                false,
-                false,
-                false,
-                false,
-                false
-            ]
-        ]
     }
 ]
