@@ -155,12 +155,12 @@ public class GameFrame extends JFrame {
         helpBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                helpBtn.setForeground(Color.YELLOW);
+                helpBtn.setForeground(Color.RED);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                helpBtn.setForeground(Color.WHITE);
+                helpBtn.setForeground(Color.YELLOW);
             }
         });
         this.getContentPane().add(helpBtn);
