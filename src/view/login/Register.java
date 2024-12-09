@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class Register extends JFrame implements ActionListener {
     private final JTextField usernameText;
@@ -19,13 +18,6 @@ public class Register extends JFrame implements ActionListener {
     private final LoginFrame loginFrame;
 
     public Register(LoginFrame loginFrame) {
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            Logger log = Logger.getLogger(getClass().getName());
-            log.info(e.getMessage());
-        }
         this.loginFrame = loginFrame;
         this.loginFrame.setVisible(false);
         setLayout(null);

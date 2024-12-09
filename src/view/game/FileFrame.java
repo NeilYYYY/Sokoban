@@ -37,12 +37,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private int id = 0;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
         this.filePath = String.format("src/saves/%d-%d.json", lv, user.getId());

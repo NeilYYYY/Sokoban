@@ -7,7 +7,9 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
 public class Sound {
+    private static int index = 7;
     private final Logger log = Logger.getLogger(this.getClass().getName());
+    private final AtomicLong currentFrame = new AtomicLong();  // 当前帧位置
     private AudioFormat audioFormat;
     private String musicPath;  // 当前音频文件路径
     private volatile boolean isPlaying = false;  // 是否正在播放
@@ -17,11 +19,18 @@ public class Sound {
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
-    private final AtomicLong currentFrame = new AtomicLong();  // 当前帧位置
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
         prefetch();
+    }
+
+    public static int getIndex() {
+        return index;
+    }
+
+    public static void setIndex(int index) {
+        Sound.index = index;
     }
 
     private void prefetch() {

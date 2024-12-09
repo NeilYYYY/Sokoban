@@ -9,7 +9,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.security.NoSuchAlgorithmException;
-import java.util.logging.Logger;
 
 public class LoginFrame extends JFrame implements ActionListener {
 
@@ -23,13 +22,6 @@ public class LoginFrame extends JFrame implements ActionListener {
     private LevelFrame levelFrame;
 
     public LoginFrame(Sound sound) {
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            Logger log = Logger.getLogger("LoginFrame");
-            log.info(e.getMessage());
-        }
         this.setTitle("Sokoban Knight");
         this.setAlwaysOnTop(false);
         this.setLayout(null);//关闭默认布局类型 自己手动设置布局

@@ -36,12 +36,6 @@ public class GameFrame extends JFrame {
 
     public GameFrame(int width, int height, LevelFrame levelFrame, MapMatrix mapMatrix, User user, Sound sound, int lv, int step, boolean mode, int time) {
         Logger log = Logger.getLogger(GameFrame.class.getName());
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
 
         Font font = new Font("Arial", Font.BOLD, 25);
         Font f = new Font("Comic Sans MS", Font.PLAIN, 22);

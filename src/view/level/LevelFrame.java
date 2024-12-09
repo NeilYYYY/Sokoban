@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Random;
-import java.util.logging.Logger;
 import javax.swing.*;
 
 import model.Level;
@@ -26,13 +25,6 @@ public class LevelFrame extends JFrame {
     private ParticlePanel panel;
 
     public LevelFrame(User user, Sound sound, boolean mode, boolean flag) {
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            Logger log = Logger.getLogger(LevelFrame.class.getName());
-            log.info(e.getMessage());
-        }
         this.setTitle("Level");
         this.setLayout(null);
         this.setSize(800, 450);

@@ -1,3 +1,4 @@
+import com.formdev.flatlaf.FlatLightLaf;
 import view.login.LoginFrame;
 import view.music.Sound;
 
@@ -5,6 +6,7 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
+        FlatLightLaf.setup();
         Sound sound = new Sound("src/misc/EnterHallownest.wav");
         sound.setVolume(0.5);
         sound.setLooping(true);

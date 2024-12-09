@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.logging.Logger;
 
 public class MusicFrame extends JFrame implements ActionListener {
     private final JFrame jFrame;
@@ -20,13 +19,6 @@ public class MusicFrame extends JFrame implements ActionListener {
     private int choose;
 
     public MusicFrame(JFrame jFrame, Sound sound) {
-        try {
-            String lookAndFeel = UIManager.getCrossPlatformLookAndFeelClassName();
-            UIManager.setLookAndFeel(lookAndFeel);
-        } catch (Exception e) {
-            Logger log = Logger.getLogger(this.getClass().getName());
-            log.info(e.getMessage());
-        }
         this.jFrame = jFrame;
         this.jFrame.setVisible(false);
         this.sound = sound;
@@ -197,13 +189,16 @@ public class MusicFrame extends JFrame implements ActionListener {
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                this.getContentPane().remove(pauseBtn);
-                this.getContentPane().add(playBtn, Integer.valueOf(0));
+                if (this.sound.isPlaying()) {
+                    this.getContentPane().remove(pauseBtn);
+                    this.getContentPane().add(playBtn, Integer.valueOf(0));
+                }
                 sound.pause();
                 sound.displayStatus();
                 choose = songList.getSelectedIndex();
                 String selectedSong = SongName[choose];
                 sound.changeSource("src/misc/" + selectedSong);
+                Sound.setIndex(choose);
                 sound.setVolume(0.5);
                 statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                 revalidate();
@@ -242,10 +237,10 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });//增加双击功能
         // SongList 的鼠标进入/离开效果
-        songList.setCellRenderer((_, value, _, isSelected, cellHasFocus) -> {
+        songList.setCellRenderer((_, value, index, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
             label.setFont(new Font("Serif", Font.BOLD, 12));
-            if (isSelected || cellHasFocus) {
+            if (isSelected || cellHasFocus || index == Sound.getIndex()) {
                 label.setOpaque(false);
                 label.setForeground(Color.YELLOW);
             } else {
@@ -277,7 +272,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             this.repaint();    // 重绘界面
         } else if (e.getSource() == pauseBtn) {
             this.getContentPane().remove(pauseBtn);
-            this.getContentPane().add(playBtn);
+            this.getContentPane().add(playBtn, Integer.valueOf(0));
             this.sound.pause();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
             this.sound.displayStatus();
