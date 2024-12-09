@@ -7,11 +7,8 @@ import view.music.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.security.NoSuchAlgorithmException;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.logging.Logger;
 
 public class LoginFrame extends JFrame implements ActionListener {
@@ -71,6 +68,17 @@ public class LoginFrame extends JFrame implements ActionListener {
         guestBtn.setFocusPainted(false);
         guestBtn.setContentAreaFilled(false);
         guestBtn.addActionListener(this);
+        guestBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                guestBtn.setForeground(Color.DARK_GRAY);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                guestBtn.setForeground(Color.GRAY);
+            }
+        });
         loginBtn = new JButton("Login");
         loginBtn.setFont(f);
         loginBtn.setFont(f.deriveFont(16f));
@@ -81,6 +89,17 @@ public class LoginFrame extends JFrame implements ActionListener {
         loginBtn.setFocusPainted(false);
         loginBtn.setContentAreaFilled(false);
         loginBtn.addActionListener(this);//监听登录事件
+        loginBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                loginBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                loginBtn.setForeground(Color.WHITE);
+            }
+        });
         registerBtn = new JButton("Register");
         registerBtn.setFont(f);
         registerBtn.setFont(f.deriveFont(16f));
@@ -91,6 +110,17 @@ public class LoginFrame extends JFrame implements ActionListener {
         registerBtn.setFocusPainted(false);
         registerBtn.setContentAreaFilled(false);
         registerBtn.addActionListener(this);//监听注册事件
+        registerBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                registerBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                registerBtn.setForeground(Color.WHITE);
+            }
+        });
         musicBtn = new JButton("Music");
         musicBtn.setFont(f);
         musicBtn.setForeground(Color.WHITE);
@@ -100,6 +130,18 @@ public class LoginFrame extends JFrame implements ActionListener {
         musicBtn.setFocusPainted(false);
         musicBtn.setContentAreaFilled(false);
         musicBtn.addActionListener(this);
+        musicBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicBtn.setForeground(Color.WHITE);
+            }
+        });
+
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
 

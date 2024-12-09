@@ -78,6 +78,17 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.pauseBtn.setFocusPainted(false);
         this.pauseBtn.setContentAreaFilled(false);
         this.pauseBtn.addActionListener(this);
+        this.pauseBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                pauseBtn.setForeground(new Color(255, 255, 0)); // 鼠标进入时，变为红色
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                pauseBtn.setForeground(Color.WHITE); // 鼠标离开时，恢复为白色
+            }
+        });
         if (this.sound.isPlaying()) {
             this.getContentPane().add(pauseBtn, Integer.valueOf(0));
         }
@@ -95,6 +106,17 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.playBtn.setFocusPainted(false);
         this.playBtn.setContentAreaFilled(false);
         this.playBtn.addActionListener(this);
+        this.playBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                playBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                playBtn.setForeground(Color.WHITE);
+            }
+        });
         if (!this.sound.isPlaying()) {
             this.getContentPane().add(playBtn, Integer.valueOf(0));
         }
@@ -112,6 +134,17 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(backBtn, Integer.valueOf(0));
 
         statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
@@ -208,11 +241,17 @@ public class MusicFrame extends JFrame implements ActionListener {
             public void mouseExited(MouseEvent e) {
             }
         });//增加双击功能
-        songList.setCellRenderer((_, value, _, _, _) -> {
+        // SongList 的鼠标进入/离开效果
+        songList.setCellRenderer((_, value, _, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
-            label.setOpaque(false); // 让每个项的背景透明
             label.setFont(new Font("Serif", Font.BOLD, 12));
-            label.setForeground(Color.WHITE); // 设置文本颜色为白色
+            if (isSelected || cellHasFocus) {
+                label.setOpaque(false);
+                label.setForeground(Color.YELLOW);
+            } else {
+                label.setOpaque(false);
+                label.setForeground(Color.WHITE);
+            }
             return label;
         });
         songList.setOpaque(false);

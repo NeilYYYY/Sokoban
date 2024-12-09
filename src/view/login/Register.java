@@ -5,10 +5,7 @@ import view.ParticlePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -68,6 +65,17 @@ public class Register extends JFrame implements ActionListener {
         registerBtn.setFocusPainted(false);
         registerBtn.setContentAreaFilled(false);
         registerBtn.addActionListener(this);
+        registerBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                registerBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                registerBtn.setForeground(Color.WHITE);
+            }
+        });
         backBtn = new JButton("Back");
         backBtn.setFont(f);
         backBtn.setFont(f.deriveFont(16f));
@@ -78,6 +86,17 @@ public class Register extends JFrame implements ActionListener {
         backBtn.setFocusPainted(false);
         backBtn.setContentAreaFilled(false);
         backBtn.addActionListener(this);
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.WHITE);
+            }
+        });
         usernameText = new JTextField(15);
         passwordText = new JPasswordField(15);
         passwordTextTrue = new JPasswordField(15);

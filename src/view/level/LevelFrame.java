@@ -1,6 +1,8 @@
 package view.level;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 import java.util.logging.Logger;
 import javax.swing.*;
@@ -79,6 +81,17 @@ public class LevelFrame extends JFrame {
         level1Btn.setBorder(null);
         level1Btn.setFocusPainted(false);
         level1Btn.setContentAreaFilled(false);
+        level1Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level1Btn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level1Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level1Btn, Integer.valueOf(1));
         JLabel level1Status = new JLabel(String.format("%d ", check[0]));
         level1Status.setLocation(new Point(180, 215));
@@ -107,6 +120,17 @@ public class LevelFrame extends JFrame {
         level2Btn.setBorder(null);
         level2Btn.setFocusPainted(false);
         level2Btn.setContentAreaFilled(false);
+        level2Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level2Btn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level2Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level2Btn, Integer.valueOf(1));
         JLabel level2Status = new JLabel(String.format("%d ", check[1]));
         level2Status.setLocation(new Point(270, 215));
@@ -147,6 +171,17 @@ public class LevelFrame extends JFrame {
         level3Status.setSize(80, 60);
         level3Status.setFont(f);
         level3Status.setForeground(Color.WHITE);
+        level3Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level3Btn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level3Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level3Status, Integer.valueOf(1));
         level3Status.setVisible(false);
 
@@ -175,6 +210,17 @@ public class LevelFrame extends JFrame {
         level4Btn.setBorder(null);
         level4Btn.setFocusPainted(false);
         level4Btn.setContentAreaFilled(false);
+        level4Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level4Btn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level4Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level4Btn, Integer.valueOf(1));
         JLabel level4Status = new JLabel(String.format("%d ", check[3]));
         level4Status.setLocation(new Point(450, 215));
@@ -209,6 +255,17 @@ public class LevelFrame extends JFrame {
         level5Btn.setBorder(null);
         level5Btn.setFocusPainted(false);
         level5Btn.setContentAreaFilled(false);
+        level5Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level5Btn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level5Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level5Btn, Integer.valueOf(1));
         JLabel level5Status = new JLabel(String.format("%d ", check[4]));
         level5Status.setLocation(new Point(540, 215));
@@ -243,6 +300,17 @@ public class LevelFrame extends JFrame {
         level6Btn.setBorder(null);
         level6Btn.setFocusPainted(false);
         level6Btn.setContentAreaFilled(false);
+        level6Btn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                level6Btn.setForeground(Color.RED);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                level6Btn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(level6Btn, Integer.valueOf(1));
         level6Btn.setVisible(false);
 
@@ -280,6 +348,17 @@ public class LevelFrame extends JFrame {
         backBtn.setBorder(null);
         backBtn.setFocusPainted(false);
         backBtn.setContentAreaFilled(false);
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(backBtn, Integer.valueOf(1));
         backBtn.setVisible(false);
         if (flag) {
@@ -296,6 +375,17 @@ public class LevelFrame extends JFrame {
         logoutBtn.setBorder(null);
         logoutBtn.setFocusPainted(false);
         logoutBtn.setContentAreaFilled(false);
+        logoutBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                logoutBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                logoutBtn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(logoutBtn, Integer.valueOf(1));
 
         JButton musicBtn = new JButton("Music");
@@ -308,12 +398,22 @@ public class LevelFrame extends JFrame {
         musicBtn.setBorder(null);
         musicBtn.setFocusPainted(false);
         musicBtn.setContentAreaFilled(false);
+        musicBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicBtn.setForeground(Color.WHITE);
+            }
+        });
         getContentPane().add(musicBtn, Integer.valueOf(1));
 
         JButton changeModeBtn = new JButton("Change Mode");
         changeModeBtn.setLocation(new Point(10, 350));
         changeModeBtn.setSize(140, 60);
-        getContentPane().add(changeModeBtn, Integer.valueOf(1));
         changeModeBtn.setFont(f);
         changeModeBtn.setForeground(Color.WHITE);
         changeModeBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -321,11 +421,22 @@ public class LevelFrame extends JFrame {
         changeModeBtn.setBorder(null);
         changeModeBtn.setFocusPainted(false);
         changeModeBtn.setContentAreaFilled(false);
+        changeModeBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                changeModeBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                changeModeBtn.setForeground(Color.WHITE);
+            }
+        });
+        getContentPane().add(changeModeBtn, Integer.valueOf(1));
 
         JButton settingBtn = new JButton("Account Setting");
         settingBtn.setLocation(new Point(600, 10));
         settingBtn.setSize(140, 60);
-        getContentPane().add(settingBtn, Integer.valueOf(1));
         settingBtn.setFont(f);
         settingBtn.setForeground(Color.WHITE);
         settingBtn.setMargin(new Insets(0, 0, 0, 0));
@@ -333,6 +444,18 @@ public class LevelFrame extends JFrame {
         settingBtn.setBorder(null);
         settingBtn.setFocusPainted(false);
         settingBtn.setContentAreaFilled(false);
+        settingBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                settingBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                settingBtn.setForeground(Color.WHITE);
+            }
+        });
+        getContentPane().add(settingBtn, Integer.valueOf(1));
         if (this.user.getId() == 0) {
             settingBtn.setVisible(false);
         }

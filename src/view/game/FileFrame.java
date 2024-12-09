@@ -13,6 +13,8 @@ import view.music.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,6 +70,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         backBtn.setBorder(null);
         backBtn.setFocusPainted(false);
         backBtn.setContentAreaFilled(false);
+        backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.BLACK);
+            }
+        });
         this.getContentPane().add(backBtn);
 
         JButton loadBtn = new JButton("Load");
@@ -78,6 +91,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         loadBtn.setBorder(null);
         loadBtn.setFocusPainted(false);
         loadBtn.setContentAreaFilled(false);
+        loadBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                loadBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                loadBtn.setForeground(Color.BLACK);
+            }
+        });
 
         JButton saveBtn = new JButton("Save");
         saveBtn.setFont(f);
@@ -87,6 +111,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         saveBtn.setBorder(null);
         saveBtn.setFocusPainted(false);
         saveBtn.setContentAreaFilled(false);
+        saveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                saveBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                saveBtn.setForeground(Color.BLACK);
+            }
+        });
 
         loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
         saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
@@ -115,11 +150,16 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         });
 
         savingList = getSavingList();
-        savingList.setCellRenderer((_, value, _, _, _) -> {
+        savingList.setCellRenderer((_, value, _, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
-            label.setOpaque(false); // 让每个项的背景透明
             label.setFont(new Font("Serif", Font.BOLD, 12));
-            label.setForeground(Color.BLACK); // 设置文本颜色为黑色
+            if (isSelected || cellHasFocus) {
+                label.setOpaque(false);
+                label.setForeground(Color.YELLOW);
+            } else {
+                label.setOpaque(false);
+                label.setForeground(Color.BLACK);
+            }
             return label;
         });
         savingList.setOpaque(false);

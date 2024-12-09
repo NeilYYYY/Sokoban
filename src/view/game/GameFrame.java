@@ -2,6 +2,8 @@ package view.game;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -87,6 +89,17 @@ public class GameFrame extends JFrame {
         restartBtn.setFocusPainted(false);
         restartBtn.setContentAreaFilled(false);
         restartBtn.setForeground(Color.WHITE);
+        restartBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                restartBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                restartBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(restartBtn);
 
         JButton loadBtn = new JButton("Saving");
@@ -99,6 +112,17 @@ public class GameFrame extends JFrame {
         loadBtn.setFocusPainted(false);
         loadBtn.setContentAreaFilled(false);
         loadBtn.setForeground(Color.WHITE);
+        loadBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                loadBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                loadBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(loadBtn);
 
         this.backBtn = new JButton("Back");
@@ -111,6 +135,17 @@ public class GameFrame extends JFrame {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.setForeground(Color.WHITE);
+        this.backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(this.backBtn);
 
         JButton helpBtn = new JButton("Help");
@@ -123,6 +158,17 @@ public class GameFrame extends JFrame {
         helpBtn.setFocusPainted(false);
         helpBtn.setContentAreaFilled(false);
         helpBtn.setForeground(Color.YELLOW);
+        helpBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                helpBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                helpBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(helpBtn);
 
         JButton musicBtn = new JButton("Music");
@@ -135,6 +181,17 @@ public class GameFrame extends JFrame {
         musicBtn.setFocusPainted(false);
         musicBtn.setContentAreaFilled(false);
         musicBtn.setForeground(Color.WHITE);
+        musicBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                musicBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                musicBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(musicBtn);
 
         JButton undoBtn = new JButton("Undo");
@@ -147,6 +204,17 @@ public class GameFrame extends JFrame {
         undoBtn.setFocusPainted(false);
         undoBtn.setContentAreaFilled(false);
         undoBtn.setForeground(Color.WHITE);
+        undoBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                undoBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                undoBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(undoBtn);
 
         JButton upMoveBtn = new JButton("↑");
@@ -159,6 +227,17 @@ public class GameFrame extends JFrame {
         upMoveBtn.setContentAreaFilled(false);
         upMoveBtn.setFont(font);
         upMoveBtn.setForeground(Color.WHITE);
+        upMoveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                upMoveBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                upMoveBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(upMoveBtn);
 
         JButton downMoveBtn = new JButton("↓");
@@ -171,6 +250,17 @@ public class GameFrame extends JFrame {
         downMoveBtn.setContentAreaFilled(false);
         downMoveBtn.setFont(font);
         downMoveBtn.setForeground(Color.WHITE);
+        downMoveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                downMoveBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                downMoveBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(downMoveBtn);
 
         JButton leftMoveBtn = new JButton("←");
@@ -183,6 +273,17 @@ public class GameFrame extends JFrame {
         leftMoveBtn.setContentAreaFilled(false);
         leftMoveBtn.setFont(font);
         leftMoveBtn.setForeground(Color.WHITE);
+        leftMoveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                leftMoveBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                leftMoveBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(leftMoveBtn);
 
         JButton rightMoveBtn = new JButton("→");
@@ -195,6 +296,17 @@ public class GameFrame extends JFrame {
         rightMoveBtn.setContentAreaFilled(false);
         rightMoveBtn.setFont(font);
         rightMoveBtn.setForeground(Color.WHITE);
+        rightMoveBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                rightMoveBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                rightMoveBtn.setForeground(Color.WHITE);
+            }
+        });
         this.getContentPane().add(rightMoveBtn);
 
         if (lv != 6) {
@@ -203,8 +315,8 @@ public class GameFrame extends JFrame {
             leastStepLabel.setFont(f);
             leastStepLabel.setLocation(new Point(this.gamePanel.getWidth() + 200, 70));
             leastStepLabel.setSize(180, 50);
-            this.getContentPane().add(leastStepLabel, Integer.valueOf(1));
             leastStepLabel.setForeground(Color.WHITE);
+            this.getContentPane().add(leastStepLabel, Integer.valueOf(1));
 
             JLabel lvLabel = new JLabel(String.format("Level: %d", this.lv));
             lvLabel.setFont(f);

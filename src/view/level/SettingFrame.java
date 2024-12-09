@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
@@ -65,6 +67,17 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.changeUsernameBtn.setFocusPainted(false);
         this.changeUsernameBtn.setContentAreaFilled(false);
         this.changeUsernameBtn.addActionListener(this);
+        this.changeUsernameBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                changeUsernameBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                changeUsernameBtn.setForeground(Color.WHITE);
+            }
+        });
 
         this.changePasswordBtn = new JButton("Change");
         this.changePasswordBtn.setFont(f);
@@ -76,6 +89,17 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.changePasswordBtn.setFocusPainted(false);
         this.changePasswordBtn.setContentAreaFilled(false);
         this.changePasswordBtn.addActionListener(this);
+        this.changePasswordBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                changePasswordBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                changePasswordBtn.setForeground(Color.WHITE);
+            }
+        });
 
         this.backBtn = new JButton("Back");
         this.backBtn.setFont(f);
@@ -87,6 +111,17 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
+        this.backBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                backBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                backBtn.setForeground(Color.WHITE);
+            }
+        });
 
         this.deleteBtn = new JButton("Delete");
         this.deleteBtn.setFont(f);
@@ -98,6 +133,17 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.deleteBtn.setFocusPainted(false);
         this.deleteBtn.setContentAreaFilled(false);
         this.deleteBtn.addActionListener(this);
+        this.deleteBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                deleteBtn.setForeground(Color.RED);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                deleteBtn.setForeground(Color.WHITE);
+            }
+        });
 
         JPanel usernameJp = new JPanel();
         usernameJp.setBackground(null);
