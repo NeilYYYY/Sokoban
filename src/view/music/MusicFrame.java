@@ -18,6 +18,7 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final Sound sound;
     private int choose;
     private final JProgressBar progressBar;
+    private final JList<String> songList = getSongList();
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         this.jFrame = jFrame;
@@ -44,7 +45,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         scrollPane.setBorder(null);
         this.getContentPane().add(scrollPane, Integer.valueOf(0));
 
-        choose = 1;
+        choose = Sound.getIndex();
         SongName = new String[]{
                 "東方紅魔郷魔法少女達の百年祭.wav",
                 "東方紅魔郷亡き王女の为のセプテット.wav",
@@ -84,7 +85,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
         if (this.sound.isPlaying()) {
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
-            SwingUtilities.invokeLater(this.pauseBtn::requestFocusInWindow);
         }
 
         this.playBtn = new JButton("▶");
@@ -113,7 +113,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
         if (!this.sound.isPlaying()) {
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
-            SwingUtilities.invokeLater(this.playBtn::requestFocusInWindow);
         }
 
         this.backBtn = new JButton("⮐");
@@ -196,6 +195,49 @@ public class MusicFrame extends JFrame implements ActionListener {
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1));
 
+        // Add KeyListener to the frame for global keyboard control
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_SPACE -> {
+                        if (sound.isPlaying()) {
+                            MusicFrame.this.pauseBtn.doClick();
+                        } else {
+                            MusicFrame.this.playBtn.doClick();
+                        }
+                    }
+                    case KeyEvent.VK_UP -> {
+                        int previousIndex = choose - 1;
+                        if (previousIndex >= 0) {
+                            choose = previousIndex;
+                            songList.setSelectedIndex(choose);
+                        }
+                    }
+                    case KeyEvent.VK_DOWN -> {
+                        int nextIndex = choose + 1;
+                        if (nextIndex < SongName.length) {
+                            choose = nextIndex;
+                            songList.setSelectedIndex(choose);
+                        }
+                    }
+                    case KeyEvent.VK_LEFT -> {
+                        int newVolumeDown = volumeSlider.getValue() - 5;
+                        if (newVolumeDown >= 0) {
+                            volumeSlider.setValue(newVolumeDown);
+                        }
+                    }
+                    case KeyEvent.VK_RIGHT -> {
+                        int newVolumeUp = volumeSlider.getValue() + 5;
+                        if (newVolumeUp <= 100) {
+                            volumeSlider.setValue(newVolumeUp);
+                        }
+                    }
+                    case KeyEvent.VK_ESCAPE -> MusicFrame.this.backBtn.doClick();
+                }
+            }
+        });
+        SwingUtilities.invokeLater(this::requestFocusInWindow);
         this.setVisible(true);
     }
 
@@ -216,7 +258,6 @@ public class MusicFrame extends JFrame implements ActionListener {
     }
 
     private @NotNull JScrollPane getJScrollPane(Sound sound) {
-        JList<String> songList = getSongList();
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
@@ -241,7 +282,16 @@ public class MusicFrame extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    startSoundPlaying(sound);
+                    if (!sound.isPlaying()) {
+                        remove(playBtn);
+                        add(pauseBtn, Integer.valueOf(0));
+                        pauseBtn.requestFocusInWindow();
+                        sound.play();
+                    }
+                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                    volumeSlider.setValue(50);
+                    revalidate();
+                    repaint();
                 }
             }
 
@@ -259,17 +309,6 @@ public class MusicFrame extends JFrame implements ActionListener {
 
             @Override
             public void mouseExited(MouseEvent e) {
-            }
-        });
-
-        songList.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) {
-                // When Enter key is pressed, start playing the song
-                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
-                    // Ensure a song is selected
-                    startSoundPlaying(sound);
-                }
             }
         });
 
@@ -293,19 +332,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         return scrollPane;
     }
 
-    private void startSoundPlaying(Sound sound) {
-        if (!sound.isPlaying()) {
-            remove(playBtn);
-            add(pauseBtn, Integer.valueOf(0));
-            pauseBtn.requestFocusInWindow();
-            sound.play();
-        }
-        statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-        volumeSlider.setValue(50);
-        revalidate();
-        repaint();
-    }
-
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == this.backBtn) {
@@ -315,7 +341,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == this.playBtn) {
             this.getContentPane().remove(this.playBtn);
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
-            this.pauseBtn.requestFocusInWindow();
+            this.requestFocusInWindow();
             this.sound.play();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
             this.revalidate();
@@ -323,7 +349,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == this.pauseBtn) {
             this.getContentPane().remove(this.pauseBtn);
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
-            this.playBtn.requestFocusInWindow();
+            this.requestFocusInWindow();
             this.sound.pause();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
             this.revalidate();
