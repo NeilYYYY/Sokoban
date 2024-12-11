@@ -17,7 +17,6 @@ import view.music.MusicFrame;
 import view.music.Sound;
 
 public class GameFrame extends JFrame {
-
     private final GameController controller;
     private final GamePanel gamePanel;
     private final int lv;
@@ -27,10 +26,10 @@ public class GameFrame extends JFrame {
     private final boolean mode;
     private final int time;
     private final int[] leastStep = {13, 23, 31, 27, 37};
-    JLabel leftTimeLabel;
-    JLabel timeLabel;
-    String musicPath;
-    JButton backBtn;
+    private JLabel leftTimeLabel;
+    private JLabel timeLabel;
+    private final String musicPath;
+    private final JButton backBtn;
     private LevelFrame levelFrame;
     private boolean check = true;
 
@@ -412,10 +411,10 @@ public class GameFrame extends JFrame {
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                     this.check = false;
                 }
-                this.fileFrame.Show(0);
+                this.fileFrame.Show(this.fileFrame.getId());
                 this.setVisible(false);
                 this.fileFrame.setVisible(true);
-                this.gamePanel.requestFocusInWindow();
+                this.fileFrame.requestFocusInWindow();
             }
         });
 

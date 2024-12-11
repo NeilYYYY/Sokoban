@@ -272,6 +272,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     this.sound.setVolume(0.5);
                     this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
                 }
+                this.requestFocusInWindow();
                 revalidate();
                 repaint();
             }
@@ -300,7 +301,6 @@ public class MusicFrame extends JFrame implements ActionListener {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-                MusicFrame.this.requestFocusInWindow();
             }
 
             @Override

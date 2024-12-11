@@ -236,7 +236,6 @@ public class LoginFrame extends JFrame implements ActionListener {
             } catch (NoSuchAlgorithmException ex) {
                 throw new RuntimeException(ex);
             }
-            System.out.println(temp);
             User user;
             if (temp && !username.isEmpty()) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
@@ -262,7 +261,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     private void showLevelFrame() {
         this.dispose();
-        System.out.println("用户名 = " + usernameText.getText() + "喵");
+        System.out.println("\n用户名 = " + usernameText.getText() + "喵");
         System.out.println("密码 = " + String.valueOf(passwordText.getPassword()) + "喵");
         try {
             System.out.println("密码SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())) + "喵");

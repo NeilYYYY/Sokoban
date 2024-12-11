@@ -38,7 +38,6 @@ public class GameController {
         this.sound = sound;
         this.levelFrame = levelFrame;
         view.setController(this);
-        System.out.println(user);
         if (view.getFrame().isMode()) {
             timer = new Timer(1000, e -> {
                 view.setTime(view.getTime() - 1);

@@ -13,6 +13,8 @@ import view.music.Sound;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
@@ -35,6 +37,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private int step;
     private GameFrame gameFrame;
     private int id = 0;
+    private final JButton backBtn;
+    private final JButton loadBtn;
+    private final JButton saveBtn;
+    private final JLabel statusLabel;
+
+    public int getId() {
+        return id;
+    }
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
@@ -54,17 +64,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.gamePanel.setLocation(130, height / 2 - this.gamePanel.getHeight() / 2);
         this.getContentPane().add(this.gamePanel);
 
-        JButton backBtn = new JButton("Back");
-        backBtn.setLocation(new Point(125 + this.gamePanel.getWidth() + 30, 300));
-        backBtn.setSize(100, 50);
-        backBtn.setFont(f);
-        backBtn.setForeground(Color.BLACK);
-        backBtn.setMargin(new Insets(0, 0, 0, 0));
-        backBtn.setBorderPainted(false);
-        backBtn.setBorder(null);
-        backBtn.setFocusPainted(false);
-        backBtn.setContentAreaFilled(false);
-        backBtn.addMouseListener(new MouseAdapter() {
+        this.backBtn = new JButton("Back");
+        this.backBtn.setLocation(new Point(125 + this.gamePanel.getWidth() + 30, 300));
+        this.backBtn.setSize(100, 50);
+        this.backBtn.setFont(f);
+        this.backBtn.setForeground(Color.BLACK);
+        this.backBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.backBtn.setBorderPainted(false);
+        this.backBtn.setBorder(null);
+        this.backBtn.setFocusPainted(false);
+        this.backBtn.setContentAreaFilled(false);
+        this.backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backBtn.setForeground(Color.YELLOW);
@@ -75,17 +85,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 backBtn.setForeground(Color.BLACK);
             }
         });
-        this.getContentPane().add(backBtn);
+        this.getContentPane().add(this.backBtn);
 
-        JButton loadBtn = new JButton("Load");
-        loadBtn.setFont(f);
-        loadBtn.setForeground(Color.BLACK);
-        loadBtn.setMargin(new Insets(0, 0, 0, 0));
-        loadBtn.setBorderPainted(false);
-        loadBtn.setBorder(null);
-        loadBtn.setFocusPainted(false);
-        loadBtn.setContentAreaFilled(false);
-        loadBtn.addMouseListener(new MouseAdapter() {
+        this.loadBtn = new JButton("Load");
+        this.loadBtn.setFont(f);
+        this.loadBtn.setForeground(Color.BLACK);
+        this.loadBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.loadBtn.setBorderPainted(false);
+        this.loadBtn.setBorder(null);
+        this.loadBtn.setFocusPainted(false);
+        this.loadBtn.setContentAreaFilled(false);
+        this.loadBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 loadBtn.setForeground(Color.YELLOW);
@@ -97,15 +107,15 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
 
-        JButton saveBtn = new JButton("Save");
-        saveBtn.setFont(f);
-        saveBtn.setForeground(Color.BLACK);
-        saveBtn.setMargin(new Insets(0, 0, 0, 0));
-        saveBtn.setBorderPainted(false);
-        saveBtn.setBorder(null);
-        saveBtn.setFocusPainted(false);
-        saveBtn.setContentAreaFilled(false);
-        saveBtn.addMouseListener(new MouseAdapter() {
+        this.saveBtn = new JButton("Save");
+        this.saveBtn.setFont(f);
+        this.saveBtn.setForeground(Color.BLACK);
+        this.saveBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.saveBtn.setBorderPainted(false);
+        this.saveBtn.setBorder(null);
+        this.saveBtn.setFocusPainted(false);
+        this.saveBtn.setContentAreaFilled(false);
+        this.saveBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 saveBtn.setForeground(Color.YELLOW);
@@ -117,37 +127,43 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
 
-        loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
-        saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
+        this.loadBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 200, 100, 50);
+        this.saveBtn.setBounds(125 + this.gamePanel.getWidth() + 30, 100, 100, 50);
 
         this.getContentPane().add(loadBtn);
         this.getContentPane().add(saveBtn);
 
-        loadBtn.addActionListener(_ -> {
+        this.loadBtn.addActionListener(_ -> {
             try {
-                Load(id);
+                Load(this.id);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
-        saveBtn.addActionListener(_ -> {
+        this.saveBtn.addActionListener(_ -> {
             try {
-                Save(id);
+                Save(this.id);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             try {
-                Show(id);
+                Show(this.id);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });
 
-        savingList = getSavingList();
-        savingList.setCellRenderer((_, value, _, isSelected, cellHasFocus) -> {
+        this.statusLabel = new JLabel();
+        this.statusLabel.setFont(f);
+        this.statusLabel.setForeground(Color.BLACK);
+        this.statusLabel.setBounds(200, 50, 100, 60);
+        this.getContentPane().add(this.statusLabel);
+
+        this.savingList = getSavingList();
+        this.savingList.setCellRenderer((_, value, index, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
             label.setFont(new Font("Serif", Font.BOLD, 12));
-            if (isSelected || cellHasFocus) {
+            if (isSelected || cellHasFocus || index == this.id) {
                 label.setOpaque(false);
                 label.setForeground(Color.YELLOW);
             } else {
@@ -156,21 +172,20 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
             return label;
         });
-        savingList.setOpaque(false);
-        savingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        savingList.addListSelectionListener(e -> {
+        this.savingList.setOpaque(false);
+        this.savingList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.savingList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                id = savingList.getSelectedIndex();
-                System.out.println(id);
+                this.id = savingList.getSelectedIndex();
                 try {
-                    Show(id);
+                    Show(this.id);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }
         });
-        savingList.setOpaque(false);
-        JScrollPane scrollPane = new JScrollPane(savingList);
+        this.savingList.setOpaque(false);
+        JScrollPane scrollPane = new JScrollPane(this.savingList);
         scrollPane.setBounds(30, 125, 75, 115);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -186,14 +201,43 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
         this.getContentPane().setLayout(null);
-        copyModel = this.gameFrame.getGameController().getModel();
+        this.copyModel = this.gameFrame.getGameController().getModel();
         this.step = this.gameFrame.getGamePanel().getSteps();
 
         backBtn.addActionListener(_ -> {
             this.gameFrame.getController().getTimer().start();
             this.dispose();
             this.gameFrame.setVisible(true);
+            this.gameFrame.getGamePanel().requestFocusInWindow();
         });
+
+        this.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP -> {
+                        int previousIndex = id - 1;
+                        if (previousIndex >= 0) {
+                            id = previousIndex;
+                            savingList.setSelectedIndex(id);
+                        }
+                        FileFrame.this.repaint();
+                    }
+                    case KeyEvent.VK_DOWN -> {
+                        int nextIndex = id + 1;
+                        if (nextIndex < 6) {
+                            id = nextIndex;
+                            savingList.setSelectedIndex(id);
+                        }
+                        FileFrame.this.repaint();
+                    }
+                    case KeyEvent.VK_S -> FileFrame.this.saveBtn.doClick();
+                    case KeyEvent.VK_L -> FileFrame.this.loadBtn.doClick();
+                    case KeyEvent.VK_ESCAPE -> FileFrame.this.backBtn.doClick();
+                }
+            }
+        });
+        SwingUtilities.invokeLater(this::requestFocusInWindow);
     }
 
     @Contract(" -> new")
@@ -372,6 +416,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     }
 
     public void Show(int id) {
+        this.requestFocusInWindow();
         //读取地图
         if (checkFile()) {
             System.err.println("存档文件损坏喵！");
@@ -384,10 +429,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
                 System.out.printf("读入存档%d喵\n", id);
+                this.statusLabel.setText("");
                 reloadPanel(map, gamePanel);
             } else {
                 map = new MapInfo(Level.values()[this.lv - 1].getMap());
                 System.err.println("地图不存在喵");
+                this.statusLabel.setText("空存档喵");
                 reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
@@ -397,6 +444,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Save(int id) {
         //读取文件
+        this.requestFocusInWindow();
         if (checkFile()) {
             System.err.println("存档文件损坏喵！");
             fixFile();
@@ -461,5 +509,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        this.requestFocusInWindow();
     }
 }

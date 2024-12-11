@@ -512,7 +512,7 @@ public class LevelFrame extends JFrame {
         changeModeBtn.addActionListener(_ -> {
             //change bg
             this.mode = !this.mode;
-            System.out.println("change to mode " + this.mode);
+            System.out.println("限时模式: " + this.mode);
             this.getContentPane().remove(this.panel);
             this.panel = new ParticlePanel(50, this.mode, true);
             this.panel.setBounds(0, 0, 800, 450);
