@@ -27,7 +27,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Music Player");
         setSize(300, 450);
-//        setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
@@ -148,11 +147,10 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.getContentPane().add(this.statusLabel, Integer.valueOf(0));
 
         this.progressBar = new JProgressBar();
-        this.progressBar.setBounds(10, 340, 280, 15); // 设置进度条位置和大小
+        this.progressBar.setBounds(10, 340, 280, 15);
         progressBar.setStringPainted(true); // 显示文本
         this.getContentPane().add(progressBar, Integer.valueOf(0));
 
-        // 定时更新进度条
         Timer progressTimer = new Timer(500, _ -> {
             long currentFrame = sound.getCurrentFrame();
             long totalFrames = sound.getClipLength();
@@ -187,6 +185,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             double volume = this.volumeSlider.getValue() / 100.0;
             this.sound.setVolume(volume);
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", volume * 100));
+            this.requestFocusInWindow();
         });
 
         ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
@@ -195,7 +194,6 @@ public class MusicFrame extends JFrame implements ActionListener {
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1));
 
-        // Add KeyListener to the frame for global keyboard control
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -290,6 +288,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     }
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                     volumeSlider.setValue(50);
+                    MusicFrame.this.requestFocusInWindow();
                     revalidate();
                     repaint();
                 }
@@ -301,6 +300,7 @@ public class MusicFrame extends JFrame implements ActionListener {
 
             @Override
             public void mouseReleased(MouseEvent e) {
+                MusicFrame.this.requestFocusInWindow();
             }
 
             @Override
