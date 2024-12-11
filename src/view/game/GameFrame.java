@@ -436,43 +436,43 @@ public class GameFrame extends JFrame {
         });
 
         undoBtn.addActionListener(_ -> {
-            if (gamePanel.getSteps() == 0) {
+            if (this.gamePanel.getSteps() == 0) {
                 JOptionPane.showMessageDialog(this, "步数为0，无法撤回喵", "Error", JOptionPane.INFORMATION_MESSAGE);
-                gamePanel.requestFocusInWindow();
+                this.gamePanel.requestFocusInWindow();
             } else {
-                gamePanel.undoMove();
-                gamePanel.requestFocusInWindow();
+                this.gamePanel.undoMove();
+                this.gamePanel.requestFocusInWindow();
             }
         });
 
         musicBtn.addActionListener(_ -> {
             new MusicFrame(this, this.sound);
-            gamePanel.requestFocusInWindow();
+            this.gamePanel.requestFocusInWindow();
         });
 
         helpBtn.addActionListener(_ -> {
             JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(new ImageIcon("src/images/Help.png").getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
-            gamePanel.requestFocusInWindow();
+            this.gamePanel.requestFocusInWindow();
         });
 
         upMoveBtn.addActionListener(_ -> {
-            gamePanel.doMoveUp();
-            gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.doMoveUp();
+            this.gamePanel.requestFocusInWindow();//enable key listener
         });
 
         downMoveBtn.addActionListener(_ -> {
-            gamePanel.doMoveDown();
-            gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.doMoveDown();
+            this.gamePanel.requestFocusInWindow();//enable key listener
         });
 
         leftMoveBtn.addActionListener(_ -> {
-            gamePanel.doMoveLeft();
-            gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.doMoveLeft();
+            this.gamePanel.requestFocusInWindow();//enable key listener
         });
 
         rightMoveBtn.addActionListener(_ -> {
-            gamePanel.doMoveRight();
-            gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.doMoveRight();
+            this.gamePanel.requestFocusInWindow();//enable key listener
         });
 
         ImageIcon back = new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png");
@@ -500,7 +500,7 @@ public class GameFrame extends JFrame {
                 log.info(e.getMessage());
             }
             try {
-                if (FileFrame.updateMapById(filepath, 0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
+                if (FileFrame.updateMapById(filepath, 0, this.controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
                     System.out.println("更新成功喵");
                 } else {
                     System.err.println("更新失败喵");
@@ -549,62 +549,62 @@ public class GameFrame extends JFrame {
     }
 
     public JButton getBackBtn() {
-        return backBtn;
+        return this.backBtn;
     }
 
     public Sound getSound() {
-        return sound;
+        return this.sound;
     }
 
     public String getMusicPath() {
-        return musicPath;
+        return this.musicPath;
     }
 
     public JLabel getTimeLabel() {
-        return timeLabel;
+        return this.timeLabel;
     }
 
     public LevelFrame getLevelFrame() {
-        return levelFrame;
+        return this.levelFrame;
     }
 
     public User getUser() {
-        return user;
+        return this.user;
     }
 
     public JLabel getLeftTimeLabel() {
-        return leftTimeLabel;
+        return this.leftTimeLabel;
     }
 
     public FileFrame getFileFrame() {
-        return fileFrame;
+        return this.fileFrame;
     }
 
     public int getLv() {
-        return lv;
+        return this.lv;
     }
 
     public GameController getGameController() {
-        return controller;
+        return this.controller;
     }
 
     public GamePanel getGamePanel() {
-        return gamePanel;
+        return this.gamePanel;
     }
 
     public GameController getController() {
-        return controller;
+        return this.controller;
     }
 
     public boolean isMode() {
-        return mode;
+        return this.mode;
     }
 
     public int getTime() {
-        return time;
+        return this.time;
     }
 
     public int[] getLeastStep() {
-        return leastStep;
+        return this.leastStep;
     }
 }

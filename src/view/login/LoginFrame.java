@@ -150,7 +150,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    loginBtn.doClick(); // 模拟按下登录按钮
+                    loginBtn.doClick();
                 }
             }
 
@@ -167,7 +167,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    loginBtn.doClick(); // 模拟按下登录按钮
+                    loginBtn.doClick();
                 }
             }
 

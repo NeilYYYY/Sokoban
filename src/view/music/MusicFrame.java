@@ -44,8 +44,8 @@ public class MusicFrame extends JFrame implements ActionListener {
         scrollPane.setBorder(null);
         this.getContentPane().add(scrollPane, Integer.valueOf(0));
 
-        choose = Sound.getIndex();
-        SongName = new String[]{
+        this.choose = Sound.getIndex();
+        this.SongName = new String[]{
                 "東方紅魔郷魔法少女達の百年祭.wav",
                 "東方紅魔郷亡き王女の为のセプテット.wav",
                 "東方紅魔郷U.N.オーエンは彼女なのか？.wav",
@@ -256,27 +256,27 @@ public class MusicFrame extends JFrame implements ActionListener {
     }
 
     private @NotNull JScrollPane getJScrollPane(Sound sound) {
-        songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        songList.addListSelectionListener(e -> {
+        this.songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        this.songList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                choose = songList.getSelectedIndex();
-                String selectedSong = SongName[choose];
-                if (choose != Sound.getIndex()) {
+                this.choose = this.songList.getSelectedIndex();
+                String selectedSong = this.SongName[this.choose];
+                if (this.choose != Sound.getIndex()) {
                     if (this.sound.isPlaying()) {
-                        this.getContentPane().remove(pauseBtn);
-                        this.getContentPane().add(playBtn, Integer.valueOf(0));
-                        sound.pause();
+                        this.getContentPane().remove(this.pauseBtn);
+                        this.getContentPane().add(this.playBtn, Integer.valueOf(0));
+                        this.sound.pause();
                     }
-                    sound.changeSource("src/misc/" + selectedSong);
+                    this.sound.changeSource("src/misc/" + selectedSong);
                     Sound.setIndex(choose);
-                    sound.setVolume(0.5);
-                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                    this.sound.setVolume(0.5);
+                    this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
                 }
                 revalidate();
                 repaint();
             }
         });
-        songList.addMouseListener(new MouseListener() {
+        this.songList.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
@@ -312,7 +312,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });
 
-        songList.setCellRenderer((_, value, index, isSelected, cellHasFocus) -> {
+        this.songList.setCellRenderer((_, value, index, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
             label.setFont(new Font("Serif", Font.BOLD, 12));
             if (isSelected || cellHasFocus || index == Sound.getIndex()) {
@@ -324,10 +324,10 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
             return label;
         });
-        songList.setOpaque(false);
+        this.songList.setOpaque(false);
 
         // 将列表放置在滚动面板中，并将滚动面板添加到悬浮窗口中
-        JScrollPane scrollPane = new JScrollPane(songList);
+        JScrollPane scrollPane = new JScrollPane(this.songList);
         scrollPane.setBounds(35, 35, 220, 260);
         return scrollPane;
     }

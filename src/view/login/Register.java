@@ -23,7 +23,6 @@ public class Register extends JFrame implements ActionListener {
         setLayout(null);
         setTitle("Register");
         setSize(800, 450);
-//        setAlwaysOnTop(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         this.getContentPane().setLayout(null);
@@ -47,17 +46,17 @@ public class Register extends JFrame implements ActionListener {
         JLabel passwordTrue = new JLabel("Confirm Password:");
         passwordTrue.setFont(f);
         passwordTrue.setForeground(Color.WHITE);
-        registerBtn = new JButton("Register");
-        registerBtn.setFont(f);
-        registerBtn.setFont(f.deriveFont(16f));
-        registerBtn.setForeground(Color.WHITE);
-        registerBtn.setMargin(new Insets(0, 0, 0, 0));
-        registerBtn.setBorderPainted(false);
-        registerBtn.setBorder(null);
-        registerBtn.setFocusPainted(false);
-        registerBtn.setContentAreaFilled(false);
-        registerBtn.addActionListener(this);
-        registerBtn.addMouseListener(new MouseAdapter() {
+        this.registerBtn = new JButton("Register");
+        this.registerBtn.setFont(f);
+        this.registerBtn.setFont(f.deriveFont(16f));
+        this.registerBtn.setForeground(Color.WHITE);
+        this.registerBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.registerBtn.setBorderPainted(false);
+        this.registerBtn.setBorder(null);
+        this.registerBtn.setFocusPainted(false);
+        this.registerBtn.setContentAreaFilled(false);
+        this.registerBtn.addActionListener(this);
+        this.registerBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 registerBtn.setForeground(Color.YELLOW);
@@ -68,17 +67,17 @@ public class Register extends JFrame implements ActionListener {
                 registerBtn.setForeground(Color.WHITE);
             }
         });
-        backBtn = new JButton("Back");
-        backBtn.setFont(f);
-        backBtn.setFont(f.deriveFont(16f));
-        backBtn.setForeground(Color.WHITE);
-        backBtn.setMargin(new Insets(0, 0, 0, 0));
-        backBtn.setBorderPainted(false);
-        backBtn.setBorder(null);
-        backBtn.setFocusPainted(false);
-        backBtn.setContentAreaFilled(false);
-        backBtn.addActionListener(this);
-        backBtn.addMouseListener(new MouseAdapter() {
+        this.backBtn = new JButton("Back");
+        this.backBtn.setFont(f);
+        this.backBtn.setFont(f.deriveFont(16f));
+        this.backBtn.setForeground(Color.WHITE);
+        this.backBtn.setMargin(new Insets(0, 0, 0, 0));
+        this.backBtn.setBorderPainted(false);
+        this.backBtn.setBorder(null);
+        this.backBtn.setFocusPainted(false);
+        this.backBtn.setContentAreaFilled(false);
+        this.backBtn.addActionListener(this);
+        this.backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backBtn.setForeground(Color.YELLOW);
@@ -89,17 +88,19 @@ public class Register extends JFrame implements ActionListener {
                 backBtn.setForeground(Color.WHITE);
             }
         });
-        usernameText = new JTextField(15);
-        passwordText = new JPasswordField(15);
-        passwordTextTrue = new JPasswordField(15);
+        this.usernameText = new JTextField(15);
+        this.passwordText = new JPasswordField(15);
+        this.passwordTextTrue = new JPasswordField(15);
 
-        usernameText.setForeground(Color.BLACK);
-        passwordText.setForeground(Color.BLACK);
-        passwordTextTrue.setForeground(Color.BLACK);
-        usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        passwordTextTrue.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        passwordTextTrue.addKeyListener(new KeyListener() {
+        this.usernameText.setForeground(Color.BLACK);
+        this.passwordText.setForeground(Color.BLACK);
+        this.passwordTextTrue.setForeground(Color.BLACK);
+
+        this.usernameText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        this.passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        this.passwordTextTrue.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+
+        this.passwordTextTrue.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
             }
@@ -107,7 +108,7 @@ public class Register extends JFrame implements ActionListener {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    registerBtn.doClick(); // 模拟按下注册按钮
+                    registerBtn.doClick();
                 }
             }
 
@@ -139,13 +140,13 @@ public class Register extends JFrame implements ActionListener {
         registerJp.setBounds(350, 280, 200, 50);
 
         usernameJp.add(username);
-        usernameJp.add(usernameText);
+        usernameJp.add(this.usernameText);
         passwordJp.add(password);
-        passwordJp.add(passwordText);
+        passwordJp.add(this.passwordText);
         passwordTrueJp.add(passwordTrue);
-        passwordTrueJp.add(passwordTextTrue);
-        backJp.add(backBtn);
-        registerJp.add(registerBtn);
+        passwordTrueJp.add(this.passwordTextTrue);
+        backJp.add(this.backBtn);
+        registerJp.add(this.registerBtn);
 
         this.getContentPane().add(usernameJp, Integer.valueOf(1));
         this.getContentPane().add(passwordJp, Integer.valueOf(1));
@@ -163,10 +164,10 @@ public class Register extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
-        if (e.getSource() == registerBtn) {
-            String username = usernameText.getText();
-            String password = new String(passwordText.getPassword());
-            String passwordTrue = new String(passwordTextTrue.getPassword());
+        if (e.getSource() == this.registerBtn) {
+            String username = this.usernameText.getText();
+            String password = new String(this.passwordText.getPassword());
+            String passwordTrue = new String(this.passwordTextTrue.getPassword());
             ArrayList<User> user = User.getUserList();
             for (User data : user) {
                 System.out.println(data.getUsername());
@@ -199,7 +200,7 @@ public class Register extends JFrame implements ActionListener {
             } else {
                 JOptionPane.showMessageDialog(this, "好好填用户名和密码喵！", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } else if (e.getSource() == backBtn) {
+        } else if (e.getSource() == this.backBtn) {
             this.dispose();
             this.loginFrame.setVisible(true);
         }

@@ -42,7 +42,7 @@ public class Sound {
             this.audioFormat = this.audioStream.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, this.audioFormat);
             this.sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-            this.sourceDataLine.open(audioFormat);
+            this.sourceDataLine.open(this.audioFormat);
             this.clipLength = this.audioStream.getFrameLength();
             this.currentFrame.set(0);
             initVolumeControl();

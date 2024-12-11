@@ -36,10 +36,10 @@ public class LevelFrame extends JFrame {
         layeredPane.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.setContentPane(layeredPane);
 
-        panel = new ParticlePanel(50, mode, true);
-        panel.setBounds(0, 0, 800, 450);
-        panel.setOpaque(false);
-        this.getContentPane().add(panel, Integer.valueOf(0));
+        this.panel = new ParticlePanel(50, mode, true);
+        this.panel.setBounds(0, 0, 800, 450);
+        this.panel.setOpaque(false);
+        this.getContentPane().add(this.panel, Integer.valueOf(0));
 
         Font f = new Font("Comic Sans MS", Font.BOLD, 16);
         this.mode = mode;
@@ -428,9 +428,9 @@ public class LevelFrame extends JFrame {
             backImg = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
         }
         backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-        bg = new JLabel(backImg);
-        bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.bg = new JLabel(backImg);
+        this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+        this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
@@ -513,26 +513,26 @@ public class LevelFrame extends JFrame {
             //change bg
             this.mode = !this.mode;
             System.out.println("change to mode " + this.mode);
-            this.getContentPane().remove(panel);
-            panel = new ParticlePanel(50, this.mode, true);
-            panel.setBounds(0, 0, 800, 450);
-            panel.setOpaque(false);
-            this.getContentPane().add(panel, Integer.valueOf(0));
+            this.getContentPane().remove(this.panel);
+            this.panel = new ParticlePanel(50, this.mode, true);
+            this.panel.setBounds(0, 0, 800, 450);
+            this.panel.setOpaque(false);
+            this.getContentPane().add(this.panel, Integer.valueOf(0));
             if (this.mode) {
-                this.getContentPane().remove(bg);
+                this.getContentPane().remove(this.bg);
                 ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-                bg = new JLabel(imageIcon);
-                bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-                this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.bg = new JLabel(imageIcon);
+                this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+                this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
                 this.getContentPane().repaint();
             } else {
-                this.getContentPane().remove(bg);
+                this.getContentPane().remove(this.bg);
                 ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
-                bg = new JLabel(imageIcon);
-                bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-                this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.bg = new JLabel(imageIcon);
+                this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
+                this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
                 this.getContentPane().repaint();
             }
         });
@@ -577,7 +577,7 @@ public class LevelFrame extends JFrame {
 
     public void show(int k, JLabel[][] stars) {
         for (int i = 0; i < 3; i++) {
-            if (user.getLv()[i][k]) {
+            if (this.user.getLv()[i][k]) {
                 stars[i][k].setVisible(true);
             }
         }
