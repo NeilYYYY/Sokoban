@@ -153,10 +153,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
 
-        this.statusLabel = new JLabel();
+        this.statusLabel = new JLabel("");
         this.statusLabel.setFont(f);
-        this.statusLabel.setForeground(Color.BLACK);
-        this.statusLabel.setBounds(200, 50, 100, 60);
+        this.statusLabel.setForeground(Color.RED);
+        this.statusLabel.setBounds(250, 50, 100, 60);
         this.getContentPane().add(this.statusLabel);
 
         this.savingList = getSavingList();
@@ -193,7 +193,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         scrollPane.setBorder(null);
         this.getContentPane().add(scrollPane);
 
-        ImageIcon back = new ImageIcon("src/images/FileFrameBackground.png");
+        ImageIcon back = new ImageIcon("src/images/Zako.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -206,6 +206,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
         backBtn.addActionListener(_ -> {
             this.gameFrame.getController().getTimer().start();
+            this.backBtn.setForeground(Color.BLACK);
             this.dispose();
             this.gameFrame.setVisible(true);
             this.gameFrame.getGamePanel().requestFocusInWindow();
@@ -394,6 +395,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                     gameFrame.getGamePanel().setTime(gameFrame.getGamePanel().getTime() + 1);
                     gameFrame.getGamePanel().getFrame().getTimeLabel().setText(String.format("Time: %d", gameFrame.getGamePanel().getTime()));
                 }));
+                this.loadBtn.setForeground(Color.BLACK);
                 this.dispose();
                 this.gameFrame.setVisible(true);
                 gameFrame.getGamePanel().repaint();
@@ -434,7 +436,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             } else {
                 map = new MapInfo(Level.values()[this.lv - 1].getMap());
                 System.err.println("地图不存在喵");
-                this.statusLabel.setText("空存档喵");
+                this.statusLabel.setText("EMPTY");
                 reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
