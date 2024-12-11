@@ -17,6 +17,7 @@ public class MusicFrame extends JFrame implements ActionListener {
     private final JLabel statusLabel;
     private final Sound sound;
     private int choose;
+    private final JProgressBar progressBar;
 
     public MusicFrame(JFrame jFrame, Sound sound) {
         this.jFrame = jFrame;
@@ -82,7 +83,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });
         if (this.sound.isPlaying()) {
-            this.getContentPane().add(pauseBtn, Integer.valueOf(0));
+            this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
         }
 
         this.playBtn = new JButton("▶");
@@ -110,7 +111,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             }
         });
         if (!this.sound.isPlaying()) {
-            this.getContentPane().add(playBtn, Integer.valueOf(0));
+            this.getContentPane().add(this.playBtn, Integer.valueOf(0));
         }
 
         this.backBtn = new JButton("⮐");
@@ -126,7 +127,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.backBtn.setFocusPainted(false);
         this.backBtn.setContentAreaFilled(false);
         this.backBtn.addActionListener(this);
-        backBtn.addMouseListener(new MouseAdapter() {
+        this.backBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 backBtn.setForeground(Color.YELLOW);
@@ -137,26 +138,54 @@ public class MusicFrame extends JFrame implements ActionListener {
                 backBtn.setForeground(Color.WHITE);
             }
         });
-        this.getContentPane().add(backBtn, Integer.valueOf(0));
+        this.getContentPane().add(this.backBtn, Integer.valueOf(0));
 
-        statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
-        statusLabel.setFont(new Font("Serif", Font.PLAIN, 12));
-        statusLabel.setForeground(Color.WHITE);
-        statusLabel.setBounds(10, 370, 200, 30);
-        this.getContentPane().add(statusLabel, Integer.valueOf(0));
+        this.statusLabel = new JLabel(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
+        this.statusLabel.setFont(new Font("Serif", Font.PLAIN, 12));
+        this.statusLabel.setForeground(Color.WHITE);
+        this.statusLabel.setBounds(10, 370, 200, 30);
+        this.getContentPane().add(this.statusLabel, Integer.valueOf(0));
 
-        volumeSlider = new JSlider(0, 100, (int) (this.sound.getVolume() * 100));
-        volumeSlider.setBounds(10, 370, 200, 10);
-        volumeSlider.setPaintTicks(true);
-        volumeSlider.setPaintLabels(true);
-        volumeSlider.setOpaque(false);
-        volumeSlider.setFocusable(false);
-        this.getContentPane().add(volumeSlider, Integer.valueOf(0));
+        this.progressBar = new JProgressBar();
+        this.progressBar.setBounds(10, 340, 280, 20); // 设置进度条位置和大小
+        progressBar.setStringPainted(true); // 显示文本
+        this.getContentPane().add(progressBar, Integer.valueOf(0));
 
-        volumeSlider.addChangeListener(_ -> {
-            double volume = volumeSlider.getValue() / 100.0;
+        // 定时更新进度条
+        Timer progressTimer = new Timer(500, _ -> {
+            long currentFrame = sound.getCurrentFrame();
+            long totalFrames = sound.getClipLength();
+
+            if (totalFrames > 0) {
+                int progress = (int) (100 * currentFrame / totalFrames);
+                progressBar.setValue(progress); // 更新进度
+                float frameRate = sound.getFrameRate();
+                // 计算已播放时间和总时长
+                if (frameRate > 0) {
+                    long currentSeconds = (long) (currentFrame / frameRate);
+                    long totalSeconds = (long) (totalFrames / frameRate);
+                    // 转换为分钟和秒
+                    String currentTime = String.format("%02d:%02d", currentSeconds / 60, currentSeconds % 60);
+                    String totalTime = String.format("%02d:%02d", totalSeconds / 60, totalSeconds % 60);
+                    // 设置显示文本
+                    progressBar.setString(currentTime + "/" + totalTime);
+                }
+            }
+        });
+        progressTimer.start();
+
+        this.volumeSlider = new JSlider(0, 100, (int) (this.sound.getVolume() * 100));
+        this.volumeSlider.setBounds(10, 370, 200, 10);
+        this.volumeSlider.setPaintTicks(true);
+        this.volumeSlider.setPaintLabels(true);
+        this.volumeSlider.setOpaque(false);
+        this.volumeSlider.setFocusable(false);
+        this.getContentPane().add(this.volumeSlider, Integer.valueOf(0));
+
+        this.volumeSlider.addChangeListener(_ -> {
+            double volume = this.volumeSlider.getValue() / 100.0;
             this.sound.setVolume(volume);
-            statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", volume * 100));
+            this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", volume * 100));
         });
 
         ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
@@ -201,7 +230,8 @@ public class MusicFrame extends JFrame implements ActionListener {
                     Sound.setIndex(choose);
                     sound.setVolume(0.5);
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                }revalidate();
+                }
+                revalidate();
                 repaint();
             }
         });

@@ -29,7 +29,7 @@ public class Sound {
     }
 
     public static int getIndex() {
-        return index;
+        return Sound.index;
     }
 
     public static void setIndex(int index) {
@@ -38,13 +38,13 @@ public class Sound {
 
     private void prefetch() {
         try {
-            audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
-            audioFormat = audioStream.getFormat();
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
-            sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
-            sourceDataLine.open(audioFormat);
-            clipLength = audioStream.getFrameLength();
-            currentFrame.set(0);
+            this.audioStream = AudioSystem.getAudioInputStream(new File(this.musicPath));
+            this.audioFormat = this.audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(SourceDataLine.class, this.audioFormat);
+            this.sourceDataLine = (SourceDataLine) AudioSystem.getLine(info);
+            this.sourceDataLine.open(audioFormat);
+            this.clipLength = this.audioStream.getFrameLength();
+            this.currentFrame.set(0);
             initVolumeControl();
         } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             log.info(e.getMessage());
@@ -52,36 +52,36 @@ public class Sound {
     }
 
     private void initVolumeControl() {
-        if (sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
-            volumeControl = (FloatControl) sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
+        if (this.sourceDataLine.isControlSupported(FloatControl.Type.MASTER_GAIN)) {
+            this.volumeControl = (FloatControl) this.sourceDataLine.getControl(FloatControl.Type.MASTER_GAIN);
         }
     }
 
     public void play() {
-        if (isPlaying) {
+        if (this.isPlaying) {
             return;
         }
-        isPlaying = true;
-        playThread = new Thread(this::playAudio);
-        playThread.start();
+        this.isPlaying = true;
+        this.playThread = new Thread(this::playAudio);
+        this.playThread.start();
         startProgressBar();
     }
 
     private void playAudio() {
         try {
             do {
-                sourceDataLine.start();
-                audioStream = AudioSystem.getAudioInputStream(new File(musicPath));
+                this.sourceDataLine.start();
+                this.audioStream = AudioSystem.getAudioInputStream(new File(this.musicPath));
                 skipToCurrentFrame();
                 byte[] buffer = new byte[1024];
                 int bytesRead;
-                while ((bytesRead = audioStream.read(buffer, 0, buffer.length)) != -1 && isPlaying) {
-                    sourceDataLine.write(buffer, 0, bytesRead);
-                    currentFrame.addAndGet(bytesRead / audioFormat.getFrameSize());
+                while ((bytesRead = this.audioStream.read(buffer, 0, buffer.length)) != -1 && this.isPlaying) {
+                    this.sourceDataLine.write(buffer, 0, bytesRead);
+                    this.currentFrame.addAndGet(bytesRead / this.audioFormat.getFrameSize());
                 }
-                if (!isPlaying) return;
-                currentFrame.set(0);
-            } while (isLooping && isPlaying);
+                if (!this.isPlaying) return;
+                this.currentFrame.set(0);
+            } while (this.isLooping && this.isPlaying);
             stop();
         } catch (IOException | UnsupportedAudioFileException e) {
             log.info(e.getMessage());
@@ -89,9 +89,9 @@ public class Sound {
     }
 
     private void skipToCurrentFrame() throws IOException {
-        if (currentFrame.get() > 0) {
-            long bytesToSkip = currentFrame.get() * audioFormat.getFrameSize();
-            long bytesSkipped = audioStream.skip(bytesToSkip);
+        if (this.currentFrame.get() > 0) {
+            long bytesToSkip = this.currentFrame.get() * this.audioFormat.getFrameSize();
+            long bytesSkipped = this.audioStream.skip(bytesToSkip);
             if (bytesSkipped != bytesToSkip) {
                 log.warning("跳过 " + bytesSkipped + " 字节, expected " + bytesToSkip);
             }
@@ -99,24 +99,24 @@ public class Sound {
     }
 
     public void pause() {
-        if (!isPlaying) {
+        if (!this.isPlaying) {
             return;
         }
-        isPlaying = false;
-        sourceDataLine.stop();
+        this.isPlaying = false;
+        this.sourceDataLine.stop();
         stopProgressBar();
     }
 
     public void stop() {
-        isPlaying = false;
-        currentFrame.set(0);
-        if (sourceDataLine != null) {
-            sourceDataLine.stop();
-            sourceDataLine.close();
+        this.isPlaying = false;
+        this.currentFrame.set(0);
+        if (this.sourceDataLine != null) {
+            this.sourceDataLine.stop();
+            this.sourceDataLine.close();
         }
         if (playThread != null && playThread.isAlive()) {
             try {
-                playThread.join();
+                this.playThread.join();
             } catch (InterruptedException e) {
                 log.info(e.getMessage());
             }
@@ -126,7 +126,7 @@ public class Sound {
     }
 
     public void setLooping(boolean looping) {
-        isLooping = looping;
+        this.isLooping = looping;
         System.out.println("循环已" + (looping ? "开启喵" : "关闭喵"));
     }
 
@@ -134,43 +134,43 @@ public class Sound {
         stop();
         this.musicPath = newPath;
         prefetch();
-        System.out.println("\n改变音频路径: " + newPath + "喵");
+        System.out.println("\n改变音频路径: " + newPath);
     }
 
     public String getMusicPath() {
-        return musicPath;
+        return this.musicPath;
     }
 
     public double getVolume() {
-        if (volumeControl == null) {
+        if (this.volumeControl == null) {
             System.err.println("声音控制不支持喵！");
             return 0.0;
         }
-        float min = volumeControl.getMinimum();
-        float max = volumeControl.getMaximum();
+        float min = this.volumeControl.getMinimum();
+        float max = this.volumeControl.getMaximum();
         float mid = (max + min) / 2;
-        return (volumeControl.getValue() - mid) / (max - mid);
+        return (this.volumeControl.getValue() - mid) / (max - mid);
     }
 
     public void setVolume(double volume) {
-        if (volumeControl == null) {
+        if (this.volumeControl == null) {
             System.err.println("声音控制不支持喵！");
             return;
         }
-        float min = volumeControl.getMinimum();
-        float max = volumeControl.getMaximum();
+        float min = this.volumeControl.getMinimum();
+        float max = this.volumeControl.getMaximum();
         float mid = (max + min) / 2;
         float newVolume = (float) (mid + (max - mid) * volume);
-        volumeControl.setValue(newVolume);
+        this.volumeControl.setValue(newVolume);
     }
 
     public boolean isPlaying() {
-        return isPlaying;
+        return this.isPlaying;
     }
 
     private void startProgressBar() {
-        progressTimer = new Timer(true);
-        progressTimer.scheduleAtFixedRate(new TimerTask() {
+        this.progressTimer = new Timer(true);
+        this.progressTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 if (!isPlaying) return;
@@ -183,16 +183,29 @@ public class Sound {
                 for (int i = 0; i < barLength; i++) {
                     bar.append(i < filledLength ? "=" : "-");
                 }
-                System.out.printf("\r[%s] %02d:%02d/%02d:%02d", bar,
-                        currentSeconds / 60, currentSeconds % 60,
-                        totalSeconds / 60, totalSeconds % 60);
+                System.out.printf("\r[%s] %02d:%02d/%02d:%02d", bar, currentSeconds / 60, currentSeconds % 60, totalSeconds / 60, totalSeconds % 60);
             }
         }, 0, 500); // 每 500 毫秒更新一次
     }
 
     private void stopProgressBar() {
-        if (progressTimer != null) {
-            progressTimer.cancel();
+        if (this.progressTimer != null) {
+            this.progressTimer.cancel();
         }
+    }
+
+    public long getCurrentFrame() {
+        return this.currentFrame.get();
+    }
+
+    public long getClipLength() {
+        return this.clipLength;
+    }
+
+    public float getFrameRate() {
+        if (this.audioFormat != null) {
+            return this.audioFormat.getFrameRate();
+        }
+        return -1; // 如果音频格式未初始化，返回一个无效值。
     }
 }
