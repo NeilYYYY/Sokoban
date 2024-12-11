@@ -173,9 +173,9 @@ public class GamePanel extends ListenerPanel {
                     mapInfo.setStep(0);
                     FileFrame.addNewMap(mapInfo, filepath);
                 }
-                System.out.println("创建新文件并保存");
+                System.out.println("创建新文件并保存喵");
             } catch (Exception e) {
-                System.out.println("保存失败");
+                System.out.println("保存失败喵");
                 log.info(e.getMessage());
             }
         }
@@ -206,7 +206,7 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 4;
                     getGrids()[hero.getRow()][hero.getCol() + 1].removeFragileFromGrid();
-                    System.out.println("Fragile back");
+                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
@@ -220,7 +220,7 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 4;
                     getGrids()[hero.getRow()][hero.getCol() - 1].removeFragileFromGrid();
-                    System.out.println("Fragile back");
+                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
@@ -234,7 +234,7 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 4;
                     getGrids()[hero.getRow() + 1][hero.getCol()].removeFragileFromGrid();
-                    System.out.println("Fragile back");
+                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
@@ -248,7 +248,7 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 4;
                     getGrids()[hero.getRow() - 1][hero.getCol()].removeFragileFromGrid();
-                    System.out.println("Fragile back");
+                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
@@ -315,9 +315,9 @@ public class GamePanel extends ListenerPanel {
             }
             boolean result = FileFrame.updateMapById(this.filepath, 0, controller.getModel(), this.steps, this.time, moveHero, moveBox);
             if (result) {
-                System.out.println("更新成功");
+                System.out.println("更新成功喵");
             } else {
-                System.out.println("更新失败");
+                System.out.println("更新失败喵");
             }
             FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filepath)), new File(filepath + ".sha"));
         } catch (IOException e) {

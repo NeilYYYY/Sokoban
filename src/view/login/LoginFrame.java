@@ -241,10 +241,10 @@ public class LoginFrame extends JFrame implements ActionListener {
             if (temp && !username.isEmpty()) {
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user, this.sound, false, false);
-                JOptionPane.showMessageDialog(this, "登录成功", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "登录成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
                 showLevelFrame();
             } else {
-                JOptionPane.showMessageDialog(this, "登录失败", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "登录失败喵！", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }//注册操作
         else if (e.getSource() == registerBtn) {
@@ -255,17 +255,17 @@ public class LoginFrame extends JFrame implements ActionListener {
             User user;
             user = User.getUser("", User.getUserList());
             levelFrame = new LevelFrame(user, this.sound, false, false);
-            JOptionPane.showMessageDialog(this, "游客模式", "Success", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "游客模式喵～", "Info", JOptionPane.INFORMATION_MESSAGE);
             showLevelFrame();
         }
     }
 
     private void showLevelFrame() {
         this.dispose();
-        System.out.println("Username = " + usernameText.getText());
-        System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
+        System.out.println("用户名 = " + usernameText.getText() + "喵");
+        System.out.println("密码 = " + String.valueOf(passwordText.getPassword()) + "喵");
         try {
-            System.out.println("Password.SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())));
+            System.out.println("密码SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())) + "喵");
         } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }

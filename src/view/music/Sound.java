@@ -56,7 +56,7 @@ public class Sound {
 
     public void play() {
         if (isPlaying) {
-            System.err.println("Audio is already playing.");
+            System.err.println("音频已经在播放了喵～");
             return;
         }
         isPlaying = true;
@@ -90,14 +90,14 @@ public class Sound {
             long bytesToSkip = currentFrame.get() * audioFormat.getFrameSize();
             long bytesSkipped = audioStream.skip(bytesToSkip);
             if (bytesSkipped != bytesToSkip) {
-                log.warning("Skipped " + bytesSkipped + " bytes, expected " + bytesToSkip);
+                log.warning("跳过 " + bytesSkipped + " 字节, expected " + bytesToSkip);
             }
         }
     }
 
     public void pause() {
         if (!isPlaying) {
-            System.err.println("Audio is not currently playing.");
+            System.err.println("音频已经暂停了喵～");
             return;
         }
         isPlaying = false;
@@ -123,14 +123,14 @@ public class Sound {
 
     public void setLooping(boolean looping) {
         isLooping = looping;
-        System.out.println("Looping is set to: " + (looping ? "enabled" : "disabled"));
+        System.out.println("循环已" + (looping ? "开启喵" : "关闭喵"));
     }
 
     public void changeSource(String newPath) {
         stop();
         this.musicPath = newPath;
         prefetch();
-        System.out.println("Changed audio source to: " + newPath);
+        System.out.println("改变音频路径: " + newPath + "喵");
     }
 
     public String getMusicPath() {
@@ -143,7 +143,7 @@ public class Sound {
 
     public double getVolume() {
         if (volumeControl == null) {
-            System.err.println("Volume control not supported.");
+            System.err.println("声音控制不支持喵！");
             return 0.0;
         }
         float min = volumeControl.getMinimum();
@@ -154,7 +154,7 @@ public class Sound {
 
     public void setVolume(double volume) {
         if (volumeControl == null) {
-            System.err.println("Volume control not supported.");
+            System.err.println("声音控制不支持喵！");
             return;
         }
         float min = volumeControl.getMinimum();
@@ -165,8 +165,8 @@ public class Sound {
     }
 
     public void displayStatus() {
-        String status = isPlaying ? "Playing" : "Paused";
-        System.out.printf("Status: %s, Progress: %.2f%%, Volume: %.2f%%, Looping: %s\n", status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
+        String status = isPlaying ? "播放" : "暂停";
+        System.out.printf("状态: %s, 进度: %.2f%%, 音量: %.2f%%, 循环: %s\n", status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
     }
 
     public boolean isPlaying() {

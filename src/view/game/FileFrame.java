@@ -259,7 +259,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             gson.toJson(response, MapsResponse.class, jsonWriter);
             jsonWriter.flush(); // 确保所有内容都已写入
         } catch (IOException e) {
-            throw new IOException("Error saving maps to JSON: " + e.getMessage(), e);
+            throw new IOException("将Map写入JSON时错误: " + e.getMessage(), e);
         }
     }
 
@@ -355,7 +355,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().repaint();
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
-                System.err.println("地图不存在");
+                System.err.println("地图不存在喵");
                 JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
@@ -383,11 +383,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
-                System.out.printf("读入存档%d\n", id);
+                System.out.printf("读入存档%d喵\n", id);
                 reloadPanel(map, gamePanel);
             } else {
                 map = new MapInfo(Level.values()[this.lv - 1].getMap());
-                System.err.println("地图不存在");
+                System.err.println("地图不存在喵");
                 reloadPanel(map, gamePanel);
             }
         } catch (IOException e) {
@@ -411,9 +411,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             this.step = this.gameFrame.getGamePanel().getSteps();
             boolean result = updateMapById(this.filePath, id, copyModel, this.step, gameFrame.getGamePanel().getTime(), gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox());
             if (result) {
-                System.out.println("更新成功");
+                System.out.println("更新成功喵");
             } else {
-                System.err.println("更新失败");
+                System.err.println("更新失败喵");
             }
             FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filePath)), new File(filePath + ".sha"));
         } catch (IOException e) {
@@ -435,9 +435,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         File file = new File(filePath);
         File file1 = new File(filePath + ".sha");
         if (file.delete() && file1.delete()) {
-            System.err.println("文件已删除");
+            System.err.println("文件已删除喵");
         } else {
-            System.err.println("删除文件失败");
+            System.err.println("删除文件失败喵");
         }
 
         MapMatrix originalMap = new MapMatrix(Level.values()[gameFrame.getLv() - 1].getMap());
@@ -450,9 +450,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 mapInfo.setStep(0);
                 addNewMap(mapInfo, filePath);
             }
-            System.out.println("创建新文件并保存");
+            System.out.println("创建新文件并保存喵");
         } catch (Exception e) {
-            System.err.println("保存失败");
+            System.err.println("保存失败喵");
             log.info(e.getMessage());
         }
         try {

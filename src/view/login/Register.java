@@ -177,7 +177,7 @@ public class Register extends JFrame implements ActionListener {
             if (found) {
                 boolean temp = User.readUser(username, user);//检测用户名是否重复
                 if (temp) {
-                    JOptionPane.showMessageDialog(this, "注册成功", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "注册成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
                     int id = user.toArray().length;
                     try {
                         boolean[][] checkPoint = new boolean[3][6];
@@ -194,10 +194,10 @@ public class Register extends JFrame implements ActionListener {
                     this.dispose();
                     this.loginFrame.setVisible(true);
                 } else {
-                    JOptionPane.showMessageDialog(this, "用户名重复，注册失败", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "用户名重复了喵！！！", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "注册失败,请正确填写用户名和密码", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "好好填用户名和密码喵！", "Error", JOptionPane.ERROR_MESSAGE);
             }
         } else if (e.getSource() == backBtn) {
             this.dispose();

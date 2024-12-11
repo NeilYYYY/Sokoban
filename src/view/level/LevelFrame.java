@@ -448,7 +448,7 @@ public class LevelFrame extends JFrame {
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "未解锁喵～", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -460,7 +460,7 @@ public class LevelFrame extends JFrame {
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "未解锁喵～", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -472,7 +472,7 @@ public class LevelFrame extends JFrame {
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "未解锁喵～", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
@@ -484,7 +484,7 @@ public class LevelFrame extends JFrame {
                 this.setVisible(false);
                 gameFrame.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(this, "Locked", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "未解锁喵～", "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

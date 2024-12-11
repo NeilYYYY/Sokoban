@@ -61,7 +61,7 @@ public class GameController {
     }
 
     public void restartGame() {
-        System.out.println("Do restart game here");
+        System.out.println("还要重开？这么菜的喵？");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
                 switch (model.getId(i, j) % 10) {
@@ -157,13 +157,13 @@ public class GameController {
                 users.get(this.user.getId()).getLv()[0][this.lv - 1] = true;
                 User.writeUser(users);
             }
-            System.out.println("You win!");
+            System.out.println("可恶喵，给你赢了喵");
             Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
             timer.stop();
             if (gameFrame.getLv() == 6) {//最后一关则退出
-                JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "恭喜通关喵!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.view.getFrame().getSound().changeSource(this.view.getFrame().getMusicPath());
                 this.view.getFrame().getSound().setVolume(0.5);
                 this.view.getFrame().getSound().play();
@@ -188,13 +188,13 @@ public class GameController {
                 }
             }
             if (gameFrame.getLv() == 5) {
-                JOptionPane.showMessageDialog(null, "Congratulations!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "恭喜通关喵!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                 this.levelFrame = new LevelFrame(this.user, this.sound, this.view.getFrame().isMode(), true);
                 this.levelFrame.setVisible(true);
                 gameFrame.dispose();
                 return true;
             }
-            int option = JOptionPane.showOptionDialog(null, "You Win!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Next"}, "Next");
+            int option = JOptionPane.showOptionDialog(null, "赢了喵!", "SUCCESS", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Next"}, "Next");
             if (option == 1) {
                 GameFrame newGameFrame = getNewGameFrame(gameFrame);
                 newGameFrame.setVisible(true);
@@ -252,13 +252,13 @@ public class GameController {
             s.setVolume(1.0);
             s.play();
             if (this.view.getSteps() >= 100) {
-                System.out.println("Too many steps! 雑魚～");
-                JOptionPane.showMessageDialog(gameFrame, "Too many steps! 雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);
+                System.out.println("步数太多啦！雑魚～");
+                JOptionPane.showMessageDialog(gameFrame, "步数太多啦！雑魚～", "FAILED", JOptionPane.INFORMATION_MESSAGE);
                 gameFrame.getController().restartGame();
                 return true;
             }
-            System.out.println("You lose!");
-            int option = JOptionPane.showOptionDialog(null, "Game Over!", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Restart"}, "Restart");
+            System.out.println("雑魚！雑魚！");
+            int option = JOptionPane.showOptionDialog(null, "菜", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Restart"}, "Restart");
             // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();
@@ -297,7 +297,7 @@ public class GameController {
             //update hero in MapMatrix
             if (model.getMatrix()[row][col] == 25) {
                 moveFragile[view.getSteps()] = 1;
-                System.out.println("Fragile");
+                System.out.println("易碎格");
             } else {
                 moveFragile[view.getSteps()] = 0;
             }
@@ -328,7 +328,7 @@ public class GameController {
             if (model.getMatrix()[row][col] == 25) {
                 moveFragile[view.getSteps()] = 1;
                 view.setMoveFragile(moveFragile);
-                System.out.println("Fragile");
+                System.out.println("易碎格");
             } else {
                 moveFragile[view.getSteps()] = 0;
             }

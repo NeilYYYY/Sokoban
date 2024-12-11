@@ -494,16 +494,16 @@ public class GameFrame extends JFrame {
                     mapInfo.setStep(0);
                     FileFrame.addNewMap(mapInfo, filepath);
                 }
-                System.out.println("创建新文件并保存");
+                System.out.println("创建新文件并保存喵");
             } catch (Exception e) {
-                System.err.println("保存失败");
+                System.err.println("保存失败喵");
                 log.info(e.getMessage());
             }
             try {
                 if (FileFrame.updateMapById(filepath, 0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
-                    System.out.println("更新成功");
+                    System.out.println("更新成功喵");
                 } else {
-                    System.err.println("更新失败");
+                    System.err.println("更新失败喵");
                 }
                 FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
@@ -527,16 +527,16 @@ public class GameFrame extends JFrame {
                         mapInfo.setStep(0);
                         FileFrame.addNewMap(mapInfo, filepath);
                     }
-                    System.out.println("创建新文件并保存");
+                    System.out.println("创建新文件并保存喵");
                 } catch (Exception e) {
-                    System.err.println("保存失败");
+                    System.err.println("保存失败喵");
                     log.info(e.getMessage());
                 }
                 try {
                     if (FileFrame.updateMapById(filepath, 0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
-                        System.out.println("更新成功");
+                        System.out.println("更新成功喵");
                     } else {
-                        System.out.println("更新失败");
+                        System.out.println("更新失败喵");
                     }
                     FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
                 } catch (IOException e) {
