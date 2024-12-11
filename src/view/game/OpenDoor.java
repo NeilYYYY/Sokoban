@@ -9,7 +9,7 @@ public class OpenDoor extends JComponent {
     private final Image image;
 
     public OpenDoor(int width, int height) {
-        this.image = new ImageIcon("src/images/OpenDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        this.image = new ImageIcon("resources/images/OpenDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         this.setSize(width, height);
         this.setLocation(5, 5);
     }

@@ -157,7 +157,7 @@ public class GameController {
                 User.writeUser(users);
             }
             System.out.println("可恶喵，给你赢了喵");
-            Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
+            Sound s = new Sound("resources/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
             s.play();
             timer.stop();
@@ -247,7 +247,7 @@ public class GameController {
 
     public boolean doLose(GameFrame gameFrame) {
         if (checkLose()) {
-            Sound s = new Sound("src/misc/NV_Korogu_Man_Young_Bad00_Think00.wav");
+            Sound s = new Sound("resources/misc/NV_Korogu_Man_Young_Bad00_Think00.wav");
             s.setVolume(1.0);
             s.play();
             if (this.view.getSteps() >= 100) {
@@ -313,7 +313,7 @@ public class GameController {
                 view.setMoveFragile(moveFragile);
                 view.getGrids()[row][col].setFragileInGrid(new Fragile(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10));
             }
-            Sound s = new Sound("src/misc/Foot_Step.wav");
+            Sound s = new Sound("resources/misc/Foot_Step.wav");
             s.setVolume(1.0);
             s.play();
             return true;
@@ -363,7 +363,7 @@ public class GameController {
                     view.setMoveBox(moveBox);
                 }
             }
-            Sound s = new Sound("src/misc/Foot_Step.wav");
+            Sound s = new Sound("resources/misc/Foot_Step.wav");
             s.play();
             return true;
         }
@@ -385,7 +385,7 @@ public class GameController {
                     }
                 }
             }
-            Sound s = new Sound("src/misc/Door.wav");
+            Sound s = new Sound("resources/misc/Door.wav");
             s.setVolume(0.6);
             s.play();
         }

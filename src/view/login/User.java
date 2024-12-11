@@ -43,7 +43,7 @@ public class User {
 
     //读取用户数据 检测用户名密码
     public static boolean checkUser(String username, String password) {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("users.json"))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -97,7 +97,7 @@ public class User {
 
     //获取用户的所有信息数据
     public static ArrayList<User> getUserList() {
-        try (BufferedReader br = new BufferedReader(new FileReader("src/users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("users.json"))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -114,7 +114,7 @@ public class User {
 
     //将用户信息写入json文件中
     public static void writeUser(ArrayList<User> user) {
-        try (Writer writer = new FileWriter("src/users.json")) {
+        try (Writer writer = new FileWriter("users.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             // 使用 JsonWriter 设置 4 个空格的缩进
             JsonWriter jsonWriter = new JsonWriter(writer);

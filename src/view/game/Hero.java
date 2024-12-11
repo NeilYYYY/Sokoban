@@ -17,9 +17,9 @@ public class Hero extends JComponent {
         this.setSize(width, height);
         this.setLocation(8, 8);
         if (user.getId() == 2) {
-            this.image = new ImageIcon("src/images/Grub.png").getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
+            this.image = new ImageIcon("resources/images/Grub.png").getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
         } else {
-            this.image = new ImageIcon("src/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+            this.image = new ImageIcon("resources/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
         }
     }
 

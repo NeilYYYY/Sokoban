@@ -47,7 +47,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         JLabel password = new JLabel("Password: ");
         password.setFont(f);
         password.setForeground(Color.WHITE);
-        JLabel titleLabel = new JLabel(new ImageIcon("src/images/Title.png"));
+        JLabel titleLabel = new JLabel(new ImageIcon("resources/images/Title.png"));
         titleLabel.setBounds(240, 20, 300, 155);
         this.getContentPane().add(titleLabel, Integer.valueOf(1));
 
@@ -216,7 +216,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.getContentPane().add(registerJp, Integer.valueOf(1));
         this.getContentPane().add(musicJp, Integer.valueOf(1));
         this.getContentPane().add(guestJp, Integer.valueOf(1));
-        ImageIcon back = new ImageIcon("src/images/Menu_Theme_Godmaster.png");
+        ImageIcon back = new ImageIcon("resources/images/Menu_Theme_Godmaster.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());

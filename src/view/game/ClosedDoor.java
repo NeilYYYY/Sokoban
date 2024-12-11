@@ -11,7 +11,7 @@ public class ClosedDoor extends JComponent {
     public ClosedDoor(int width, int height) {
         this.setSize(width, height);
         this.setLocation(5, 5);
-        this.image = new ImageIcon("src/images/ClosedDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        this.image = new ImageIcon("resources/images/ClosedDoor.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
     }
 
     @Override

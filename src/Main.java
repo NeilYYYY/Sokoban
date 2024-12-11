@@ -7,7 +7,7 @@ import javax.swing.*;
 public class Main {
     public static void main(String[] args) {
         FlatLightLaf.setup();
-        Sound sound = new Sound("src/misc/EnterHallownest.wav");
+        Sound sound = new Sound("resources/misc/EnterHallownest.wav");
         sound.setVolume(0.5);
         sound.setLooping(true);
         sound.play();

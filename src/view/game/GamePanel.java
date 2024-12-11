@@ -39,7 +39,7 @@ public class GamePanel extends ListenerPanel {
         this.model.copyMatrix(model.getMatrix());
         this.frame = frame;
         this.grids = new GridComponent[model.getHeight()][model.getWidth()];
-        this.filepath = String.format("src/saves/%d-%d.json", this.frame.getLv(), user.getId());
+        this.filepath = String.format("saves/%d-%d.json", this.frame.getLv(), user.getId());
         this.file = new File(filepath);
         this.time = frame.getTime();
         initialGame(step);

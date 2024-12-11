@@ -49,7 +49,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
-        this.filePath = String.format("src/saves/%d-%d.json", lv, user.getId());
+        this.filePath = String.format("saves/%d-%d.json", lv, user.getId());
         this.lv = lv;
         this.user = user;
         this.sound = sound;
@@ -156,7 +156,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.statusLabel = new JLabel("");
         this.statusLabel.setFont(f);
         this.statusLabel.setForeground(Color.RED);
-        this.statusLabel.setBounds(250, 50, 100, 60);
+        this.statusLabel.setBounds(100 + this.gamePanel.getWidth() / 2, 10, 80, 60);
         this.getContentPane().add(this.statusLabel);
 
         this.savingList = getSavingList();
@@ -193,7 +193,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         scrollPane.setBorder(null);
         this.getContentPane().add(scrollPane);
 
-        ImageIcon back = new ImageIcon("src/images/Zako.png");
+        ImageIcon back = new ImageIcon("resources/images/Zako.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());

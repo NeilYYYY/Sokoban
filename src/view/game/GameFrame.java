@@ -59,7 +59,7 @@ public class GameFrame extends JFrame {
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        String filepath = String.format("src/saves/%d-%d.json", this.lv, user.getId());
+        String filepath = String.format("saves/%d-%d.json", this.lv, user.getId());
         File file = new File(filepath);
 
         this.gamePanel = new GamePanel(mapMatrix, this, this.user, step);
@@ -344,7 +344,7 @@ public class GameFrame extends JFrame {
         } else {
             loadBtn.setVisible(false);
             musicBtn.setVisible(false);
-            this.sound.changeSource("src/misc/东方永夜抄竹取飞翔.wav");
+            this.sound.changeSource("resources/misc/东方永夜抄竹取飞翔.wav");
             this.sound.setVolume(0.5);
             this.sound.play();
 
@@ -405,7 +405,7 @@ public class GameFrame extends JFrame {
                 this.gamePanel.requestFocusInWindow();
             } else {
                 if (this.check) {
-                    Sound s = new Sound("src/misc/zako.wav");
+                    Sound s = new Sound("resources/misc/zako.wav");
                     s.setVolume(0.8);
                     s.play();
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
@@ -450,7 +450,7 @@ public class GameFrame extends JFrame {
         });
 
         helpBtn.addActionListener(_ -> {
-            JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(new ImageIcon("src/images/Help.png").getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
+            JOptionPane.showMessageDialog(this, null, "Help", JOptionPane.INFORMATION_MESSAGE, new ImageIcon(new ImageIcon("resources/images/Help.png").getImage().getScaledInstance(1200, 675, Image.SCALE_SMOOTH)));
             this.gamePanel.requestFocusInWindow();
         });
 
@@ -474,7 +474,7 @@ public class GameFrame extends JFrame {
             this.gamePanel.requestFocusInWindow();//enable key listener
         });
 
-        ImageIcon back = new ImageIcon("src/images/Menu_Theme_The_Eternal_Ordeal.png");
+        ImageIcon back = new ImageIcon("resources/images/Menu_Theme_The_Eternal_Ordeal.png");
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());

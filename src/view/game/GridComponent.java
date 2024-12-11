@@ -19,20 +19,20 @@ public class GridComponent extends JComponent {
     public GridComponent(int id, int gridSize) {
         switch (new Random().nextInt(6) + 1) {
             case 1 ->
-                    this.imageWall = new ImageIcon("src/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall1.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 2 ->
-                    this.imageWall = new ImageIcon("src/images/Wall2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall2.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 3 ->
-                    this.imageWall = new ImageIcon("src/images/Wall3.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall3.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 4 ->
-                    this.imageWall = new ImageIcon("src/images/Wall4.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall4.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             case 5 ->
-                    this.imageWall = new ImageIcon("src/images/Wall5.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall5.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
             default ->
-                    this.imageWall = new ImageIcon("src/images/Wall6.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+                    this.imageWall = new ImageIcon("resources/images/Wall6.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
         }
-        this.imageFloor = new ImageIcon("src/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
-        this.imageButton = new ImageIcon("src/images/Button.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+        this.imageFloor = new ImageIcon("resources/images/Floor.png").getImage().getScaledInstance(50, 50, Image.SCALE_DEFAULT);
+        this.imageButton = new ImageIcon("resources/images/Button.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
         this.setSize(gridSize, gridSize);
         this.id = id;
     }

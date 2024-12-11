@@ -220,7 +220,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             this.requestFocusInWindow();
         });
 
-        ImageIcon back = new ImageIcon("src/images/MusicFrameBackground.png");
+        ImageIcon back = new ImageIcon("resources/images/MusicFrameBackground.png");
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -309,7 +309,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                         this.getContentPane().add(this.playBtn, Integer.valueOf(0));
                         this.sound.pause();
                     }
-                    this.sound.changeSource("src/misc/" + selectedSong);
+                    this.sound.changeSource("resources/misc/" + selectedSong);
                     Sound.setIndex(choose);
                     this.sound.setVolume(0.5);
                     this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));

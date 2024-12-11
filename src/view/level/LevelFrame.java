@@ -45,15 +45,15 @@ public class LevelFrame extends JFrame {
         this.mode = mode;
         this.user = user;
 
-        ImageIcon starImg = new ImageIcon("src/images/star.png");
+        ImageIcon starImg = new ImageIcon("resources/images/star.png");
         starImg.setImage(starImg.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
-        ImageIcon crownImg = new ImageIcon("src/images/crown.png");
+        ImageIcon crownImg = new ImageIcon("resources/images/crown.png");
         crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        ImageIcon kingImg = new ImageIcon("src/images/king.png");
+        ImageIcon kingImg = new ImageIcon("resources/images/king.png");
         kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        ImageIcon kingAltImg = new ImageIcon("src/images/king_alter.png");
+        ImageIcon kingAltImg = new ImageIcon("resources/images/king_alter.png");
         kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
-        ImageIcon lockImg = new ImageIcon("src/images/lock.png");
+        ImageIcon lockImg = new ImageIcon("resources/images/lock.png");
         lockImg.setImage(lockImg.getImage().getScaledInstance(80, 45, Image.SCALE_DEFAULT));
 
         JLabel[][] stars = new JLabel[3][5];
@@ -423,9 +423,9 @@ public class LevelFrame extends JFrame {
 
         ImageIcon backImg;// 背景图置于最底层
         if (this.mode) {
-            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
+            backImg = new ImageIcon("resources/images/Menu_Theme_Voidheart_Alter.png");
         } else {
-            backImg = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+            backImg = new ImageIcon("resources/images/Menu_Theme_Voidheart.png");
         }
         backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
         this.bg = new JLabel(backImg);
@@ -497,7 +497,7 @@ public class LevelFrame extends JFrame {
         });
 
         logoutBtn.addActionListener(_ -> {
-            ImageIcon originalIcon = new ImageIcon("src/images/Logout.png");
+            ImageIcon originalIcon = new ImageIcon("resources/images/Logout.png");
             Image originalImage = originalIcon.getImage();
             Image resizedImage = originalImage.getScaledInstance(450, 450, Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(resizedImage);
@@ -520,7 +520,7 @@ public class LevelFrame extends JFrame {
             this.getContentPane().add(this.panel, Integer.valueOf(0));
             if (this.mode) {
                 this.getContentPane().remove(this.bg);
-                ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart_Alter.png");
+                ImageIcon imageIcon = new ImageIcon("resources/images/Menu_Theme_Voidheart_Alter.png");
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
@@ -528,7 +528,7 @@ public class LevelFrame extends JFrame {
                 this.getContentPane().repaint();
             } else {
                 this.getContentPane().remove(this.bg);
-                ImageIcon imageIcon = new ImageIcon("src/images/Menu_Theme_Voidheart.png");
+                ImageIcon imageIcon = new ImageIcon("resources/images/Menu_Theme_Voidheart.png");
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
