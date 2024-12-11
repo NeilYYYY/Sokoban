@@ -84,6 +84,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
         if (this.sound.isPlaying()) {
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
+            SwingUtilities.invokeLater(this.pauseBtn::requestFocusInWindow);
         }
 
         this.playBtn = new JButton("▶");
@@ -112,6 +113,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
         if (!this.sound.isPlaying()) {
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
+            SwingUtilities.invokeLater(this.playBtn::requestFocusInWindow);
         }
 
         this.backBtn = new JButton("⮐");
@@ -147,7 +149,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.getContentPane().add(this.statusLabel, Integer.valueOf(0));
 
         this.progressBar = new JProgressBar();
-        this.progressBar.setBounds(10, 340, 280, 20); // 设置进度条位置和大小
+        this.progressBar.setBounds(10, 340, 280, 15); // 设置进度条位置和大小
         progressBar.setStringPainted(true); // 显示文本
         this.getContentPane().add(progressBar, Integer.valueOf(0));
 
@@ -239,15 +241,7 @@ public class MusicFrame extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    if (!sound.isPlaying()) {
-                        remove(playBtn);
-                        add(pauseBtn, Integer.valueOf(0));
-                        sound.play();
-                    }
-                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                    volumeSlider.setValue(50);
-                    revalidate();
-                    repaint();
+                    startSoundPlaying(sound);
                 }
             }
 
@@ -265,6 +259,17 @@ public class MusicFrame extends JFrame implements ActionListener {
 
             @Override
             public void mouseExited(MouseEvent e) {
+            }
+        });
+
+        songList.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // When Enter key is pressed, start playing the song
+                if (e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_SPACE) {
+                    // Ensure a song is selected
+                    startSoundPlaying(sound);
+                }
             }
         });
 
@@ -288,6 +293,19 @@ public class MusicFrame extends JFrame implements ActionListener {
         return scrollPane;
     }
 
+    private void startSoundPlaying(Sound sound) {
+        if (!sound.isPlaying()) {
+            remove(playBtn);
+            add(pauseBtn, Integer.valueOf(0));
+            pauseBtn.requestFocusInWindow();
+            sound.play();
+        }
+        statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+        volumeSlider.setValue(50);
+        revalidate();
+        repaint();
+    }
+
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == this.backBtn) {
@@ -297,6 +315,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == this.playBtn) {
             this.getContentPane().remove(this.playBtn);
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
+            this.pauseBtn.requestFocusInWindow();
             this.sound.play();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
             this.revalidate();
@@ -304,6 +323,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         } else if (e.getSource() == this.pauseBtn) {
             this.getContentPane().remove(this.pauseBtn);
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
+            this.playBtn.requestFocusInWindow();
             this.sound.pause();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
             this.revalidate();
