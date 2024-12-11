@@ -194,7 +194,6 @@ public class MusicFrame extends JFrame implements ActionListener {
                     this.getContentPane().add(playBtn, Integer.valueOf(0));
                 }
                 sound.pause();
-                sound.displayStatus();
                 choose = songList.getSelectedIndex();
                 String selectedSong = SongName[choose];
                 sound.changeSource("src/misc/" + selectedSong);
@@ -214,7 +213,6 @@ public class MusicFrame extends JFrame implements ActionListener {
                     sound.play();
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                     volumeSlider.setValue(50);
-                    sound.displayStatus();
                     revalidate();
                     repaint();
                 }
@@ -259,23 +257,24 @@ public class MusicFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
-        if (e.getSource() == backBtn) {
+        if (e.getSource() == this.backBtn) {
+            System.out.println();
             this.setVisible(false);
             this.jFrame.setVisible(true);
-        } else if (e.getSource() == playBtn) {
-            this.getContentPane().remove(playBtn);
-            this.getContentPane().add(pauseBtn);
+        } else if (e.getSource() == this.playBtn) {
+            this.getContentPane().remove(this.playBtn);
+            this.pauseBtn.setForeground(Color.WHITE);
+            this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
             this.sound.play();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
-            this.sound.displayStatus();
             this.revalidate(); // 重新布局组件
             this.repaint();    // 重绘界面
-        } else if (e.getSource() == pauseBtn) {
-            this.getContentPane().remove(pauseBtn);
-            this.getContentPane().add(playBtn, Integer.valueOf(0));
+        } else if (e.getSource() == this.pauseBtn) {
+            this.getContentPane().remove(this.pauseBtn);
+            this.playBtn.setForeground(Color.WHITE);
+            this.getContentPane().add(this.playBtn, Integer.valueOf(0));
             this.sound.pause();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
-            this.sound.displayStatus();
             this.revalidate(); // 重新布局组件
             this.repaint();    // 重绘界面
         }

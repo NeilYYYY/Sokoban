@@ -3,6 +3,8 @@ package view.music;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Logger;
 
@@ -19,6 +21,7 @@ public class Sound {
     private SourceDataLine sourceDataLine;
     private FloatControl volumeControl;  // 音量控制器
     private long clipLength;  // 音频总时长（帧数）
+    private Timer progressTimer;  // 进度条定时器
 
     public Sound(String musicPath) {
         this.musicPath = musicPath;
@@ -56,12 +59,12 @@ public class Sound {
 
     public void play() {
         if (isPlaying) {
-            System.err.println("音频已经在播放了喵～");
             return;
         }
         isPlaying = true;
         playThread = new Thread(this::playAudio);
         playThread.start();
+        startProgressBar();
     }
 
     private void playAudio() {
@@ -97,11 +100,11 @@ public class Sound {
 
     public void pause() {
         if (!isPlaying) {
-            System.err.println("音频已经暂停了喵～");
             return;
         }
         isPlaying = false;
         sourceDataLine.stop();
+        stopProgressBar();
     }
 
     public void stop() {
@@ -118,6 +121,7 @@ public class Sound {
                 log.info(e.getMessage());
             }
         }
+        stopProgressBar();
         prefetch();
     }
 
@@ -130,15 +134,11 @@ public class Sound {
         stop();
         this.musicPath = newPath;
         prefetch();
-        System.out.println("改变音频路径: " + newPath + "喵");
+        System.out.println("\n改变音频路径: " + newPath + "喵");
     }
 
     public String getMusicPath() {
         return musicPath;
-    }
-
-    public double getProgress() {
-        return clipLength == 0 ? 0.0 : (double) currentFrame.get() / clipLength * 100.0;
     }
 
     public double getVolume() {
@@ -164,12 +164,35 @@ public class Sound {
         volumeControl.setValue(newVolume);
     }
 
-    public void displayStatus() {
-        String status = isPlaying ? "播放" : "暂停";
-        System.out.printf("状态: %s, 进度: %.2f%%, 音量: %.2f%%, 循环: %s\n", status, getProgress(), getVolume() * 100, isLooping ? "Enabled" : "Disabled");
-    }
-
     public boolean isPlaying() {
         return isPlaying;
+    }
+
+    private void startProgressBar() {
+        progressTimer = new Timer(true);
+        progressTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (!isPlaying) return;
+                long currentSeconds = (long) (currentFrame.get() / audioFormat.getFrameRate());
+                long totalSeconds = (long) (clipLength / audioFormat.getFrameRate());
+                int barLength = 50; // 进度条长度
+                double progress = (double) currentFrame.get() / clipLength;
+                int filledLength = (int) (barLength * progress);
+                StringBuilder bar = new StringBuilder();
+                for (int i = 0; i < barLength; i++) {
+                    bar.append(i < filledLength ? "=" : "-");
+                }
+                System.out.printf("\r[%s] %02d:%02d/%02d:%02d", bar,
+                        currentSeconds / 60, currentSeconds % 60,
+                        totalSeconds / 60, totalSeconds % 60);
+            }
+        }, 0, 500); // 每 500 毫秒更新一次
+    }
+
+    private void stopProgressBar() {
+        if (progressTimer != null) {
+            progressTimer.cancel();
+        }
     }
 }
