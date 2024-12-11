@@ -169,7 +169,7 @@ public class LevelFrame extends JFrame {
             this.getContentPane().add(stars[i][2], Integer.valueOf(1));
         }
         if (user.getLv()[0][1]) {
-            show (2, stars);
+            show(2, stars);
             locks[1].setVisible(false);
         }
         if (flag) {
@@ -205,7 +205,7 @@ public class LevelFrame extends JFrame {
             this.getContentPane().add(stars[i][3], Integer.valueOf(1));
         }
         if (user.getLv()[0][2]) {
-            show (3, stars);
+            show(3, stars);
             locks[2].setVisible(false);
         }
         if (flag) {
@@ -238,7 +238,7 @@ public class LevelFrame extends JFrame {
         getContentPane().add(level5Btn, Integer.valueOf(1));
         getContentPane().add(locks[3], Integer.valueOf(2));
         for (int i = 0; i < 3; i++) {
-           this.getContentPane().add(stars[i][4], Integer.valueOf(1));
+            this.getContentPane().add(stars[i][4], Integer.valueOf(1));
         }
 
         if (user.getLv()[0][3]) {
@@ -282,7 +282,9 @@ public class LevelFrame extends JFrame {
 
         if (flag) {
             level6Btn.setVisible(true);
-            crown.setVisible(true);
+            if (this.user.getLv()[0][5]) {
+                crown.setVisible(true);
+            }
         }
 
         JButton kingBtn = new JButton(kingImg);
@@ -551,7 +553,9 @@ public class LevelFrame extends JFrame {
             for (int i = 0; i < 5; i++) {
                 show(i, stars);
             }
-            crown.setVisible(false);
+            if (this.user.getLv()[0][5]) {
+                crown.setVisible(false);
+            }
         });
 
         kingBtn.addActionListener(_ -> {
@@ -566,7 +570,9 @@ public class LevelFrame extends JFrame {
             for (int i = 0; i < 5; i++) {
                 noShow(i, stars);
             }
-            crown.setVisible(true);
+            if (this.user.getLv()[0][5]) {
+                crown.setVisible(true);
+            }
         });
 
         musicBtn.addActionListener(_ -> new MusicFrame(this, this.sound));
