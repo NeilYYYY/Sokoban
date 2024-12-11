@@ -222,7 +222,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                             id = previousIndex;
                             savingList.setSelectedIndex(id);
                         }
-                        FileFrame.this.repaint();
+                        repaint();
                     }
                     case KeyEvent.VK_DOWN -> {
                         int nextIndex = id + 1;
@@ -230,11 +230,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                             id = nextIndex;
                             savingList.setSelectedIndex(id);
                         }
-                        FileFrame.this.repaint();
+                        repaint();
                     }
-                    case KeyEvent.VK_S -> FileFrame.this.saveBtn.doClick();
-                    case KeyEvent.VK_L -> FileFrame.this.loadBtn.doClick();
-                    case KeyEvent.VK_ESCAPE -> FileFrame.this.backBtn.doClick();
+                    case KeyEvent.VK_S -> saveBtn.doClick();
+                    case KeyEvent.VK_L -> loadBtn.doClick();
+                    case KeyEvent.VK_ESCAPE -> backBtn.doClick();
                 }
             }
         });

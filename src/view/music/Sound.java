@@ -199,14 +199,10 @@ public class Sound {
     }
 
     public void setCurrentFrame(long frame) throws InterruptedException {
-        if (this.isPlaying) {
-            this.pause();
-            Thread.sleep(100);
-            this.currentFrame.set(frame);
-            this.play();
-        } else {
-            this.currentFrame.set(frame);
-        }
+        this.currentFrame.set(frame);
+        this.pause();
+        Thread.sleep(100);
+        this.play();
     }
 
     public long getClipLength() {

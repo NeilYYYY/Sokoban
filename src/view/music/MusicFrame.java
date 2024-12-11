@@ -176,6 +176,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         progressBar.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                playBtn.doClick();
                 try {
                     updateProgress(e);
                 } catch (InterruptedException ex) {
@@ -190,7 +191,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                 } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
-                MusicFrame.this.requestFocusInWindow();
+                requestFocusInWindow();
             }
 
             private void updateProgress(@NotNull MouseEvent e) throws InterruptedException {
@@ -231,9 +232,9 @@ public class MusicFrame extends JFrame implements ActionListener {
                 switch (e.getKeyCode()) {
                     case KeyEvent.VK_SPACE -> {
                         if (sound.isPlaying()) {
-                            MusicFrame.this.pauseBtn.doClick();
+                            pauseBtn.doClick();
                         } else {
-                            MusicFrame.this.playBtn.doClick();
+                            playBtn.doClick();
                         }
                     }
                     case KeyEvent.VK_UP -> {
@@ -251,18 +252,28 @@ public class MusicFrame extends JFrame implements ActionListener {
                         }
                     }
                     case KeyEvent.VK_LEFT -> {
-                        int newVolumeDown = volumeSlider.getValue() - 5;
-                        if (newVolumeDown >= 0) {
-                            volumeSlider.setValue(newVolumeDown);
+                        playBtn.doClick();
+                        long currentFrame = sound.getCurrentFrame();
+                        long newFrame = currentFrame - (long) (sound.getFrameRate() * 5); // Rewind 5 seconds
+                        if (newFrame < 0) newFrame = 0;
+                        try {
+                            sound.setCurrentFrame(newFrame);
+                        } catch (InterruptedException ex) {
+                            throw new RuntimeException(ex);
                         }
                     }
                     case KeyEvent.VK_RIGHT -> {
-                        int newVolumeUp = volumeSlider.getValue() + 5;
-                        if (newVolumeUp <= 100) {
-                            volumeSlider.setValue(newVolumeUp);
+                        playBtn.doClick();
+                        long currentFrame = sound.getCurrentFrame();
+                        long newFrame = currentFrame + (long) (sound.getFrameRate() * 5); // Fast-forward 5 seconds
+                        if (newFrame > sound.getClipLength()) newFrame = sound.getClipLength();
+                        try {
+                            sound.setCurrentFrame(newFrame);
+                        } catch (InterruptedException ex) {
+                            throw new RuntimeException(ex);
                         }
                     }
-                    case KeyEvent.VK_ESCAPE -> MusicFrame.this.backBtn.doClick();
+                    case KeyEvent.VK_ESCAPE -> backBtn.doClick();
                 }
             }
         });
@@ -320,7 +331,7 @@ public class MusicFrame extends JFrame implements ActionListener {
                     }
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                     volumeSlider.setValue(50);
-                    MusicFrame.this.requestFocusInWindow();
+                    requestFocusInWindow();
                     revalidate();
                     repaint();
                 }
@@ -370,6 +381,9 @@ public class MusicFrame extends JFrame implements ActionListener {
             this.setVisible(false);
             this.jFrame.setVisible(true);
         } else if (e.getSource() == this.playBtn) {
+            if (this.sound.isPlaying()) {
+                return;
+            }
             this.getContentPane().remove(this.playBtn);
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
             this.requestFocusInWindow();
@@ -378,6 +392,9 @@ public class MusicFrame extends JFrame implements ActionListener {
             this.revalidate();
             this.repaint();
         } else if (e.getSource() == this.pauseBtn) {
+            if (!this.sound.isPlaying()) {
+                return;
+            }
             this.getContentPane().remove(this.pauseBtn);
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
             this.requestFocusInWindow();
