@@ -147,7 +147,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         this.getContentPane().add(this.statusLabel, Integer.valueOf(0));
 
         this.progressBar = new JProgressBar();
-        this.progressBar.setBounds(10, 340, 280, 15);
+        this.progressBar.setBounds(10, 340, 270, 15);
         progressBar.setStringPainted(true); // 显示文本
         this.getContentPane().add(progressBar, Integer.valueOf(0));
 
