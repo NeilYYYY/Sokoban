@@ -189,18 +189,19 @@ public class MusicFrame extends JFrame implements ActionListener {
         songList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         songList.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                if (this.sound.isPlaying()) {
-                    this.getContentPane().remove(pauseBtn);
-                    this.getContentPane().add(playBtn, Integer.valueOf(0));
-                }
-                sound.pause();
                 choose = songList.getSelectedIndex();
                 String selectedSong = SongName[choose];
-                sound.changeSource("src/misc/" + selectedSong);
-                Sound.setIndex(choose);
-                sound.setVolume(0.5);
-                statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
-                revalidate();
+                if (choose != Sound.getIndex()) {
+                    if (this.sound.isPlaying()) {
+                        this.getContentPane().remove(pauseBtn);
+                        this.getContentPane().add(playBtn, Integer.valueOf(0));
+                        sound.pause();
+                    }
+                    sound.changeSource("src/misc/" + selectedSong);
+                    Sound.setIndex(choose);
+                    sound.setVolume(0.5);
+                    statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
+                }revalidate();
                 repaint();
             }
         });
@@ -208,9 +209,11 @@ public class MusicFrame extends JFrame implements ActionListener {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    remove(playBtn);
-                    add(pauseBtn);
-                    sound.play();
+                    if (!sound.isPlaying()) {
+                        remove(playBtn);
+                        add(pauseBtn, Integer.valueOf(0));
+                        sound.play();
+                    }
                     statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", sound.isPlaying() ? "Playing" : "Paused", sound.getVolume() * 100));
                     volumeSlider.setValue(50);
                     revalidate();
@@ -233,8 +236,8 @@ public class MusicFrame extends JFrame implements ActionListener {
             @Override
             public void mouseExited(MouseEvent e) {
             }
-        });//增加双击功能
-        // SongList 的鼠标进入/离开效果
+        });
+
         songList.setCellRenderer((_, value, index, isSelected, cellHasFocus) -> {
             JLabel label = new JLabel(value);
             label.setFont(new Font("Serif", Font.BOLD, 12));
@@ -263,20 +266,18 @@ public class MusicFrame extends JFrame implements ActionListener {
             this.jFrame.setVisible(true);
         } else if (e.getSource() == this.playBtn) {
             this.getContentPane().remove(this.playBtn);
-            this.pauseBtn.setForeground(Color.WHITE);
             this.getContentPane().add(this.pauseBtn, Integer.valueOf(0));
             this.sound.play();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
-            this.revalidate(); // 重新布局组件
-            this.repaint();    // 重绘界面
+            this.revalidate();
+            this.repaint();
         } else if (e.getSource() == this.pauseBtn) {
             this.getContentPane().remove(this.pauseBtn);
-            this.playBtn.setForeground(Color.WHITE);
             this.getContentPane().add(this.playBtn, Integer.valueOf(0));
             this.sound.pause();
             this.statusLabel.setText(String.format("Status: %s, Volume: %.0f%%", this.sound.isPlaying() ? "Playing" : "Paused", this.sound.getVolume() * 100));
-            this.revalidate(); // 重新布局组件
-            this.repaint();    // 重绘界面
+            this.revalidate();
+            this.repaint();
         }
     }
 }
