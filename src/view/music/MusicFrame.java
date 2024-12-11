@@ -173,6 +173,37 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
         progressTimer.start();
 
+        progressBar.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                try {
+                    updateProgress(e);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                try {
+                    updateProgress(e);
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
+                MusicFrame.this.requestFocusInWindow();
+            }
+
+            private void updateProgress(@NotNull MouseEvent e) throws InterruptedException {
+                int mouseX = e.getX();
+                int progressBarVal = (int) Math.round(((double) mouseX / (double) progressBar.getWidth()) * 100);
+                progressBar.setValue(progressBarVal);
+
+                long totalFrames = sound.getClipLength();
+                long newFrame = (totalFrames * progressBarVal) / 100;
+                sound.setCurrentFrame(newFrame);
+            }
+        });
+
         this.volumeSlider = new JSlider(0, 100, (int) (this.sound.getVolume() * 100));
         this.volumeSlider.setBounds(10, 370, 200, 10);
         this.volumeSlider.setPaintTicks(true);
