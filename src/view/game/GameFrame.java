@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import controller.GameController;
 import model.MapMatrix;
 import view.FileSHAUtil;
+import view.RandomAvatar;
 import view.level.LevelFrame;
 import view.login.User;
 import view.music.MusicFrame;
@@ -411,6 +412,7 @@ public class GameFrame extends JFrame {
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                     this.check = false;
                 }
+                RandomAvatar.updateImage(this.fileFrame.getAvatar(), "image-0");
                 this.fileFrame.Show(this.fileFrame.getId());
                 this.setVisible(false);
                 this.fileFrame.setVisible(true);

@@ -2,7 +2,7 @@ package view.login;
 
 import org.jetbrains.annotations.NotNull;
 import view.ParticlePanel;
-import view.PreloadWebpImage;
+import view.RandomAvatar;
 import view.level.LevelFrame;
 import view.music.*;
 
@@ -242,7 +242,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user, this.sound, false, false);
                 JOptionPane.showMessageDialog(this, "登录成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
-                PreloadWebpImage.preloadImages(1);
+                RandomAvatar.preloadImages(1);
                 showLevelFrame();
             } else {
                 JOptionPane.showMessageDialog(this, "登录失败喵！", "Error", JOptionPane.ERROR_MESSAGE);

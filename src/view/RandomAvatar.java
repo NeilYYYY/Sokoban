@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-public class PreloadWebpImage {
+public class RandomAvatar {
     private static final String API_URL = "https://www.loliapi.com/acg/pp/";
     private static final int IMAGE_WIDTH = 100;
     private static final int IMAGE_HEIGHT = 100;
@@ -32,7 +32,7 @@ public class PreloadWebpImage {
                         System.out.println("Preloaded image-" + i);
                     }
                 } catch (Exception e) {
-                    Logger log = Logger.getLogger(PreloadWebpImage.class.getName());
+                    Logger log = Logger.getLogger(RandomAvatar.class.getName());
                     log.info("网络连接失败喵：" + e.getMessage());
                 }
             }
@@ -40,7 +40,7 @@ public class PreloadWebpImage {
     }
 
     private static BufferedImage loadImageFromApi() throws Exception {
-        URI uri = new URI(PreloadWebpImage.API_URL);
+        URI uri = new URI(RandomAvatar.API_URL);
         URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("User-Agent", "Mozilla/5.0");
@@ -61,7 +61,7 @@ public class PreloadWebpImage {
     private static BufferedImage resizeImage(BufferedImage originalImage) {
         int originalWidth = originalImage.getWidth();
         int originalHeight = originalImage.getHeight();
-        double scale = Math.min((double) PreloadWebpImage.IMAGE_WIDTH / originalWidth, (double) PreloadWebpImage.IMAGE_HEIGHT / originalHeight);
+        double scale = Math.min((double) RandomAvatar.IMAGE_WIDTH / originalWidth, (double) RandomAvatar.IMAGE_HEIGHT / originalHeight);
 
         int newWidth = (int) (originalWidth * scale);
         int newHeight = (int) (originalHeight * scale);

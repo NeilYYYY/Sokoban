@@ -8,7 +8,7 @@ import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import view.FileSHAUtil;
-import view.PreloadWebpImage;
+import view.RandomAvatar;
 import view.login.User;
 import view.music.Sound;
 
@@ -38,11 +38,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final JButton loadBtn;
     private final JButton saveBtn;
     private final JLabel statusLabel;
+    private final JLabel avatar;
     JList<String> savingList;
     private int step;
     private GameFrame gameFrame;
     private int id = 0;
-
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
@@ -104,13 +104,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         });
 
-        JLabel avatar = new JLabel("Avatar");
-        avatar.setBounds(670, 10, 100, 100);
+        this.avatar = new JLabel("Avatar");
+        this.avatar.setBounds(670, 10, 100, 100);
         this.getContentPane().add(avatar);
-        PreloadWebpImage.updateImage(avatar, "image-0");
+        RandomAvatar.updateImage(avatar, "image-0");
 
         JLabel userName = new JLabel(user.getUsername());
         userName.setFont(f);
+        userName.setForeground(Color.BLUE);
         userName.setBounds(600, 35, 50, 50);
         userName.setHorizontalAlignment(SwingConstants.RIGHT);
         this.getContentPane().add(userName);
@@ -353,6 +354,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         }
         gamePanel.repaint();
+    }
+
+    public JLabel getAvatar() {
+        return avatar;
     }
 
     public int getId() {
