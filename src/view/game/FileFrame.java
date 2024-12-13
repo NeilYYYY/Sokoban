@@ -8,6 +8,7 @@ import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import view.FileSHAUtil;
+import view.PreloadWebpImage;
 import view.login.User;
 import view.music.Sound;
 
@@ -33,18 +34,14 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private final User user;
     private final Sound sound;
     private final Logger log = Logger.getLogger(FileFrame.class.getName());
-    JList<String> savingList;
-    private int step;
-    private GameFrame gameFrame;
-    private int id = 0;
     private final JButton backBtn;
     private final JButton loadBtn;
     private final JButton saveBtn;
     private final JLabel statusLabel;
-
-    public int getId() {
-        return id;
-    }
+    JList<String> savingList;
+    private int step;
+    private GameFrame gameFrame;
+    private int id = 0;
 
     public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
@@ -106,6 +103,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 loadBtn.setForeground(Color.BLACK);
             }
         });
+
+        JLabel avatar = new JLabel("Avatar");
+        avatar.setBounds(670, 10, 100, 100);
+        this.getContentPane().add(avatar);
+        PreloadWebpImage.updateImage(avatar, "image-0");
+
+        JLabel userName = new JLabel(user.getUsername());
+        userName.setFont(f);
+        userName.setBounds(600, 35, 50, 50);
+        userName.setHorizontalAlignment(SwingConstants.RIGHT);
+        this.getContentPane().add(userName);
 
         this.saveBtn = new JButton("Save");
         this.saveBtn.setFont(f);
@@ -345,6 +353,10 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
         }
         gamePanel.repaint();
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void Load(int id) {

@@ -26,10 +26,10 @@ public class GameFrame extends JFrame {
     private final boolean mode;
     private final int time;
     private final int[] leastStep = {13, 23, 31, 27, 37};
-    private JLabel leftTimeLabel;
-    private JLabel timeLabel;
     private final String musicPath;
     private final JButton backBtn;
+    private JLabel leftTimeLabel;
+    private JLabel timeLabel;
     private LevelFrame levelFrame;
     private boolean check = true;
 
