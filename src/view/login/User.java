@@ -12,6 +12,8 @@ import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Logger;
 
 public class User {
@@ -116,7 +118,6 @@ public class User {
     public static void writeUser(ArrayList<User> user) {
         try (Writer writer = new FileWriter("users.json")) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            // 使用 JsonWriter 设置 4 个空格的缩进
             JsonWriter jsonWriter = new JsonWriter(writer);
             jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
             gson.toJson(user, ArrayList.class, jsonWriter);
@@ -124,6 +125,38 @@ public class User {
         } catch (IOException e) {
             log.info(e.getMessage());
         }
+    }
+
+    public static void initialUsers() {
+        String filePath = "users.json";
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("users.json does not exist. Generating...");
+            List<User> defaultUsers = Arrays.asList(
+                    new User(0, "", "", createDefaultLv(false)),
+                    new User(1, "admin", "64d09d9930c8ecf79e513167a588cb75439b762ce8f9b22ea59765f32aa74ca19d2f1e97dc922a3d4954594a05062917fb24d1f8e72f2ed02a58ed7534f94d27", createDefaultLv(true)),
+                    new User(2, "Box", "c964a72641eea046484af0198742a258d814224e6400400777959bb94ab811bf505ef4a5d1eb46f2f909f4b6bfa45b27af07bdfd5943cf3c0f6e65e8dc81430b", createDefaultLv(false))
+            );
+
+            try (FileWriter writer = new FileWriter(file)) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                JsonWriter jsonWriter = new JsonWriter(writer);
+                jsonWriter.setIndent("    ");
+                gson.toJson(defaultUsers, ArrayList.class, jsonWriter);
+                jsonWriter.flush();
+                System.out.println("user.json generated successfully.");
+            } catch (IOException e) {
+                System.err.println("Failed to write user.json: " + e.getMessage());
+            }
+        }
+    }
+
+    public static boolean[][] createDefaultLv(boolean value) {
+        boolean[][] lv = new boolean[3][6];
+        for (boolean[] booleans : lv) {
+            Arrays.fill(booleans, value);
+        }
+        return lv;
     }
 
     public int getId() {
