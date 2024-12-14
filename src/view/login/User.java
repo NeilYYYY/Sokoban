@@ -18,7 +18,8 @@ import java.util.logging.Logger;
 
 public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
-    private final int id;
+    private static final String path = "users.json";
+    private int id;
     private String username;
     private String password;
     private final boolean[][] lv;
@@ -45,7 +46,7 @@ public class User {
 
     //读取用户数据 检测用户名密码
     public static boolean checkUser(String username, String password) {
-        try (BufferedReader br = new BufferedReader(new FileReader("users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -99,7 +100,7 @@ public class User {
 
     //获取用户的所有信息数据
     public static ArrayList<User> getUserList() {
-        try (BufferedReader br = new BufferedReader(new FileReader("users.json"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
@@ -116,7 +117,7 @@ public class User {
 
     //将用户信息写入json文件中
     public static void writeUser(ArrayList<User> user) {
-        try (Writer writer = new FileWriter("users.json")) {
+        try (Writer writer = new FileWriter(User.path)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonWriter jsonWriter = new JsonWriter(writer);
             jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
@@ -128,10 +129,9 @@ public class User {
     }
 
     public static void initialUsers() {
-        String filePath = "users.json";
-        File file = new File(filePath);
+        File file = new File(User.path);
         if (!file.exists()) {
-            System.out.println("users.json does not exist. Generating...");
+            System.out.println("正在初始化用户信息...");
             List<User> defaultUsers = Arrays.asList(
                     new User(0, "", "", createDefaultLv(false)),
                     new User(1, "admin", "64d09d9930c8ecf79e513167a588cb75439b762ce8f9b22ea59765f32aa74ca19d2f1e97dc922a3d4954594a05062917fb24d1f8e72f2ed02a58ed7534f94d27", createDefaultLv(true)),
@@ -144,14 +144,14 @@ public class User {
                 jsonWriter.setIndent("    ");
                 gson.toJson(defaultUsers, ArrayList.class, jsonWriter);
                 jsonWriter.flush();
-                System.out.println("user.json generated successfully.");
+                System.out.println("初始化成功喵！");
             } catch (IOException e) {
                 System.err.println("Failed to write user.json: " + e.getMessage());
             }
         }
     }
 
-    public static boolean[][] createDefaultLv(boolean value) {
+    public static boolean @NotNull [] @NotNull [] createDefaultLv(boolean value) {
         boolean[][] lv = new boolean[3][6];
         for (boolean[] booleans : lv) {
             Arrays.fill(booleans, value);
@@ -161,6 +161,10 @@ public class User {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {

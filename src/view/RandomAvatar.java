@@ -33,7 +33,7 @@ public class RandomAvatar {
                     }
                 } catch (Exception e) {
                     Logger log = Logger.getLogger(RandomAvatar.class.getName());
-                    log.info("网络连接失败喵：" + e.getMessage());
+                    log.info("预加载图片失败喵：" + e.getMessage());
                 }
             }
         }).start();

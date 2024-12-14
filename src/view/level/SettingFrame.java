@@ -190,14 +190,17 @@ public class SettingFrame extends JFrame implements ActionListener {
             this.dispose();
             this.levelFrame.setVisible(true);
         } else if (e.getSource() == changeUsernameBtn) {
-            String newUsername = JOptionPane.showInputDialog("输入你的新用户名喵：");
-
-            if (newUsername == null) {
-                // 用户点击了取消
+            if (this.user.getId() == 2) {
+                JOptionPane.showMessageDialog(this, "此账号不允许修改用户名喵！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 用户名非空检测
+            String newUsername = JOptionPane.showInputDialog("输入你的新用户名喵：");
+
+            if (newUsername == null) {
+                return;
+            }
+
             if (newUsername.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "用户名不能为空喵！！！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -207,18 +210,20 @@ public class SettingFrame extends JFrame implements ActionListener {
             users.get(this.user.getId()).setUsername(newUsername);
             User.writeUser(users);
 
-            // 更新界面上的用户名
             this.changeUsername.setText(String.format("Username: %s", newUsername));
             JOptionPane.showMessageDialog(this, "修改用户名成功喵～");
         } else if (e.getSource() == changePasswordBtn) {
-            String newPassword = JOptionPane.showInputDialog("输入你的新密码喵：");
-
-            if (newPassword == null) {
-                // 用户点击了取消
+            if (this.user.getId() == 2) {
+                JOptionPane.showMessageDialog(this, "此账号不允许修改密码喵！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
-            // 密码非空检测
+            String newPassword = JOptionPane.showInputDialog("输入你的新密码喵：");
+
+            if (newPassword == null) {
+                return;
+            }
+
             if (newPassword.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "密码不能为空喵！！！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -227,11 +232,9 @@ public class SettingFrame extends JFrame implements ActionListener {
             String confirmPassword = JOptionPane.showInputDialog("确认你的新密码喵：");
 
             if (confirmPassword == null) {
-                // 用户点击了取消
                 return;
             }
 
-            // 确认密码输入
             if (confirmPassword.trim().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "确认密码不能为空喵！！！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                 return;
@@ -240,7 +243,7 @@ public class SettingFrame extends JFrame implements ActionListener {
             if (confirmPassword.equals(newPassword)) {
                 try {
                     ArrayList<User> users = User.getUserList();
-                    users.get(this.user.getId()).setPassword(User.getSHA(newPassword));  // 将新密码进行哈希处理
+                    users.get(this.user.getId()).setPassword(User.getSHA(newPassword));
                     User.writeUser(users);
                     JOptionPane.showMessageDialog(this, "修改密码成功喵！");
                 } catch (NoSuchAlgorithmException ex) {
@@ -253,8 +256,14 @@ public class SettingFrame extends JFrame implements ActionListener {
             Object[] options = {"不了喵～", "就是要删除喵！"};
             int confirm = JOptionPane.showOptionDialog(this, "你真的要删除账号喵？", "Delete Account", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
             if (confirm == 1) {
+                if (this.user.getId() == 2) {
+                    JOptionPane.showMessageDialog(this, "此账号不允许删除喵！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 ArrayList<User> users = User.getUserList();
-                users.remove(this.user.getId());  // 删除当前用户
+                users.get(this.user.getId()).setUsername("Deleted");
+                users.get(this.user.getId()).setPassword("Deleted");
+                users.get(this.user.getId()).setId(-1);
                 User.writeUser(users);
                 JOptionPane.showMessageDialog(this, "既然如此，你再也看不到你的账号了喵！！！", "Account Deleted", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();
