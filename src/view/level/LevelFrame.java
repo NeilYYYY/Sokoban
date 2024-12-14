@@ -46,15 +46,15 @@ public class LevelFrame extends JFrame {
         this.user = user;
 
         ImageIcon starImg = new ImageIcon("resources/images/star.png");
-        starImg.setImage(starImg.getImage().getScaledInstance(20, 15, Image.SCALE_DEFAULT));
+        starImg.setImage(starImg.getImage().getScaledInstance(20, 15, Image.SCALE_SMOOTH));
         ImageIcon crownImg = new ImageIcon("resources/images/crown.png");
-        crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        crownImg.setImage(crownImg.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH));
         ImageIcon kingImg = new ImageIcon("resources/images/king.png");
-        kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        kingImg.setImage(kingImg.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH));
         ImageIcon kingAltImg = new ImageIcon("resources/images/king_alter.png");
-        kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_DEFAULT));
+        kingAltImg.setImage(kingAltImg.getImage().getScaledInstance(40, 30, Image.SCALE_SMOOTH));
         ImageIcon lockImg = new ImageIcon("resources/images/lock.png");
-        lockImg.setImage(lockImg.getImage().getScaledInstance(80, 45, Image.SCALE_DEFAULT));
+        lockImg.setImage(lockImg.getImage().getScaledInstance(80, 45, Image.SCALE_SMOOTH));
 
         JLabel[][] stars = new JLabel[3][5];
         for (int i = 0; i < 5; i++) {
@@ -429,7 +429,7 @@ public class LevelFrame extends JFrame {
         } else {
             backImg = new ImageIcon("resources/images/Menu_Theme_Voidheart.png");
         }
-        backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         this.bg = new JLabel(backImg);
         this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
@@ -523,7 +523,7 @@ public class LevelFrame extends JFrame {
             if (this.mode) {
                 this.getContentPane().remove(this.bg);
                 ImageIcon imageIcon = new ImageIcon("resources/images/Menu_Theme_Voidheart_Alter.png");
-                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
                 this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
@@ -531,7 +531,7 @@ public class LevelFrame extends JFrame {
             } else {
                 this.getContentPane().remove(this.bg);
                 ImageIcon imageIcon = new ImageIcon("resources/images/Menu_Theme_Voidheart.png");
-                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+                imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
                 this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层

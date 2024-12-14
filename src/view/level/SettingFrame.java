@@ -177,7 +177,7 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.getContentPane().add(deleteJp, Integer.valueOf(1));
 
         ImageIcon back = new ImageIcon("resources/images/Menu_Theme_Godmaster.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层

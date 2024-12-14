@@ -218,7 +218,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.getContentPane().add(musicJp, Integer.valueOf(1));
         this.getContentPane().add(guestJp, Integer.valueOf(1));
         ImageIcon back = new ImageIcon("resources/images/Menu_Theme_Godmaster.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
@@ -233,7 +233,7 @@ public class LoginFrame extends JFrame implements ActionListener {
             // 根据读取的用户账号信息进行校验
             boolean temp;
             try {
-                temp = User.checkUser(username, User.getSHA(password));
+                temp = User.checkUserPassword(username, User.getSHA(password));
             } catch (NoSuchAlgorithmException ex) {
                 throw new RuntimeException(ex);
             }
@@ -263,10 +263,11 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     private void showLevelFrame() {
         this.dispose();
-        System.out.println("\n用户名 = " + usernameText.getText() + "喵");
-        System.out.println("密码 = " + String.valueOf(passwordText.getPassword()) + "喵");
+        System.out.println();
+        System.out.println("Username = " + usernameText.getText());
+        System.out.println("Password = " + String.valueOf(passwordText.getPassword()));
         try {
-            System.out.println("密码SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())) + "喵");
+            System.out.println("Password.SHA = " + User.getSHA(String.valueOf(passwordText.getPassword())));
         } catch (NoSuchAlgorithmException ex) {
             throw new RuntimeException(ex);
         }

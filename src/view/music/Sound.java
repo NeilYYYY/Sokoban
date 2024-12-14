@@ -64,7 +64,9 @@ public class Sound {
         this.isPlaying = true;
         this.playThread = new Thread(this::playAudio);
         this.playThread.start();
-        startProgressBar();
+        if ((long) (clipLength / audioFormat.getFrameRate()) > 60) {
+            startProgressBar();
+        }
     }
 
     private void playAudio() {

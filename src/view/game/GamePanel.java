@@ -202,7 +202,6 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 4;
                     getGrids()[hero.getRow()][hero.getCol() + 1].removeFragileFromGrid();
-                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
@@ -216,7 +215,6 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 4;
                     getGrids()[hero.getRow()][hero.getCol() - 1].removeFragileFromGrid();
-                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
@@ -230,7 +228,6 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 4;
                     getGrids()[hero.getRow() + 1][hero.getCol()].removeFragileFromGrid();
-                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
@@ -244,7 +241,6 @@ public class GamePanel extends ListenerPanel {
                 if (moveFragile[this.steps] == 1) {
                     controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 4;
                     getGrids()[hero.getRow() - 1][hero.getCol()].removeFragileFromGrid();
-                    System.out.println("不易碎");
                     moveFragile[this.steps] = 0;
                 }
                 targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
@@ -307,13 +303,11 @@ public class GamePanel extends ListenerPanel {
             if (FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
-                JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
             boolean result = FileFrame.updateMapById(this.filepath, 0, controller.getModel(), this.steps, this.time, moveHero, moveBox);
-            if (result) {
-                System.out.println("更新成功喵");
-            } else {
-                System.out.println("更新失败喵");
+            if (!result) {
+                System.out.println("自动保存失败喵。。。");
             }
             FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filepath)), new File(filepath + ".sha"));
         } catch (IOException e) {

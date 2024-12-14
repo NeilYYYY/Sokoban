@@ -13,10 +13,6 @@ import view.music.Sound;
 import javax.swing.*;
 import java.util.ArrayList;
 
-/**
- * It is a bridge to combine GamePanel(view) and MapMatrix(model) in one game.
- * You can design several methods about the game logic in this class.
- */
 public class GameController {
     private final GamePanel view;
     private final MapMatrix model;
@@ -60,6 +56,7 @@ public class GameController {
     }
 
     public void restartGame() {
+        System.out.println();
         System.out.println("还要重开？这么菜的喵？");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
@@ -156,6 +153,7 @@ public class GameController {
                 users.get(this.user.getId()).getLv()[0][this.lv - 1] = true;
                 User.writeUser(users);
             }
+            System.out.println();
             System.out.println("可恶喵，给你赢了喵");
             Sound s = new Sound("resources/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
@@ -258,7 +256,6 @@ public class GameController {
             }
             System.out.println("雑魚！雑魚！");
             int option = JOptionPane.showOptionDialog(null, "菜", "FAILED", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"Back", "Restart"}, "Restart");
-            // 根据用户选择打开不同的 JFrame
             if (option == 1) {
                 gameFrame.getController().restartGame();
             } else {
@@ -285,7 +282,6 @@ public class GameController {
 
     public boolean doMove(int row, int col, @NotNull Direction direction) {
         GridComponent currentGrid = view.getGridComponent(row, col);
-        //target row can column.
         int tRow = row + direction.getRow();
         int tCol = col + direction.getCol();
         int ttRow = tRow + direction.getRow();
@@ -293,19 +289,15 @@ public class GameController {
         GridComponent targetGrid = view.getGridComponent(tRow, tCol);
         int[][] map = model.getMatrix();
         if (map[tRow][tCol] == 0 || map[tRow][tCol] == 2 || map[tRow][tCol] == 4 || map[tRow][tCol] == 100 || map[tRow][tCol] == 5) {
-            //update hero in MapMatrix
             if (model.getMatrix()[row][col] == 25) {
                 moveFragile[view.getSteps()] = 1;
-                System.out.println("易碎格");
             } else {
                 moveFragile[view.getSteps()] = 0;
             }
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 20;
-            //Update hero in GamePanel
             Hero h = currentGrid.removeHeroFromGrid();
             targetGrid.setHeroInGrid(h);
-            //Update the row and column attribute in hero
             moveHeroBack(direction, tRow, tCol, h);
             moveBox[view.getSteps()] = 0;
             if (model.getMatrix()[row][col] == 5) {
@@ -327,7 +319,6 @@ public class GameController {
             if (model.getMatrix()[row][col] == 25) {
                 moveFragile[view.getSteps()] = 1;
                 view.setMoveFragile(moveFragile);
-                System.out.println("易碎格");
             } else {
                 moveFragile[view.getSteps()] = 0;
             }

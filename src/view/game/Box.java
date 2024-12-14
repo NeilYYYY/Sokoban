@@ -13,9 +13,9 @@ public class Box extends JComponent {
         this.setSize(width, height);
         this.setLocation(5, 5);
         if (user.getId() == 2) {
-            this.image = new ImageIcon("resources/images/The_Knight.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            this.image = new ImageIcon("resources/images/The_Knight.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         } else {
-            this.image = new ImageIcon("resources/images/Grub.png").getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT);
+            this.image = new ImageIcon("resources/images/Grub.png").getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
         }
     }
 

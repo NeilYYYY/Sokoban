@@ -221,7 +221,7 @@ public class MusicFrame extends JFrame implements ActionListener {
         });
 
         ImageIcon back = new ImageIcon("resources/images/MusicFrameBackground.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1));

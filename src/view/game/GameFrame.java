@@ -477,14 +477,15 @@ public class GameFrame extends JFrame {
         });
 
         ImageIcon back = new ImageIcon("resources/images/Menu_Theme_The_Eternal_Ordeal.png");
-        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
         if (!file.exists() && user.getId() != 0 && lv != 6) {
-            if (!file.getParentFile().mkdirs()) {
-                System.err.println("目录已存在喵: " + file.getParentFile().getAbsolutePath());
+            System.err.println("存档文件不存在喵！");
+            if (file.getParentFile().mkdirs()) {
+                System.err.println("存档目录不存在，创建新目录喵~");
             }
             try {
                 FileFrame.createFile(filepath);
@@ -497,14 +498,11 @@ public class GameFrame extends JFrame {
                 }
                 System.out.println("创建新文件并保存喵");
             } catch (Exception e) {
-                System.err.println("保存失败喵");
                 log.info(e.getMessage());
             }
             try {
-                if (FileFrame.updateMapById(filepath, 0, this.controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
-                    System.out.println("更新成功喵");
-                } else {
-                    System.err.println("更新失败喵");
+                if (! FileFrame.updateMapById(filepath, 0, this.controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
+                    System.err.println("保存失败喵");
                 }
                 FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
@@ -516,7 +514,7 @@ public class GameFrame extends JFrame {
 
         File shaFile = new File(filepath + ".sha");
         if (!shaFile.exists() && user.getId() != 0 && lv != 6) {
-            System.err.println("存档文档损坏喵！");
+            System.err.println("存档文档损坏喵！sha文件不存在喵！");
             if (file.delete()) {
                 System.err.println("存档已清空！！！");
                 try {
@@ -530,13 +528,10 @@ public class GameFrame extends JFrame {
                     }
                     System.out.println("创建新文件并保存喵");
                 } catch (Exception e) {
-                    System.err.println("保存失败喵");
                     log.info(e.getMessage());
                 }
                 try {
-                    if (FileFrame.updateMapById(filepath, 0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
-                        System.out.println("更新成功喵");
-                    } else {
+                    if (!FileFrame.updateMapById(filepath, 0, controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
                         System.out.println("更新失败喵");
                     }
                     FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));

@@ -19,7 +19,7 @@ public class Hero extends JComponent {
         if (user.getId() == 2) {
             this.image = new ImageIcon("resources/images/Grub.png").getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
         } else {
-            this.image = new ImageIcon("resources/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_DEFAULT);
+            this.image = new ImageIcon("resources/images/The_Knight.png").getImage().getScaledInstance(34, 34, Image.SCALE_SMOOTH);
         }
     }
 

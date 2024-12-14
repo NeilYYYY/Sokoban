@@ -8,7 +8,6 @@ import model.MapMatrix;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import view.FileSHAUtil;
-import view.RandomAvatar;
 import view.login.User;
 import view.music.Sound;
 
@@ -43,7 +42,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     private int step;
     private GameFrame gameFrame;
     private int id = 0;
-    public FileFrame(int width, int height, User user, GameFrame gameFrame, int lv, Sound sound) {
+
+    public FileFrame(int width, int height, @NotNull User user, GameFrame gameFrame, int lv, Sound sound) {
         Font f = new Font("Comic Sans MS", Font.BOLD, 18);
         this.gameFrame = gameFrame;
         this.filePath = String.format("saves/%d-%d.json", lv, user.getId());
@@ -52,9 +52,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.sound = sound;
         this.setTitle("Savings");
         this.setAlwaysOnTop(false);
-        this.setLayout(null);//关闭默认布局类型 自己手动设置布局
+        this.setLayout(null);
         this.setSize(width, height);
-        this.setLocationRelativeTo(null);//设置GUI显示居中
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.gamePanel = new GamePanel(this.gameFrame.getGameController().getModel(), gameFrame, user, gameFrame.getGamePanel().getSteps());
         this.gamePanel.setFocusable(false);
@@ -103,11 +103,11 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 loadBtn.setForeground(Color.BLACK);
             }
         });
-
-        this.avatar = new JLabel("Avatar");
+        ImageIcon avatarIcon = new ImageIcon("resources/images/defaultAvatar.png");
+        avatarIcon.setImage(avatarIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+        this.avatar = new JLabel(avatarIcon);
         this.avatar.setBounds(670, 10, 100, 100);
         this.getContentPane().add(avatar);
-        RandomAvatar.updateImage(avatar, "image-0");
 
         JLabel userName = new JLabel(user.getUsername());
         userName.setFont(f);
@@ -149,6 +149,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 throw new RuntimeException(e);
             }
         });
+
         this.saveBtn.addActionListener(_ -> {
             try {
                 Save(this.id);
@@ -203,12 +204,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.getContentPane().add(scrollPane);
 
         ImageIcon back = new ImageIcon("resources/images/Zako.png");
-        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.getContentPane().add(bg, Integer.valueOf(-1));
 
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
         this.copyModel = this.gameFrame.getGameController().getModel();
         this.step = this.gameFrame.getGamePanel().getSteps();
@@ -259,7 +260,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         listModel.addElement("save_03");
         listModel.addElement("save_04");
         listModel.addElement("save_05");
-        // 创建列表，并设置选择监听器
         return new JList<>(listModel);
     }
 
@@ -369,7 +369,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         if (checkFile()) {
             System.err.println("存档文件损坏喵！");
             fixFile();
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
             return;
         }
@@ -377,7 +377,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
-                System.out.printf("读入存档%d\n", id);
+                System.out.printf("读入存档%d喵~\n", id);
                 gameFrame.getGamePanel().setFlag(true);
                 for (int i = 0; i < gameFrame.getGamePanel().getGrids().length; i++) {
                     for (int j = 0; j < gameFrame.getGamePanel().getGrids()[i].length; j++) {
@@ -440,19 +440,17 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         if (checkFile()) {
             System.err.println("存档文件损坏喵！");
             fixFile();
-            JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         try {
             Map<Integer, MapInfo> maps = loadMapsFromJson(filePath);
             MapInfo map = maps.get(id);
             if (map.getModel() != null) {
-                System.out.printf("读入存档%d喵\n", id);
                 this.statusLabel.setText("");
                 reloadPanel(map, gamePanel);
             } else {
                 map = new MapInfo(Level.values()[this.lv - 1].getMap());
-                System.err.println("地图不存在喵");
                 this.statusLabel.setText("EMPTY");
                 reloadPanel(map, gamePanel);
             }
@@ -478,9 +476,9 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             this.step = this.gameFrame.getGamePanel().getSteps();
             boolean result = updateMapById(this.filePath, id, copyModel, this.step, gameFrame.getGamePanel().getTime(), gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox());
             if (result) {
-                System.out.println("更新成功喵");
+                System.out.println("保存成功喵");
             } else {
-                System.err.println("更新失败喵");
+                System.err.println("保存失败喵");
             }
             FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filePath)), new File(filePath + ".sha"));
         } catch (IOException e) {
@@ -519,7 +517,6 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             }
             System.out.println("创建新文件并保存喵");
         } catch (Exception e) {
-            System.err.println("保存失败喵");
             log.info(e.getMessage());
         }
         try {

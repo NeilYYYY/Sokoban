@@ -155,7 +155,7 @@ public class Register extends JFrame implements ActionListener {
         this.getContentPane().add(registerJp, Integer.valueOf(1));
 
         ImageIcon back = new ImageIcon("resources/images/Menu_Theme_Godmaster.png");
-        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_DEFAULT));
+        back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
@@ -175,7 +175,7 @@ public class Register extends JFrame implements ActionListener {
             boolean found;
             found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue) && !username.equals("Deleted"));
             if (found) {
-                boolean temp = User.readUser(username, users);//检测用户名是否重复
+                boolean temp = User.checkUsername(username, users);//检测用户名是否重复
                 if (temp) {
                     int id = users.toArray().length;
                     User tempUser = User.getUser("Deleted", users);

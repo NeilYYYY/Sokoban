@@ -34,8 +34,8 @@ public class User {
         }
     }
 
-    //读取用户数据 检查是否出现用户名重复的情况
-    public static boolean readUser(String username, @NotNull ArrayList<User> user) {
+    //检查是否出现用户名重复
+    public static boolean checkUsername(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.getUsername().equals(username)) {
                 return false;
@@ -44,8 +44,8 @@ public class User {
         return true;
     }
 
-    //读取用户数据 检测用户名密码
-    public static boolean checkUser(String username, String password) {
+    //检测用户名密码
+    public static boolean checkUserPassword(String username, String password) {
         try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
             String line;
@@ -66,7 +66,7 @@ public class User {
         return false;
     }
 
-    //读取用户数据 找到用户
+    //找到并返回用户
     public static @Nullable User getUser(String username, @NotNull ArrayList<User> user) {
         for (User data : user) {
             if (data.getUsername().equals(username)) {
@@ -98,7 +98,6 @@ public class User {
         return stringBuilder.toString();
     }
 
-    //获取用户的所有信息数据
     public static ArrayList<User> getUserList() {
         try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
@@ -115,7 +114,6 @@ public class User {
         return new ArrayList<>();
     }
 
-    //将用户信息写入json文件中
     public static void writeUser(ArrayList<User> user) {
         for (int i = user.size() - 1; i >= 0; i--) {
             if (user.get(i).getUsername().equals("Deleted")) {
