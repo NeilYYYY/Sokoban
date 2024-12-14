@@ -173,7 +173,7 @@ public class Register extends JFrame implements ActionListener {
                 System.out.println(data.getUsername());
             }
             boolean found;
-            found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue));
+            found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue) && !username.equals("Deleted"));
             if (found) {
                 boolean temp = User.readUser(username, user);//检测用户名是否重复
                 if (temp) {
