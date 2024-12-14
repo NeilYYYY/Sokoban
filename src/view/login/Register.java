@@ -168,23 +168,33 @@ public class Register extends JFrame implements ActionListener {
             String username = this.usernameText.getText();
             String password = new String(this.passwordText.getPassword());
             String passwordTrue = new String(this.passwordTextTrue.getPassword());
-            ArrayList<User> user = User.getUserList();
-            for (User data : user) {
+            ArrayList<User> users = User.getUserList();
+            for (User data : users) {
                 System.out.println(data.getUsername());
             }
             boolean found;
             found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue) && !username.equals("Deleted"));
             if (found) {
-                boolean temp = User.readUser(username, user);//检测用户名是否重复
+                boolean temp = User.readUser(username, users);//检测用户名是否重复
                 if (temp) {
-                    JOptionPane.showMessageDialog(this, "注册成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
-                    int id = user.toArray().length;
-                    try {
-                        user.add(new User(id, username, User.getSHA(password), User.createDefaultLv(false)));
-                    } catch (NoSuchAlgorithmException ex) {
-                        throw new RuntimeException(ex);
+                    int id = users.toArray().length;
+                    User tempUser = User.getUser("Deleted", users);
+                    if (tempUser != null) {
+                        id = tempUser.getId();
+                        try {
+                            users.set(id, new User(id, username, User.getSHA(password), User.createDefaultLv(false)));
+                        } catch (NoSuchAlgorithmException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    } else {
+                        try {
+                            users.add(new User(id, username, User.getSHA(password), User.createDefaultLv(false)));
+                        } catch (NoSuchAlgorithmException ex) {
+                            throw new RuntimeException(ex);
+                        }
                     }
-                    User.writeUser(user);//将新用户的数据写入json表中
+                    User.writeUser(users);//将新用户的数据写入json表中
+                    JOptionPane.showMessageDialog(this, "注册成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     this.loginFrame.setVisible(true);
                 } else {

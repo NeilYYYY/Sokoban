@@ -14,6 +14,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SettingFrame extends JFrame implements ActionListener {
     JButton changeUsernameBtn;
@@ -263,7 +264,10 @@ public class SettingFrame extends JFrame implements ActionListener {
                 ArrayList<User> users = User.getUserList();
                 users.get(this.user.getId()).setUsername("Deleted");
                 users.get(this.user.getId()).setPassword("Deleted");
-                users.get(this.user.getId()).setId(-1);
+                boolean[][] tempLv = users.get(this.user.getId()).getLv();
+                for (boolean[] booleans : tempLv) {
+                    Arrays.fill(booleans, false);
+                }
                 User.writeUser(users);
                 JOptionPane.showMessageDialog(this, "既然如此，你再也看不到你的账号了喵！！！", "Account Deleted", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

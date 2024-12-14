@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
     private static final String path = "users.json";
-    private int id;
+    private final int id;
     private String username;
     private String password;
     private final boolean[][] lv;
@@ -117,15 +117,22 @@ public class User {
 
     //将用户信息写入json文件中
     public static void writeUser(ArrayList<User> user) {
-        try (Writer writer = new FileWriter(User.path)) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonWriter jsonWriter = new JsonWriter(writer);
-            jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
-            gson.toJson(user, ArrayList.class, jsonWriter);
-            jsonWriter.flush();
-        } catch (IOException e) {
-            log.info(e.getMessage());
+        for (int i = user.size() - 1; i >= 0; i--) {
+            if (user.get(i).getUsername().equals("Deleted")) {
+                user.remove(i);
+            } else {
+                break;
+            }
         }
+            try (Writer writer = new FileWriter(User.path)) {
+                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                JsonWriter jsonWriter = new JsonWriter(writer);
+                jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
+                gson.toJson(user, ArrayList.class, jsonWriter);
+                jsonWriter.flush();
+            } catch (IOException e) {
+                log.info(e.getMessage());
+            }
     }
 
     public static void initialUsers() {
@@ -161,10 +168,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getUsername() {
