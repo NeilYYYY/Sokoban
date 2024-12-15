@@ -365,9 +365,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     }
 
     public void Load(int id) {
-        //读取地图
-        if (checkFile()) {
-            System.err.println("存档文件损坏喵！");
+        if (checkFileFailed()) {
+            log.warning("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
@@ -418,7 +417,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
                 gameFrame.getGamePanel().repaint();
                 gameFrame.getGamePanel().requestFocusInWindow();
             } else {
-                System.err.println("地图不存在喵");
+                log.warning("地图不存在喵");
                 JOptionPane.showMessageDialog(this, "这是个空存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (IOException e) {
@@ -436,9 +435,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public void Show(int id) {
         this.requestFocusInWindow();
-        //读取地图
-        if (checkFile()) {
-            System.err.println("存档文件损坏喵！");
+        if (checkFileFailed()) {
+            log.warning("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             return;
@@ -462,11 +460,12 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     public void Save(int id) {
         //读取文件
         this.requestFocusInWindow();
-        if (checkFile()) {
-            System.err.println("存档文件损坏喵！");
+        if (checkFileFailed()) {
+            log.warning("存档文件损坏喵！");
             fixFile();
             JOptionPane.showMessageDialog(this, "存档文件损坏喵~已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             reopenGameFrame();
+            return;
         }
         if (id == 0) {
             JOptionPane.showMessageDialog(this, "这是Auto_Save喵~", "Tips", JOptionPane.INFORMATION_MESSAGE);
@@ -478,7 +477,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             if (result) {
                 System.out.println("保存成功喵");
             } else {
-                System.err.println("保存失败喵");
+                log.warning("保存失败喵");
             }
             FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(this.filePath)), new File(filePath + ".sha"));
         } catch (IOException e) {
@@ -488,23 +487,20 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         }
     }
 
-    public boolean checkFile() {
+    public boolean checkFileFailed() {
         try {
-            return FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filePath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filePath)));
+            return !new File(filePath).exists() || !new File(filePath + ".sha").exists() || !FileSHAUtil.compareSHA(FileSHAUtil.loadSHAFromFile(new File(this.filePath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filePath)));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public void fixFile() {
-        File file = new File(filePath);
-        File file1 = new File(filePath + ".sha");
-        if (file.delete() && file1.delete()) {
-            System.err.println("文件已删除喵");
+        if (new File(filePath).delete() && new File(filePath + ".sha").delete()) {
+            log.info("文件已删除喵");
         } else {
-            System.err.println("删除文件失败喵");
+            log.warning("删除文件失败喵");
         }
-
         MapMatrix originalMap = new MapMatrix(Level.values()[gameFrame.getLv() - 1].getMap());
         try {
             createFile(filePath);

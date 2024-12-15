@@ -20,9 +20,9 @@ public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
     private static final String path = "users.json";
     private final int id;
+    private final boolean[][] lv;
     private String username;
     private String password;
-    private final boolean[][] lv;
 
     public User(int id, String username, String password, boolean @NotNull [] @NotNull [] lv) {
         this.id = id;
@@ -122,15 +122,15 @@ public class User {
                 break;
             }
         }
-            try (Writer writer = new FileWriter(User.path)) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonWriter jsonWriter = new JsonWriter(writer);
-                jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
-                gson.toJson(user, ArrayList.class, jsonWriter);
-                jsonWriter.flush();
-            } catch (IOException e) {
-                log.info(e.getMessage());
-            }
+        try (Writer writer = new FileWriter(User.path)) {
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonWriter jsonWriter = new JsonWriter(writer);
+            jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
+            gson.toJson(user, ArrayList.class, jsonWriter);
+            jsonWriter.flush();
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
     }
 
     public static void initialUsers() {
@@ -151,7 +151,7 @@ public class User {
                 jsonWriter.flush();
                 System.out.println("初始化成功喵！");
             } catch (IOException e) {
-                System.err.println("Failed to write user.json: " + e.getMessage());
+                log.warning("写入 user.json 失败: " + e.getMessage());
             }
         }
     }

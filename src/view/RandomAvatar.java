@@ -18,8 +18,6 @@ public class RandomAvatar {
     private static final String API_URL = "https://www.loliapi.com/acg/pp/";
     private static final int IMAGE_WIDTH = 100;
     private static final int IMAGE_HEIGHT = 100;
-
-    // 缓存图片的 Map
     private static final ConcurrentHashMap<String, ImageIcon> imageCache = new ConcurrentHashMap<>();
 
     public static void preloadImages(int count) {

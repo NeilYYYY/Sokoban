@@ -483,9 +483,9 @@ public class GameFrame extends JFrame {
         this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
 
         if (!file.exists() && user.getId() != 0 && lv != 6) {
-            System.err.println("存档文件不存在喵！");
+            log.warning("存档文件不存在喵！");
             if (file.getParentFile().mkdirs()) {
-                System.err.println("存档目录不存在，创建新目录喵~");
+                log.warning("存档目录不存在，创建新目录喵~");
             }
             try {
                 FileFrame.createFile(filepath);
@@ -496,13 +496,13 @@ public class GameFrame extends JFrame {
                     mapInfo.setStep(0);
                     FileFrame.addNewMap(mapInfo, filepath);
                 }
-                System.out.println("创建新文件并保存喵");
+                log.info("创建新文件并保存喵");
             } catch (Exception e) {
                 log.info(e.getMessage());
             }
             try {
-                if (! FileFrame.updateMapById(filepath, 0, this.controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
-                    System.err.println("保存失败喵");
+                if (!FileFrame.updateMapById(filepath, 0, this.controller.getModel(), this.gamePanel.getSteps(), this.gamePanel.getTime(), this.gamePanel.getMoveHero(), this.gamePanel.getMoveBox())) {
+                    log.warning("保存失败喵");
                 }
                 FileSHAUtil.saveSHAToFile(FileSHAUtil.calculateSHA(new File(filepath)), new File(filepath + ".sha"));
             } catch (IOException e) {
@@ -514,9 +514,9 @@ public class GameFrame extends JFrame {
 
         File shaFile = new File(filepath + ".sha");
         if (!shaFile.exists() && user.getId() != 0 && lv != 6) {
-            System.err.println("存档文档损坏喵！sha文件不存在喵！");
+            log.warning("存档文档损坏！sha文件不存在喵！");
             if (file.delete()) {
-                System.err.println("存档已清空！！！");
+                log.warning("存档已清空！！！");
                 try {
                     FileFrame.createFile(filepath);
                     for (int i = 0; i < 6; i++) {

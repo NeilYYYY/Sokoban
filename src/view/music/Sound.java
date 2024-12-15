@@ -145,7 +145,7 @@ public class Sound {
 
     public double getVolume() {
         if (this.volumeControl == null) {
-            System.err.println("声音控制不支持喵！");
+            log.warning("声音控制不支持喵！");
             return 0.0;
         }
         float min = this.volumeControl.getMinimum();
@@ -156,7 +156,7 @@ public class Sound {
 
     public void setVolume(double volume) {
         if (this.volumeControl == null) {
-            System.err.println("声音控制不支持喵！");
+            log.warning("声音控制不支持喵！");
             return;
         }
         float min = this.volumeControl.getMinimum();
@@ -215,6 +215,7 @@ public class Sound {
         if (this.audioFormat != null) {
             return this.audioFormat.getFrameRate();
         }
+        log.warning("音频未初始化喵！");
         return -1; // 如果音频格式未初始化，返回一个无效值。
     }
 }

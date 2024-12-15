@@ -37,8 +37,8 @@ public class FileSHAUtil {
         }
     }
 
-    @Contract(value = "_, null -> true", pure = true)
-    public static boolean compareSHAFailed(@NotNull String shaFromFile, String calculatedSHA) {
-        return !shaFromFile.equals(calculatedSHA);
+    @Contract(pure = true, value = "_, null -> false")
+    public static boolean compareSHA(@NotNull String shaFromFile, String calculatedSHA) {
+        return shaFromFile.equals(calculatedSHA);
     }
 }

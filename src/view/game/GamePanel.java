@@ -300,7 +300,7 @@ public class GamePanel extends ListenerPanel {
             return;
         }
         try {
-            if (FileSHAUtil.compareSHAFailed(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
+            if (FileSHAUtil.compareSHA(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
                 JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
