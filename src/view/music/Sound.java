@@ -95,7 +95,7 @@ public class Sound {
             long bytesToSkip = this.currentFrame.get() * this.audioFormat.getFrameSize();
             long bytesSkipped = this.audioStream.skip(bytesToSkip);
             if (bytesSkipped != bytesToSkip) {
-                log.warning("快进按太快啦！实际跳至 " + bytesSkipped + " 字节, 小于目标 " + bytesToSkip + " 字节，可能会导致播放异常喵！");
+                log.info("快进按太快啦！实际跳至 " + bytesSkipped + " 字节, 小于目标 " + bytesToSkip + " 字节，可能会导致播放异常喵！");
             }
         }
     }
