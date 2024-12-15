@@ -58,7 +58,7 @@ public class RandomAvatar {
     private static @NotNull HttpURLConnection getHttpURLConnection(URI uri) throws IOException {
         URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
         connection.setRequestProperty("Referer", "https://www.loliapi.com/");
         connection.setRequestProperty("Accept", "image/webp,image/apng,image/*,*/*;q=0.8");
         connection.setConnectTimeout(5000);
