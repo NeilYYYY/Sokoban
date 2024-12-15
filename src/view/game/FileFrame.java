@@ -475,7 +475,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
             this.step = this.gameFrame.getGamePanel().getSteps();
             boolean result = updateMapById(this.filePath, id, copyModel, this.step, gameFrame.getGamePanel().getTime(), gameFrame.getGamePanel().getMoveHero(), gameFrame.getGamePanel().getMoveBox());
             if (result) {
-                System.out.println("保存成功喵");
+                System.out.println("保存成功喵~");
             } else {
                 log.warning("保存失败喵");
             }
@@ -496,10 +496,8 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
     }
 
     public void fixFile() {
-        if (new File(filePath).delete() && new File(filePath + ".sha").delete()) {
-            log.info("文件已删除喵");
-        } else {
-            log.warning("删除文件失败喵");
+        if (new File(filePath).delete() || new File(filePath + ".sha").delete()) {
+            log.warning("存档文件已清除喵");
         }
         MapMatrix originalMap = new MapMatrix(Level.values()[gameFrame.getLv() - 1].getMap());
         try {

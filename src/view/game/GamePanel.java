@@ -300,10 +300,10 @@ public class GamePanel extends ListenerPanel {
             return;
         }
         try {
-            if (FileSHAUtil.compareSHA(FileSHAUtil.loadSHAFromFile(new File(this.filepath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filepath)))) {
+            if (frame.getFileFrame().checkFileFailed()) {
                 System.out.println("存档文件损坏喵！");
                 frame.getFileFrame().fixFile();
-                JOptionPane.showMessageDialog(this, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this.frame, "存档文件损坏，已重置存档喵~", "Error", JOptionPane.INFORMATION_MESSAGE);
             }
             boolean result = FileFrame.updateMapById(this.filepath, 0, controller.getModel(), this.steps, this.time, moveHero, moveBox);
             if (!result) {
