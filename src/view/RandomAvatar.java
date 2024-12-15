@@ -55,19 +55,18 @@ public class RandomAvatar {
         }
     }
 
-    private static @NotNull HttpURLConnection getHttpURLConnection(URI uri) throws IOException {
+    private static @NotNull HttpURLConnection getHttpURLConnection(@NotNull URI uri) throws IOException {
         URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
         connection.setRequestProperty("Referer", "https://www.loliapi.com/");
-        connection.setRequestProperty("Accept", "image/webp,image/apng,image/*,*/*;q=0.8");
         connection.setConnectTimeout(5000);
         connection.setReadTimeout(5000);
         connection.connect();
         return connection;
     }
 
-    private static BufferedImage resizeImage(BufferedImage originalImage) {
+    private static @NotNull BufferedImage resizeImage(@NotNull BufferedImage originalImage) {
         int originalWidth = originalImage.getWidth();
         int originalHeight = originalImage.getHeight();
         double scale = Math.min((double) RandomAvatar.IMAGE_WIDTH / originalWidth, (double) RandomAvatar.IMAGE_HEIGHT / originalHeight);
