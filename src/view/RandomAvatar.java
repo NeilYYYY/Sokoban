@@ -1,5 +1,7 @@
 package view;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -41,12 +43,7 @@ public class RandomAvatar {
 
     private static BufferedImage loadImageFromApi() throws Exception {
         URI uri = new URI(RandomAvatar.API_URL);
-        URL url = uri.toURL();
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestProperty("User-Agent", "Mozilla/5.0");
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
-        connection.connect();
+        HttpURLConnection connection = getHttpURLConnection(uri);
 
         int responseCode = connection.getResponseCode();
         if (responseCode != HttpURLConnection.HTTP_OK) {
@@ -56,6 +53,18 @@ public class RandomAvatar {
         try (InputStream inputStream = connection.getInputStream()) {
             return ImageIO.read(inputStream);
         }
+    }
+
+    private static @NotNull HttpURLConnection getHttpURLConnection(URI uri) throws IOException {
+        URL url = uri.toURL();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        connection.setRequestProperty("Referer", "https://www.loliapi.com/");
+        connection.setRequestProperty("Accept", "image/webp,image/apng,image/*,*/*;q=0.8");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(5000);
+        connection.connect();
+        return connection;
     }
 
     private static BufferedImage resizeImage(BufferedImage originalImage) {
