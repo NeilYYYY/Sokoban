@@ -20,9 +20,9 @@ public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
     private static final String path = "users.json";
     private final int id;
-    private final boolean[][] lv;
     private String username;
     private String password;
+    private final boolean[][] lv;
 
     public User(int id, String username, String password, boolean @NotNull [] @NotNull [] lv) {
         this.id = id;
