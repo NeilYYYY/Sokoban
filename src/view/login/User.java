@@ -1,7 +1,6 @@
 package view.login;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 import org.jetbrains.annotations.Contract;
@@ -46,6 +45,9 @@ public class User {
 
     //检测用户名密码
     public static boolean checkUserPassword(String username, String password) {
+        if (isInvalidJson(User.path)) {
+            initialUsers(true);
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
             String line;
@@ -99,6 +101,9 @@ public class User {
     }
 
     public static ArrayList<User> getUserList() {
+        if (isInvalidJson(User.path)) {
+            initialUsers(true);
+        }
         try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
             StringBuilder json = new StringBuilder();
             String line;
@@ -114,7 +119,7 @@ public class User {
         return new ArrayList<>();
     }
 
-    public static void writeUser(ArrayList<User> user) {
+    public static void writeUser(@NotNull ArrayList<User> user) {
         for (int i = user.size() - 1; i >= 0; i--) {
             if (user.get(i).getUsername().equals("Deleted")) {
                 user.remove(i);
@@ -133,10 +138,14 @@ public class User {
         }
     }
 
-    public static void initialUsers() {
+    public static void initialUsers(boolean force) {
         File file = new File(User.path);
-        if (!file.exists()) {
-            System.out.println("正在初始化用户列表...");
+        if (!file.exists() || force) {
+            if (force) {
+                System.out.println("强制初始化用户列表...");
+            } else {
+                System.out.println("正在初始化用户列表...");
+            }
             List<User> defaultUsers = Arrays.asList(
                     new User(0, "", "", createDefaultLv(false)),
                     new User(1, "admin", "64d09d9930c8ecf79e513167a588cb75439b762ce8f9b22ea59765f32aa74ca19d2f1e97dc922a3d4954594a05062917fb24d1f8e72f2ed02a58ed7534f94d27", createDefaultLv(true)),
@@ -153,6 +162,19 @@ public class User {
             } catch (IOException e) {
                 log.warning("写入 user.json 失败: " + e.getMessage());
             }
+        }
+    }
+
+    public static boolean isInvalidJson(String filePath) {
+        try (FileReader reader = new FileReader(filePath)) {
+            JsonElement jsonElement = JsonParser.parseReader(reader);
+            return jsonElement == null;
+        } catch (JsonSyntaxException e) {
+            log.warning("用户文件格式不正确喵: " + e.getMessage());
+            return true;
+        } catch (IOException e) {
+            log.warning("读取用户文件失败喵: " + e.getMessage());
+            return true;
         }
     }
 
