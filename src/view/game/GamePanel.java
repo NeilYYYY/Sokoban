@@ -259,7 +259,7 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
                 controller.doorCheck(hero.getRow(), hero.getCol() - 1);
-                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), model.getMatrix()[hero.getRow()][hero.getCol() - 1]);
+                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1]);
                 currentGrid.setBoxInGrid(b);
             }
             case 2 -> {//撤回箱子右移
@@ -269,7 +269,7 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
                 controller.doorCheck(hero.getRow(), hero.getCol() + 1);
-                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), model.getMatrix()[hero.getRow()][hero.getCol() + 1]);
+                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1]);
                 currentGrid.setBoxInGrid(b);
             }
             case 3 -> {//撤回箱子上移
@@ -279,7 +279,7 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
                 controller.doorCheck(hero.getRow() - 1, hero.getCol());
-                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), model.getMatrix()[hero.getRow() - 1][hero.getCol()]);
+                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()]);
                 currentGrid.setBoxInGrid(b);
             }
             case 4 -> {//撤回箱子下移
@@ -289,7 +289,7 @@ public class GamePanel extends ListenerPanel {
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
                 controller.doorCheck(hero.getRow() + 1, hero.getCol());
-                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), model.getMatrix()[hero.getRow() + 1][hero.getCol()]);
+                b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()]);
                 currentGrid.setBoxInGrid(b);
             }
         }
