@@ -105,13 +105,11 @@ public class GridComponent extends JComponent {
     }
 
     //When removing box from this grid, invoking this method
-    public Box removeBoxFromGrid() {
+    public void removeBoxFromGrid() {
         this.remove(this.box);//remove box component from grid component
-        Box b = this.box;
         this.box = null;//set the hero attribute to null
         this.revalidate();//Update component painting in real time
         this.repaint();
-        return b;
     }
 
     public void removeOpenDoorFromGrid() {

@@ -96,7 +96,7 @@ public class GameController {
                 }
                 switch (model.getId(i, j) % 100 / 10) {
                     case 1 ->
-                            view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10, user));
+                            view.getGrids()[i][j].setBoxInGrid(new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10, user, model.getId(i, j)));
                     case 2 -> {
                         view.getGrids()[i][j].setHeroInGrid(view.getHero());
                         view.getHero().setRow(i);
@@ -325,7 +325,8 @@ public class GameController {
             model.getMatrix()[row][col] -= 20;
             model.getMatrix()[tRow][tCol] += 10;
             model.getMatrix()[ttRow][ttCol] += 10;
-            Box b = targetGrid.removeBoxFromGrid();
+            targetGrid.removeBoxFromGrid();
+            Box b = new Box(view.getGRID_SIZE() - 10, view.getGRID_SIZE() - 10, user, model.getMatrix()[ttRow][ttCol]);
             Hero h = currentGrid.removeHeroFromGrid();
             targetGrid.setHeroInGrid(h);
             ttGrid.setBoxInGrid(b);
