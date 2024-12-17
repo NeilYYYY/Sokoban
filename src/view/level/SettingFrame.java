@@ -248,8 +248,13 @@ public class SettingFrame extends JFrame implements ActionListener {
                 return;
             }
 
-            this.user.setUsername(newUsername);
             ArrayList<User> users = User.getUserList();
+            if (!User.checkUsername(newUsername, users)) {
+                JOptionPane.showMessageDialog(this, "用户名已存在喵！！！", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            this.user.setUsername(newUsername);
             users.get(this.user.getId()).setUsername(newUsername);
             User.writeUser(users);
 

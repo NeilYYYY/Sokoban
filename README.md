@@ -131,6 +131,7 @@ advanced category, including but not limited to:
 * 关卡选择界面
 * 打包exe 可以在无Java环境下运行
 * 菜单用户-账号：Box 密码：Revenge - 将hero和box贴图互换。
+* 自动存档
 
 ## V. Appendix
 
