@@ -64,7 +64,6 @@ public class RandomAvatar {
         }
     }
 
-
     private static @NotNull HttpURLConnection getHttpURLConnection(@NotNull URI uri) throws IOException {
         URL url = uri.toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

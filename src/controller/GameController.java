@@ -308,6 +308,8 @@ public class GameController {
             Sound s = new Sound("resources/misc/Foot_Step.wav");
             s.setVolume(1.0);
             s.play();
+            currentGrid.repaint();
+            targetGrid.repaint();
             return true;
         }
         if (map[tRow][tCol] == 10 || map[tRow][tCol] == 12 || map[tRow][tCol] == 14 || map[tRow][tCol] == 110 || map[tRow][tCol] == 15) {
@@ -357,6 +359,9 @@ public class GameController {
             }
             Sound s = new Sound("resources/misc/Foot_Step.wav");
             s.play();
+            currentGrid.repaint();
+            targetGrid.repaint();
+            ttGrid.repaint();
             return true;
         }
         return false;

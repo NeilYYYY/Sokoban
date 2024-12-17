@@ -192,8 +192,8 @@ public class GamePanel extends ListenerPanel {
             this.stepLabel.setText(String.format("Step: %d", this.steps));
         }
         GridComponent currentGrid = getGridComponent(hero.getRow(), hero.getCol());
-        GridComponent targetGrid;
-        GridComponent ttGrid;
+        GridComponent originGrid;
+        GridComponent boxGrid;
         Hero h = currentGrid.removeHeroFromGrid();
         switch (moveHero[this.steps]) {
             case 1 -> {//撤回英雄左移
@@ -204,10 +204,12 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow()][hero.getCol() + 1].removeFragileFromGrid();
                     moveFragile[this.steps] = 0;
                 }
-                targetGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
-                targetGrid.setHeroInGrid(h);
+                originGrid = getGridComponent(hero.getRow(), hero.getCol() + 1);
+                originGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
                 h.setCol(hero.getCol() + 1);
+                currentGrid.repaint();
+                originGrid.repaint();
             }
             case 2 -> {//撤回英雄右移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
@@ -217,10 +219,12 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow()][hero.getCol() - 1].removeFragileFromGrid();
                     moveFragile[this.steps] = 0;
                 }
-                targetGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
-                targetGrid.setHeroInGrid(h);
+                originGrid = getGridComponent(hero.getRow(), hero.getCol() - 1);
+                originGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow());
                 h.setCol(hero.getCol() - 1);
+                currentGrid.repaint();
+                originGrid.repaint();
             }
             case 3 -> {//撤回英雄上移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
@@ -230,10 +234,12 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow() + 1][hero.getCol()].removeFragileFromGrid();
                     moveFragile[this.steps] = 0;
                 }
-                targetGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
-                targetGrid.setHeroInGrid(h);
+                originGrid = getGridComponent(hero.getRow() + 1, hero.getCol());
+                originGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() + 1);
                 h.setCol(hero.getCol());
+                currentGrid.repaint();
+                originGrid.repaint();
             }
             case 4 -> {//撤回英雄下移
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol()] -= 20;
@@ -243,58 +249,68 @@ public class GamePanel extends ListenerPanel {
                     getGrids()[hero.getRow() - 1][hero.getCol()].removeFragileFromGrid();
                     moveFragile[this.steps] = 0;
                 }
-                targetGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
-                targetGrid.setHeroInGrid(h);
+                originGrid = getGridComponent(hero.getRow() - 1, hero.getCol());
+                originGrid.setHeroInGrid(h);
                 h.setRow(hero.getRow() - 1);
                 h.setCol(hero.getCol());
+                currentGrid.repaint();
+                originGrid.repaint();
             }
         }
         moveHero[this.steps] = 0;
         Box b;
         switch (moveBox[this.steps]) {
             case 1 -> {//撤回箱子左移
-                ttGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
-                ttGrid.removeBoxFromGrid();
+                boxGrid = getGridComponent(hero.getRow(), hero.getCol() - 2);
+                boxGrid.removeBoxFromGrid();
                 controller.doorCheck(hero.getRow(), hero.getCol() - 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1] += 10;
                 controller.doorCheck(hero.getRow(), hero.getCol() - 1);
                 b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow()][hero.getCol() - 1]);
                 currentGrid.setBoxInGrid(b);
+                boxGrid.repaint();
+                currentGrid.repaint();
             }
             case 2 -> {//撤回箱子右移
-                ttGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
-                ttGrid.removeBoxFromGrid();
+                boxGrid = getGridComponent(hero.getRow(), hero.getCol() + 2);
+                boxGrid.removeBoxFromGrid();
                 controller.doorCheck(hero.getRow(), hero.getCol() + 2);
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 2] -= 10;
                 controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1] += 10;
                 controller.doorCheck(hero.getRow(), hero.getCol() + 1);
                 b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow()][hero.getCol() + 1]);
                 currentGrid.setBoxInGrid(b);
+                boxGrid.repaint();
+                currentGrid.repaint();
             }
             case 3 -> {//撤回箱子上移
-                ttGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
-                ttGrid.removeBoxFromGrid();
+                boxGrid = getGridComponent(hero.getRow() - 2, hero.getCol());
+                boxGrid.removeBoxFromGrid();
                 controller.doorCheck(hero.getRow() - 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() - 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()] += 10;
                 controller.doorCheck(hero.getRow() - 1, hero.getCol());
                 b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow() - 1][hero.getCol()]);
                 currentGrid.setBoxInGrid(b);
+                boxGrid.repaint();
+                currentGrid.repaint();
             }
             case 4 -> {//撤回箱子下移
-                ttGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
-                ttGrid.removeBoxFromGrid();
+                boxGrid = getGridComponent(hero.getRow() + 2, hero.getCol());
+                boxGrid.removeBoxFromGrid();
                 controller.doorCheck(hero.getRow() + 2, hero.getCol());
                 controller.getModel().getMatrix()[hero.getRow() + 2][hero.getCol()] -= 10;
                 controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()] += 10;
                 controller.doorCheck(hero.getRow() + 1, hero.getCol());
                 b = new Box(getGRID_SIZE() - 10, getGRID_SIZE() - 10, frame.getUser(), controller.getModel().getMatrix()[hero.getRow() + 1][hero.getCol()]);
                 currentGrid.setBoxInGrid(b);
+                boxGrid.repaint();
+                currentGrid.repaint();
             }
         }
         moveBox[this.steps] = 0;
-        if (!frame.isMode() || frame.getLv() != 6) {
+        if (!frame.isMode() && frame.getLv() != 6) {
             autoSave();
         }
     }
