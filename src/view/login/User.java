@@ -3,7 +3,6 @@ package view.login;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,7 +88,7 @@ public class User {
     public static void removeTrailingDeletedUsers(@NotNull List<User> users) {
         ListIterator<User> iterator = users.listIterator(users.size());
         while (iterator.hasPrevious()) {
-            if (!iterator.previous().getUsername().equals("Deleted")) {
+            if (!iterator.previous().getUsername().equals("DELETED")) {
                 break;
             }
             iterator.remove();
@@ -166,11 +165,5 @@ public class User {
 
     public boolean[][] getLv() {
         return lv;
-    }
-
-    @Contract(pure = true)
-    @Override
-    public @NotNull String toString() {
-        return String.format("%d, %s, %s", id, username, password);
     }
 }

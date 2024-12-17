@@ -2,6 +2,7 @@ package view.level;
 
 import org.jetbrains.annotations.NotNull;
 import view.ParticlePanel;
+import view.RandomAvatar;
 import view.login.LoginFrame;
 import view.login.User;
 import view.music.Sound;
@@ -51,6 +52,17 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.getContentPane().add(panel, Integer.valueOf(0));
 
         Font f = new Font("Comic Sans MS", Font.PLAIN, 13);
+
+        ImageIcon avatarIcon = new ImageIcon("resources/images/defaultAvatar.png");
+        avatarIcon.setImage(avatarIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+        JLabel avatar = new JLabel(avatarIcon);
+        avatar.setBounds(670, 10, 100, 100);
+        this.getContentPane().add(avatar, Integer.valueOf(1));
+        RandomAvatar.updateAvatar(avatar);
+
+        JButton changeAvatarBtn = getChangeAvatarBtn(f, avatar);
+        this.getContentPane().add(changeAvatarBtn, Integer.valueOf(1));
+
         this.changeUsername = new JLabel(String.format("Username: %s", user.getUsername()));
         this.changeUsername.setFont(f);
         this.changeUsername.setForeground(Color.WHITE);
@@ -185,6 +197,35 @@ public class SettingFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
+    private static @NotNull JButton getChangeAvatarBtn(Font f, JLabel avatar) {
+        JButton changeAvatarBtn = new JButton("Change");
+        changeAvatarBtn.setFont(f);
+        changeAvatarBtn.setFont(f.deriveFont(16f));
+        changeAvatarBtn.setForeground(Color.WHITE);
+        changeAvatarBtn.setMargin(new Insets(0, 0, 0, 0));
+        changeAvatarBtn.setBorderPainted(false);
+        changeAvatarBtn.setBorder(null);
+        changeAvatarBtn.setFocusPainted(false);
+        changeAvatarBtn.setContentAreaFilled(false);
+        changeAvatarBtn.addActionListener(_ -> {
+            RandomAvatar.changeAvatar(avatar);
+            System.out.println("头像已更换喵~");
+        });
+        changeAvatarBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                changeAvatarBtn.setForeground(Color.YELLOW);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                changeAvatarBtn.setForeground(Color.WHITE);
+            }
+        });
+        changeAvatarBtn.setBounds(580, 35, 100, 30);
+        return changeAvatarBtn;
+    }
+
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == backBtn) {
@@ -207,6 +248,7 @@ public class SettingFrame extends JFrame implements ActionListener {
                 return;
             }
 
+            this.user.setUsername(newUsername);
             ArrayList<User> users = User.getUserList();
             users.get(this.user.getId()).setUsername(newUsername);
             User.writeUser(users);
@@ -243,6 +285,7 @@ public class SettingFrame extends JFrame implements ActionListener {
 
             if (confirmPassword.equals(newPassword)) {
                 try {
+                    this.user.setPassword(User.getSHA(newPassword));
                     ArrayList<User> users = User.getUserList();
                     users.get(this.user.getId()).setPassword(User.getSHA(newPassword));
                     User.writeUser(users);
@@ -262,8 +305,8 @@ public class SettingFrame extends JFrame implements ActionListener {
                     return;
                 }
                 ArrayList<User> users = User.getUserList();
-                users.get(this.user.getId()).setUsername("Deleted");
-                users.get(this.user.getId()).setPassword("Deleted");
+                users.get(this.user.getId()).setUsername("DELETED");
+                users.get(this.user.getId()).setPassword("DELETED");
                 boolean[][] tempLv = users.get(this.user.getId()).getLv();
                 for (boolean[] booleans : tempLv) {
                     Arrays.fill(booleans, false);

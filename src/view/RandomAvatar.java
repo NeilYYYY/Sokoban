@@ -94,4 +94,22 @@ public class RandomAvatar {
             imageLabel.setIcon(imageCache);
         }
     }
+
+    public static void changeAvatar(JLabel imageLabel) {
+        new Thread(() -> {
+            try {
+                BufferedImage originalImage = loadImageFromApi();
+                if (originalImage != null) {
+                    BufferedImage scaledImage = resizeImage(originalImage);
+                    imageCache = new ImageIcon(scaledImage);
+                    SwingUtilities.invokeLater(() -> {
+                        imageLabel.setText("");
+                        imageLabel.setIcon(imageCache);
+                    });
+                }
+            } catch (Exception e) {
+                log.info("更换图片失败喵：" + e.getMessage());
+            }
+        }).start();
+    }
 }

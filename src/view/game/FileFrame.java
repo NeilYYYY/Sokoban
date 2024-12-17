@@ -112,7 +112,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         JLabel userName = new JLabel(user.getUsername());
         userName.setFont(f);
         userName.setForeground(Color.BLUE);
-        userName.setBounds(600, 35, 50, 50);
+        userName.setBounds(250, 40, 400, 30);
         userName.setHorizontalAlignment(SwingConstants.RIGHT);
         this.getContentPane().add(userName);
 
