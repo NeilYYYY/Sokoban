@@ -412,7 +412,7 @@ public class GameFrame extends JFrame {
                     JOptionPane.showOptionDialog(this, "不会要用存档才能过吧~ 雑魚♡~ 雑魚♡~", "雑魚♡~", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{"我是杂鱼喵~", "私は雑魚にゃ♡~"}, "私は雑魚にゃ♡~");
                     this.check = false;
                 }
-                RandomAvatar.updateImage(this.fileFrame.getAvatar(), "image-0");
+                RandomAvatar.updateAvatar(this.fileFrame.getAvatar());
                 this.fileFrame.Show(this.fileFrame.getId());
                 this.setVisible(false);
                 this.fileFrame.setVisible(true);
@@ -480,7 +480,7 @@ public class GameFrame extends JFrame {
         back.setImage(back.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.getContentPane().add(bg, Integer.valueOf(-1));
 
         if (!file.exists() && user.getId() != 0 && lv != 6) {
             log.warning("存档文件不存在喵！");

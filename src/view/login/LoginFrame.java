@@ -25,10 +25,10 @@ public class LoginFrame extends JFrame implements ActionListener {
     public LoginFrame(Sound sound) {
         this.setTitle("Sokoban Knight");
         this.setAlwaysOnTop(false);
-        this.setLayout(null);//关闭默认布局类型 自己手动设置布局
+        this.setLayout(null);
         this.setSize(800, 450);
-        this.setLocationRelativeTo(null);//设置GUI显示居中
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);//设置关闭模式
+        this.setLocationRelativeTo(null);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.getContentPane().setLayout(null);
         this.setResizable(false);
 
@@ -221,7 +221,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.getContentPane().add(bg, Integer.valueOf(-1));
         setVisible(true);
     }
 
@@ -242,12 +242,12 @@ public class LoginFrame extends JFrame implements ActionListener {
                 user = User.getUser(usernameText.getText(), User.getUserList());
                 levelFrame = new LevelFrame(user, this.sound, false, false);
                 JOptionPane.showMessageDialog(this, "登录成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
-                RandomAvatar.preloadImages(1);
+                RandomAvatar.preloadAvatar();
                 showLevelFrame();
             } else {
                 JOptionPane.showMessageDialog(this, "登录失败喵！", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }//注册操作
+        }
         else if (e.getSource() == registerBtn) {
             new Register(this);
         } else if (e.getSource() == musicBtn) {

@@ -11,7 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.InetAddress;
 import java.net.URI;
 import java.net.URL;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
@@ -19,23 +18,20 @@ public class RandomAvatar {
     private static final String API_URL = "https://www.loliapi.com/acg/pp/";
     private static final int IMAGE_WIDTH = 100;
     private static final int IMAGE_HEIGHT = 100;
-    private static final ConcurrentHashMap<String, ImageIcon> imageCache = new ConcurrentHashMap<>();
     private static final Logger log = Logger.getLogger(RandomAvatar.class.getName());
+    private static ImageIcon imageCache = null;
 
-    public static void preloadImages(int count) {
+    public static void preloadAvatar() {
         new Thread(() -> {
-            for (int i = 0; i < count; i++) {
-                try {
-                    BufferedImage originalImage = loadImageFromApi();
-                    if (originalImage != null) {
-                        BufferedImage scaledImage = resizeImage(originalImage);
-                        ImageIcon imageIcon = new ImageIcon(scaledImage);
-                        imageCache.put("image-" + i, imageIcon); // 缓存图片
-                        System.out.println("Preloaded image-" + i);
-                    }
-                } catch (Exception e) {
-                    log.info("预加载图片失败喵：" + e.getMessage());
+            try {
+                BufferedImage originalImage = loadImageFromApi();
+                if (originalImage != null) {
+                    BufferedImage scaledImage = resizeImage(originalImage);
+                    imageCache = new ImageIcon(scaledImage);
+                    System.out.println("预加载图片成功喵！");
                 }
+            } catch (Exception e) {
+                log.info("预加载图片失败喵：" + e.getMessage());
             }
         }).start();
     }
@@ -58,7 +54,7 @@ public class RandomAvatar {
     private static boolean isNetworkAvailable() {
         try {
             InetAddress address = InetAddress.getByName("www.loliapi.com");
-            return address.isReachable(2000); // 超时时间为 2 秒
+            return address.isReachable(2000);
         } catch (IOException e) {
             return false;
         }
@@ -69,8 +65,8 @@ public class RandomAvatar {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36");
         connection.setRequestProperty("Referer", "https://www.loliapi.com/");
-        connection.setConnectTimeout(5000);
-        connection.setReadTimeout(5000);
+        connection.setConnectTimeout(2000);
+        connection.setReadTimeout(2000);
         connection.connect();
         return connection;
     }
@@ -92,11 +88,10 @@ public class RandomAvatar {
         return resizedImage;
     }
 
-    public static void updateImage(JLabel imageLabel, String key) {
-        ImageIcon cachedImage = imageCache.get(key);
-        if (cachedImage != null) {
-            imageLabel.setText(""); // 清除文字
-            imageLabel.setIcon(cachedImage);
+    public static void updateAvatar(JLabel imageLabel) {
+        if (imageCache != null) {
+            imageLabel.setText("");
+            imageLabel.setIcon(imageCache);
         }
     }
 }

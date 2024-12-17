@@ -423,7 +423,7 @@ public class LevelFrame extends JFrame {
             settingBtn.setVisible(false);
         }
 
-        ImageIcon backImg;// 背景图置于最底层
+        ImageIcon backImg;
         if (this.mode) {
             backImg = new ImageIcon("resources/images/Menu_Theme_Voidheart_Alter.png");
         } else {
@@ -432,7 +432,7 @@ public class LevelFrame extends JFrame {
         backImg.setImage(backImg.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         this.bg = new JLabel(backImg);
         this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.getContentPane().add(this.bg, Integer.valueOf(-1));
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
@@ -512,7 +512,6 @@ public class LevelFrame extends JFrame {
         });
 
         changeModeBtn.addActionListener(_ -> {
-            //change bg
             this.mode = !this.mode;
             System.out.println("限时模式: " + this.mode);
             this.getContentPane().remove(this.panel);
@@ -526,7 +525,7 @@ public class LevelFrame extends JFrame {
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-                this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.getContentPane().add(this.bg, Integer.valueOf(-1));
                 this.getContentPane().repaint();
             } else {
                 this.getContentPane().remove(this.bg);
@@ -534,7 +533,7 @@ public class LevelFrame extends JFrame {
                 imageIcon.setImage(imageIcon.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
                 this.bg = new JLabel(imageIcon);
                 this.bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-                this.getContentPane().add(this.bg, Integer.valueOf(-1)); // 背景图置于最底层
+                this.getContentPane().add(this.bg, Integer.valueOf(-1));
                 this.getContentPane().repaint();
             }
         });

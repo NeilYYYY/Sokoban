@@ -158,7 +158,7 @@ public class Register extends JFrame implements ActionListener {
         back.setImage(back.getImage().getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH));
         JLabel bg = new JLabel(back);
         bg.setBounds(0, 0, this.getWidth(), this.getHeight());
-        this.getContentPane().add(bg, Integer.valueOf(-1)); // 背景图置于最底层
+        this.getContentPane().add(bg, Integer.valueOf(-1));
         setVisible(true);
     }
 
