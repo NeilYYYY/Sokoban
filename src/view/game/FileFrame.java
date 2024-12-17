@@ -489,7 +489,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
 
     public boolean checkFileFailed() {
         try {
-            return !new File(filePath).exists() || !new File(filePath + ".sha").exists() || !FileSHAUtil.compareSHA(FileSHAUtil.loadSHAFromFile(new File(this.filePath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filePath)));
+            return !new File(filePath).exists() || !new File(filePath + ".sha").exists() || !FileSHAUtil.compareSHA(FileSHAUtil.loadSHAFromFile(new File(this.filePath + ".sha")), FileSHAUtil.calculateSHA(new File(this.filePath))) || User.isInvalidJson(this.filePath);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

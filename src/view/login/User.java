@@ -115,7 +115,7 @@ public class User {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             return jsonElement == null;
         } catch (JsonSyntaxException | IOException e) {
-            log.warning("用户文件格式不正确喵: " + e.getMessage());
+            log.warning("文件格式不正确喵: " + e.getMessage());
             return true;
         }
     }
