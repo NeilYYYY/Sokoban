@@ -13,6 +13,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.logging.Logger;
 
 public class User {
@@ -27,68 +28,33 @@ public class User {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.lv = new boolean[lv.length][lv[0].length];
-        for (int i = 0; i < lv.length; i++) {
-            System.arraycopy(lv[i], 0, this.lv[i], 0, lv[i].length);
-        }
+        this.lv = Arrays.stream(lv).map(boolean[]::clone).toArray(boolean[][]::new);
     }
 
-    //检查是否出现用户名重复
-    public static boolean checkUsername(String username, @NotNull ArrayList<User> user) {
-        for (User data : user) {
-            if (data.getUsername().equals(username)) {
-                return false;
-            }
-        }
-        return true;
+    public static boolean checkUsername(String username, @NotNull List<User> users) {
+        return users.stream().noneMatch(user -> user.getUsername().equals(username));
     }
 
-    //检测用户名密码
     public static boolean checkUserPassword(String username, String password) {
         if (isInvalidJson(User.path)) {
             initialUsers(true);
         }
-        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
-            StringBuilder json = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                json.append(line).append("\n");
-            }
-            Gson gson = new Gson();
-            ArrayList<User> dataList = gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
-            }.getType());
-            for (User data : dataList) {
-                if (data.getUsername().equals(username) && data.getPassword().equals(password)) {
-                    return true;
-                }
-            }
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-        return false;
+        List<User> users = readUsersFromFile();
+        return users.stream().anyMatch(user -> user.getUsername().equals(username) && user.getPassword().equals(password));
     }
 
-    //找到并返回用户
-    public static @Nullable User getUser(String username, @NotNull ArrayList<User> user) {
-        for (User data : user) {
-            if (data.getUsername().equals(username)) {
-                return data;
-            }
-        }
-        return null;
+    public static @Nullable User getUser(String username, @NotNull List<User> users) {
+        return users.stream().filter(user -> user.getUsername().equals(username)).findFirst().orElse(null);
     }
 
-    public static String getSHA(@NotNull String str) throws NoSuchAlgorithmException {
+    public static @NotNull String getSHA(@NotNull String str) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA3-512");
         byte[] shaBytes = md.digest(str.getBytes());
         return bytesToHexString(shaBytes);
     }
 
-    public static String bytesToHexString(byte[] bytes) {
+    public static @NotNull String bytesToHexString(byte @NotNull [] bytes) {
         StringBuilder stringBuilder = new StringBuilder();
-        if (bytes == null || bytes.length == 0) {
-            return null;
-        }
         for (byte aByte : bytes) {
             int v = aByte & 0xFF;
             String hv = Integer.toHexString(v);
@@ -104,64 +70,43 @@ public class User {
         if (isInvalidJson(User.path)) {
             initialUsers(true);
         }
-        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
-            StringBuilder json = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null) {
-                json.append(line).append("\n");
-            }
-            Gson gson = new Gson();
-            return gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
-            }.getType());
-        } catch (Exception e) {
-            log.info(e.getMessage());
-        }
-        return new ArrayList<>();
+        return readUsersFromFile();
     }
 
-    public static void writeUser(@NotNull ArrayList<User> user) {
-        for (int i = user.size() - 1; i >= 0; i--) {
-            if (user.get(i).getUsername().equals("Deleted")) {
-                user.remove(i);
-            } else {
-                break;
-            }
-        }
+    public static void writeUser(@NotNull List<User> users) {
+        removeTrailingDeletedUsers(users);
         try (Writer writer = new FileWriter(User.path)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonWriter jsonWriter = new JsonWriter(writer);
-            jsonWriter.setIndent("    "); // 设置缩进为 4 个空格
-            gson.toJson(user, ArrayList.class, jsonWriter);
+            jsonWriter.setIndent("    ");
+            gson.toJson(users, ArrayList.class, jsonWriter);
             jsonWriter.flush();
         } catch (IOException e) {
             log.info(e.getMessage());
         }
     }
 
+    public static void removeTrailingDeletedUsers(@NotNull List<User> users) {
+        ListIterator<User> iterator = users.listIterator(users.size());
+        while (iterator.hasPrevious()) {
+            if (!iterator.previous().getUsername().equals("Deleted")) {
+                break;
+            }
+            iterator.remove();
+        }
+    }
+
     public static void initialUsers(boolean force) {
         File file = new File(User.path);
         if (!file.exists() || force) {
-            if (force) {
-                System.out.println("强制初始化用户列表...");
-            } else {
-                System.out.println("正在初始化用户列表...");
-            }
+            log.info(force ? "强制初始化用户列表..." : "正在初始化用户列表...");
             List<User> defaultUsers = Arrays.asList(
                     new User(0, "", "", createDefaultLv(false)),
                     new User(1, "admin", "64d09d9930c8ecf79e513167a588cb75439b762ce8f9b22ea59765f32aa74ca19d2f1e97dc922a3d4954594a05062917fb24d1f8e72f2ed02a58ed7534f94d27", createDefaultLv(true)),
                     new User(2, "Box", "c964a72641eea046484af0198742a258d814224e6400400777959bb94ab811bf505ef4a5d1eb46f2f909f4b6bfa45b27af07bdfd5943cf3c0f6e65e8dc81430b", createDefaultLv(false))
             );
-
-            try (FileWriter writer = new FileWriter(file)) {
-                Gson gson = new GsonBuilder().setPrettyPrinting().create();
-                JsonWriter jsonWriter = new JsonWriter(writer);
-                jsonWriter.setIndent("    ");
-                gson.toJson(defaultUsers, ArrayList.class, jsonWriter);
-                jsonWriter.flush();
-                System.out.println("初始化成功喵！");
-            } catch (IOException e) {
-                log.warning("写入 user.json 失败: " + e.getMessage());
-            }
+            writeUser(defaultUsers);
+            log.info("初始化成功喵！");
         }
     }
 
@@ -169,11 +114,8 @@ public class User {
         try (FileReader reader = new FileReader(filePath)) {
             JsonElement jsonElement = JsonParser.parseReader(reader);
             return jsonElement == null;
-        } catch (JsonSyntaxException e) {
+        } catch (JsonSyntaxException | IOException e) {
             log.warning("用户文件格式不正确喵: " + e.getMessage());
-            return true;
-        } catch (IOException e) {
-            log.warning("读取用户文件失败喵: " + e.getMessage());
             return true;
         }
     }
@@ -184,6 +126,22 @@ public class User {
             Arrays.fill(booleans, value);
         }
         return lv;
+    }
+
+    private static ArrayList<User> readUsersFromFile() {
+        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
+            StringBuilder json = new StringBuilder();
+            String line;
+            while ((line = br.readLine()) != null) {
+                json.append(line).append("\n");
+            }
+            Gson gson = new Gson();
+            return gson.fromJson(json.toString(), new TypeToken<ArrayList<User>>() {
+            }.getType());
+        } catch (IOException e) {
+            log.info(e.getMessage());
+        }
+        return new ArrayList<>();
     }
 
     public int getId() {

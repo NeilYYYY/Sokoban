@@ -390,7 +390,7 @@ public class GameFrame extends JFrame {
 
         restartBtn.addActionListener(_ -> {
             this.controller.restartGame();
-            this.gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.requestFocusInWindow();
         });
 
         loadBtn.addActionListener(_ -> {
@@ -458,22 +458,22 @@ public class GameFrame extends JFrame {
 
         upMoveBtn.addActionListener(_ -> {
             this.gamePanel.doMoveUp();
-            this.gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.requestFocusInWindow();
         });
 
         downMoveBtn.addActionListener(_ -> {
             this.gamePanel.doMoveDown();
-            this.gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.requestFocusInWindow();
         });
 
         leftMoveBtn.addActionListener(_ -> {
             this.gamePanel.doMoveLeft();
-            this.gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.requestFocusInWindow();
         });
 
         rightMoveBtn.addActionListener(_ -> {
             this.gamePanel.doMoveRight();
-            this.gamePanel.requestFocusInWindow();//enable key listener
+            this.gamePanel.requestFocusInWindow();
         });
 
         ImageIcon back = new ImageIcon("resources/images/Menu_Theme_The_Eternal_Ordeal.png");
