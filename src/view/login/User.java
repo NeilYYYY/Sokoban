@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 public class User {
     private static final Logger log = Logger.getLogger(User.class.getName());
-    private static final String path = "users.json";
+    private static final String PATH = "users.json";
     private final int id;
     private String username;
     private String password;
@@ -36,7 +36,7 @@ public class User {
     }
 
     public static boolean checkUserPassword(String username, String password) {
-        if (isInvalidJson(User.path)) {
+        if (isInvalidJson(User.PATH)) {
             initialUsers(true);
         }
         List<User> users = readUsersFromFile();
@@ -67,7 +67,7 @@ public class User {
     }
 
     public static ArrayList<User> getUserList() {
-        if (isInvalidJson(User.path)) {
+        if (isInvalidJson(User.PATH)) {
             initialUsers(true);
         }
         return readUsersFromFile();
@@ -75,7 +75,7 @@ public class User {
 
     public static void writeUser(@NotNull List<User> users) {
         removeTrailingDeletedUsers(users);
-        try (Writer writer = new FileWriter(User.path)) {
+        try (Writer writer = new FileWriter(User.PATH)) {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonWriter jsonWriter = new JsonWriter(writer);
             jsonWriter.setIndent("    ");
@@ -97,7 +97,7 @@ public class User {
     }
 
     public static void initialUsers(boolean force) {
-        File file = new File(User.path);
+        File file = new File(User.PATH);
         if (!file.exists() || force) {
             log.info(force ? "强制初始化用户列表..." : "正在初始化用户列表...");
             List<User> defaultUsers = Arrays.asList(
@@ -129,7 +129,7 @@ public class User {
     }
 
     private static ArrayList<User> readUsersFromFile() {
-        try (BufferedReader br = new BufferedReader(new FileReader(User.path))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(User.PATH))) {
             StringBuilder json = new StringBuilder();
             String line;
             while ((line = br.readLine()) != null) {
