@@ -18,7 +18,7 @@ import view.music.Sound;
 public class LevelFrame extends JFrame {
     private final User user;
     private final Sound sound;
-    private final int time;
+    private int time;
     private int lv = 0;
     private boolean mode;
     private JLabel bg;
@@ -29,7 +29,7 @@ public class LevelFrame extends JFrame {
         this.setLayout(null);
         this.setSize(800, 450);
         this.sound = sound;
-        this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
+        this.time = 65535;
         this.setResizable(false);
 
         JLayeredPane layeredPane = new JLayeredPane();
@@ -436,6 +436,7 @@ public class LevelFrame extends JFrame {
 
         level1Btn.addActionListener(_ -> {
             this.lv = 1;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_1.getMap());
             GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
             this.setVisible(false);
@@ -444,6 +445,7 @@ public class LevelFrame extends JFrame {
 
         level2Btn.addActionListener(_ -> {
             this.lv = 2;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_2.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
@@ -456,6 +458,7 @@ public class LevelFrame extends JFrame {
 
         level3Btn.addActionListener(_ -> {
             this.lv = 3;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_3.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
@@ -468,6 +471,7 @@ public class LevelFrame extends JFrame {
 
         level4Btn.addActionListener(_ -> {
             this.lv = 4;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_4.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
@@ -480,6 +484,7 @@ public class LevelFrame extends JFrame {
 
         level5Btn.addActionListener(_ -> {
             this.lv = 5;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             if (this.user.getLv()[0][this.lv - 2]) {
                 MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_5.getMap());
                 GameFrame gameFrame = new GameFrame(800, 450, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
@@ -492,6 +497,7 @@ public class LevelFrame extends JFrame {
 
         level6Btn.addActionListener(_ -> {
             this.lv = 6;
+            this.time = new Random(System.currentTimeMillis()).nextInt(121) + 30;
             MapMatrix mapMatrix = new MapMatrix(Level.LEVEL_6.getMap());
             GameFrame gameFrame = new GameFrame(900, 600, this, mapMatrix, this.user, this.sound, this.lv, 0, this.mode, this.time);
             this.setVisible(false);

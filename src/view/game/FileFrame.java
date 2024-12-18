@@ -215,7 +215,7 @@ public class FileFrame extends JFrame /*implements ActionListener */ {
         this.step = this.gameFrame.getGamePanel().getSteps();
 
         backBtn.addActionListener(_ -> {
-            this.gameFrame.getController().getTimer().start();
+            this.gameFrame.getGamePanel().setFlag(true);
             this.backBtn.setForeground(Color.BLACK);
             this.dispose();
             this.gameFrame.setVisible(true);

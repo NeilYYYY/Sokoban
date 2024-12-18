@@ -42,11 +42,11 @@ public class GameFrame extends JFrame {
         Font f2 = new Font("Comic Sans MS", Font.PLAIN, 18);
 
         this.mode = mode;
-        int temp = 0;
         if (this.mode) {
-            temp = time;
+            this.time = time;
+        } else {
+            this.time = 0;
         }
-        this.time = temp;
         this.lv = lv;
         this.user = user;
         this.sound = sound;
@@ -96,28 +96,28 @@ public class GameFrame extends JFrame {
         });
         this.getContentPane().add(restartBtn);
 
-        JButton loadBtn = new JButton("Saving");
-        loadBtn.setLocation(new Point(this.gamePanel.getWidth() + 180, 180));
-        loadBtn.setSize(80, 50);
-        loadBtn.setFont(f2);
-        loadBtn.setMargin(new Insets(0, 0, 0, 0));
-        loadBtn.setBorderPainted(false);
-        loadBtn.setBorder(null);
-        loadBtn.setFocusPainted(false);
-        loadBtn.setContentAreaFilled(false);
-        loadBtn.setForeground(Color.WHITE);
-        loadBtn.addMouseListener(new MouseAdapter() {
+        JButton savingBtn = new JButton("Saving");
+        savingBtn.setLocation(new Point(this.gamePanel.getWidth() + 180, 180));
+        savingBtn.setSize(80, 50);
+        savingBtn.setFont(f2);
+        savingBtn.setMargin(new Insets(0, 0, 0, 0));
+        savingBtn.setBorderPainted(false);
+        savingBtn.setBorder(null);
+        savingBtn.setFocusPainted(false);
+        savingBtn.setContentAreaFilled(false);
+        savingBtn.setForeground(Color.WHITE);
+        savingBtn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
-                loadBtn.setForeground(Color.YELLOW);
+                savingBtn.setForeground(Color.YELLOW);
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                loadBtn.setForeground(Color.WHITE);
+                savingBtn.setForeground(Color.WHITE);
             }
         });
-        this.getContentPane().add(loadBtn);
+        this.getContentPane().add(savingBtn);
 
         this.backBtn = new JButton("Back");
         this.backBtn.setLocation(new Point(this.gamePanel.getWidth() + 80, 240));
@@ -343,7 +343,7 @@ public class GameFrame extends JFrame {
             stepLabel.setForeground(Color.WHITE);
             this.gamePanel.setStepLabel(stepLabel);
         } else {
-            loadBtn.setVisible(false);
+            savingBtn.setVisible(false);
             musicBtn.setVisible(false);
             this.sound.changeSource("resources/misc/东方永夜抄竹取飞翔.wav");
             this.sound.setVolume(0.5);
@@ -393,13 +393,14 @@ public class GameFrame extends JFrame {
             this.gamePanel.requestFocusInWindow();
         });
 
-        loadBtn.addActionListener(_ -> {
+        savingBtn.addActionListener(_ -> {
+            this.controller.getTimer().stop();
             if (isMode() || this.lv == 6) {
                 JOptionPane.showMessageDialog(this, "此模式无法存档喵~");
+                this.gamePanel.setFlag(true);
                 this.gamePanel.requestFocusInWindow();
                 return;
             }
-            this.controller.getTimer().stop();
             if (this.user.getId() == 0) {
                 JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
                 this.controller.getTimer().start();
