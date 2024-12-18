@@ -397,13 +397,12 @@ public class GameFrame extends JFrame {
             this.controller.getTimer().stop();
             if (isMode() || this.lv == 6) {
                 JOptionPane.showMessageDialog(this, "此模式无法存档喵~");
-                this.gamePanel.setFlag(true);
                 this.gamePanel.requestFocusInWindow();
                 return;
             }
             if (this.user.getId() == 0) {
                 JOptionPane.showMessageDialog(this, "游客模式不能存档喵~", "QAQ", JOptionPane.ERROR_MESSAGE);
-                this.controller.getTimer().start();
+                this.gamePanel.setFlag(true);
                 this.gamePanel.requestFocusInWindow();
             } else {
                 if (this.check) {
