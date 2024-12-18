@@ -13,9 +13,6 @@ public class Main {
         sound.setVolume(0.5);
         sound.setLooping(true);
         sound.play();
-        SwingUtilities.invokeLater(() -> {
-            LoginFrame loginFrame = new LoginFrame(sound);
-            loginFrame.setVisible(true);
-        });
+        SwingUtilities.invokeLater(() -> new LoginFrame(sound).setVisible(true));
     }
 }
