@@ -169,13 +169,10 @@ public class Register extends JFrame implements ActionListener {
             String password = new String(this.passwordText.getPassword());
             String passwordTrue = new String(this.passwordTextTrue.getPassword());
             ArrayList<User> users = User.getUserList();
-            for (User data : users) {
-                System.out.println(data.getUsername());
-            }
             boolean found;
             found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue) && !username.equals("DELETED"));
             if (found) {
-                boolean temp = User.checkUsername(username, users);//检测用户名是否重复
+                boolean temp = User.checkUsername(username, users);
                 if (temp) {
                     int id = users.toArray().length;
                     User tempUser = User.getUser("DELETED", users);
@@ -193,7 +190,7 @@ public class Register extends JFrame implements ActionListener {
                             throw new RuntimeException(ex);
                         }
                     }
-                    User.writeUser(users);//将新用户的数据写入json表中
+                    User.writeUser(users);
                     JOptionPane.showMessageDialog(this, "注册成功喵～", "Success", JOptionPane.INFORMATION_MESSAGE);
                     this.dispose();
                     this.loginFrame.setVisible(true);
