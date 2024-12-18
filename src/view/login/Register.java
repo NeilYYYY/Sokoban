@@ -100,6 +100,40 @@ public class Register extends JFrame implements ActionListener {
         this.passwordText.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         this.passwordTextTrue.setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
+        this.usernameText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    registerBtn.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
+        this.passwordText.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    registerBtn.doClick();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+            }
+        });
+
         this.passwordTextTrue.addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -170,7 +204,7 @@ public class Register extends JFrame implements ActionListener {
             String passwordTrue = new String(this.passwordTextTrue.getPassword());
             ArrayList<User> users = User.getUserList();
             boolean found;
-            found = (!username.isEmpty() && !password.isEmpty() && !passwordTrue.isEmpty() && password.equals(passwordTrue) && !username.equals("DELETED"));
+            found = (!username.trim().isEmpty() && !password.trim().isEmpty() && !passwordTrue.trim().isEmpty() && password.equals(passwordTrue) && !username.equals("DELETED"));
             if (found) {
                 boolean temp = User.checkUsername(username, users);
                 if (temp) {
