@@ -377,7 +377,6 @@ public class MusicFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(@NotNull ActionEvent e) {
         if (e.getSource() == this.backBtn) {
-            System.out.println();
             this.setVisible(false);
             this.jFrame.setVisible(true);
         } else if (e.getSource() == this.playBtn) {

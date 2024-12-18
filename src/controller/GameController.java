@@ -56,7 +56,6 @@ public class GameController {
     }
 
     public void restartGame() {
-        System.out.println();
         System.out.println("还要重开？这么菜的喵？");
         for (int i = 0; i < view.getGrids().length; i++) {
             for (int j = 0; j < view.getGrids()[i].length; j++) {
@@ -153,7 +152,6 @@ public class GameController {
                 users.get(this.user.getId()).getLv()[0][this.lv - 1] = true;
                 User.writeUser(users);
             }
-            System.out.println();
             System.out.println("可恶喵，给你赢了喵");
             Sound s = new Sound("resources/misc/NV_Korogu_Man_Young_Normal00_HiddenKorok_Appear00.wav");
             s.setVolume(1.0);
